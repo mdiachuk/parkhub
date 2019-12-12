@@ -1,0 +1,34 @@
+
+<div class="col-md-6">
+  <h2 class="text-center">Sing Up</h2>
+  <form>
+
+
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="name" [(ngModel)]="users.name" placeholder="name" name="name" class="form-control" id="name">
+    </div>
+
+    <div class="form-group">
+      <label for="secondname">Second Name:</label>
+      <input type="text" [(ngModel)]="users.secondname" placeholder="Sevondname" name="sevondname" class="form-control" id="secondname">
+    </div>
+
+    <div class="form-group">
+      <label for="telephone">Telephone:</label>
+      <input type="tel" [(ngModel)]="users.telephone" placeholder="Telephone" name="telephone" class="form-control" id="telephone">
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" [(ngModel)]="users.email" placeholder="Email" name="email" class="form-control" id="email">
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" [(ngModel)]="users.password" placeholder="Password" name="password" class="form-control" id="password">
+    </div>
+
+    <button class="btn btn-success" (click)="singUpUser()">Create</button>
+  </form>
+</div>
