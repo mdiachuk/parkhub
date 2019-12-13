@@ -98,3 +98,4 @@ booking_id INT NOT NULL REFERENCES park_hub.booking(id),
 price INT,
 is_paid boolean NOT NULL DEFAULT 'false'
         );
+
