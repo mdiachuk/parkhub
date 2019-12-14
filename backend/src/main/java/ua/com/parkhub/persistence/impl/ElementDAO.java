@@ -31,12 +31,12 @@ public class ElementDAO<E> implements IElementDAO<E> {
     }
 
     @Override
-    public E getElementById(long id) {
+    public E findElementById(long id) {
         return emp.find( elementClass, id);
     }
 
     @Override
-    public List<E> getAll() {
+    public List<E> findAll() {
         CriteriaBuilder cb = emp.getCriteriaBuilder();
         CriteriaQuery<E> cq = cb.createQuery(elementClass);
         Root<E> rootEntry = cq.from(elementClass);
