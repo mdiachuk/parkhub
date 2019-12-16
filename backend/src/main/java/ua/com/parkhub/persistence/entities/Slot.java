@@ -10,8 +10,7 @@ import java.io.Serializable;
 public class Slot implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "slot_generator")
-    @SequenceGenerator(name = "slot_generator", sequenceName = "park_hub.slot_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column

@@ -10,8 +10,7 @@ import java.io.Serializable;
 public class Payment implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "payment_generator")
-    @SequenceGenerator(name="payment_generator", sequenceName = "park_hub.payment_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
