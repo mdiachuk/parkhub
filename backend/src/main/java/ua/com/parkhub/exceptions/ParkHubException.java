@@ -1,5 +1,7 @@
 package ua.com.parkhub.exceptions;
 
+import java.util.Arrays;
+
 public class ParkHubException extends RuntimeException {
 
     public ParkHubException() {
@@ -16,5 +18,12 @@ public class ParkHubException extends RuntimeException {
 
     public ParkHubException(Throwable cause) {
         super(cause);
+    }
+
+    public String getAuthServiceStackTrace() {
+        StringBuilder trace = new StringBuilder();
+        StackTraceElement[] traceElements = super.getStackTrace();
+        Arrays.stream(traceElements).forEach(x-> trace.append(x.toString()+"\n"));
+        return trace.toString();
     }
 }

@@ -1,0 +1,56 @@
+package ua.com.parkhub.mappers;
+
+import ua.com.parkhub.dto.RoleDTO;
+import ua.com.parkhub.dto.UserDTO;
+import ua.com.parkhub.exceptions.ParkHubException;
+import ua.com.parkhub.persistence.entities.User;
+import ua.com.parkhub.persistence.entities.UserRole;
+
+import java.util.Arrays;
+
+public class UserMapper {
+
+    private UserMapper(){}
+
+    public static User persist(UserDTO userDTO) {
+        if(userDTO == null) {
+            throw new ParkHubException("UserDTO to be mapped to User entity is null.");
+        }
+        User userEntity = new User();
+        userEntity.setEmail(userDTO.getEmail());
+        userEntity.setFirstName(userDTO.getFirstName());
+        userEntity.setLastName(userDTO.getLastName());
+        UserRole role = new UserRole();
+        if (userDTO.getRole() != null) {
+            role.setRoleName(userDTO.getRole().toString());
+        }
+        userEntity.setRole(role);
+        return userEntity;
+    }
+
+    public static UserDTO detach(User user) {
+        if(user == null) {
+            throw new ParkHubException("User entity to be converted to UserDTO is null.");
+        }
+        UserDTO userDto = new UserDTO();
+        userDto.setEmail(user.getEmail());
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
+        userDto.setId(user.getId());
+        UserRole role = user.getRole();
+        if(role != null && role.getRoleName() != null) {
+            String roleName = role.getRoleName();
+            switch (roleName) {
+                case "ADMIN":
+                    userDto.setRole(RoleDTO.ADMIN);
+                    break;
+                case "USER":
+                    userDto.setRole(RoleDTO.USER);
+                    break;
+                default:
+                    throw new ParkHubException(String.format("Not known role name: %s. Role name may be one of the following: %s).", roleName, Arrays.asList(RoleDTO.values())));
+            }
+        }
+        return userDto;
+    }
+}

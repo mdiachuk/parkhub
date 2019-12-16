@@ -1,12 +1,15 @@
 package ua.com.parkhub.persistence.impl;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Optional;
+
 import ua.com.parkhub.persistence.IElementDAO;
 
 public class ElementDAO<E> implements IElementDAO<E> {
@@ -48,5 +51,24 @@ public class ElementDAO<E> implements IElementDAO<E> {
     @Override
     public void deleteElement(E element) {
         emp.remove(element);
+    }
+
+    @Override
+    public <F> Optional<E> findOneByFieldEqual(String fieldName, F fieldValue) {
+        CriteriaBuilder criteriaBuilder = emp.getCriteriaBuilder();
+        CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(elementClass);
+        Root<E> elementRoot = criteriaQuery.from(elementClass);
+        criteriaQuery.select(elementRoot).where(criteriaBuilder.equal(elementRoot.get(fieldName), fieldValue));
+
+        try {
+            E element = emp.createQuery(criteriaQuery).getSingleResult();
+            return Optional.of(element);
+        } catch (NoResultException e1) {
+//            logger.debug(e1.getMessage());
+            return Optional.empty();
+        } catch (Exception e2) {
+//            logger.error(e2.getMessage(), e2);
+            throw new UnsupportedOperationException();//DaoLayerException(e2.getMessage());
+        }
     }
 }
