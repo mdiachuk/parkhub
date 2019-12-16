@@ -86,7 +86,7 @@ id BIGSERIAL PRIMARY KEY NOT NULL,
 customer_id INT NOT NULL REFERENCES park_hub.customer(id),
 car_number VARCHAR(8) NOT NULL,
 slot_id INT NOT NULL REFERENCES park_hub.slot(id),
-chek_in TIMESTAMP with time zone 
+chek_in TIMESTAMP with time zone
 		NOT NULL DEFAULT current_timestamp,
 check_out TIMESTAMP with time zone,
 is_active boolean NOT NULL DEFAULT 'true'
