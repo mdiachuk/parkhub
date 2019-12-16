@@ -40,17 +40,8 @@ public class ParkingController {
     @PostMapping
     public ResponseEntity addParking(@RequestBody ParkingRequestDTO parkingRequestDTO) {
         // validation here
-     /*   Gson gson = new Gson();
-        String Json = gson.toJson(parkingRequestDTO);
-        JsonObject jsonObject = new JsonParser().parse(Json).getAsJsonObject();*/
         ParkingRequestModel parkingModel = parkingRequestMapper.parkingRequestDTOToParkingRequestModel(parkingRequestDTO);
-
-//        psv.createParkingFROMModels
-//                (addressMapper.addressDTOToAddressModel(addressDTO),
-//                        parkingMapper.parkingDTOToParkingModel(parkingDTO));
         psv.createParkingFROMParkingRequestModel(parkingModel);
-//                (addressMapper.addressDTOToAddressModel(addressDTO),
-//                        parkingMapper.parkingDTOToParkingModel(parkingDTO));
         return ResponseEntity.ok().build();
     }
 
