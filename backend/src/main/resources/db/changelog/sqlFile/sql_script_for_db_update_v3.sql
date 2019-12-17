@@ -8,7 +8,7 @@ CREATE SCHEMA park_hub;
 /*-----------------------------------------------------*/
 CREATE TABLE IF NOT EXISTS "park_hub".customer (
 
-	id   BIGINT   NOT NULL   PRIMARY KEY,
+	id   BIGSERIAL   NOT NULL   PRIMARY KEY,
 	phone_number   VARCHAR(50)   NOT NULL,
 	is_active boolean NOT NULL DEFAULT 'true'
 
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS "park_hub".customer (
 
 CREATE TABLE IF NOT EXISTS "park_hub".user_role (
 
-	id   BIGINT   NOT NULL   PRIMARY KEY,
+	id   BIGSERIAL   NOT NULL   PRIMARY KEY,
 	role_name   VARCHAR(50)   NOT NULL,
 	is_active boolean NOT NULL DEFAULT 'true'
 
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS "park_hub".user_role (
 
 CREATE TABLE IF NOT EXISTS "park_hub".user (
 
-	id BIGINT PRIMARY KEY NOT NULL,
+	id BIGSERIAL PRIMARY KEY NOT NULL,
     customer_id BIGINT NOT NULL REFERENCES park_hub.customer(id),
     first_name VARCHAR (255) NOT NULL,
 	second_name VARCHAR (255) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS "park_hub".user (
 
 CREATE TABLE IF NOT EXISTS "park_hub".address(
 
-	id BIGINT PRIMARY KEY NOT NULL,
+	id BIGSERIAL PRIMARY KEY NOT NULL,
     city VARCHAR(255) NOT NULL,
     street VARCHAR(255) NOT NULL,
     building VARCHAR(255) NOT NULL
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS "park_hub".address(
 
 CREATE TABLE IF NOT EXISTS "park_hub".parking(
 
-id BIGINT PRIMARY KEY NOT NULL,
+id BIGSERIAL PRIMARY KEY NOT NULL,
 parking_owner_id BIGINT NOT NULL REFERENCES park_hub.user(id),
 parking_name VARCHAR(255) NOT NULL,
 address_id BIGINT NOT NULL REFERENCES park_hub.address(id),
@@ -58,7 +58,7 @@ is_active boolean NOT NULL DEFAULT 'true'
 
 CREATE TABLE IF NOT EXISTS "park_hub".slot(
 
-id BIGINT PRIMARY KEY NOT NULL,
+id BIGSERIAL PRIMARY KEY NOT NULL,
 parking_id BIGINT NOT NULL REFERENCES park_hub.parking(id),
 slot_number VARCHAR NOT NULL,
 is_reserved boolean NOT NULL DEFAULT 'false',
@@ -66,7 +66,7 @@ is_active boolean NOT NULL DEFAULT 'true'
 );
 
 CREATE TABLE IF NOT EXISTS "park_hub".booking(
-id BIGINT PRIMARY KEY NOT NULL,
+id BIGSERIAL PRIMARY KEY NOT NULL,
 customer_id BIGINT NOT NULL REFERENCES park_hub.customer(id),
 car_number VARCHAR(8) NOT NULL,
 slot_id BIGINT NOT NULL REFERENCES park_hub.slot(id),
@@ -77,7 +77,7 @@ is_active boolean NOT NULL DEFAULT 'true'
         );
 
 CREATE TABLE IF NOT EXISTS "park_hub".payment(
-id BIGINT PRIMARY KEY NOT NULL,
+id BIGSERIAL PRIMARY KEY NOT NULL,
 booking_id BIGINT NOT NULL REFERENCES park_hub.booking(id),
 price INT,
 is_paid boolean NOT NULL DEFAULT 'false'
@@ -85,7 +85,7 @@ is_paid boolean NOT NULL DEFAULT 'false'
 
 CREATE TABLE IF NOT EXISTS "park_hub".support_ticket_type
 (
-    id        BIGINT PRIMARY KEY NOT NULL,
+    id        BIGSERIAL PRIMARY KEY NOT NULL,
     type      VARCHAR            NOT NULL,
     is_active boolean            NOT NULL DEFAULT 'true'
 );
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS "park_hub".support_ticket_type
 CREATE TABLE IF NOT EXISTS "park_hub".support_ticket
 (
 
-    id             BIGINT PRIMARY KEY NOT NULL,
+    id             BIGSERIAL PRIMARY KEY NOT NULL,
     author_id      BIGINT             NOT NULL REFERENCES park_hub.customer (id),
     description    VARCHAR               NOT NULL,
     ticket_type_id BIGINT                NOT NULL REFERENCES park_hub.support_ticket_type(id),
