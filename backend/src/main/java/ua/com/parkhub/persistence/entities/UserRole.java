@@ -11,8 +11,7 @@ import java.io.Serializable;
 public class UserRole implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_role_generator")
-    @SequenceGenerator(name = "user_role_generator", sequenceName = "park_hub.user_role_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "roleName")

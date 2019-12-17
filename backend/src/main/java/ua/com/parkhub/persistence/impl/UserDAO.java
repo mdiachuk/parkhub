@@ -40,5 +40,6 @@ public class UserDAO extends ElementDAO<User> {
         }//decide what to do with npe
 
     }
+
 }
 
