@@ -3,12 +3,13 @@ package ua.com.parkhub.backend.persistense.entities;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Table(name = "customer")
+@javax.persistence.Entity
+@Table(name = "customer", schema="park_hub")
 public class Customer implements Entity {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue (strategy = GenerationType.AUTO)
+//    @GeneratedValue (strategy = GenerationType.AUTO)
     private long id;
 
     @Column (name = "phone_number")

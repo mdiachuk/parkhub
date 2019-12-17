@@ -6,11 +6,12 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Component
-@Table(name = "users")
+@javax.persistence.Entity
+@Table(name = "users", schema="park_hub")
 public class User implements ua.com.parkhub.backend.persistense.entities.Entity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int id;
 

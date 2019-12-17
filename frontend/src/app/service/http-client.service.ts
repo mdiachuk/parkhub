@@ -26,7 +26,7 @@ export class HttpClientService {
   ) { }
 
   getUser(){
-    console.log("test call!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    console.log("test call!");
     return this.httpClient.get<User[]>('http://localhost:8081/api/singup')
   }
 

@@ -14,6 +14,9 @@ public class SingUpController {
 
     @Autowired
     private SingUpService singUpService;
+    @Autowired
+    private User user;
+
 
     @PostMapping
     public String create(@RequestBody User user) {
