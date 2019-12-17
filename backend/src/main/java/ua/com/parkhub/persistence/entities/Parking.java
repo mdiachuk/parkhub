@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -40,7 +41,7 @@ public class Parking implements Serializable {
 
     @OneToMany
     @JoinColumn(name = "parking_id")
-    private Set<Slot> slots;
+    private List<Slot> slots;
 
     public Long getId() {
         return id;
@@ -98,11 +99,11 @@ public class Parking implements Serializable {
         this.owner = owner;
     }
 
-    public Set<Slot> getSlots() {
+    public List<Slot> getSlots() {
         return slots;
     }
 
-    public void setSlots(Set<Slot> slots) {
+    public void setSlots(List<Slot> slots) {
         this.slots = slots;
     }
 }
