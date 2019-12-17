@@ -10,8 +10,7 @@ import java.io.Serializable;
 public class Address implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_generator")
-    @SequenceGenerator(name="address_generator", sequenceName = "park_hub.address_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column

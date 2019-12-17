@@ -5,15 +5,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "parking",schema = "park_hub")
 public class Parking implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "parking_generator")
-    @SequenceGenerator(name="parking_generator", sequenceName = "park_hub.parking_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column

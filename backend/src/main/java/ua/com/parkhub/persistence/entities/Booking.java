@@ -12,8 +12,7 @@ import java.time.LocalDateTime;
 public class Booking implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "booking_generator")
-    @SequenceGenerator(name="booking_generator", sequenceName = "park_hub.booking_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
