@@ -7,9 +7,9 @@ import ua.com.parkhub.service.AdminService;
 
 @Service
 public class AdminDTO {
-    public long id;
-    public String firstName;
-    public String userRole;
+    private long id;
+    private String firstName;
+    private String userRole;
 
     public AdminDTO() {
     }

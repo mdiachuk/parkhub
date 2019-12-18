@@ -11,6 +11,6 @@ export class AdminService {
   constructor(private http: HttpClient) { }
 
   getUserById(id: number): Observable<Admin>{
-    return this.http.get<Admin>('//localhost:8080/admin/{id}');
+    return this.http.get<Admin>('http://localhost:8080/admin/{id}');
   }
 }

@@ -11,18 +11,18 @@ import ua.com.parkhub.service.AdminService;
 
 @RestController @CrossOrigin(origins = "http://localhost:4200")
 public class AdminController {
-    /*public AdminService adminService;
+    public AdminService adminService;
 
     @Autowired
     public AdminController(AdminService adminService) {
         this.adminService = adminService;
-    }*/
+    }
 
-    public AdminDTO adminDTO;
+    /*public AdminDTO adminDTO;
     @Autowired
     public AdminController(AdminDTO adminDTO) {
         this.adminDTO = adminDTO;
-    }
+    }*/
 
 
     /*@GetMapping("/admin/{id}")
@@ -31,9 +31,18 @@ public class AdminController {
         return targetUser;
     }*/
 
-    @GetMapping("/admin/{id}")
+    /*@GetMapping("/admin/{id}")
     public AdminDTO getUserById(@PathVariable("id") long id){
         return adminDTO.findUserByIdDTO(id);
+    }*/
+
+    @GetMapping("/admin/{id}")
+    public AdminDTO getUserByID(@PathVariable("id")long id ){
+        AdminDTO targetUserDTO = new AdminDTO();
+        targetUserDTO.setUserRole(adminService.getRole(id));
+        targetUserDTO.setFirstName(adminService.getFirstName(id));
+        targetUserDTO.setId(adminService.getId(id));
+        return targetUserDTO;
     }
 
     /*@PostMapping("/admin")

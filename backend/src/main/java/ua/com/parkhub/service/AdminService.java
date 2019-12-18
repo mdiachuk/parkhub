@@ -34,9 +34,9 @@ public class AdminService  {
         return targetUser.getFirstName();
     }
 
-    /*public long getId(long id){
+    public long getId(long id){
         User targetUser = userDAO.findElementById(id);
         return targetUser.getId();
-    }*/
+    }
 }
 
