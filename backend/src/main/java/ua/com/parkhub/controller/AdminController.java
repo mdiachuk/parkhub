@@ -3,6 +3,7 @@ package ua.com.parkhub.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import ua.com.parkhub.dto.AdminDTO;
@@ -47,8 +48,9 @@ public class AdminController {
     }
 
     @PostMapping("/admin/{id}")
-    public void setRole(@PathVariable("id") long id){
-        AdminDTO targetUserDTO = new AdminDTO();
+    public ResponseEntity setRole(@RequestBody AdminDTO adminDTO){
+        adminService.setRole(adminDTO.getId(), adminDTO.getUserRole());
+        return ResponseEntity.ok().build();
 
     }
 

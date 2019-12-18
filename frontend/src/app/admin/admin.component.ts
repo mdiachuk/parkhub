@@ -26,7 +26,11 @@ export class AdminComponent implements OnInit {
     //this.adminService.getUserById();
   }
   try(){
-    this.httpClient.get<Admin>("http://localhost:8080/admin/1").subscribe(response => this.admin = response);
+    this.adminService.getUserById(1).subscribe(response => {
+      this.admin = response;
+      this.admin.userRole = "Admin"
+      this.adminService.updateRole(this.admin);
+    });
   }
 
 }
