@@ -4,6 +4,7 @@ package ua.com.parkhub.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.hibernate.validator.constraints.UniqueElements;
 import ua.com.parkhub.persistence.entities.Address;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -13,8 +14,7 @@ import ua.com.parkhub.persistence.entities.Address;
         "tariff",
         "city",
         "street",
-        "building",
-        "ownerEmail"
+        "building"
 
 })
 public class ParkingRequestDTO {
@@ -37,8 +37,6 @@ public class ParkingRequestDTO {
     @JsonProperty("building")
     private String building;
 
-    @JsonProperty("ownerEmail")
-    private String ownerEmail;
 
     public String getParkingName() {
         return parkingName;
@@ -88,12 +86,4 @@ public class ParkingRequestDTO {
         this.building = building;
     }
 
-
-    public String getOwnerEmail() {
-        return ownerEmail;
-    }
-
-    public void setOwnerEmail(String ownerEmail) {
-        this.ownerEmail = ownerEmail;
-    }
 }

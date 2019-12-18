@@ -66,7 +66,7 @@ public class Booking implements Serializable {
         return checkOut;
     }
 
-    public void setCheck_out(LocalDateTime checkOut) {
+    public void setCheckOut(LocalDateTime checkOut) {
         this.checkOut = checkOut;
     }
 

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
+import { ParkingServiceService } from '../parking-service.service';
+import { Parking } from '../parking';
+import { ActivatedRoute, Router } from '@angular/router';
 
-export interface Food {
-  value: string;
-  viewValue: string;
-}
+
 
 
 @Component({
@@ -16,14 +16,23 @@ export interface Food {
 export class AddParkingComponent {
   
   formGroup: FormGroup;
+  parking: Parking;
   titleAlert: string = 'This field is required';
   post: any = '';
   CityArray: any = ['Kyiv', 'Lviv', 'Chernivtsi', 'Dnipro', 'Kharkiv'];
-  nameregex: RegExp = /^[a-zA-Z ]*$/
+  nameregex: RegExp = /^[a-zA-Z]*$/
   onlyPositiveIntegersregex: RegExp = /^[1-9]+[0-9]*$/  
   streetregex: RegExp = /^([a-zA-Z -]+)$/
   buildingregex: RegExp = /^([a-zA-Z0-9 -]+)$/
-  constructor(private formBuilder: FormBuilder) { }
+  parkNameValidator: any;
+  //parkingService: ParkingServiceService;
+  
+  constructor(private formBuilder: FormBuilder,private route: ActivatedRoute, 
+    private router: Router,
+       private parkingService: ParkingServiceService) { 
+        this.parking = new Parking();
+        //this.parkingService = new ParkingServiceService();
+       }
 
   ngOnInit() {
     this.createForm();
@@ -53,17 +62,20 @@ export class AddParkingComponent {
   //   return (!passwordCheck.test(enteredPassword) && enteredPassword) ? { 'requirements': true } : null;
   // }
 
-  checkInUseParkingName(control) {
-    // mimic http database access
-    let db = ['tony@gmail.com'];
-    return new Observable(observer => {
-      setTimeout(() => {
-        let result = (db.indexOf(control.value) !== -1) ? { 'alreadyInUse': true } : null;
-        observer.next(result);
-        observer.complete();
-      }, 4000)
-    })
-  }
+  // checkInUseParkingName(control) {
+  //   // mimic http database access
+  //   let db = ['tony@gmail.com'];
+  //   return new Observable(observer => {
+  //     setTimeout(() => {
+  //       let result = (db.indexOf(control.value) !== -1) ? { 'alreadyInUse': true } : null;
+  //       observer.next(result);
+  //       observer.complete();
+  //     }, 4000)
+  //   })
+  // }
+
+
+
 
   getErrorParkingName() {
     return this.formGroup.get('parkingName').hasError('required') ? 'Field is required' :
@@ -93,8 +105,18 @@ export class AddParkingComponent {
       this.formGroup.get('building').hasError('pattern') ? 'Not a valid building' : '';
   }
 
-  onSubmit(post) {
-    this.post = post;
-  }
+
+
+  onSubmit(formGroup) {
+    console.log(this.parkingService,formGroup);
+     this.parkingService.save(formGroup)
+     .subscribe( data => {
+       alert("User created successfully.");
+    },
+    err => {
+      alert(err.error);
+    });
+}
+
 
 }

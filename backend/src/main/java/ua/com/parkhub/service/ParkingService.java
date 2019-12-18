@@ -43,6 +43,10 @@ public class ParkingService {
 
         userDAO.addElement(theUser);
     }
+    public void checkUniqueParkingName(User theUser) {
+
+        userDAO.addElement(theUser);
+    }
     public void saveUserRole(UserRole theUserRole) {
 
         userRoleDAO.addElement(theUserRole);
@@ -90,10 +94,15 @@ public class ParkingService {
         //parkingDAO.addElement(parkingMapper.parkingModelToParking(parking));
 
     }
+    @Transactional
+    public boolean checkIfParkingIsUnique(ParkingRequestModel parkingRequestModel) {
+        Long count =parkingDAO.checkUniquenessofParking(parkingRequestModel.getParkingName());
+        return (count == 0);
+
+    }
 
     @Transactional
-    public void createParkingFROMParkingRequestModel(ParkingRequestModel parkingRequestModel) {
-        //parking.setOwner(userDAO.findElementById(9));
+    public void createParkingFROMParkingRequestModel(ParkingRequestModel parkingRequestModel,long id) {
         ParkingModel parkingModel = new ParkingModel();
         parkingModel.setParkingName(parkingRequestModel.getParkingName());
         parkingModel.setSlotsNumber(parkingRequestModel.getSlotsNumber());
@@ -105,13 +114,8 @@ public class ParkingService {
         parkingModel.setAddress(addressModel);//to think about ownerId
         Address address = addressMapper.addressModelToAddress(addressModel);
         Parking parking = parkingMapper.parkingModelToParking(parkingModel);
-        parking.setOwner(userDAO.findElementByEmail(parkingRequestModel.getOwnerEmail()));
+        parking.setOwner(userDAO.findElementById(id));
         parking.setAddress(address);
-//        parkingMapper.parkingModelToParking(parking).
-//                setAddress(addressMapper.addressModelToAddress(address));
-//        parking1.setAddress(address1);
-//        addressDAO.addElement(address1);
-//        parkingDAO.addElement(parking1);
         addressDAO.addElement(address);
         parkingDAO.addElement(parking);
 

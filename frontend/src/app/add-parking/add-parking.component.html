@@ -13,14 +13,14 @@
     </mat-form-field>
 
     <mat-form-field class="form-element">
-      <input matInput placeholder="Number of slots" formControlName="slotsNumber">
+      <input type="number" matInput placeholder="Number of slots" formControlName="slotsNumber">
       <mat-error *ngIf="!formGroup.controls['slotsNumber'].valid && formGroup.controls['slotsNumber'].touched">
         {{ getErrorSlotsNumber() }}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field class="form-element">
-      <input matInput placeholder="Tariff" formControlName="tariff">
+      <input type="number" matInput placeholder="Tariff" formControlName="tariff">
       <mat-error *ngIf="!formGroup.controls['tariff'].valid && formGroup.controls['tariff'].touched">
         {{ getErrorTariff() }}
       </mat-error>
@@ -71,8 +71,8 @@
   </form>
 </div>
 
-<ng-template #forminfo>
+<!-- <ng-template #forminfo>
   <div class="container">
     {{ post | json }}
   </div>
-</ng-template>
+</ng-template> -->

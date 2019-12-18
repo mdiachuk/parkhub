@@ -16,7 +16,6 @@ public class ParkingRequestModel {
 
     private String building;
 
-    private String ownerEmail;
 
     public String getParkingName() {
         return parkingName;
@@ -66,11 +65,5 @@ public class ParkingRequestModel {
         this.building = building;
     }
 
-    public String getOwnerEmail() {
-        return ownerEmail;
-    }
 
-    public void setOwnerEmail(String ownerEmail) {
-        this.ownerEmail = ownerEmail;
-    }
 }
