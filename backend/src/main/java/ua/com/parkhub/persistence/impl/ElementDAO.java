@@ -27,7 +27,7 @@ public class ElementDAO<E> implements IElementDAO<E> {
 
     @Override
     public void updateElement(E element) {
-        emp.refresh(element);
+        emp.persist(element);
     }
 
     @Override

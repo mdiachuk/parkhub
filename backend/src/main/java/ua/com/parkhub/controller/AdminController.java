@@ -2,6 +2,7 @@ package ua.com.parkhub.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.web.bind.annotation.*;
 
 import ua.com.parkhub.dto.AdminDTO;
@@ -43,6 +44,12 @@ public class AdminController {
         targetUserDTO.setFirstName(adminService.getFirstName(id));
         targetUserDTO.setId(adminService.getId(id));
         return targetUserDTO;
+    }
+
+    @PostMapping("/admin/{id}")
+    public void setRole(@PathVariable("id") long id){
+        AdminDTO targetUserDTO = new AdminDTO();
+
     }
 
     /*@PostMapping("/admin")
