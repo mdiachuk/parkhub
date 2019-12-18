@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class AdminService  {
-    public UserDAO userDAO;
+    private UserDAO userDAO;
     private UserRoleDAO userRoleDAO;
 
 
@@ -44,10 +44,6 @@ public class AdminService  {
     public long getId(long id){
         User targetUser = userDAO.findElementById(id);
         return targetUser.getId();
-    }
-
-    public void updateData(User user){
-        userDAO.updateElement(user);
     }
 }
 
