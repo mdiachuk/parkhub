@@ -1,6 +1,5 @@
 export class Admin{
     id: number
     firstName: String
-    lastName: String
-    role: String
+    userRole: String
 }

@@ -1,5 +1,6 @@
 package ua.com.parkhub.service;
 import org.springframework.stereotype.Service;
+import ua.com.parkhub.dto.AdminDTO;
 import ua.com.parkhub.persistence.entities.User;
 import ua.com.parkhub.persistence.entities.UserRole;
 import ua.com.parkhub.persistence.impl.UserDAO;
@@ -8,8 +9,10 @@ import ua.com.parkhub.persistence.impl.UserDAO;
 public class AdminService  {
     public UserDAO userDAO;
 
+
     public AdminService(UserDAO userDAO) {
         this.userDAO = userDAO;
+
     }
 
     public User findUserById(long id){
@@ -25,5 +28,15 @@ public class AdminService  {
         User targetUser = userDAO.findElementById(id);
         return targetUser.getRole().getRoleName();
     }
+
+    public String getFirstName(long id){
+        User targetUser = userDAO.findElementById(id);
+        return targetUser.getFirstName();
+    }
+
+    /*public long getId(long id){
+        User targetUser = userDAO.findElementById(id);
+        return targetUser.getId();
+    }*/
 }
 
