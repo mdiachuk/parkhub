@@ -19,13 +19,16 @@ public class AdminController {
 
     @GetMapping("/admin/{id}")
     public User getUserById(@PathVariable("id") long id){
-        return adminService.findUserById(id);
+        User targetUser = adminService.findUserById(id);
+        return targetUser;
     }
 
     @PostMapping("/admin")
     public void setUserRole(long id, UserRole role){
         adminService.setRole(id, role);
     }
+
+
 
     /*@GetMapping("/test")
     public TestDTO test() {

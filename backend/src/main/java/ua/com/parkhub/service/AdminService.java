@@ -21,5 +21,9 @@ public class AdminService  {
         targetUser.setRole(role);
         userDAO.updateElement(targetUser);
     }
+    public String getRole(long id){
+        User targetUser = userDAO.findElementById(id);
+        return targetUser.getRole().getRoleName();
+    }
 }
 

@@ -23,7 +23,7 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() {
     this.try();
-    // this.adminService.getUserById().subscribe(response => this.admin = response);
+    //this.adminService.getUserById(1).subscribe(response => this.admin = response);
   }
   try(){
     this.httpClient.get<Admin>("http://localhost:8080/admin/1").subscribe(response => this.admin = response);
