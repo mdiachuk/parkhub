@@ -28,9 +28,8 @@ export class AdminComponent implements OnInit {
   try(){
     this.adminService.getUserById(1).subscribe(response => {
       this.admin = response;
-      this.admin.userRole = "Admin"
+      this.admin.userRole = "Manager"
       this.adminService.updateRole(this.admin);
     });
   }
-
 }
