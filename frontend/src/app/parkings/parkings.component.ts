@@ -1,8 +1,10 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTable } from '@angular/material/table';
-import { ParkingsDataSource, ParkingsItem } from './parkings-datasource';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatSort} from '@angular/material/sort';
+import { ParkingService} from "../parking.service";
+import { ParkingItem } from '../parking-item';
+
 
 
 @Component({
@@ -10,22 +12,38 @@ import { ParkingsDataSource, ParkingsItem } from './parkings-datasource';
   templateUrl: './parkings.component.html',
   styleUrls: ['./parkings.component.scss']
 })
-export class ParkingsComponent implements AfterViewInit, OnInit {
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
-  @ViewChild(MatTable, {static: false}) table: MatTable<ParkingsItem>;
-  dataSource: ParkingsDataSource;
+export class ParkingsComponent implements OnInit {
+
+  constructor(private parkingService: ParkingService){
+  }
+
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
+  // data: ParkingItem[];
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['name', 'address'];
+  dataSource = new MatTableDataSource<ParkingItem>();
+
+  getData(): void {
+    this.parkingService.getData()
+      .subscribe(data => {
+        this.dataSource.data = data;
+      });
+  }
 
   ngOnInit() {
-    this.dataSource = new ParkingsDataSource();
+    this.getData();
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
 }
+
+// TODO: replace this with real data from your application
+
