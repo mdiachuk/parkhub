@@ -1,11 +1,12 @@
 <h2>Admins page</h2>
-
+<mat-card>
 <h2>Get User by Id</h2>
+
 <div>
     <label>
-    <input type="text" [formControl]="idGetter">
+    <input  type="text" [formControl]="idGetter">
     </label>
-    <button (click)="idGetterMethod()">Get User by Id</button>
+    <button mat-raised-button color="primary" (click)="idGetterMethod()">Get User by Id</button>
     <div>Id: {{admin.id}}</div>
     <div>Name: {{admin.firstName}}</div>
     <div>Role: {{admin.userRole}}</div>
@@ -17,6 +18,7 @@
     <input type="text" [formControl]="roleControl">
     </label>
     <p>
-        <button (click)="updateRoleName()">Update Role</button>
+        <button mat-raised-button color="primary" (click)="updateRoleName()">Update Role</button>
     </p>
 </div>
+</mat-card>
