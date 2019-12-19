@@ -1,4 +1,23 @@
 <h2>Admins page</h2>
-<div>Id: {{admin.id}}</div>
-<div>Name: {{admin.firstName}}</div>
+
+<h2>Get User by Id</h2>
+<div>
+    <label>
+    <input type="text" [formControl]="idGetter">
+    </label>
+    <button (click)="idGetterMethod()">Get User by Id</button>
+    <div>Id: {{admin.id}}</div>
+    <div>Name: {{admin.firstName}}</div>
+    <div>Role: {{admin.userRole}}</div>
+</div>
+
+<h2>Update Role Form</h2>
+<div>
+    <label>User Role:
+    <input type="text" [formControl]="roleControl">
+    </label>
+    <p>
+        <button (click)="updateRoleName()">Update Role</button>
+    </p>
+</div>
 <div>Role: {{admin.userRole}}</div>

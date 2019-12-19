@@ -3,6 +3,7 @@ import { AdminService } from '../service/admin.service'
 import { Admin } from '../Classes/admin'
 import { ActivatedRoute, Router} from '@angular/router'
 import { HttpClient } from '@angular/common/http'
+import { FormControl } from '@angular/forms'
 
 
 @Component({
@@ -11,7 +12,18 @@ import { HttpClient } from '@angular/common/http'
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
-  admin = new Admin()
+  admin = new Admin();
+  idGetter = new FormControl('');
+  idGetterMethod(){
+    this.idGetter.setValue(this.idGetter.value)
+    this.adminService.getUserById(this.idGetter.value).subscribe(response => this.admin = response);
+  }
+  roleControl = new FormControl('');
+  updateRoleName(){
+      this.roleControl.setValue(this.roleControl.value)
+      this.admin.userRole = this.roleControl.value;
+      this.adminService.updateRole(this.admin);
+  }
   
 
   constructor(
@@ -22,14 +34,7 @@ export class AdminComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.try();
-    //this.adminService.getUserById();
+  
   }
-  try(){
-    this.adminService.getUserById(1).subscribe(response => {
-      this.admin = response;
-      this.admin.userRole = "Manager"
-      this.adminService.updateRole(this.admin);
-    });
-  }
+ 
 }
