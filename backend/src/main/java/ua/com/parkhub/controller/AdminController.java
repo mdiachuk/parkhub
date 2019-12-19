@@ -47,7 +47,6 @@ public class AdminController {
     public ResponseEntity setRole(@RequestBody AdminDTO adminDTO){
         adminService.setRole(adminDTO.getId(), adminDTO.getUserRole());
         return ResponseEntity.ok().build();
-
     }
 
     /*@PostMapping("/admin")
