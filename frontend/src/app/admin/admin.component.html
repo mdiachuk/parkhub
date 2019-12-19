@@ -1,24 +1,32 @@
-<h2>Admins page</h2>
 <mat-card>
-<h2>Get User by Id</h2>
-
+<h2>Admins page</h2>
+<h3>Get User by Id</h3>
+<mat-card-content>
 <div>
-    <label>
-    <input  type="text" [formControl]="idGetter">
-    </label>
+    <mat-form-field>
+        <input matInput type="number" min="1" [formControl]="idGetter" placeholder="Type User ID">
+    </mat-form-field>
+    <p>
     <button mat-raised-button color="primary" (click)="idGetterMethod()">Get User by Id</button>
+    </p>
+    <mat-card-content>
     <div>Id: {{admin.id}}</div>
     <div>Name: {{admin.firstName}}</div>
     <div>Role: {{admin.userRole}}</div>
+    </mat-card-content>
 </div>
-
-<h2>Update Role Form</h2>
-<div>
-    <label>User Role:
-    <input type="text" [formControl]="roleControl">
-    </label>
+<mat-divider></mat-divider>
+</mat-card-content>
+</mat-card>
+<mat-card>
+    <mat-card-content>
+        <h3>Update Role Form</h3>
+        <div>
+        <mat-form-field>
+            <input matInput type="text" [formControl]="roleControl" placeholder="Type User Role">
+        </mat-form-field>
+    
     <p>
         <button mat-raised-button color="primary" (click)="updateRoleName()">Update Role</button>
     </p>
 </div>
-</mat-card>

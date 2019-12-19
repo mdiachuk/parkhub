@@ -1,14 +1,10 @@
 package ua.com.parkhub.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import ua.com.parkhub.dto.AdminDTO;
-import ua.com.parkhub.persistence.entities.User;
-import ua.com.parkhub.persistence.entities.UserRole;
 import ua.com.parkhub.service.AdminService;
 
 @RestController @CrossOrigin(origins = "http://localhost:4200")
