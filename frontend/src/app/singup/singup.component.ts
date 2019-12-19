@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClientService, User} from "../service/http-client.service";
+import {Customer, HttpClientService, User, UserRole} from "../service/http-client.service";
 
 @Component({
   selector: 'app-singup',
@@ -8,15 +8,17 @@ import {HttpClientService, User} from "../service/http-client.service";
 })
 export class SingupComponent implements OnInit {
 
-  users:User = new User("","","",
-    "","","","","");
+  customer:Customer = new Customer("", true);
+
+  userRole:UserRole = new UserRole("1")
+
+  users:User = new User("","",this.customer,"","",this.userRole);
 
   constructor(
     private httpClientService:HttpClientService
   ) { }
 
   ngOnInit() {
-
 
   }
 

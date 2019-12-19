@@ -3,16 +3,27 @@ import {HttpClient} from "@angular/common/http";
 
 export class User {
   constructor(
-  public id:string,
-  public icustomerId:string,
   public name:string,
   public secondname:string,
-  public telephone:string,
+  public customer:Customer,
   public email:string,
-  public password:string,
-  public role:string,
+  public pass:string,
+  public role: UserRole
   ){}
 
+}
+
+export class UserRole {
+  constructor(
+    public id:string
+  ){}
+}
+
+export class Customer {
+  constructor(
+    public phoneNumber:string,
+    public isActive:boolean
+  ){}
 }
 
 @Injectable({
@@ -31,7 +42,7 @@ export class HttpClientService {
   }
 
   public createUser(user) {
-    console.log("test call! SingUp User");
+    console.log("SingUp User");
     return this.httpClient.post<User>("http://localhost:8081/api/singup", user);
   }
 
