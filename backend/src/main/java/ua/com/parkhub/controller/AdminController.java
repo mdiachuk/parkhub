@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.AdminDTO;
 import ua.com.parkhub.service.AdminService;
 
-@RestController @CrossOrigin(origins = "http://localhost:4200")
+@RestController
 public class AdminController {
     public AdminService adminService;
 
