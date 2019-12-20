@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.hibernate.validator.constraints.UniqueElements;
 import ua.com.parkhub.persistence.entities.Address;
 
+import javax.validation.constraints.NotNull;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "parkingName",
@@ -18,22 +20,28 @@ import ua.com.parkhub.persistence.entities.Address;
 
 })
 public class ParkingRequestDTO {
+    @NotNull
     @JsonProperty("parkingName")
     private String parkingName;
 
+    @NotNull
     @JsonProperty("slotsNumber")
     private int slotsNumber;
 
+    @NotNull
     @JsonProperty("tariff")
     private int tariff;
 
 
+    @NotNull
     @JsonProperty("city")
     private String city;
 
+    @NotNull
     @JsonProperty("street")
     private String street;
 
+    @NotNull
     @JsonProperty("building")
     private String building;
 

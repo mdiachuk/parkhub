@@ -10,9 +10,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AddParkingComponent } from './add-parking/add-parking.component';
 import { ParkingServiceService } from './parking-service.service';
 
-const appRoutes: Routes =[
-  { path: 'home/cabinet/addParking', component: AddParkingComponent},
-];
 
 @NgModule({
   declarations: [
@@ -23,7 +20,6 @@ const appRoutes: Routes =[
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MaterialModule,

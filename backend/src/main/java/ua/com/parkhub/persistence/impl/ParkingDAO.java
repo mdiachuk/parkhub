@@ -1,13 +1,13 @@
 package ua.com.parkhub.persistence.impl;
 
 import org.springframework.stereotype.Repository;
+import ua.com.parkhub.persistence.entities.Address;
 import ua.com.parkhub.persistence.entities.Parking;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.util.List;
 
 @Repository
 public class ParkingDAO extends ElementDAO<Parking> {
@@ -16,7 +16,7 @@ public class ParkingDAO extends ElementDAO<Parking> {
         super(Parking.class);
     }
 
-    public Long  checkUniquenessofParking(String parkingName) {
+    public Long countOfParkingsByName(String parkingName) {
         CriteriaBuilder cb = emp.getCriteriaBuilder();
         CriteriaQuery<Long> cr = cb.createQuery(Long.class);
         Root<Parking> root = cr.from(Parking.class);
@@ -25,8 +25,17 @@ public class ParkingDAO extends ElementDAO<Parking> {
         TypedQuery<Long> count = emp.createQuery(cr);
         return count.getSingleResult();
     }
-    //method to check unique of address
-    // SELECT * From Parking where city = ... and street ==... and building ==...
-    // SELECT Count(*) FROM Parking where city ==........
+
+    public Long countOfParkingsByAddress(String city, String street, String building) {
+        CriteriaBuilder cb = emp.getCriteriaBuilder();
+        CriteriaQuery<Long> cr = cb.createQuery(Long.class);
+        Root<Address> root = cr.from(Address.class);
+        cr.select(cb.count(root));
+        cr.where
+                ((cb.equal(root.get("city"), city)),(cb.equal(root.get("street"), street)),(cb.equal(root.get("building"), building)));
+        TypedQuery<Long> count = emp.createQuery(cr);
+        return count.getSingleResult();
+    }
 }
+
 

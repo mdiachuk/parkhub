@@ -115,7 +115,9 @@ export class AddParkingComponent {
     },
     err => {
       alert(err.error);
-    });
+    });//if request == ok -> redirect to home/cabinet/manager
+
+    
 }
 
 

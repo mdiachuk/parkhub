@@ -12,7 +12,7 @@ export class ParkingServiceService {
   private parkingUrl: string;
 
   constructor(private http: HttpClient,private router: Router ) {
-    this.parkingUrl = 'http://localhost:8080/home/cabinet/addParking';
+    this.parkingUrl = 'api/home/cabinet/addParking';
    }
 
    public save(parking: Parking)  {
