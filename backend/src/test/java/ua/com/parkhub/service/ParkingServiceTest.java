@@ -22,14 +22,12 @@ class ParkingServiceTest {
     public void checkCorrectReturnCityBuildStreetFindAddress(){
         Parking parking = new Parking();
         Address address = new Address();
-        address.setId((long) 1);
         address.setBuilding("build");
         address.setStreet("Street");
         address.setCity("City");
         parking.setAddress(address);
         ParkingDAO parkingDAO = mock(ParkingDAO.class);
         ParkingService parkingService = new ParkingService(parkingDAO);
-        System.out.println(parkingService.findAddress(parking));
         Assert.assertTrue(parkingService.findAddress(parking).contains("City"));
         Assert.assertTrue(parkingService.findAddress(parking).contains("build"));
         Assert.assertTrue(parkingService.findAddress(parking).contains("Street"));
@@ -50,16 +48,12 @@ class ParkingServiceTest {
         parking.setSlots(slots);
         parking.setId((long) 1);
         Address address = new Address();
-        address.setId((long) 1);
         address.setBuilding("build");
         address.setStreet("Street");
         address.setCity("City");
         parking.setAddress(address);
         parking.setParkingName("parking1");
         parking.setTariff(25);
-        User user = new User();
-        parking.setOwner(user);
-        parking.setActive(true);
         ParkingDAO parkingDAO = mock(ParkingDAO.class);
         when(parkingDAO.findElementById(anyLong())).thenReturn(parking);
         ParkingService parkingService = new ParkingService(parkingDAO);
@@ -81,16 +75,12 @@ class ParkingServiceTest {
         parking.setSlots(slots);
         parking.setId((long) 1);
         Address address = new Address();
-        address.setId((long) 1);
         address.setBuilding("build");
         address.setStreet("Street");
         address.setCity("City");
         parking.setAddress(address);
         parking.setParkingName("parking1");
         parking.setTariff(25);
-        User user = new User();
-        parking.setOwner(user);
-        parking.setActive(true);
         ParkingDAO parkingDAO = mock(ParkingDAO.class);
         List<Parking> parkings = new ArrayList<>();
         parkings.add(parking);
@@ -115,7 +105,6 @@ class ParkingServiceTest {
         parking.setSlots(slots);
         ParkingDAO parkingDAO = mock(ParkingDAO.class);
         ParkingService parkingService = new ParkingService(parkingDAO);
-        System.out.println(parkingService.findFullness(parking));
         Assert.assertTrue(parkingService.findFullness(parking).contains("1/2"));
     }
 
