@@ -57,11 +57,6 @@ public class ParkingService {
         String fullness;
         int busySlots=0;
         busySlots = (int) parking.getSlots().stream().filter(Slot::isReserved).count();
-
-/*        for (Slot slot: parking.getSlots()){
-            if (slot.isReserved()) busySlots++;
-
-        }*/
         fullness = busySlots + "/" + parking.getSlotsNumber();
         return fullness;
     }

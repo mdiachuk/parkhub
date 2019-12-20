@@ -2,6 +2,7 @@ package ua.com.parkhub.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.Assert;
+import ua.com.parkhub.dto.ParkingDTO;
 import ua.com.parkhub.persistence.entities.Address;
 import ua.com.parkhub.persistence.entities.Parking;
 import ua.com.parkhub.persistence.entities.Slot;
@@ -18,7 +19,7 @@ import static org.mockito.Mockito.when;
 class ParkingServiceTest {
 
     @Test
-    public void checkCorrectReturnCityFindAddress(){
+    public void checkCorrectReturnCityBuildStreetFindAddress(){
         Parking parking = new Parking();
         Address address = new Address();
         address.setId((long) 1);
@@ -33,6 +34,7 @@ class ParkingServiceTest {
         Assert.assertTrue(parkingService.findAddress(parking).contains("build"));
         Assert.assertTrue(parkingService.findAddress(parking).contains("Street"));
     }
+
 
     @Test
     public void checkFindParkingById(){
@@ -61,12 +63,8 @@ class ParkingServiceTest {
         ParkingDAO parkingDAO = mock(ParkingDAO.class);
         when(parkingDAO.findElementById(anyLong())).thenReturn(parking);
         ParkingService parkingService = new ParkingService(parkingDAO);
-        System.out.println(parkingService.findParkingById(1).getParkingName());
-        System.out.println(parkingService.findParkingById(1).getFullness());
-        System.out.println(parkingService.findParkingById(1).getAddress());
-
-        //Assert.assertTrue(parkingService.findFullness(parking).contains("1/2"));
-
+        Assert.assertTrue(parkingService.findParkingById(1).getParkingName().equals(parking.getParkingName()));
+        Assert.assertTrue(parkingService.findParkingById(1).getFullness().equals("1/2"));
     }
 
     @Test
@@ -98,7 +96,8 @@ class ParkingServiceTest {
         parkings.add(parking);
         when(parkingDAO.findAll()).thenReturn(parkings);
         ParkingService parkingService = new ParkingService(parkingDAO);
-        System.out.println(parkingService.findAllParking().get(0).getParkingName());
+        Assert.assertTrue(parkingService.findAllParking().get(0).getParkingName().equals(parking.getParkingName()));
+        Assert.assertTrue(parkingService.findAllParking().get(0).getFullness().equals("1/2"));
 
     }
 
