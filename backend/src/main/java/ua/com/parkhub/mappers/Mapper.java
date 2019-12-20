@@ -1,6 +1,6 @@
 package ua.com.parkhub.mappers;
 
-public interface Mapper<E, M> {
-    E toEntity(M model);
-    M totoModel(E entity);
+public interface Mapper<M, E> {
+    E transformEtoM(M from);
+    M transformMtoE(E from);
 }

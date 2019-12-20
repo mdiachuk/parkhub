@@ -23,6 +23,11 @@ public class UserRole implements Serializable {
     @NotNull
     private boolean isActive = true;
 
+    public UserRole(Long id, String roleName) {
+        this.id = id;
+        this.roleName = roleName;
+    }
+
     public Long getId() {
         return id;
     }
@@ -46,4 +51,8 @@ public class UserRole implements Serializable {
     public void setActive(boolean active) {
         isActive = active;
     }
+
+
+
+
 }
