@@ -20,6 +20,12 @@ public class AdminUserModel {
     private AdminUserModel() {
     }
 
+    public AdminUserModel(long id, String firstName, UserRole role) {
+        this.id = id;
+        this.firstName = firstName;
+        this.role = role;
+    }
+
     public long getId() {
         return id;
     }
