@@ -2,11 +2,9 @@ package ua.com.parkhub.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.Assert;
-import ua.com.parkhub.dto.ParkingDTO;
 import ua.com.parkhub.persistence.entities.Address;
 import ua.com.parkhub.persistence.entities.Parking;
 import ua.com.parkhub.persistence.entities.Slot;
-import ua.com.parkhub.persistence.entities.User;
 import ua.com.parkhub.persistence.impl.ParkingDAO;
 
 import java.util.ArrayList;
