@@ -32,7 +32,8 @@ export class ManagerSignupComponent implements OnInit {
       phoneNumber: [''],
       password: [''],
       confirmPassword: [''],
-      comment: ['']
+      comment: [''],
+      checkbox: false
     }, { validator: ConfirmPasswordValidator.matchPassword });
     this.result = new ManagerSignupMessage();
     this.isCreated = false;

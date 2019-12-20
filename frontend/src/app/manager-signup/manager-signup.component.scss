@@ -1,6 +1,4 @@
 .container {
-    margin-top: 10px;
-    margin-left: 30px;
     text-align: center;
 }
 
@@ -10,7 +8,7 @@ button.submit {
 }
 
 .label {
-    margin-top: 50px;
+    margin-top: 30px;
     font-size: 19px;
 }
 
@@ -18,8 +16,16 @@ li.name-block, li.comment-block {
     margin-top: 30px;
 }
 
-li.buttons-block, li.errors-block {
+li.errors-block, li.checkbox {
     margin-top: 20px;
+}
+
+li.checkbox {
+    // margin-right: px;
+}
+
+li.buttons-block {
+    margin-top: 40px;
 }
 
 .comment {
