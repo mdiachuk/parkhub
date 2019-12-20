@@ -20,9 +20,9 @@ import java.util.Optional;
 @Service
 public class SignUpService {
 
-    private static final long ADMIN_ID = 2;
-    private static final long PENDING_ROLE_ID = 1;
-    private static final long MANAGER_REGISTRATION_TICKET_TYPE_ID = 1;
+    private static final long ADMIN_ID = 1;
+    private static final String PENDING_ROLE_NAME = "Pending";
+    private static final String MANAGER_REGISTRATION_REQUEST_TICKET_TYPE = "Manager registration request";
 
     private final CustomerDAO customerDAO;
     private final UserDAO userDAO;
@@ -82,7 +82,7 @@ public class SignUpService {
         user.setEmail(managerDTO.getEmail());
         user.setPassword(passwordEncoder.encode(managerDTO.getPassword()));
         user.setRole(userRoleDAO
-                .findElementById(PENDING_ROLE_ID)
+                .findOneByFieldEqual("roleName", PENDING_ROLE_NAME)
                 .orElseThrow(NoResultException::new));
         return user;
     }
@@ -102,7 +102,7 @@ public class SignUpService {
                 .orElseThrow(NoResultException::new));
         supportTicket.setSolvers(solvers);
         supportTicket.setSupportTicketType(supportTicketTypeDAO
-                .findElementById(MANAGER_REGISTRATION_TICKET_TYPE_ID)
+                .findOneByFieldEqual("type", MANAGER_REGISTRATION_REQUEST_TICKET_TYPE)
                 .orElseThrow(NoResultException::new));
         return supportTicket;
     }
