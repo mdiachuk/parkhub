@@ -1,0 +1,65 @@
+.container {
+    margin-top: 10px;
+    margin-left: 30px;
+    text-align: center;
+}
+
+button.submit {
+    color: white;
+    background-color: #FF4081;
+}
+
+.label {
+    margin-top: 50px;
+    font-size: 19px;
+}
+
+li.name-block, li.comment-block {
+    margin-top: 30px;
+}
+
+li.buttons-block, li.errors-block {
+    margin-top: 20px;
+}
+
+.comment {
+    width: 370px;
+}
+
+.error-log {
+    color: #FF4081;
+}
+
+.success {
+    margin-top: 150px;
+    text-align: center;
+}
+
+div.success-message {
+    margin-top: 20px;
+    font-size: medium;
+    color: #24B05B;
+}
+
+div.homepage-link {
+    margin-top: 20px;
+}
+
+a.homepage-link {
+    color: #FF4081;
+    text-decoration: none;
+}
+
+.success-image {
+    width: 10%;
+    height: auto;
+}
+
+li {
+    list-style-type: none;
+}
+
+ul {
+    margin-left: 0; 
+    padding-left: 0; 
+}
