@@ -17,7 +17,7 @@ public class AdminUserModel {
     private String userRole;
     private List<SupportTicket> tickets;
 
-    private AdminUserModel() {
+    public AdminUserModel() {
     }
 
     public AdminUserModel(long id, String firstName, UserRole role) {
