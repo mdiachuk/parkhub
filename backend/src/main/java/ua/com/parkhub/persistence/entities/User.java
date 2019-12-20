@@ -43,6 +43,9 @@ public class User implements Serializable {
     @ManyToMany(mappedBy = "solvers")
     private List<SupportTicket> tickets;
 
+    public User() {
+    }
+
     public User(long id, String firstName, UserRole role) {
         this.id = id;
         this.firstName = firstName;

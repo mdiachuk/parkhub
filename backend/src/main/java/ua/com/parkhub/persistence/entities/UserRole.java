@@ -23,6 +23,9 @@ public class UserRole implements Serializable {
     @NotNull
     private boolean isActive = true;
 
+    public UserRole() {
+    }
+
     public UserRole(Long id, String roleName) {
         this.id = id;
         this.roleName = roleName;
