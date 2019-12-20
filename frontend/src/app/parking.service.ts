@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { EXAMPLE_DATA } from "./mock-data"
 import { ParkingItem } from './parking-item';
 import { Observable, of } from 'rxjs';
 import {HttpClient} from "@angular/common/http"

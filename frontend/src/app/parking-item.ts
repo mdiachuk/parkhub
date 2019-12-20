@@ -1,4 +1,4 @@
 export interface ParkingItem {
-  name: string;
-  address: string;
+  parkingName: string;
+  parkingAddress: string;
 }

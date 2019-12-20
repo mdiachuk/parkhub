@@ -9,5 +9,7 @@ public class ParkingDAO extends ElementDAO<Parking> {
     public ParkingDAO() {
         super(Parking.class);
     }
+
+
 }
 

@@ -8,6 +8,7 @@ import ua.com.parkhub.dto.ParkingDTO;
 import ua.com.parkhub.mappers.ParkingMapper;
 import ua.com.parkhub.service.ParkingService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,9 @@ public class ManagerController {
 
     @GetMapping(value = "/parkings")
     public ResponseEntity<List<ParkingDTO>> getAllParkings() {
-
         return ResponseEntity.ok(parkingService.findAll().stream().map(parkingMapper::fromModelToDto).collect(Collectors.toList()));
+//        List<ParkingDTO> testlist= new ArrayList<>();
+//        testlist.add(new ParkingDTO("Parkovka", "Kyiv"));
+//        return ResponseEntity.ok(testlist);
     }
 }
