@@ -32,6 +32,14 @@ public class Customer implements Serializable {
     @JoinColumn(name = "author_id")
     private List<SupportTicket> supportTickets;
 
+    public Customer() {
+    }
+
+    public Customer(@NotNull @Size(min = 5, max = 50) String phoneNumber, @NotNull boolean isActive) {
+        this.phoneNumber = phoneNumber;
+        this.isActive = isActive;
+    }
+
     public Long getId() {
         return id;
     }
@@ -55,7 +63,6 @@ public class Customer implements Serializable {
     public void setActive(boolean active) {
         isActive = active;
     }
-
 
     public List<Booking> getBookings() {
         return bookings;

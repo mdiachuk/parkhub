@@ -5,7 +5,6 @@ import ua.com.parkhub.persistence.entities.Parking;
 
 @Repository
 public class ParkingDAO extends ElementDAO<Parking> {
-
     public ParkingDAO() {
         super(Parking.class);
     }

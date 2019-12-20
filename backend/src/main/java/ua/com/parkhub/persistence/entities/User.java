@@ -43,6 +43,18 @@ public class User implements Serializable {
     @ManyToMany(mappedBy = "solvers")
     private List<SupportTicket> tickets;
 
+    public User() {
+    }
+
+    public User(@NotNull String firstName, @NotNull String lastName, @NotNull String email, @NotNull @Size(min = 6, max = 60) String password, UserRole role, Customer customer) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.customer = customer;
+    }
+
     public Long getId() {
         return id;
     }

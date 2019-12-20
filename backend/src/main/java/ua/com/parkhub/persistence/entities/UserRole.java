@@ -23,6 +23,14 @@ public class UserRole implements Serializable {
     @NotNull
     private boolean isActive = true;
 
+    public UserRole() {
+    }
+
+    public UserRole(@NotNull @Size(min = 3, max = 50) String roleName, @NotNull boolean isActive) {
+        this.roleName = roleName;
+        this.isActive = isActive;
+    }
+
     public Long getId() {
         return id;
     }

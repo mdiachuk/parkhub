@@ -24,6 +24,15 @@ public class Payment implements Serializable {
     @JoinColumn(name = "booking_id")
     private Booking booking;
 
+    public Payment() {
+    }
+
+    public Payment(int price, @NotNull boolean isPaid, Booking booking) {
+        this.price = price;
+        this.isPaid = isPaid;
+        this.booking = booking;
+    }
+
     public Long getId() {
         return id;
     }

@@ -1,5 +1,8 @@
 package ua.com.parkhub.persistence.impl;
 
+import org.springframework.transaction.annotation.Transactional;
+import ua.com.parkhub.persistence.IElementDAO;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -7,7 +10,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
-import ua.com.parkhub.persistence.IElementDAO;
+import java.util.Optional;
 
 public class ElementDAO<E> implements IElementDAO<E> {
 
@@ -21,21 +24,25 @@ public class ElementDAO<E> implements IElementDAO<E> {
     }
 
     @Override
+    @Transactional
     public void addElement(E element) {
         emp.persist(element);
     }
 
     @Override
+    @Transactional
     public void updateElement(E element) {
-        emp.refresh(element);
+        this.emp.persist(this.emp.merge(element));
     }
 
     @Override
-    public E findElementById(long id) {
-        return emp.find( elementClass, id);
+    @Transactional
+    public Optional<E> findElementById(long id) {
+        return Optional.ofNullable(emp.find( elementClass, id));
     }
 
     @Override
+    @Transactional
     public List<E> findAll() {
         CriteriaBuilder cb = emp.getCriteriaBuilder();
         CriteriaQuery<E> cq = cb.createQuery(elementClass);
@@ -46,6 +53,7 @@ public class ElementDAO<E> implements IElementDAO<E> {
     }
 
     @Override
+    @Transactional
     public void deleteElement(E element) {
         emp.remove(element);
     }

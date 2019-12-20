@@ -1,7 +1,7 @@
 package ua.com.parkhub.persistence.entities;
 
-import javax.persistence.*;
 import javax.persistence.Entity;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -24,6 +24,15 @@ public class Address implements Serializable {
     @Column
     @NotNull
     private String building;
+
+    public Address() {
+    }
+
+    public Address(@NotNull String city, @NotNull String street, @NotNull String building) {
+        this.city = city;
+        this.street = street;
+        this.building = building;
+    }
 
     public Long getId() {
         return id;
