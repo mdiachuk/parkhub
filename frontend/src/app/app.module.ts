@@ -17,11 +17,14 @@ import { ParkingService } from './services/parking.service';
 
 
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
     PageComponent,
     ParkingListComponent,
+
     
   ],
   imports: [
