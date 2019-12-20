@@ -30,7 +30,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         return userDAO.findUserByEmail(user.getEmail())
                 .filter(
                         userEntity -> user.getPassword().equals(userEntity.getPassword())
-//                        userEntity -> passwordEncoder.matches(user.getPassword(), userEntity.getPassword())//TODO: ЗМІНИТИ ПІСЛЯ МЕРДЖА МАКСА
+//                        userEntity -> passwordEncoder.matches(user.getPassword(), userEntity.getPassword())
+//                        TODO: change after Max`s marge
                 )
                 .map(UserMapper::detach)
                 .orElseThrow(() -> new PermissionException("Please enter valid credentials!"));

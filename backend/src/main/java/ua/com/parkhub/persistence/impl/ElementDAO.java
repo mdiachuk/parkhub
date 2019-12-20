@@ -55,11 +55,12 @@ public class ElementDAO<E> implements IElementDAO<E> {
 
     @Override
     public <F> Optional<E> findOneByFieldEqual(String fieldName, F fieldValue) {
-        CriteriaBuilder criteriaBuilder = emp.getCriteriaBuilder();
-        CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(elementClass);
-        Root<E> elementRoot = criteriaQuery.from(elementClass);
+        CriteriaBuilder criteriaBuilder = emp.getCriteriaBuilder();                      //Create an EntityManager, open a transaction, and create a CriteriaBuilder that will build query objects.
+        CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(elementClass);      //Using CriteriaBuilder we create CriteriaQuery, which is parameterized by the type that this query returns.
+        Root<E> elementRoot = criteriaQuery.from(elementClass);                          //Then a root object is created, from which the tree of properties is traversed when imposing restrictions or specifying what to choose.
         criteriaQuery.select(elementRoot).where(criteriaBuilder.equal(elementRoot.get(fieldName), fieldValue));
-
+                                                                                         //The equal() method creates an instance of Predicate that compares the values of the received link to the fieldName and the fieldValue.
+                                                                                         //This Predicate is given to the CriteriaQuery.where() method and now the query will return only those objects for which the predicate is true.
         try {
             E element = emp.createQuery(criteriaQuery).getSingleResult();
             return Optional.of(element);
@@ -68,7 +69,7 @@ public class ElementDAO<E> implements IElementDAO<E> {
             return Optional.empty();
         } catch (Exception e2) {
 //            logger.error(e2.getMessage(), e2);
-            throw new UnsupportedOperationException();//DaoLayerException(e2.getMessage());
+            throw new UnsupportedOperationException();
         }
     }
 }

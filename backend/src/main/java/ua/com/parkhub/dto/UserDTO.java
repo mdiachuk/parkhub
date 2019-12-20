@@ -8,6 +8,15 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private RoleDTO role;
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public String getEmail() {
         return email;

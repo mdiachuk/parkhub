@@ -22,7 +22,7 @@ public class UserMapper {
         userEntity.setLastName(userDTO.getLastName());
         UserRole role = new UserRole();
         if (userDTO.getRole() != null) {
-            role.setRoleName(userDTO.getRole().toString());
+            role.setRoleName(userDTO.getRole().getRoleName());
         }
         userEntity.setRole(role);
         return userEntity;
@@ -39,13 +39,16 @@ public class UserMapper {
         userDto.setId(user.getId());
         UserRole role = user.getRole();
         if(role != null && role.getRoleName() != null) {
-            String roleName = role.getRoleName();
+            String roleName = role.getRoleName().toUpperCase();
             switch (roleName) {
                 case "ADMIN":
                     userDto.setRole(RoleDTO.ADMIN);
                     break;
                 case "USER":
                     userDto.setRole(RoleDTO.USER);
+                    break;
+                case "MANAGER":
+                    userDto.setRole(RoleDTO.MANAGER);
                     break;
                 default:
                     throw new ParkHubException(String.format("Not known role name: %s. Role name may be one of the following: %s).", roleName, Arrays.asList(RoleDTO.values())));

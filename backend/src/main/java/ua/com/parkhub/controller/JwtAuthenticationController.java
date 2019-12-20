@@ -36,10 +36,8 @@ public class JwtAuthenticationController {
     @PostMapping(value = "/login")
     public ResponseEntity<UserDTO> loginUser(@Valid @RequestBody LoginDTO login) {
         UserDTO response = authenticationService.loginUser(login);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-
-        httpHeaders.add(Constants.TOKEN_HEADER, jwtUtil.generateToken(response.getEmail(), response.getRole().toString(), response.getId()));
-        return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
+        response.setToken(jwtUtil.generateToken(response.getEmail(), response.getRole().toString(), response.getId()));
+        return ResponseEntity.ok(response);
     }
+
 }

@@ -6,7 +6,6 @@ import io.jsonwebtoken.Jwts;
 import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,6 +30,9 @@ public class JwtUtil {
     @Value("${jwt.refreshing_minutes}")
     private int jwtRefreshingMinutes;
 
+    private final int millisecondsInSecond = 1000;
+    private final int secondsInMinute = 60;
+
     private static Logger logger = LoggerFactory.getLogger(JwtUtil.class.getSimpleName());
 
     public String generateToken(String email, String role, Long id) {
@@ -47,7 +49,7 @@ public class JwtUtil {
     }
 
     private Date generateExpDate() {
-        return new Date(System.currentTimeMillis() + jwtLifeMinutes * 60 * 1000);
+        return new Date(System.currentTimeMillis() + jwtLifeMinutes * secondsInMinute * millisecondsInSecond);
     }
 
     public Authentication getAuthentication(String token) throws InvalidTokenException {
