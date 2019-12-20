@@ -31,14 +31,6 @@ public class Customer implements Serializable {
     @OneToMany(mappedBy = "customer")
     private List<SupportTicket> supportTickets;
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     @OneToOne(mappedBy = "customer")
     private User user;
 
@@ -80,5 +72,13 @@ public class Customer implements Serializable {
 
     public void setSupportTickets(List<SupportTicket> supportTickets) {
         this.supportTickets = supportTickets;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
