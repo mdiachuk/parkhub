@@ -26,6 +26,18 @@ public class SupportTicket implements Serializable {
     @JoinColumn(name = "ticket_type_id")
     private SupportTicketType supportTicketType;
 
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Customer customer;
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     @ManyToMany
     @JoinTable(name = "ticket_solver",
                joinColumns = { @JoinColumn(name = "ticket_id") },

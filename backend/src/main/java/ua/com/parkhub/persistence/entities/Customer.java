@@ -28,9 +28,19 @@ public class Customer implements Serializable {
     @JoinColumn(name = "customer_id")
     private List<Booking> bookings;
 
-    @OneToMany
-    @JoinColumn(name = "author_id")
+    @OneToMany(mappedBy = "customer")
     private List<SupportTicket> supportTickets;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @OneToOne(mappedBy = "customer")
+    private User user;
 
     public Long getId() {
         return id;
@@ -55,7 +65,6 @@ public class Customer implements Serializable {
     public void setActive(boolean active) {
         isActive = active;
     }
-
 
     public List<Booking> getBookings() {
         return bookings;
