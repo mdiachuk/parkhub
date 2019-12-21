@@ -8,47 +8,44 @@ button.submit {
 }
 
 .label {
-    margin-top: 30px;
-    font-size: 19px;
+    margin-top: 2%;
+    font-size: 118%;
 }
 
-li.name-block, li.comment-block {
-    margin-top: 30px;
+li.comment-block {
+    margin-top: 2%;
 }
 
-li.errors-block, li.checkbox {
-    margin-top: 20px;
+
+li.name-block {
+    margin-top: 2%;
 }
 
 li.checkbox {
-    // margin-right: px;
+    margin-top: 1%;
 }
 
 li.buttons-block {
-    margin-top: 40px;
+    margin-top: 3%;
 }
 
 .comment {
-    width: 370px;
-}
-
-.error-log {
-    color: #FF4081;
+    width: 24%;
 }
 
 .success {
-    margin-top: 150px;
+    margin-top: 10%;
     text-align: center;
 }
 
 div.success-message {
-    margin-top: 20px;
+    margin-top: 2%;
     font-size: medium;
     color: #24B05B;
 }
 
 div.homepage-link {
-    margin-top: 20px;
+    margin-top: 1%;
 }
 
 a.homepage-link {

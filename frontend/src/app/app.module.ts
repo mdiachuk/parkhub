@@ -7,7 +7,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ManagerSignupComponent } from './manager-signup/manager-signup.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatButtonModule, MatSelectModule, MatIconModule, MatToolbarModule, MatCheckboxModule } from '@angular/material';
+import {
+  MatInputModule, MatButtonModule, MatSelectModule, MatIconModule, MatToolbarModule,
+  MatCheckboxModule, MatSnackBarModule
+} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,8 @@ import { MatInputModule, MatButtonModule, MatSelectModule, MatIconModule, MatToo
     MatSelectModule,
     MatIconModule,
     MatToolbarModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -63,7 +63,8 @@
                 </mat-form-field>
             </li>
             <li class="checkbox">
-                <mat-checkbox required formControlName="checkbox">I agree with terms, conditions and privacy policy
+                <mat-checkbox required formControlName="checkbox">I agree with terms, conditions and privacy
+                    policy
                 </mat-checkbox>
             </li>
         </form>
@@ -71,9 +72,6 @@
             <button class="reset" mat-flat-button (click)="reset()">Reset</button>
             &nbsp;
             <button class="submit" mat-raised-button [disabled]="!signupForm.valid" (click)="register()">Submit</button>
-        </li>
-        <li class="errors-block">
-            <div class="error-log" *ngIf="isErrors">{{ message }}</div>
         </li>
     </ul>
 </div>
