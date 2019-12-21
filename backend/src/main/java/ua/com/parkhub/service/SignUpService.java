@@ -12,7 +12,6 @@ import ua.com.parkhub.persistence.entities.SupportTicket;
 import ua.com.parkhub.persistence.entities.User;
 import ua.com.parkhub.persistence.impl.*;
 
-import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;

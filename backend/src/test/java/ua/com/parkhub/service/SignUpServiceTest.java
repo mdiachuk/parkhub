@@ -1,0 +1,145 @@
+package ua.com.parkhub.service;
+
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import ua.com.parkhub.dto.ManagerDTO;
+import ua.com.parkhub.exceptions.EmailIsUsedException;
+import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
+import ua.com.parkhub.exceptions.PhoneNumberIsUsedException;
+import ua.com.parkhub.persistence.entities.*;
+import ua.com.parkhub.persistence.impl.*;
+
+import java.time.Duration;
+import java.util.Optional;
+
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+
+class SignUpServiceTest {
+
+    private static final int TIMEOUT = 2000;
+
+    @Mock
+    private CustomerDAO customerDAO;
+    @Mock
+    private UserDAO userDAO;
+    @Mock
+    private UserRoleDAO userRoleDAO;
+    @Mock
+    private  SupportTicketDAO supportTicketDAO;
+    @Mock
+    private SupportTicketTypeDAO supportTicketTypeDAO;
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
+    @InjectMocks
+    SignUpService signUpService;
+
+    @BeforeEach
+    public void init() {
+        MockitoAnnotations.initMocks(this);
+    }
+
+    @Test
+    public void test_registerManager_phoneNumberIsUsed_exceptionThrown() {
+        ManagerDTO manager = new ManagerDTO();
+        Customer customer = Mockito.mock(Customer.class);
+        User user = new User();
+
+        when(customerDAO.findCustomerByPhoneNumber(manager.getPhoneNumber()))
+                .thenReturn(Optional.of(customer));
+        when(Optional.of(customer).get().getUser())
+                .thenReturn(user);
+
+        assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
+            assertThrows(PhoneNumberIsUsedException.class, () -> {
+                signUpService.registerManager(manager);
+            });
+        });
+    }
+
+    @Test
+    public void test_registerManager_pendingRoleNotFound_exceptionThrown() {
+        ManagerDTO manager = new ManagerDTO();
+
+        when(userRoleDAO.findUserRoleByRoleName(anyString()))
+                .thenReturn(Optional.empty());
+
+        assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
+            assertThrows(NotFoundInDataBaseException.class, () -> {
+                signUpService.registerManager(manager);
+            });
+        });
+    }
+
+    @Test
+    public void test_registerManager_adminNotFound_exceptionThrown() {
+        ManagerDTO manager = new ManagerDTO();
+
+        when(userDAO.findElementById(anyLong()))
+                .thenReturn(Optional.empty());
+
+        assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
+            assertThrows(NotFoundInDataBaseException.class, () -> {
+                signUpService.registerManager(manager);
+            });
+        });
+    }
+
+    @Test
+    public void test_registerManager_supportTicketTypeNotFound_exceptionThrown() {
+        ManagerDTO manager = new ManagerDTO();
+
+        when(supportTicketTypeDAO.findSupportTicketTypeByType(anyString()))
+                .thenReturn(Optional.empty());
+
+        assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
+            assertThrows(NotFoundInDataBaseException.class, () -> {
+                signUpService.registerManager(manager);
+            });
+        });
+    }
+
+    @Test
+    public void test_registerManager_emailIsUsed_exceptionThrown() {
+        ManagerDTO manager = new ManagerDTO();
+        User user = new User();
+
+        when(userDAO.findUserByEmail(manager.getPhoneNumber()))
+                .thenReturn(Optional.of(user));
+
+        assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
+            assertThrows(EmailIsUsedException.class, () -> {
+                signUpService.registerManager(manager);
+            });
+        });
+    }
+
+    @Test
+    public void test_registerManager_everythingCorrect() {
+        ManagerDTO manager = new ManagerDTO();
+        User user = new User();
+        UserRole userRole = new UserRole();
+        SupportTicketType supportTicketType = new SupportTicketType();
+
+        when(userRoleDAO.findUserRoleByRoleName(anyString()))
+                .thenReturn(Optional.of(userRole));
+        when(userDAO.findElementById(anyLong()))
+                .thenReturn(Optional.of(user));
+        when(supportTicketTypeDAO.findSupportTicketTypeByType(anyString()))
+                .thenReturn(Optional.of(supportTicketType));
+        when(customerDAO.findCustomerByPhoneNumber("a"))
+                .thenThrow(PhoneNumberIsUsedException.class);
+
+        assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
+            signUpService.registerManager(manager);
+        });
+    }
+}
