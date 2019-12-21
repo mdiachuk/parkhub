@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import ua.com.parkhub.ResponseMessage;
+import ua.com.parkhub.controller.messages.ResponseMessage;
 import ua.com.parkhub.dto.ManagerDTO;
 import ua.com.parkhub.exceptions.EmailIsUsedException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;

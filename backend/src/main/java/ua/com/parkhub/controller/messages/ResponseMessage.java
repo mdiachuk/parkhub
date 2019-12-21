@@ -1,4 +1,4 @@
-package ua.com.parkhub;
+package ua.com.parkhub.controller.messages;
 
 public class ResponseMessage {
 
