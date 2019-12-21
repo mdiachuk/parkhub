@@ -26,4 +26,9 @@ public class ParkingService {
 
         return parkingDAO.findAll().stream().map(parkingMapper::fromEntityToModel).collect(Collectors.toList());
     }
+
+    public ParkingModel findParkingByIdYaroslav(long id){
+
+        return parkingMapper.fromEntityToModel(parkingDAO.findElementById(id));
+    }
 }

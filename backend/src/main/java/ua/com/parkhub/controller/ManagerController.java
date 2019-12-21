@@ -3,12 +3,14 @@ package ua.com.parkhub.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ua.com.parkhub.dto.ParkingDTO;
+import ua.com.parkhub.dto.DescribedParkingDTO;
+import ua.com.parkhub.dto.ShortParkingDTO;
 import ua.com.parkhub.mappers.ParkingMapper;
 import ua.com.parkhub.service.ParkingService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,10 +27,14 @@ public class ManagerController {
     }
 
     @GetMapping(value = "/parkings")
-    public ResponseEntity<List<ParkingDTO>> getAllParkings() {
-        return ResponseEntity.ok(parkingService.findAll().stream().map(parkingMapper::fromModelToDto).collect(Collectors.toList()));
-//        List<ParkingDTO> testlist= new ArrayList<>();
-//        testlist.add(new ParkingDTO("Parkovka", "Kyiv"));
-//        return ResponseEntity.ok(testlist);
+    public ResponseEntity<List<ShortParkingDTO>> getAllParkings() {
+
+        return ResponseEntity.ok(parkingService.findAll().stream().map(parkingMapper::fromModelToShortDto).collect(Collectors.toList()));
+    }
+
+    @GetMapping(value = "/parkings/{parkingId}")
+    public ResponseEntity<DescribedParkingDTO> getParkingById(@PathVariable("parkingId") String parkingId){
+
+        return ResponseEntity.ok(parkingMapper.fromModelToDescribedDto(parkingService.findParkingByIdYaroslav(Long.parseLong(parkingId))));
     }
 }

@@ -7,6 +7,7 @@ import java.util.Set;
 
 public class ParkingModel {
 
+    private long id;
     private String parkingName;
     private int slotsNumber;
     private int tariff;
@@ -14,13 +15,22 @@ public class ParkingModel {
     private User owner;
     AddressModel addressModel;
 
-    public ParkingModel(String parkingName, int slotsNumber, int tariff, boolean isActive, User owner, AddressModel addressModel) {
+    public ParkingModel(long id, String parkingName, int slotsNumber, int tariff, boolean isActive, User owner, AddressModel addressModel) {
+        this.id = id;
         this.parkingName = parkingName;
         this.slotsNumber = slotsNumber;
         this.tariff = tariff;
         this.isActive = isActive;
         this.owner = owner;
         this.addressModel = addressModel;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getParkingName() {

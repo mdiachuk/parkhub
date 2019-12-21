@@ -20,14 +20,11 @@ export class ParkingsComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  // data: ParkingItem[];
-
-  /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['name', 'address'];
   dataSource = new MatTableDataSource<ParkingItem>();
 
   getData(): void {
-    this.parkingService.getData()
+    this.parkingService.getAllParkings()
       .subscribe(data => {
         this.dataSource.data = data;
       });
@@ -44,6 +41,3 @@ export class ParkingsComponent implements OnInit {
   }
 
 }
-
-// TODO: replace this with real data from your application
-

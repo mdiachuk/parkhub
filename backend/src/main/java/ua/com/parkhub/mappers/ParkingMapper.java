@@ -1,8 +1,8 @@
 package ua.com.parkhub.mappers;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-import ua.com.parkhub.dto.ParkingDTO;
+import ua.com.parkhub.dto.DescribedParkingDTO;
+import ua.com.parkhub.dto.ShortParkingDTO;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.persistence.entities.Parking;
 
@@ -15,21 +15,17 @@ public class ParkingMapper {
 
     public ParkingModel fromEntityToModel(Parking parking){
         return Objects.isNull(parking) ? null :
-                new ParkingModel(parking.getParkingName(),parking.getSlotsNumber(),parking.getTariff(),parking.isActive(),parking.getOwner(),
+                new ParkingModel(parking.getId(), parking.getParkingName(),parking.getSlotsNumber(),parking.getTariff(),parking.isActive(),parking.getOwner(),
                         addressMapper.fromEntityToModel(parking.getAddress()));
     }
 
-    public ParkingDTO fromModelToDto(ParkingModel model) {
-        return Objects.isNull(model) ? null : new ParkingDTO(model.getParkingName(),
+    public ShortParkingDTO fromModelToShortDto(ParkingModel model) {
+        return Objects.isNull(model) ? null : new ShortParkingDTO(model.getId(), model.getParkingName(),
                 addressMapper.fromModelToDTO(model.getAddressModel()).getAddress());
     }
 
-    /*public Parking fromDtoToModel(ParkingDTO dto) {
-
-    }*/
-
-//    public Parking fromModeltoEntity(ParkingModel model) {
-//
-//    }
+    public DescribedParkingDTO fromModelToDescribedDto(ParkingModel model) {
+        return Objects.isNull(model) ? null : new DescribedParkingDTO(model.getSlotsNumber(), model.getTariff());
+    }
 }
 

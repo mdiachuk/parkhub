@@ -1,19 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { BodyComponent } from './body/body.component';
+import { ParkingListComponent } from './parking-list/parking-list.component';
+import {ParkingDetailComponent} from './parking-detail/parking-detail.component'
 
 const appRoutes: Routes = [
   {
     path: 'parkings',
-    component: BodyComponent,
+    component: ParkingListComponent,
   },
-  // {
-  //   path: 'parkings/:id',
-  //   component: BodyComponent,
-  // },
-  { 
-    path: '', redirectTo: '/parkings', pathMatch: 'full' 
-  }
+  {
+    path: 'parkings/:id',
+    component: ParkingDetailComponent,
+  },
 ];
 
 @NgModule({
