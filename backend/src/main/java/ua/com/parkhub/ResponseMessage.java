@@ -1,6 +1,6 @@
 package ua.com.parkhub;
 
-public class SignUpMessage {
+public class ResponseMessage {
 
     private boolean isCreated;
     private String description;

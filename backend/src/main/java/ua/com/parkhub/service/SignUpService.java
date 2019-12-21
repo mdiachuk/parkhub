@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.com.parkhub.dto.ManagerDTO;
 import ua.com.parkhub.exceptions.EmailIsUsedException;
+import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberIsUsedException;
 import ua.com.parkhub.persistence.entities.Customer;
 import ua.com.parkhub.persistence.entities.SupportTicket;
@@ -83,7 +84,7 @@ public class SignUpService {
         user.setPassword(passwordEncoder.encode(managerDTO.getPassword()));
         user.setRole(userRoleDAO
                 .findUserRoleByRoleName(PENDING_ROLE_NAME)
-                .orElseThrow(NoResultException::new));
+                .orElseThrow(NotFoundInDataBaseException::new));
         return user;
     }
 
@@ -99,11 +100,11 @@ public class SignUpService {
         List<User> solvers = new ArrayList<>();
         solvers.add(userDAO
                 .findElementById(ADMIN_ID)
-                .orElseThrow(NoResultException::new));
+                .orElseThrow(NotFoundInDataBaseException::new));
         supportTicket.setSolvers(solvers);
         supportTicket.setSupportTicketType(supportTicketTypeDAO
                 .findSupportTicketTypeByType(MANAGER_REGISTRATION_REQUEST_TICKET_TYPE)
-                .orElseThrow(NoResultException::new));
+                .orElseThrow(NotFoundInDataBaseException::new));
         return supportTicket;
     }
 

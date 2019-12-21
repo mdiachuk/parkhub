@@ -59,7 +59,7 @@ export class ManagerSignupComponent implements OnInit {
       }
     }, err => {
       if (err.error.status === 500) {
-        this.message = 'Congratulations! You have just broken our site :) Please, try again later.';
+        this.message = 'Something went wrong on our server. Please, try again later.';
         this.openSnackBar(this.message);
       } else {
         this.message = err.error.description;
