@@ -48,24 +48,6 @@ class SignUpServiceTest {
     }
 
     @Test
-    public void test_registerManager_phoneNumberIsUsed_exceptionThrown() {
-        ManagerDTO manager = new ManagerDTO();
-        Customer customer = Mockito.mock(Customer.class);
-        User user = new User();
-
-        when(customerDAO.findCustomerByPhoneNumber(manager.getPhoneNumber()))
-                .thenReturn(Optional.of(customer));
-        when(Optional.of(customer).get().getUser())
-                .thenReturn(user);
-
-        assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
-            assertThrows(PhoneNumberIsUsedException.class, () -> {
-                signUpService.registerManager(manager);
-            });
-        });
-    }
-
-    @Test
     public void test_registerManager_pendingRoleNotFound_exceptionThrown() {
         ManagerDTO manager = new ManagerDTO();
 
@@ -73,9 +55,7 @@ class SignUpServiceTest {
                 .thenReturn(Optional.empty());
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
-            assertThrows(NotFoundInDataBaseException.class, () -> {
-                signUpService.registerManager(manager);
-            });
+            assertThrows(NotFoundInDataBaseException.class, () -> signUpService.registerManager(manager));
         });
     }
 
@@ -87,9 +67,7 @@ class SignUpServiceTest {
                 .thenReturn(Optional.empty());
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
-            assertThrows(NotFoundInDataBaseException.class, () -> {
-                signUpService.registerManager(manager);
-            });
+            assertThrows(NotFoundInDataBaseException.class, () -> signUpService.registerManager(manager));
         });
     }
 
@@ -101,10 +79,44 @@ class SignUpServiceTest {
                 .thenReturn(Optional.empty());
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
-            assertThrows(NotFoundInDataBaseException.class, () -> {
-                signUpService.registerManager(manager);
-            });
+            assertThrows(NotFoundInDataBaseException.class, () -> signUpService.registerManager(manager));
         });
+    }
+
+    @Test
+    public void test_registerManager_phoneNumberIsUsed_exceptionThrown() {
+        ManagerDTO manager = new ManagerDTO();
+        Customer customer = Mockito.mock(Customer.class);
+        User user = new User();
+
+        when(customerDAO.findCustomerByPhoneNumber(manager.getPhoneNumber()))
+                .thenReturn(Optional.of(customer));
+        when(Optional.of(customer).get().getUser())
+                .thenReturn(user);
+
+        assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
+            assertThrows(PhoneNumberIsUsedException.class, () -> signUpService.registerManager(manager));
+        });
+    }
+
+    @Test
+    public void test_registerManager_phoneNumberIsUsedButNorRegistered_everythingCorrect() {
+        ManagerDTO manager = new ManagerDTO();
+        Customer customer = new Customer();
+        User user = new User();
+        UserRole userRole = new UserRole();
+        SupportTicketType supportTicketType = new SupportTicketType();
+
+        when(customerDAO.findCustomerByPhoneNumber(manager.getPhoneNumber()))
+                .thenReturn(Optional.of(customer));
+        when(userRoleDAO.findUserRoleByRoleName(anyString()))
+                .thenReturn(Optional.of(userRole));
+        when(userDAO.findElementById(anyLong()))
+                .thenReturn(Optional.of(user));
+        when(supportTicketTypeDAO.findSupportTicketTypeByType(anyString()))
+                .thenReturn(Optional.of(supportTicketType));
+
+        assertTimeout(Duration.ofMillis(TIMEOUT), () -> signUpService.registerManager(manager));
     }
 
     @Test
@@ -116,9 +128,7 @@ class SignUpServiceTest {
                 .thenReturn(Optional.of(user));
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
-            assertThrows(EmailIsUsedException.class, () -> {
-                signUpService.registerManager(manager);
-            });
+            assertThrows(EmailIsUsedException.class, () -> signUpService.registerManager(manager));
         });
     }
 
@@ -135,11 +145,7 @@ class SignUpServiceTest {
                 .thenReturn(Optional.of(user));
         when(supportTicketTypeDAO.findSupportTicketTypeByType(anyString()))
                 .thenReturn(Optional.of(supportTicketType));
-        when(customerDAO.findCustomerByPhoneNumber("a"))
-                .thenThrow(PhoneNumberIsUsedException.class);
 
-        assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
-            signUpService.registerManager(manager);
-        });
+        assertTimeout(Duration.ofMillis(TIMEOUT), () -> signUpService.registerManager(manager));
     }
 }

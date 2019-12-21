@@ -45,15 +45,18 @@ public class SignUpService {
 
     @Transactional
     public void registerManager(ManagerDTO managerDto) {
-        Customer customer = findOrSaveCustomer(managerDto);
+        Customer customer = createCustomer(managerDto);
         User user = createUser(managerDto, customer);
+        if (customer.getId() == null) {
+            customerDAO.addElement(customer);
+        }
         SupportTicket supportTicket = createSupportTicket(managerDto, customer);
         supportTicketDAO.addElement(supportTicket);
         customerDAO.updateElement(customer);
         userDAO.addElement(user);
     }
 
-    private Customer findOrSaveCustomer(ManagerDTO managerDTO) {
+    private Customer createCustomer(ManagerDTO managerDTO) {
         Optional<Customer> optionalCustomer = customerDAO
                 .findCustomerByPhoneNumber(managerDTO.getPhoneNumber());
         if (optionalCustomer.isPresent()) {
@@ -66,7 +69,6 @@ public class SignUpService {
         Customer customer = new Customer();
         customer.setPhoneNumber(managerDTO.getPhoneNumber());
         customer.setActive(true);
-        customerDAO.addElement(customer);
         return customer;
     }
 
