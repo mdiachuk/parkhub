@@ -82,7 +82,7 @@ public class SignUpService {
         user.setEmail(managerDTO.getEmail());
         user.setPassword(passwordEncoder.encode(managerDTO.getPassword()));
         user.setRole(userRoleDAO
-                .findOneByFieldEqual("roleName", PENDING_ROLE_NAME)
+                .findUserRoleByRoleName(PENDING_ROLE_NAME)
                 .orElseThrow(NoResultException::new));
         return user;
     }
@@ -102,7 +102,7 @@ public class SignUpService {
                 .orElseThrow(NoResultException::new));
         supportTicket.setSolvers(solvers);
         supportTicket.setSupportTicketType(supportTicketTypeDAO
-                .findOneByFieldEqual("type", MANAGER_REGISTRATION_REQUEST_TICKET_TYPE)
+                .findSupportTicketTypeByType(MANAGER_REGISTRATION_REQUEST_TICKET_TYPE)
                 .orElseThrow(NoResultException::new));
         return supportTicket;
     }
