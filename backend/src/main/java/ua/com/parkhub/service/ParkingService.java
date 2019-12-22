@@ -18,7 +18,7 @@ import ua.com.parkhub.persistence.entities.Parking;
 @Service
 public class ParkingService {
 
-    ParkingDAO parkingDAO;
+    public ParkingDAO parkingDAO;
 
     @Autowired
     public ParkingService(ParkingDAO parkingDAO){
@@ -55,7 +55,7 @@ public class ParkingService {
     }
     protected String findFullness(Parking parking){
         String fullness;
-        int busySlots=0;
+        int busySlots;
         busySlots = (int) parking.getSlots().stream().filter(Slot::isReserved).count();
         fullness = busySlots + "/" + parking.getSlotsNumber();
         return fullness;
