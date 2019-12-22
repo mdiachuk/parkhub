@@ -4,15 +4,14 @@ import javax.persistence.Entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "support_ticket", schema = "park_hub")
 public class SupportTicket implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "support_ticket_generator")
-    @SequenceGenerator(name = "support_ticket_generator", sequenceName = "park_hub.support_ticket_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
@@ -32,7 +31,7 @@ public class SupportTicket implements Serializable {
                joinColumns = { @JoinColumn(name = "ticket_id") },
                inverseJoinColumns = { @JoinColumn(name = "solver_id") }
     )
-    private Set<User> solvers;
+    private List<User> solvers;
 
     public Long getId() {
         return id;
@@ -66,11 +65,11 @@ public class SupportTicket implements Serializable {
         this.supportTicketType = supportTicketType;
     }
 
-    public Set<User> getSolvers() {
+    public List<User> getSolvers() {
         return solvers;
     }
 
-    public void setSolvers(Set<User> solvers) {
+    public void setSolvers(List<User> solvers) {
         this.solvers = solvers;
     }
 }

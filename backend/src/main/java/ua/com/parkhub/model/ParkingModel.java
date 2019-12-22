@@ -1,13 +1,15 @@
 package ua.com.parkhub.model;
 
-
 public class ParkingModel {
-
     private long id;
+
     private String parkingName;
+
     private int slotsNumber;
+
     private int tariff;
-    AddressModel addressModel;
+
+    private AddressModel addressModel;
 
     public ParkingModel(long id, String parkingName, int slotsNumber, int tariff, AddressModel addressModel) {
         this.id = id;
@@ -16,15 +18,6 @@ public class ParkingModel {
         this.tariff = tariff;
         this.addressModel = addressModel;
     }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getParkingName() {
         return parkingName;
     }
@@ -55,6 +48,14 @@ public class ParkingModel {
 
     public void setAddressModel(AddressModel addressModel) {
         this.addressModel = addressModel;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
 

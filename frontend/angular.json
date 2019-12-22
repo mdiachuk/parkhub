@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "parkhub": {
+    "frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/parkhub",
+            "outputPath": "../backend/target/classes/public",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -68,18 +68,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "parkhub:build"
+            "browserTarget": "frontend:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "parkhub:build:production"
+              "browserTarget": "frontend:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "parkhub:build"
+            "browserTarget": "frontend:build"
           }
         },
         "test": {
@@ -117,16 +117,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "parkhub:serve"
+            "devServerTarget": "frontend:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "parkhub:serve:production"
+              "devServerTarget": "frontend:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "parkhub"
+  "defaultProject": "frontend"
 }

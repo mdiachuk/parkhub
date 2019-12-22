@@ -4,18 +4,17 @@ import javax.persistence.Entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "parking",schema = "park_hub")
 public class Parking implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "parking_generator")
-    @SequenceGenerator(name="parking_generator", sequenceName = "park_hub.parking_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(unique = true)
     @NotNull
     private String parkingName;
 
@@ -40,7 +39,7 @@ public class Parking implements Serializable {
 
     @OneToMany
     @JoinColumn(name = "parking_id")
-    private Set<Slot> slots;
+    private List<Slot> slots;
 
     public Long getId() {
         return id;
@@ -98,11 +97,11 @@ public class Parking implements Serializable {
         this.owner = owner;
     }
 
-    public Set<Slot> getSlots() {
+    public List<Slot> getSlots() {
         return slots;
     }
 
-    public void setSlots(Set<Slot> slots) {
+    public void setSlots(List<Slot> slots) {
         this.slots = slots;
     }
 }
