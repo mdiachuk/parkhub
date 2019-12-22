@@ -1,13 +1,13 @@
 package ua.com.parkhub.persistence.impl;
 
 import org.springframework.stereotype.Repository;
-import ua.com.parkhub.persistence.entities.Parking;
+import ua.com.parkhub.persistence.entities.ParkingEntity;
 
 @Repository
-public class ParkingDAO extends ElementDAO<Parking> {
+public class ParkingDAO extends ElementDAO<ParkingEntity> {
 
     public ParkingDAO() {
-        super(Parking.class);
+        super(ParkingEntity.class);
     }
 }
 

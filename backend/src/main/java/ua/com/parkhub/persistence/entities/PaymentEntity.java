@@ -6,8 +6,10 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "payment",schema = "park_hub")
-public class Payment implements Serializable {
+@Table(name = "payment", schema = "park_hub")
+public class PaymentEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +24,7 @@ public class Payment implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "booking_id")
-    private Booking booking;
+    private BookingEntity booking;
 
     public Long getId() {
         return id;
@@ -48,11 +50,11 @@ public class Payment implements Serializable {
         isPaid = paid;
     }
 
-    public Booking getBooking() {
+    public BookingEntity getBooking() {
         return booking;
     }
 
-    public void setBooking(Booking booking) {
+    public void setBooking(BookingEntity booking) {
         this.booking = booking;
     }
 }

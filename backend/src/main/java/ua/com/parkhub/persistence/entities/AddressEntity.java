@@ -7,7 +7,9 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "address", schema = "park_hub")
-public class Address implements Serializable {
+public class AddressEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -7,7 +7,9 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "slot", schema = "park_hub")
-public class Slot implements Serializable {
+public class SlotEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +28,7 @@ public class Slot implements Serializable {
     private boolean isActive = true;
 
     @ManyToOne
-    private Parking parking;
+    private ParkingEntity parking;
 
     public Long getId() {
         return id;
@@ -60,11 +62,11 @@ public class Slot implements Serializable {
         isActive = active;
     }
 
-    public Parking getParking() {
+    public ParkingEntity getParking() {
         return parking;
     }
 
-    public void setParking(Parking parking) {
+    public void setParking(ParkingEntity parking) {
         this.parking = parking;
     }
 }

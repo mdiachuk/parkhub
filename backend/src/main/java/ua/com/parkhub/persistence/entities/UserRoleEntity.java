@@ -3,19 +3,21 @@ package ua.com.parkhub.persistence.entities;
 import javax.persistence.Entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "support_ticket_type", schema = "park_hub")
-public class SupportTicketType implements Serializable {
+@Table(name = "user_role", schema = "park_hub")
+public class UserRoleEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "role_name")
     @NotNull
-    private String type;
+    @Size(min = 3, max = 50)
+    private String roleName;
 
     @Column
     @NotNull
@@ -29,12 +31,12 @@ public class SupportTicketType implements Serializable {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     public boolean isActive() {

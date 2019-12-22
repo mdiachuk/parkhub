@@ -8,7 +8,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "support_ticket", schema = "park_hub")
-public class SupportTicket implements Serializable {
+public class SupportTicketEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,14 +26,14 @@ public class SupportTicket implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "ticket_type_id")
-    private SupportTicketType supportTicketType;
+    private SupportTicketTypeEntity supportTicketType;
 
     @ManyToMany
     @JoinTable(name = "ticket_solver",
-               joinColumns = { @JoinColumn(name = "ticket_id") },
-               inverseJoinColumns = { @JoinColumn(name = "solver_id") }
+            joinColumns = {@JoinColumn(name = "ticket_id")},
+            inverseJoinColumns = {@JoinColumn(name = "solver_id")}
     )
-    private List<User> solvers;
+    private List<UserEntity> solvers;
 
     public Long getId() {
         return id;
@@ -57,19 +59,19 @@ public class SupportTicket implements Serializable {
         isSolved = solved;
     }
 
-    public SupportTicketType getSupportTicketType() {
+    public SupportTicketTypeEntity getSupportTicketType() {
         return supportTicketType;
     }
 
-    public void setSupportTicketType(SupportTicketType supportTicketType) {
+    public void setSupportTicketType(SupportTicketTypeEntity supportTicketType) {
         this.supportTicketType = supportTicketType;
     }
 
-    public List<User> getSolvers() {
+    public List<UserEntity> getSolvers() {
         return solvers;
     }
 
-    public void setSolvers(List<User> solvers) {
+    public void setSolvers(List<UserEntity> solvers) {
         this.solvers = solvers;
     }
 }

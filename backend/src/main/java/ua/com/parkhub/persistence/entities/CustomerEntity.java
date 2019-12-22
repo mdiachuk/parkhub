@@ -9,13 +9,15 @@ import java.util.List;
 
 @Entity
 @Table(name = "customer", schema = "park_hub")
-public class Customer implements Serializable {
+public class CustomerEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "phone_number")
     @NotNull
     @Size(min = 5, max = 50)
     private String phoneNumber;
@@ -26,11 +28,11 @@ public class Customer implements Serializable {
 
     @OneToMany
     @JoinColumn(name = "customer_id")
-    private List<Booking> bookings;
+    private List<BookingEntity> bookings;
 
     @OneToMany
     @JoinColumn(name = "author_id")
-    private List<SupportTicket> supportTickets;
+    private List<SupportTicketEntity> supportTickets;
 
     public Long getId() {
         return id;
@@ -57,19 +59,19 @@ public class Customer implements Serializable {
     }
 
 
-    public List<Booking> getBookings() {
+    public List<BookingEntity> getBookings() {
         return bookings;
     }
 
-    public void setBookings(List<Booking> bookings) {
+    public void setBookings(List<BookingEntity> bookings) {
         this.bookings = bookings;
     }
 
-    public List<SupportTicket> getSupportTickets() {
+    public List<SupportTicketEntity> getSupportTickets() {
         return supportTickets;
     }
 
-    public void setSupportTickets(List<SupportTicket> supportTickets) {
+    public void setSupportTickets(List<SupportTicketEntity> supportTickets) {
         this.supportTickets = supportTickets;
     }
 }

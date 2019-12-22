@@ -9,7 +9,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "booking", schema = "park_hub")
-public class Booking implements Serializable {
+public class BookingEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +19,7 @@ public class Booking implements Serializable {
 
     @Column
     @NotNull
-    @Size(min = 8, max = 8)
+    /*@Size(min = 8, max = 10)*/
     private String carNumber;
 
     @Column(name = "check_in")
@@ -32,11 +34,11 @@ public class Booking implements Serializable {
     private boolean isActive;
 
     @ManyToOne
-    private Customer customer;
+    private CustomerEntity customer;
 
     @OneToOne
     @JoinColumn(name = "slot_id")
-    private Slot slot;
+    private SlotEntity slot;
 
     public Long getId() {
         return id;
@@ -78,19 +80,19 @@ public class Booking implements Serializable {
         isActive = active;
     }
 
-    public Customer getCustomer() {
+    public CustomerEntity getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(CustomerEntity customer) {
         this.customer = customer;
     }
 
-    public Slot getSlot() {
+    public SlotEntity getSlot() {
         return slot;
     }
 
-    public void setSlot(Slot slot) {
+    public void setSlot(SlotEntity slot) {
         this.slot = slot;
     }
 }

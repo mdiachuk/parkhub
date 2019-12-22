@@ -9,7 +9,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "user", schema = "park_hub")
-public class User implements Serializable {
+public class UserEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,14 +36,14 @@ public class User implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "role_id")
-    private UserRole role;
+    private UserRoleEntity role;
 
     @OneToOne
     @JoinColumn(name = "customer_id")
-    private Customer customer;
+    private CustomerEntity customer;
 
     @ManyToMany(mappedBy = "solvers")
-    private List<SupportTicket> tickets;
+    private List<SupportTicketEntity> tickets;
 
     public Long getId() {
         return id;
@@ -83,27 +85,27 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public UserRole getRole() {
+    public UserRoleEntity getRole() {
         return role;
     }
 
-    public void setRole(UserRole role) {
+    public void setRole(UserRoleEntity role) {
         this.role = role;
     }
 
-    public Customer getCustomer() {
+    public CustomerEntity getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(CustomerEntity customer) {
         this.customer = customer;
     }
 
-    public List<SupportTicket> getTickets() {
+    public List<SupportTicketEntity> getTickets() {
         return tickets;
     }
 
-    public void setTickets(List<SupportTicket> tickets) {
+    public void setTickets(List<SupportTicketEntity> tickets) {
         this.tickets = tickets;
     }
 }

@@ -7,8 +7,10 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "parking",schema = "park_hub")
-public class Parking implements Serializable {
+@Table(name = "parking", schema = "park_hub")
+public class ParkingEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,15 +33,15 @@ public class Parking implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "address_id")
-    private Address address;
+    private AddressEntity address;
 
     @ManyToOne
     @JoinColumn(name = "parking_owner_id")
-    private User owner;
+    private UserEntity owner;
 
     @OneToMany
     @JoinColumn(name = "parking_id")
-    private List<Slot> slots;
+    private List<SlotEntity> slots;
 
     public Long getId() {
         return id;
@@ -81,27 +83,28 @@ public class Parking implements Serializable {
         isActive = active;
     }
 
-    public Address getAddress() {
+    public AddressEntity getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(AddressEntity address) {
         this.address = address;
     }
 
-    public User getOwner() {
+    public UserEntity getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(UserEntity owner) {
         this.owner = owner;
     }
 
-    public List<Slot> getSlots() {
+    public List<SlotEntity> getSlots() {
         return slots;
     }
 
-    public void setSlots(List<Slot> slots) {
+    public void setSlots(List<SlotEntity> slots) {
         this.slots = slots;
     }
+
 }
