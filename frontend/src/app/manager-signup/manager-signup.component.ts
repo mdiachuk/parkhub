@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { ManagerSignupMessage } from '../manager-signup-message';
 import { ConfirmPasswordValidator } from '../validation/confirm-password.validator';
 import { Manager } from '../model/manager';
 import { ManagerService } from '../service/manager.service';
@@ -16,7 +15,6 @@ export class ManagerSignupComponent implements OnInit {
 
   signupForm: FormGroup;
   manager: Manager;
-  result: ManagerSignupMessage;
   message: string;
   isCreated: boolean;
 
@@ -36,7 +34,6 @@ export class ManagerSignupComponent implements OnInit {
       comment: [''],
       checkbox: false
     }, { validator: ConfirmPasswordValidator.matchPassword });
-    this.result = new ManagerSignupMessage();
     this.isCreated = false;
   }
 
@@ -51,20 +48,10 @@ export class ManagerSignupComponent implements OnInit {
       this.signupForm.get('confirmPassword').value,
       this.signupForm.get('comment').value);
     this.managerService.registerManager(this.manager).subscribe(response => {
-      if (response.created === true) {
-        this.isCreated = true;
-      } else {
-        this.message = response.description;
-        this.openSnackBar(this.message);
-      }
+      this.isCreated = true;
     }, err => {
-      if (err.error.status === 500) {
-        this.message = 'Something went wrong on our server. Please, try again later.';
-        this.openSnackBar(this.message);
-      } else {
-        this.message = err.error.description;
-        this.openSnackBar(this.message);
-      }
+      this.message = err.error;
+      this.openSnackBar(this.message);
     });
   }
 
