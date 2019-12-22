@@ -1,5 +1,7 @@
 package ua.com.parkhub.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/manager")
 public class ManagerController {
 
+    private static final Logger logger = LoggerFactory.getLogger(ManagerController.class);
+
     private final SignUpService signUpService;
 
     @Autowired
@@ -33,27 +37,32 @@ public class ManagerController {
             List<String> errors = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
+            logger.info("Validation errors: {}", errors);
             return ResponseEntity.badRequest().body(errors);
         }
         signUpService.registerManager(managerDto);
+        logger.info("Manager registration request created");
         return ResponseEntity.ok().build();
     }
 
     @ExceptionHandler(PhoneNumberIsUsedException.class)
-    public ResponseEntity handlePhoneNumberIsUsedException() {
-        String error = "Account with this phone number already exists!";
-        return ResponseEntity.badRequest().body(error);
+    public ResponseEntity handlePhoneNumberIsUsedException(PhoneNumberIsUsedException e) {
+        String message = e.getMessage();
+        logger.info(message);
+        return ResponseEntity.badRequest().body(message);
     }
 
     @ExceptionHandler(EmailIsUsedException.class)
-    public ResponseEntity handleEmailIsUsedException() {
-        String error = "Account with this email already exists!";
-        return ResponseEntity.badRequest().body(error);
+    public ResponseEntity handleEmailIsUsedException(EmailIsUsedException e) {
+        String message = e.getMessage();
+        logger.info(message);
+        return ResponseEntity.badRequest().body(message);
     }
 
     @ExceptionHandler(NotFoundInDataBaseException.class)
-    public ResponseEntity handleNotFoundInDataBaseException() {
-        String error = "Something went wrong on our server. Please, try again later.";
-        return ResponseEntity.status(500).body(error);
+    public ResponseEntity handleNotFoundInDataBaseException(NotFoundInDataBaseException e) {
+        logger.info(e.getMessage());
+        String message = "Something went wrong on our server. Please, try again later.";
+        return ResponseEntity.status(500).body(message);
     }
 }

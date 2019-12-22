@@ -1,5 +1,7 @@
 package ua.com.parkhub.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,8 @@ public class SignUpService {
     private static final long ADMIN_ID = 1;
     private static final String PENDING_ROLE_NAME = "Pending";
     private static final String MANAGER_REGISTRATION_REQUEST_TICKET_TYPE = "Manager registration request";
+
+    private static final Logger logger = LoggerFactory.getLogger(SignUpService.class);
 
     private final CustomerDAO customerDAO;
     private final UserDAO userDAO;
@@ -60,15 +64,18 @@ public class SignUpService {
         Optional<Customer> optionalCustomer = customerDAO
                 .findCustomerByPhoneNumber(managerDTO.getPhoneNumber());
         if (optionalCustomer.isPresent()) {
+            logger.info("Customer with phone number={} was found", managerDTO.getPhoneNumber());
             Optional<User> optionalUser = Optional.ofNullable(optionalCustomer.get().getUser());
             if (optionalUser.isPresent()) {
                 throw new PhoneNumberIsUsedException();
             }
+            logger.info("Existing customer was assigned");
             return optionalCustomer.get();
         }
         Customer customer = new Customer();
         customer.setPhoneNumber(managerDTO.getPhoneNumber());
         customer.setActive(true);
+        logger.info("New customer was created");
         return customer;
     }
 
@@ -85,7 +92,9 @@ public class SignUpService {
         user.setPassword(passwordEncoder.encode(managerDTO.getPassword()));
         user.setRole(userRoleDAO
                 .findUserRoleByRoleName(PENDING_ROLE_NAME)
-                .orElseThrow(NotFoundInDataBaseException::new));
+                .orElseThrow(() -> new NotFoundInDataBaseException("Role was not found by name="
+                        + PENDING_ROLE_NAME)));
+        logger.info("New user created");
         return user;
     }
 
@@ -101,11 +110,13 @@ public class SignUpService {
         List<User> solvers = new ArrayList<>();
         solvers.add(userDAO
                 .findElementById(ADMIN_ID)
-                .orElseThrow(NotFoundInDataBaseException::new));
+                .orElseThrow(() -> new NotFoundInDataBaseException("Admin was not found by id=" + ADMIN_ID)));
         supportTicket.setSolvers(solvers);
         supportTicket.setSupportTicketType(supportTicketTypeDAO
                 .findSupportTicketTypeByType(MANAGER_REGISTRATION_REQUEST_TICKET_TYPE)
-                .orElseThrow(NotFoundInDataBaseException::new));
+                .orElseThrow(() -> new NotFoundInDataBaseException("Support ticket type was not found by type="
+                        + MANAGER_REGISTRATION_REQUEST_TICKET_TYPE)));
+        logger.info("New support ticket was created");
         return supportTicket;
     }
 
