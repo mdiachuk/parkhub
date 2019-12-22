@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {Customer, HttpClientService, User, UserRole} from "../service/http-client.service";
+import {Component, NgModule, OnInit} from '@angular/core';
+import {ConfirmPass, Customer, HttpClientService, User, UserRole} from "../service/http-client.service";
+
+
+
 
 @Component({
   selector: 'app-singup',
@@ -14,6 +17,8 @@ export class SingupComponent implements OnInit {
 
   users:User = new User("","",this.customer,"","",this.userRole);
 
+  confirmPass:ConfirmPass = new ConfirmPass("");
+
   constructor(
     private httpClientService:HttpClientService
   ) { }
@@ -23,15 +28,26 @@ export class SingupComponent implements OnInit {
   }
 
   singUpUser(): void {
-    this.httpClientService.createUser(this.users)
-      .subscribe( data => {
-        alert("User SingUp");
-      });
+    if (this.users.pass==this.confirmPass.confirmPass){
+      this.httpClientService.createUser(this.users)
+        .subscribe( data => {
+            alert("User SingUp");
+            window.location.href='/';
+          },
+          err => {
+            alert("Email or Telephone are use");
+          });
+    } else {
+      alert("Pass not Confirm")
+    }
+
 
   };
 
 
-  handleSuccessfulResponse(response)
+
+
+handleSuccessfulResponse(response)
   {
     this.users=response;
   }

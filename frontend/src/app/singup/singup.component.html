@@ -1,34 +1,43 @@
 
-<div class="col-md-6">
-  <h2 class="text-center">Sing Up</h2>
-  <form>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Sing Up User Form</mat-card-title>
+  </mat-card-header>
 
+  <mat-card-content>
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input type="text"  matInput  placeholder="Name" [(ngModel)]="users.name"  name="Name"  required>
+    </mat-form-field>
 
-    <div class="form-group">
-      <label for="name">Name:</label>
-      <input type="name" [(ngModel)]="users.name" placeholder="name" name="name" class="form-control" id="name">
-    </div>
+    <mat-form-field>
+      <mat-label>Second Name</mat-label>
+      <input type="text" matInput  placeholder="Second Name" [(ngModel)]="users.secondname"  name="Second Name"  required>
+    </mat-form-field>
 
-    <div class="form-group">
-      <label for="secondname">Second Name:</label>
-      <input type="text" [(ngModel)]="users.secondname" placeholder="Sevondname" name="sevondname" class="form-control" id="secondname">
-    </div>
+    <mat-form-field>
+      <mat-label>Telephone</mat-label>
+      <input type="tel" matInput  placeholder="Telephone"
+             [(ngModel)]="customer.phoneNumber"  name="Telephone"  required pattern="[0-9]{10}">
+    </mat-form-field>
 
-    <div class="form-group">
-      <label for="telephone">Telephone:</label>
-      <input type="tel" [(ngModel)]="customer.phoneNumber" placeholder="Telephone" name="telephone" class="form-control" id="telephone">
-    </div>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input type="email" matInput  placeholder="Email" [(ngModel)]="users.email"  name="Email"  required>
+    </mat-form-field>
 
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input type="email" [(ngModel)]="users.email" placeholder="Email" name="email" class="form-control" id="email">
-    </div>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input type="password" matInput  placeholder="Password" [(ngModel)]="users.pass"  name="Password"  required>
+    </mat-form-field>
 
-    <div class="form-group">
-      <label for="password">Password:</label>
-      <input type="password" [(ngModel)]="users.pass" placeholder="Password" name="password" class="form-control" id="password">
-    </div>
+    <mat-form-field>
+      <mat-label>Confirm Password</mat-label>
+      <input type="password" matInput  placeholder="Confirm Password"
+             [(ngModel)]="confirmPass.confirmPass" name="Confirm Password"  required>
+    </mat-form-field>
 
-    <button class="btn btn-success" (click)="singUpUser()">Create</button>
-  </form>
-</div>
+  </mat-card-content>
+  <button class="btn btn-success" (click)="singUpUser()">Create</button>
+
+</mat-card>
