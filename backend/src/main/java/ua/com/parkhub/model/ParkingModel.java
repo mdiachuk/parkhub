@@ -1,9 +1,5 @@
 package ua.com.parkhub.model;
 
-import ua.com.parkhub.persistence.entities.Slot;
-import ua.com.parkhub.persistence.entities.User;
-
-import java.util.Set;
 
 public class ParkingModel {
 
@@ -11,17 +7,13 @@ public class ParkingModel {
     private String parkingName;
     private int slotsNumber;
     private int tariff;
-    private boolean isActive = true;
-    private User owner;
     AddressModel addressModel;
 
-    public ParkingModel(long id, String parkingName, int slotsNumber, int tariff, boolean isActive, User owner, AddressModel addressModel) {
+    public ParkingModel(long id, String parkingName, int slotsNumber, int tariff, AddressModel addressModel) {
         this.id = id;
         this.parkingName = parkingName;
         this.slotsNumber = slotsNumber;
         this.tariff = tariff;
-        this.isActive = isActive;
-        this.owner = owner;
         this.addressModel = addressModel;
     }
 
@@ -55,22 +47,6 @@ public class ParkingModel {
 
     public void setTariff(int tariff) {
         this.tariff = tariff;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
     }
 
     public AddressModel getAddressModel() {

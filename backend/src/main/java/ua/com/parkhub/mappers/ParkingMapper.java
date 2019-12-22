@@ -15,7 +15,7 @@ public class ParkingMapper {
 
     public ParkingModel fromEntityToModel(Parking parking){
         return Objects.isNull(parking) ? null :
-                new ParkingModel(parking.getId(), parking.getParkingName(),parking.getSlotsNumber(),parking.getTariff(),parking.isActive(),parking.getOwner(),
+                new ParkingModel(parking.getId(), parking.getParkingName(),parking.getSlotsNumber(),parking.getTariff(),
                         addressMapper.fromEntityToModel(parking.getAddress()));
     }
 
