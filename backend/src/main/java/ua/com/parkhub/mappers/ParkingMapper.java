@@ -25,7 +25,8 @@ public class ParkingMapper {
     }
 
     public DescribedParkingDTO fromModelToDescribedDto(ParkingModel model) {
-        return Objects.isNull(model) ? null : new DescribedParkingDTO(model.getSlotsNumber(), model.getTariff());
+        return Objects.isNull(model) ? null : new DescribedParkingDTO(model.getParkingName(),
+                addressMapper.fromModelToDTO(model.getAddressModel()).getAddress(), model.getSlotsNumber(), model.getTariff());
     }
 }
 

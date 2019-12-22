@@ -1,5 +1,27 @@
-<table mat-table class="parkingTable" matSort>
-        [dataSource] = "dataSource", "dataSource1"
+
+<mat-toolbar color="primary">
+        <mat-toolbar-row>
+        <span>Custom Toolbar</span>
+</mat-toolbar-row>
+
+<div>
+<mat-list>
+        <mat-list-item>{{parkingDetail.parkingName}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>{{parkingDetail.parkingAddress}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>{{parkingDetail.slotsNumber}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>{{parkingDetail.tariff}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>1</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>1</mat-list-item>
+</mat-list>
+</div>
+
+<!-- <table mat-table class="parkingTable" matSort>
+        [dataSource] = "dataSource", 
         <ng-container matColumnDef="Name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
           <td mat-cell *matCellDef="let parking">
@@ -15,24 +37,30 @@
 
         <ng-container matColumnDef="Floors">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Floors</th>
-          <td mat-cell *matCellDef="let parking"></td>
+          <td mat-cell>
+                1
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="Places">
            <th mat-header-cell *matHeaderCellDef mat-sort-header>Places</th>
-           <td mat-cell *matCellDef="let parking"></td>
+           <td mat-cell *matCellDef="let parking">
+                {{parking.slotsNumber}}
+           </td>
         </ng-container>
       
         <ng-container matColumnDef="Tariff">
            <th mat-header-cell *matHeaderCellDef mat-sort-header>Tariff</th>
-           <td mat-cell *matCellDef="let parking"></td>
+           <td mat-cell *matCellDef="let parking">
+                {{parking.tariff}}
+           </td>
         </ng-container>
         <ng-container matColumnDef="Coefficient">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Coefficient</th>
-            <td mat-cell *matCellDef="let parking"></td>
+            <td mat-cell> 1 </td>
         </ng-container>
     
         <tr  mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr  mat-row *matRowDef="let row; columns: displayedColumns;">
         </tr>
-      </table>
+      </table> -->
