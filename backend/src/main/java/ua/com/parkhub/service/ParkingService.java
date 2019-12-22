@@ -4,8 +4,7 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.com.parkhub.mapper.AddressMapper;
-import ua.com.parkhub.mapper.ParkingMapper;
+import ua.com.parkhub.mapper.ParkingRequestMapper;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.persistence.entities.*;
 import ua.com.parkhub.persistence.impl.*;
@@ -17,16 +16,14 @@ public class ParkingService {
     private final ParkingDAO parkingDAO;
     private final AddressDAO addressDAO;
     private final UserDAO userDAO;
-    private final AddressMapper addressMapper;
-    private final ParkingMapper parkingMapper;
+    private final ParkingRequestMapper parkingRequestMapper;
 
     @Autowired
     public ParkingService(ParkingDAO parkingDAO, AddressDAO addressDAO,UserDAO userDAO) {
         this.parkingDAO = parkingDAO;
         this.addressDAO = addressDAO;
         this.userDAO = userDAO;
-        addressMapper = Mappers.getMapper( AddressMapper.class);
-        parkingMapper = Mappers.getMapper( ParkingMapper.class);
+        parkingRequestMapper = Mappers.getMapper( ParkingRequestMapper.class);
     }
 
     public boolean isParkingNameUnique(ParkingModel parkingRequestModel) {
@@ -42,8 +39,8 @@ public class ParkingService {
     }
 
     public void createParkingByOwnerID(ParkingModel parkingModel, long id) {
-        Address address = addressMapper.parkingModelToAddress(parkingModel);
-        Parking parking = parkingMapper.parkingModelToParking(parkingModel);
+        Address address = parkingRequestMapper.parkingModelToAddress(parkingModel);
+        Parking parking = parkingRequestMapper.parkingModelToParking(parkingModel);
         parking.setOwner(userDAO.findElementById(id));
         parking.setAddress(address);
         addressDAO.addElement(address);
