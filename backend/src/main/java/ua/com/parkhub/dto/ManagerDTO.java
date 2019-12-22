@@ -9,46 +9,49 @@ import javax.validation.constraints.Size;
 @PasswordMatches
 public class ManagerDTO {
 
-    @NotNull
-    @NotEmpty
-    @Size(min = 1, max = 50)
+    @NotNull(message = "First name must not be null")
+    @NotEmpty(message = "First name must not be empty")
+    @Size(max = 255, message = "First name must be 255 characters at most")
     private String firstName;
 
-    @NotNull
-    @NotEmpty
-    @Size(min=1, max=50)
+    @NotNull(message = "Last name required")
+    @NotEmpty(message = "Last name must not be empty")
+    @Size(max = 255, message = "Last name must be 255 characters at most")
     private String lastName;
 
-    @NotNull
-    @NotEmpty
-    @Size(min=1, max=50)
+    @NotNull(message = "Company name required")
+    @NotEmpty(message = "Company name must not be empty")
+    @Size(max = 255, message = "Company name must be 255 characters at most")
     private String companyName;
 
     @ValidUsreouCode
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "USREOU code required")
+    @NotEmpty(message = "USREOU code must not be empty")
     private String usreouCode;
 
     @ValidEmail
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Email must required")
+    @NotEmpty(message = "Email must not be empty")
+    @Size(max = 255, message = "Email must be 255 characters at most")
     private String email;
 
     @ValidPhoneNumber
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Phone number required")
+    @NotEmpty(message = "Phone number must not be empty")
     private String phoneNumber;
 
     @ValidPassword
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Password required")
+    @NotEmpty(message = "Password must not be empty")
+    @Size(max = 60, message = "Password must be 60 characters at most")
     private String password;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Matching password required")
+    @NotEmpty(message = "Matching password must not be empty")
+    @Size(max = 60, message = "Matching password must be 60 characters at most")
     private String matchingPassword;
 
-    @Size(max=200)
+    @Size(max=200, message = "Comment must be 200 characters at most")
     private String comment;
 
     public String getFirstName() {
