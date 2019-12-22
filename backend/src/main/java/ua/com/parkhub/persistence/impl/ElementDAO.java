@@ -35,14 +35,8 @@ public class ElementDAO<E> implements IElementDAO<E> {
 
     @Override
     public Optional<E> findElementById(long id) {
-        try {
             E element = emp.find( elementClass, id);
-            return Optional.of(element);
-        } catch (NoResultException e1) {
-            return Optional.empty();
-        } catch (Exception e2) {
-            throw new UnsupportedOperationException();
-        }
+            return Optional.ofNullable(element);
     }
 
     @Override
