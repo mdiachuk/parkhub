@@ -1,3 +1,5 @@
+
+
 export class Parking {
     parkingName: string;
     slotsNumber: number;

@@ -33,6 +33,9 @@
         <mat-option [value]="cityArray" *ngFor="let cityArray of CityArray">{{cityArray}}
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="!formGroup.controls['tariff'].valid && formGroup.controls['tariff'].touched">
+        {{ getErrorCity() }}
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="form-element">
@@ -48,9 +51,6 @@
         {{ getErrorBuilding() }}
       </mat-error>
     </mat-form-field>
-    <!-- <div class="form-element">
-      <mat-checkbox formControlName="validate" value="1">Name min. 3 characters</mat-checkbox>
-    </div> -->
 
     <div class="form-element">
       <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!formGroup.valid">Add parking</button>
@@ -59,15 +59,3 @@
   </form>
   </div>
 
-  
-  
-
-
-
-
-
-<!-- <ng-template #forminfo>
-  <div class="container">
-    {{ post | json }}
-  </div>
-</ng-template> -->

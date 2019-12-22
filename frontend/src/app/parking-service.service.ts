@@ -15,7 +15,7 @@ export class ParkingServiceService {
     this.parkingUrl = 'api/home/cabinet/addParking';
    }
 
-   public save(parking: Parking)  {
+   public save(parking: Parking) : Observable<Parking>  {
     return this.http.post<Parking>(this.parkingUrl, parking);
     //this.router.navigate(['login'], { queryParams: { returnUrl: this.parkingUrl }});
   }

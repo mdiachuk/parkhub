@@ -1,12 +1,12 @@
 package ua.com.parkhub.model;
 
-
-
 public class AddressModel {
-    private String city;
-    private String street;
-    private String building;
 
+    private String city;
+
+    private String street;
+
+    private String building;
 
     public String getCity() {
         return city;

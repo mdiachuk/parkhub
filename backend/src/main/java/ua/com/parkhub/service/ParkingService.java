@@ -6,9 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.mapper.AddressMapper;
 import ua.com.parkhub.mapper.ParkingMapper;
-import ua.com.parkhub.model.AddressModel;
 import ua.com.parkhub.model.ParkingModel;
-import ua.com.parkhub.model.ParkingRequestModel;
 import ua.com.parkhub.persistence.entities.*;
 import ua.com.parkhub.persistence.impl.*;
 
@@ -31,36 +29,20 @@ public class ParkingService {
         parkingMapper = Mappers.getMapper( ParkingMapper.class);
     }
 
-    public boolean isParkingNameUnique(ParkingRequestModel parkingRequestModel) {
+    public boolean isParkingNameUnique(ParkingModel parkingRequestModel) {
         Long count = parkingDAO.
                 countOfParkingsByName(parkingRequestModel.getParkingName());
         return count == 0;
     }
 
-    public boolean checkIfAddressIsUnique(ParkingRequestModel parkingRequestModel) {
+    public boolean checkIfAddressIsUnique(ParkingModel parkingRequestModel) {
         Long count = parkingDAO.
-                countOfParkingsByAddress(parkingRequestModel.getCity(),parkingRequestModel.getStreet(),parkingRequestModel.getBuilding());
+                countOfParkingsByAddress(parkingRequestModel.getAddress());
         return count == 0;
     }
 
-    public ParkingModel createParkingModelFROMParkingRequestModel(ParkingRequestModel parkingRequestModel) {
-        ParkingModel parkingModel = new ParkingModel();
-        parkingModel.setParkingName(parkingRequestModel.getParkingName());
-        parkingModel.setSlotsNumber(parkingRequestModel.getSlotsNumber());
-        parkingModel.setTariff(parkingRequestModel.getTariff());
-        return parkingModel;
-    }
-
-    public AddressModel createAddressModelFROMParkingRequestModel(ParkingRequestModel parkingRequestModel) {
-        AddressModel addressModel = new AddressModel();
-        addressModel.setBuilding(parkingRequestModel.getBuilding());
-        addressModel.setCity(parkingRequestModel.getCity());
-        addressModel.setStreet(parkingRequestModel.getStreet());
-        return addressModel;
-    }
-
-    public void createParkingFromParkingAndAddressModel(AddressModel addressModel, ParkingModel parkingModel, long id) {
-        Address address = addressMapper.addressModelToAddress(addressModel);
+    public void createParkingByOwnerID(ParkingModel parkingModel, long id) {
+        Address address = addressMapper.parkingModelToAddress(parkingModel);
         Parking parking = parkingMapper.parkingModelToParking(parkingModel);
         parking.setOwner(userDAO.findElementById(id));
         parking.setAddress(address);
