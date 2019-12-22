@@ -5,11 +5,6 @@ public class CustomerModel {
     private String phoneNumber;
     private boolean isActive;
 
-    public CustomerModel(String phoneNumber, boolean isActive) {
-        this.phoneNumber = phoneNumber;
-        this.isActive = isActive;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }

@@ -41,18 +41,6 @@ public class Parking implements Serializable {
     @JoinColumn(name = "parking_id")
     private List<Slot> slots;
 
-    public Parking() {
-    }
-
-    public Parking(@NotNull String parkingName, @NotNull int slotsNumber, @NotNull int tariff, boolean isActive, Address address, User owner) {
-        this.parkingName = parkingName;
-        this.slotsNumber = slotsNumber;
-        this.tariff = tariff;
-        this.isActive = isActive;
-        this.address = address;
-        this.owner = owner;
-    }
-
     public Long getId() {
         return id;
     }

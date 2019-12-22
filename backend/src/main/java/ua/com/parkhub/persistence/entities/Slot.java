@@ -28,16 +28,6 @@ public class Slot implements Serializable {
     @ManyToOne
     private Parking parking;
 
-    public Slot() {
-    }
-
-    public Slot(@NotNull String slotNumber, @NotNull boolean isReserved, @NotNull boolean isActive, Parking parking) {
-        this.slotNumber = slotNumber;
-        this.isReserved = isReserved;
-        this.isActive = isActive;
-        this.parking = parking;
-    }
-
     public Long getId() {
         return id;
     }

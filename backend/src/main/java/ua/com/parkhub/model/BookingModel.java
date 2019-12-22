@@ -12,15 +12,6 @@ public class BookingModel {
     private LocalDateTime checkOut;
     private boolean isActive;
 
-    public BookingModel(CustomerModel customer, String carNumber, SlotModel slot, LocalDateTime checkIn, LocalDateTime checkOut, boolean isActive) {
-        this.customer = customer;
-        this.carNumber = carNumber;
-        this.slot = slot;
-        this.checkIn = checkIn;
-        this.checkOut = checkOut;
-        this.isActive = isActive;
-    }
-
     public CustomerModel getCustomer() {
         return customer;
     }

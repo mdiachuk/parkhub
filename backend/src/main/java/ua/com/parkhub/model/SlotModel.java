@@ -7,13 +7,6 @@ public class SlotModel {
     private boolean isReserved;
     private boolean isActive;
 
-    public SlotModel(ParkingModel parking, String slotNumber, boolean isReserved, boolean isActive) {
-        this.parking = parking;
-        this.slotNumber = slotNumber;
-        this.isReserved = isReserved;
-        this.isActive = isActive;
-    }
-
     public ParkingModel getParking() {
         return parking;
     }

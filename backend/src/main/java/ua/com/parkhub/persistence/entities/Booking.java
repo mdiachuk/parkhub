@@ -38,18 +38,6 @@ public class Booking implements Serializable {
     @JoinColumn(name = "slot_id")
     private Slot slot;
 
-    public Booking() {
-    }
-
-    public Booking(@NotNull @Size(min = 8, max = 8) String carNumber, @NotNull LocalDateTime checkIn, LocalDateTime checkOut, @NotNull boolean isActive, Customer customer, Slot slot) {
-        this.carNumber = carNumber;
-        this.checkIn = checkIn;
-        this.checkOut = checkOut;
-        this.isActive = isActive;
-        this.customer = customer;
-        this.slot = slot;
-    }
-
     public Long getId() {
         return id;
     }

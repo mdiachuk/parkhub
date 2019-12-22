@@ -21,22 +21,25 @@ public class ParkingMapper implements Mapper<Parking, ParkingModel> {
 
     @Override
     public Optional<Parking> toEntity(ParkingModel model) {
-        return Optional.of(new Parking(model.getParkingName(),
-                model.getSlotsNumber(),
-                model.getTariff(),
-                model.isActive(),
-                addressMapper.toEntity(model.getAddress()).get(),
-                userMapper.toEntity(model.getUser()).get()));
+        Parking parking = new Parking();
+        parking.setParkingName(model.getParkingName());
+        parking.setAddress(addressMapper.toEntity(model.getAddress()).get());
+        parking.setSlotsNumber(model.getSlotsNumber());
+        parking.setOwner(userMapper.toEntity(model.getUser()).get());
+        parking.setTariff(model.getTariff());
+        parking.setActive(model.isActive());
+        return Optional.of(parking);
     }
 
     @Override
     public Optional<ParkingModel> toModel(Parking entity) {
-        return Optional.of(new ParkingModel(
-                userMapper.toModel(entity.getOwner()).get(),
-                entity.getParkingName(),
-                addressMapper.toModel(entity.getAddress()).get(),
-                entity.getSlotsNumber(),
-                entity.getTariff(),
-                entity.isActive()));
+        ParkingModel parkingModel = new ParkingModel();
+        parkingModel.setParkingName(entity.getParkingName());
+        parkingModel.setUser(userMapper.toModel(entity.getOwner()).get());
+        parkingModel.setAddress(addressMapper.toModel(entity.getAddress()).get());
+        parkingModel.setSlotsNumber(entity.getSlotsNumber());
+        parkingModel.setTariff(entity.getTariff());
+        parkingModel.setActive(entity.isActive());
+        return Optional.of(parkingModel);
     }
 }

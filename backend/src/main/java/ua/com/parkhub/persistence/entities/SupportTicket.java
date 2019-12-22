@@ -33,16 +33,6 @@ public class SupportTicket implements Serializable {
     )
     private List<User> solvers;
 
-    public SupportTicket() {
-    }
-
-    public SupportTicket(@NotNull String description, @NotNull boolean isSolved, SupportTicketType supportTicketType, List<User> solvers) {
-        this.description = description;
-        this.isSolved = isSolved;
-        this.supportTicketType = supportTicketType;
-        this.solvers = solvers;
-    }
-
     public Long getId() {
         return id;
     }

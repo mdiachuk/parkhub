@@ -19,17 +19,21 @@ public class SlotMapper implements Mapper<Slot, SlotModel> {
 
     @Override
     public Optional<Slot> toEntity(SlotModel model) {
-        return Optional.of(new Slot(model.getSlotNumber(),
-                model.isReserved(),
-                model.isActive(),
-                parkingMapper.toEntity(model.getParking()).get()));
+        Slot slot = new Slot();
+        slot.setParking(parkingMapper.toEntity(model.getParking()).get());
+        slot.setSlotNumber(model.getSlotNumber());
+        slot.setReserved(model.isReserved());
+        slot.setActive(model.isActive());
+        return Optional.of(slot);
     }
 
     @Override
     public Optional<SlotModel> toModel(Slot entity) {
-        return Optional.of(new SlotModel(parkingMapper.toModel(entity.getParking()).get(),
-                entity.getSlotNumber(),
-                entity.isReserved(),
-                entity.isActive()));
+        SlotModel slotModel = new SlotModel();
+        slotModel.setParking(parkingMapper.toModel(entity.getParking()).get());
+        slotModel.setSlotNumber(entity.getSlotNumber());
+        slotModel.setReserved(entity.isReserved());
+        slotModel.setActive(entity.isActive());
+        return Optional.of(slotModel);
     }
 }

@@ -21,15 +21,6 @@ public class SupportTicketType implements Serializable {
     @NotNull
     private boolean isActive = true;
 
-    public SupportTicketType(@NotNull String type) {
-        this.type = type;
-    }
-
-    public SupportTicketType(@NotNull String type, @NotNull boolean isActive) {
-        this.type = type;
-        this.isActive = isActive;
-    }
-
     public Long getId() {
         return id;
     }

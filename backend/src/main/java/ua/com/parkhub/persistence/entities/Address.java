@@ -25,15 +25,6 @@ public class Address implements Serializable {
     @NotNull
     private String building;
 
-    public Address() {
-    }
-
-    public Address(@NotNull String city, @NotNull String street, @NotNull String building) {
-        this.city = city;
-        this.street = street;
-        this.building = building;
-    }
-
     public Long getId() {
         return id;
     }

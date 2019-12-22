@@ -6,12 +6,6 @@ public class AddressModel {
     private String street;
     private String building;
 
-    public AddressModel(String city, String street, String building) {
-        this.city = city;
-        this.street = street;
-        this.building = building;
-    }
-
     public String getCity() {
         return city;
     }

@@ -9,15 +9,6 @@ public class ParkingModel {
     private int tariff;
     private boolean isActive;
 
-    public ParkingModel(UserModel parkingOwner, String parkingName, AddressModel address, int slotsNumber, int tariff, boolean isActive) {
-        this.parkingOwner = parkingOwner;
-        this.parkingName = parkingName;
-        this.address = address;
-        this.slotsNumber = slotsNumber;
-        this.tariff = tariff;
-        this.isActive = isActive;
-    }
-
     public UserModel getUser() {
         return parkingOwner;
     }

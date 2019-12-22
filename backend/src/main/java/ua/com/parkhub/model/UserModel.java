@@ -9,15 +9,6 @@ public class UserModel {
     private String password;
     private UserRoleModel userRole;
 
-    public UserModel(CustomerModel customer, String firstName, String lastName, String email, String password, UserRoleModel userRole) {
-        this.customer = customer;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.userRole = userRole;
-    }
-
     public CustomerModel getCustomer() {
         return customer;
     }

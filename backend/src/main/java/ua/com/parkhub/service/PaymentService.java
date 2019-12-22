@@ -53,7 +53,10 @@ public class PaymentService {
         booking.setActive(false);
         bookingDAO.updateElement(booking);
         int price = countPrice(booking);
-        Payment payment = new Payment(price, false, booking);
+        Payment payment = new Payment();
+        payment.setBooking(booking);
+        payment.setPaid(false);
+        payment.setPrice(price);
         paymentDAO.addElement(payment);
         return Optional.of(payment);
     }

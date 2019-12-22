@@ -11,13 +11,17 @@ public class UserRoleMapper implements Mapper<UserRole, UserRoleModel> {
 
     @Override
     public Optional<UserRole> toEntity(UserRoleModel model) {
-        return Optional.of(new UserRole(model.getRoleName(),
-                model.isActive()));
+        UserRole userRole = new UserRole();
+        userRole.setRoleName(model.getRoleName());
+        userRole.setActive(model.isActive());
+        return Optional.of(userRole);
     }
 
     @Override
     public Optional<UserRoleModel> toModel(UserRole entity) {
-        return Optional.of(new UserRoleModel(entity.getRoleName(),
-                entity.isActive()));
+        UserRoleModel userRoleModel = new UserRoleModel();
+        userRoleModel.setRoleName(entity.getRoleName());
+        userRoleModel.setActive(entity.isActive());
+        return Optional.of(userRoleModel);
     }
 }

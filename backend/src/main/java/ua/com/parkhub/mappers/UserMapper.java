@@ -20,21 +20,25 @@ public class UserMapper implements Mapper<User, UserModel> {
 
     @Override
     public Optional<User> toEntity(UserModel model) {
-        return Optional.of(new User(model.getFirstName(),
-                model.getLastName(),
-                model.getEmail(),
-                model.getPassword(),
-                userRoleMapper.toEntity(model.getUserRole()).get(),
-                customerMapper.toEntity(model.getCustomer()).get()));
+        User user = new User();
+        user.setCustomer(customerMapper.toEntity(model.getCustomer()).get());
+        user.setRole(userRoleMapper.toEntity(model.getUserRole()).get());
+        user.setFirstName(model.getFirstName());
+        user.setLastName(model.getLastName());
+        user.setEmail(model.getEmail());
+        user.setPassword(model.getPassword());
+        return Optional.of(user);
     }
 
     @Override
     public Optional<UserModel> toModel(User entity) {
-        return Optional.of(new UserModel(customerMapper.toModel(entity.getCustomer()).get(),
-                entity.getFirstName(),
-                entity.getLastName(),
-                entity.getEmail(),
-                entity.getPassword(),
-                userRoleMapper.toModel(entity.getRole()).get()));
+        UserModel userModel = new UserModel();
+        userModel.setCustomer(customerMapper.toModel(entity.getCustomer()).get());
+        userModel.setUserRole(userRoleMapper.toModel(entity.getRole()).get());
+        userModel.setFirstName(entity.getFirstName());
+        userModel.setLastName(entity.getLastName());
+        userModel.setEmail(entity.getEmail());
+        userModel.setPassword(entity.getPassword());
+        return Optional.of(userModel);
     }
 }

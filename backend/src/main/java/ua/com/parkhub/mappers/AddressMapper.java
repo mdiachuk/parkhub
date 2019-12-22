@@ -11,15 +11,19 @@ public class AddressMapper implements Mapper<Address, AddressModel> {
 
     @Override
     public Optional<Address> toEntity(AddressModel model) {
-        return Optional.of(new Address(model.getCity(),
-                model.getStreet(),
-                model.getBuilding()));
+        Address address = new Address();
+        address.setCity(model.getCity());
+        address.setStreet(model.getStreet());
+        address.setBuilding(model.getBuilding());
+        return Optional.of(address);
     }
 
     @Override
     public Optional<AddressModel> toModel(Address entity) {
-        return Optional.of(new AddressModel(entity.getCity(),
-                entity.getStreet(),
-                entity.getBuilding()));
+        AddressModel addressModel = new AddressModel();
+        addressModel.setCity(entity.getCity());
+        addressModel.setStreet(entity.getStreet());
+        addressModel.setBuilding(entity.getBuilding());
+        return Optional.of(addressModel);
     }
 }

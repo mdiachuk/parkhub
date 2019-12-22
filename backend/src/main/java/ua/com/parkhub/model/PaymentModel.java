@@ -6,12 +6,6 @@ public class PaymentModel {
     private int price;
     private boolean isPaid;
 
-    public PaymentModel(BookingModel booking, int price, boolean isPaid) {
-        this.booking = booking;
-        this.price = price;
-        this.isPaid = isPaid;
-    }
-
     public BookingModel getBooking() {
         return booking;
     }

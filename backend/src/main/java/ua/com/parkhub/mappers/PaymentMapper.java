@@ -19,15 +19,19 @@ public class PaymentMapper implements Mapper<Payment, PaymentModel> {
 
     @Override
     public Optional<Payment> toEntity(PaymentModel model) {
-        return Optional.of(new Payment(model.getPrice(),
-                model.isPaid(),
-                bookingMapper.toEntity(model.getBooking()).get()));
+        Payment payment = new Payment();
+        payment.setBooking(bookingMapper.toEntity(model.getBooking()).get());
+        payment.setPrice(model.getPrice());
+        payment.setPaid(model.isPaid());
+        return Optional.of(payment);
     }
 
     @Override
     public Optional<PaymentModel> toModel(Payment entity) {
-        return Optional.of(new PaymentModel(bookingMapper.toModel(entity.getBooking()).get(),
-                entity.getPrice(),
-                entity.isPaid()));
+        PaymentModel paymentModel = new PaymentModel();
+        paymentModel.setBooking(bookingMapper.toModel(entity.getBooking()).get());
+        paymentModel.setPrice(entity.getPrice());
+        paymentModel.setPaid(entity.isPaid());
+        return Optional.of(paymentModel);
     }
 }

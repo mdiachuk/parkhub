@@ -11,13 +11,17 @@ public class CustomerMapper implements Mapper<Customer, CustomerModel> {
 
     @Override
     public Optional<Customer> toEntity(CustomerModel model) {
-        return Optional.of(new Customer(model.getPhoneNumber(),
-                model.isActive()));
+        Customer customer = new Customer();
+        customer.setPhoneNumber(model.getPhoneNumber());
+        customer.setActive(model.isActive());
+        return Optional.of(customer);
     }
 
     @Override
     public Optional<CustomerModel> toModel(Customer entity) {
-        return Optional.of(new CustomerModel(entity.getPhoneNumber(),
-                entity.isActive()));
+        CustomerModel customerModel = new CustomerModel();
+        customerModel.setPhoneNumber(entity.getPhoneNumber());
+        customerModel.setActive(entity.isActive());
+        return Optional.of(customerModel);
     }
 }

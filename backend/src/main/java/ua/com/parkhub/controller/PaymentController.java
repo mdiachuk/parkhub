@@ -21,15 +21,15 @@ public class PaymentController {
     @RequestMapping(value = "api/parkoff", method = {RequestMethod.GET, RequestMethod.POST})
     public ResponseEntity<PaymentResponseDTO> getPhoneNumber(@RequestBody PhoneNumberDTO phoneNumber) {
 
-        PaymentResponseDTO p = new PaymentResponseDTO();
+        PaymentResponseDTO paymentResponseDTO = new PaymentResponseDTO();
         try {
             int price = paymentService.getPrice("+" + phoneNumber.getPhoneNumber());
-            p.setPrice(price);
-            p.setStatus(true);
+            paymentResponseDTO.setPrice(price);
+            paymentResponseDTO.setStatus(true);
         } catch (NullCustomerException e) {
-            p.setStatus(false);
-            p.setPrice(0);
+            paymentResponseDTO.setStatus(false);
+            paymentResponseDTO.setPrice(0);
         }
-        return ResponseEntity.ok(p);
+        return ResponseEntity.ok(paymentResponseDTO);
     }
 }
