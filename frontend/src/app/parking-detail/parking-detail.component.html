@@ -1,66 +1,38 @@
 
-<mat-toolbar color="primary">
-        <mat-toolbar-row>
-        <span>Custom Toolbar</span>
+<mat-toolbar class = "toolbar" color="primary">
+  <mat-toolbar-row>
+  <span>Parking Info</span>
+  <button routerLink="/parkings" id="id1" mat-raised-button color="accent">Back</button>
+  <button id="id2" mat-raised-button color="accent">Change</button>
+
 </mat-toolbar-row>
+</mat-toolbar>
 
-<div>
-<mat-list>
-        <mat-list-item>{{parkingDetail.parkingName}}</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>{{parkingDetail.parkingAddress}}</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>{{parkingDetail.slotsNumber}}</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>{{parkingDetail.tariff}}</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>1</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>1</mat-list-item>
+    <mat-list class = "leftSide">
+      <mat-list-item>Name</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>Address</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>Places</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>Tariff</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>Floors</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>Coefficient</mat-list-item>
+    </mat-list>
+
+    <mat-list class="rightSide">
+      <mat-list-item>{{parkingDetail.parkingName}}</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>{{parkingDetail.parkingAddress}}</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>{{parkingDetail.slotsNumber}}</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>{{parkingDetail.tariff}}</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>1</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>1</mat-list-item>
 </mat-list>
-</div>
-
-<!-- <table mat-table class="parkingTable" matSort>
-        [dataSource] = "dataSource", 
-        <ng-container matColumnDef="Name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-          <td mat-cell *matCellDef="let parking">
-            {{parking.parkingName}}
-          </td>
-        </ng-container>
-    
-        <ng-container matColumnDef="Address">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
-          <td mat-cell *matCellDef="let parking">
-            {{parking.parkingAddress}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="Floors">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Floors</th>
-          <td mat-cell>
-                1
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="Places">
-           <th mat-header-cell *matHeaderCellDef mat-sort-header>Places</th>
-           <td mat-cell *matCellDef="let parking">
-                {{parking.slotsNumber}}
-           </td>
-        </ng-container>
-      
-        <ng-container matColumnDef="Tariff">
-           <th mat-header-cell *matHeaderCellDef mat-sort-header>Tariff</th>
-           <td mat-cell *matCellDef="let parking">
-                {{parking.tariff}}
-           </td>
-        </ng-container>
-        <ng-container matColumnDef="Coefficient">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Coefficient</th>
-            <td mat-cell> 1 </td>
-        </ng-container>
-    
-        <tr  mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-        <tr  mat-row *matRowDef="let row; columns: displayedColumns;">
-        </tr>
-      </table> -->
+  

@@ -17,6 +17,8 @@ import { HttpClientModule }    from '@angular/common/http';
 import { ParkingDetailComponent } from './parking-detail/parking-detail.component';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list'; 
+import {MatSidenavModule} from '@angular/material/sidenav';
+
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import {MatListModule} from '@angular/material/list';
     HttpClientModule,
     MatToolbarModule,
     MatDividerModule,
-    MatListModule
+    MatListModule,
+    MatSidenavModule
   ],
   providers: [],
   bootstrap: [AppComponent]
