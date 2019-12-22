@@ -1,7 +1,5 @@
 import {Component, NgModule} from '@angular/core';
 
-
-
 export class AppModule { }
 @Component({
   selector: 'app-root',

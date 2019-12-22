@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable, of} from 'rxjs';
 import {Parking} from '../models/parking.model';
+import {Router} from "@angular/router";
 
 export class User {
   constructor(
@@ -62,7 +63,6 @@ export class ParkingService {
 
   //'http://localhost:4200/assets/parkings.json';
 
-
   constructor(
     private http: HttpClient
   ) {
@@ -74,4 +74,21 @@ export class ParkingService {
 
   }
 
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ParkingServiceService {
+
+  private parkingUrl: string;
+
+  constructor(private http: HttpClient,private router: Router ) {
+    this.parkingUrl = 'api/home/cabinet/addParking';
+  }
+
+  public save(parking: Parking) : Observable<Parking>  {
+    return this.http.post<Parking>(this.parkingUrl, parking);
+    //this.router.navigate(['login'], { queryParams: { returnUrl: this.parkingUrl }});
+  }
 }

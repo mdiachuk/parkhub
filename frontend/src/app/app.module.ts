@@ -2,7 +2,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {MaterialModule} from './material.module';
 import {AppComponent} from './app.component';
@@ -18,6 +18,8 @@ import { MatPaginatorModule, MatProgressSpinnerModule,
 import { PageComponent } from './homePage/homePage.component';
 import { ParkingListComponent } from './parking-list/parking-list.component';
 import { ParkingService} from "./service/http-client.service";
+import {AddParkingComponent} from "./add-parking/add-parking.component";
+
 
 
 @NgModule({
@@ -33,13 +35,15 @@ import { ParkingService} from "./service/http-client.service";
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    ReactiveFormsModule
   ],
   declarations: [
     AppComponent,
     SingupComponent,
     PageComponent,
-    ParkingListComponent
+    ParkingListComponent,
+    AddParkingComponent
   ],
   providers: [ParkingService],
   bootstrap: [AppComponent]
