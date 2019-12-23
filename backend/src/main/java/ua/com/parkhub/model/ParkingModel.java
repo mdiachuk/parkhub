@@ -18,6 +18,10 @@ public class ParkingModel {
         this.tariff = tariff;
         this.addressModel = addressModel;
     }
+
+    public ParkingModel() {
+    }
+
     public String getParkingName() {
         return parkingName;
     }

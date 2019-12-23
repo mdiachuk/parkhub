@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 import ua.com.parkhub.dto.DescribedParkingDTO;
 import ua.com.parkhub.dto.ShortParkingDTO;
 import ua.com.parkhub.mappers.ParkingMapper;
+import ua.com.parkhub.persistence.entities.Parking;
 import ua.com.parkhub.service.ParkingService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,15 +27,16 @@ public class ManagerController {
         this.parkingMapper = parkingMapper;
     }
 
-    @GetMapping(value = "/parkings")
+    @GetMapping(value = "/home/cabinet")
     public ResponseEntity<List<ShortParkingDTO>> getAllParkings() {
 
         return ResponseEntity.ok(parkingService.findAll().stream().map(parkingMapper::fromModelToShortDto).collect(Collectors.toList()));
     }
 
-    @GetMapping(value = "/parkings/{parkingId}")
+    @GetMapping(value = "/home/cabinet/{parkingId}")
     public ResponseEntity<DescribedParkingDTO> getParkingById(@PathVariable("parkingId") String parkingId){
 
         return ResponseEntity.ok(parkingMapper.fromModelToDescribedDto(parkingService.findParkingByIdYaroslav(Long.parseLong(parkingId))));
     }
 }
+

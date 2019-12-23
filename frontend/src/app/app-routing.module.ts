@@ -7,8 +7,8 @@ import { AppComponent } from './app.component';
 
 const appRoutes: Routes = [
   {path: 'home/cabinet', component: ParkingListComponent},
-  {path: 'parkings/:id', component: ParkingDetailComponent},
-  {path: 'home/cabinet/addParking', component: AddParkingComponent}
+  {path: 'home/cabinet/addParking', component: AddParkingComponent},
+  {path: 'home/cabinet/:id', component: ParkingDetailComponent},
 ];
 
 

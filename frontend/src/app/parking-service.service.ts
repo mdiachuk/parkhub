@@ -11,7 +11,7 @@ export class ParkingServiceService {
 
   private parkingUrl: string;
 
-  constructor(private http: HttpClient,private router: Router ) {
+  constructor(private http: HttpClient ) {
     this.parkingUrl = 'api/home/cabinet/addParking';
    }
 

@@ -46,7 +46,7 @@ class ParkingServiceTest {
 
     @Test
     void checkIfAddressIsUnique() {
-        parkingModelSpy.setAddress(addressModelSpy);
+        parkingModelSpy.setAddressModel(addressModelSpy);
         when(parkingDAOMock.countOfParkingsByAddress(addressModelSpy)).thenReturn(0L);
         assertTrue(parkingService.checkIfAddressIsUnique(parkingModelSpy),"The address should be unique ");
     }

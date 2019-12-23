@@ -21,7 +21,7 @@ export class AddParkingComponent {
   streetregex: RegExp = /^([a-zA-Z -]+)$/
   buildingregex: RegExp = /^([a-zA-Z0-9 -]+)$/
   parkNameValidator: any;
-  MatSnackBar: any;
+ // MatSnackBar: any;
   
   constructor(private formBuilder: FormBuilder,private route: ActivatedRoute, 
     private router: Router,private snackBar: MatSnackBar,

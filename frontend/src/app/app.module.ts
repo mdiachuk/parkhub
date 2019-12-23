@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import {Routes, RouterModule} from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +22,8 @@ import { ParkingDetailComponent } from './parking-detail/parking-detail.componen
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -36,12 +37,13 @@ import {MatSidenavModule} from '@angular/material/sidenav';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MatSnackBarModule ,
     BrowserAnimationsModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatSelectModule,
     ReactiveFormsModule,
-    MaterialModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -53,10 +55,9 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     HttpClientModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    MaterialModule,
     AppRoutingModule
   ],
-  providers: [ParkingServiceService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
