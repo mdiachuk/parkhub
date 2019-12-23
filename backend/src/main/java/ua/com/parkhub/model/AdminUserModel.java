@@ -1,62 +1,36 @@
-package ua.com.parkhub.persistence.entities;
+package ua.com.parkhub.model;
 
-import javax.persistence.Entity;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.io.Serializable;
+import ua.com.parkhub.persistence.entities.Customer;
+import ua.com.parkhub.persistence.entities.SupportTicket;
+import ua.com.parkhub.persistence.entities.UserRole;
+
 import java.util.List;
 
-@Entity
-@Table(name = "user", schema = "park_hub")
-public class User implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "first_name")
-    @NotNull
+public class AdminUserModel {
+    private long id;
     private String firstName;
-
-    @Column(name = "last_name")
-    @NotNull
     private String lastName;
-
-    @Column(unique = true)
-    @NotNull
     private String email;
-
-    @Column(name = "password")
-    @NotNull
-    @Size(min = 6, max = 60)
     private String password;
-
-    @ManyToOne
-    @JoinColumn(name = "role_id")
     private UserRole role;
-
-    @OneToOne
-    @JoinColumn(name = "customer_id")
     private Customer customer;
-
-    @ManyToMany(mappedBy = "solvers")
+    private String userRole;
     private List<SupportTicket> tickets;
 
-    public User() {
+    public AdminUserModel() {
     }
 
-    public User(long id, String firstName, UserRole role) {
+    public AdminUserModel(long id, String firstName, UserRole role) {
         this.id = id;
         this.firstName = firstName;
         this.role = role;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -108,6 +82,14 @@ public class User implements Serializable {
         this.customer = customer;
     }
 
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
+    }
+
     public List<SupportTicket> getTickets() {
         return tickets;
     }
@@ -116,3 +98,4 @@ public class User implements Serializable {
         this.tickets = tickets;
     }
 }
+

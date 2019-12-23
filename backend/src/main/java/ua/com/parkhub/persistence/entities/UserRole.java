@@ -14,7 +14,7 @@ public class UserRole implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "roleName")
+    @Column(name = "role_name")
     @NotNull
     @Size(min = 3, max = 50)
     private String roleName;
@@ -22,6 +22,14 @@ public class UserRole implements Serializable {
     @Column
     @NotNull
     private boolean isActive = true;
+
+    public UserRole() {
+    }
+
+    public UserRole(Long id, String roleName) {
+        this.id = id;
+        this.roleName = roleName;
+    }
 
     public Long getId() {
         return id;
@@ -46,4 +54,8 @@ public class UserRole implements Serializable {
     public void setActive(boolean active) {
         isActive = active;
     }
+
+
+
+
 }
