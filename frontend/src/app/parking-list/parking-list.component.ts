@@ -14,7 +14,6 @@ import { Parking } from '../models/parking.model';
 
 })
 
-
 export class ParkingListComponent implements OnInit {
 
   parkings: Parking[];
@@ -26,15 +25,10 @@ export class ParkingListComponent implements OnInit {
 
    }
 
-  ngOnInit() {
-
-
-
-  }
-
-
+  ngOnInit() {}
 
 }
+
 export class ParkingDataSource extends DataSource<any> {
 
   constructor(private parkingService: ParkingService) {

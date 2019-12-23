@@ -3,7 +3,7 @@
 </mat-toolbar>
 
 
-<div class="container" *ngIf="!post; else forminfo" novalidate> 
+<div class="container" *ngIf="!post; else forminfo" novalidate>
   <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form">
 
     <mat-form-field class="form-element">
@@ -54,7 +54,8 @@
 
     <div class="form-element">
       <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!formGroup.valid">Add parking</button>
-      <a mat-button color="primary" type="submit" class="button-row" routerLink="/home/cabinet">Go to cabinet of Manager</a>
+      <a mat-button color="primary" type="submit"
+         class="button-row" [routerLink]='["/manager/cabinet"]'>Go to cabinet of Manager</a>
     </div>
   </form>
   </div>

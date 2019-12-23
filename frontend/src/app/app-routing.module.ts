@@ -4,12 +4,27 @@ import {SingupComponent} from "./singup/singup.component";
 import {PageComponent} from "./homePage/homePage.component";
 import {AppComponent} from "./app.component";
 import {AddParkingComponent} from "./add-parking/add-parking.component";
+import {ParkingListComponentManager} from "./parking-list-manager/parking-list.component";
+import {ParkingDetailComponent} from "./parking-detail/parking-detail.component";
+import {ManagerSignupComponent} from "./manager-signup/manager-signup.component";
+import {AdminComponent} from "./admin/admin.component";
+// import {UserComponent} from "./user/user.component";
+import {LoginComponent} from "./login/login.component";
+import {ParkoffComponent} from "./parkoff/parkoff.component";
 
 const routes: Routes = [
-  {path:'signup', component:SingupComponent},
-  {path:'home', component:PageComponent},
-  { path: 'home/cabinet', component: AppComponent },
-  { path: 'home/cabinet/addParking', component: AddParkingComponent}
+  {path: 'parkoff', component: ParkoffComponent },
+  {path: 'signup/user', component:SingupComponent},
+  {path: 'home', component:PageComponent},
+  {path: 'signup/manager', component:ManagerSignupComponent},
+  {path: 'cabinet', component: AppComponent },
+  {path: 'cabinet/addParking', component: AddParkingComponent},
+  {path: 'manager/cabinet', component: ParkingListComponentManager,},
+  {path: 'manager/cabinet/:id', component: ParkingDetailComponent,},
+  {path: 'admin', component: AdminComponent},
+
+  // { path: 'user', component: UserComponent },
+  { path: 'login', component: LoginComponent },
   // {path: '', redirectTo: 'home', pathMatch: 'full'},
 ];
 

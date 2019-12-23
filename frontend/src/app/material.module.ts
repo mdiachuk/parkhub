@@ -43,7 +43,6 @@ import {MatSidenavModule} from "@angular/material/sidenav";
     MatToolbarModule,
     MatSidenavModule,
     MatAutocompleteModule,
-    MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,
     MatCheckboxModule,
@@ -52,7 +51,6 @@ import {MatSidenavModule} from "@angular/material/sidenav";
     MatDialogModule,
     MatExpansionModule,
     MatGridListModule,
-    MatIconModule,
     MatInputModule,
     MatListModule,
     MatMenuModule,
@@ -73,6 +71,8 @@ import {MatSidenavModule} from "@angular/material/sidenav";
     MatToolbarModule,
     MatTooltipModule,
     MatStepperModule,
+    CommonModule,
+    MatCardModule,
   ],
   exports: [
     MatButtonModule,
@@ -81,7 +81,6 @@ import {MatSidenavModule} from "@angular/material/sidenav";
     MatToolbarModule,
     MatSidenavModule,
     MatAutocompleteModule,
-    MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,
     MatCheckboxModule,
@@ -93,7 +92,6 @@ import {MatSidenavModule} from "@angular/material/sidenav";
     MatIconModule,
     MatInputModule,
     MatListModule,
-    MatMenuModule,
     MatNativeDateModule,
     MatPaginatorModule,
     MatProgressBarModule,
@@ -108,9 +106,9 @@ import {MatSidenavModule} from "@angular/material/sidenav";
     MatSortModule,
     MatTableModule,
     MatTabsModule,
-    MatToolbarModule,
     MatTooltipModule,
-    MatStepperModule
+    MatStepperModule,
+    CommonModule,
   ]
 })
 

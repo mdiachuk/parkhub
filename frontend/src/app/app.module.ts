@@ -1,4 +1,3 @@
-
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
@@ -12,14 +11,37 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatInputModule} from "@angular/material/input";
 import {MatCardModule} from "@angular/material/card";
 
-import { MatPaginatorModule, MatProgressSpinnerModule,
-  MatSortModule, MatTableModule } from "@angular/material";
+import {PageComponent} from './homePage/homePage.component';
+import {ParkingListComponent} from './parking-list/parking-list.component';
+import {ParkingListComponentManager} from './parking-list-manager/parking-list.component';
 
-import { PageComponent } from './homePage/homePage.component';
-import { ParkingListComponent } from './parking-list/parking-list.component';
-import { ParkingService} from "./service/http-client.service";
+import {ParkingService} from "./service/http-client.service";
 import {AddParkingComponent} from "./add-parking/add-parking.component";
+import {ParkingsComponent} from "./parkings/parkings.component";
+import {ParkingDetailComponent} from "./parking-detail/parking-detail.component";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatButtonModule} from "@angular/material/button";
+import {MatListModule} from "@angular/material/list";
+import {MatDividerModule} from "@angular/material/divider";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {ManagerSignupComponent} from "./manager-signup/manager-signup.component";
+import {AdminComponent} from "./admin/admin.component";
 
+import {
+  MatPaginatorModule,
+  MatProgressSpinnerModule,
+  MatSortModule,
+  MatTableModule,
+  MatSelectModule,
+  MatIconModule,
+  MatCheckboxModule,
+  MatSnackBarModule
+} from "@angular/material";
+// import {UserComponent} from "./user/user.component";
+import {LoginComponent} from "./login/login.component";
+import {AlertDialogComponent} from "./alert-dialog/alert-dialog.component";
+import {ParkoffComponent} from "./parkoff/parkoff.component";
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 @NgModule({
@@ -36,17 +58,38 @@ import {AddParkingComponent} from "./add-parking/add-parking.component";
     MatPaginatorModule,
     MatSortModule,
     MatProgressSpinnerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatListModule,
+    MatSelectModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatCheckboxModule,
+    MatSnackBarModule,
+    MatDialogModule
+
   ],
   declarations: [
     AppComponent,
     SingupComponent,
     PageComponent,
     ParkingListComponent,
-    AddParkingComponent
+    AddParkingComponent,
+    ParkingListComponentManager,
+    ParkingsComponent,
+    ParkingDetailComponent,
+    ManagerSignupComponent,
+    AdminComponent,
+    LoginComponent,
+    ParkoffComponent,
+    AlertDialogComponent
+    // UserComponent
   ],
   providers: [ParkingService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AlertDialogComponent]
 })
 export class AppModule {
 }
