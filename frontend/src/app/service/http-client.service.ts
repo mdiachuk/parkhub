@@ -10,11 +10,11 @@ import { Login } from '../interfaces/login';
 
 export class User {
   constructor(
-    public name: string,
-    public secondname: string,
+    public firstName: string,
+    public lastName: string,
     public customer: Customer,
     public email: string,
-    public pass: string,
+    public password: string,
     public role: UserRole,
     public token: string
   ) {
@@ -54,7 +54,9 @@ export class LoginService {
 
   login(login: Login): Observable<User> {
     const body = {email: login.email, password: login.password};
-    return this.http.post<User>('/api/login', body);
+    return this.http.post<User>('http://localhost:8081/api/login', body);
+
+    // return this.http.post<User>('/api/login', body);
   }
 }
 
@@ -70,7 +72,7 @@ export class HttpClientService {
 
   public createUser(user) {
     console.log("SingUp User");
-    return this.httpClient.post<User>("http://localhost:8081/api/v1/singup", user);
+    return this.httpClient.post<User>("http://localhost:8081/api/v1/singup/user", user);
   }
 
 }

@@ -11,7 +11,7 @@ import ua.com.parkhub.persistence.entities.User;
 import ua.com.parkhub.service.SingUpService;
 
 @RestController
-@RequestMapping({"/api/v1/singup"})
+@RequestMapping({"/v1/singup"})
 public class SingUpController {
 
     @Autowired

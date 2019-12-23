@@ -1,6 +1,7 @@
 package ua.com.parkhub.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.persistence.entities.User;
@@ -17,6 +18,9 @@ public class SingUpService {
 
     @Autowired
     public CustomerDAO customerDAO;
+
+    @Autowired
+    public PasswordEncoder passwordEncoder;
     /**
      * To create new user
      * @param user
@@ -58,14 +62,15 @@ public class SingUpService {
     private boolean emptyField (User user) {
             return (user.getCustomer().getPhoneNumber().length()==0||
                     user.getEmail().length()==0||
-                    user.getName().length()==0||
-                    user.getPass().length()==0||
-                    user.getSecondname().length()==0||
+                    user.getFirstName().length()==0||
+                    user.getPassword().length()==0||
+                    user.getLastName().length()==0||
                     user.getRole().getId()!=1)?false:true;
     }
 
     private boolean addUser(User user) {
         user.getCustomer().setActive(true);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDAO.addElement(user);
         return true;
 

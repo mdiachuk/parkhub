@@ -7,18 +7,18 @@
   <mat-card-content>
     <mat-form-field>
       <mat-label>Name</mat-label>
-      <input type="text"  matInput  placeholder="Name" [(ngModel)]="users.name"  name="Name"  required>
+      <input type="text"  matInput  placeholder="First Name" [(ngModel)]="users.firstName"  name="First Name"  required>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Second Name</mat-label>
-      <input type="text" matInput  placeholder="Second Name" [(ngModel)]="users.secondname"  name="Second Name"  required>
+      <input type="text" matInput  placeholder="Last Name" [(ngModel)]="users.lastName"  name="Last Name"  required>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Telephone</mat-label>
       <input type="tel" matInput  placeholder="Telephone"
-             [(ngModel)]="customer.phoneNumber"  name="Telephone"  required pattern="[0-9]{10}">
+             [(ngModel)]="customer.phoneNumber"  name="Phone Number"  required pattern="[0-9]{10}">
     </mat-form-field>
 
     <mat-form-field>
@@ -28,7 +28,7 @@
 
     <mat-form-field>
       <mat-label>Password</mat-label>
-      <input type="password" matInput  placeholder="Password" [(ngModel)]="users.pass"  name="Password"  required>
+      <input type="password" matInput  placeholder="Password" [(ngModel)]="users.password"  name="Password"  required>
     </mat-form-field>
 
     <mat-form-field>

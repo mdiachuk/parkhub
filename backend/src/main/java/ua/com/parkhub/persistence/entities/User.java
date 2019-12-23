@@ -17,10 +17,10 @@ public class User implements Entity {
     private Long id;
 
     @Column(name = "first_name")
-    private String name;
+    private String firstName;
 
     @Column(name = "last_name")
-    private String secondname;
+    private String lastName;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
@@ -31,7 +31,7 @@ public class User implements Entity {
     private String email;
 
     @Column(name = "password")
-    private String pass;
+    private String password;
 
     @OneToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id")
@@ -48,20 +48,20 @@ public class User implements Entity {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getSecondname() {
-        return secondname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSecondname(String secondname) {
-        this.secondname = secondname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Customer getCustomer() {
@@ -80,12 +80,12 @@ public class User implements Entity {
         this.email = email;
     }
 
-    public String getPass() {
-        return pass;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 
@@ -103,28 +103,28 @@ public class User implements Entity {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return Objects.equals(id, user.id) &&
-                Objects.equals(name, user.name) &&
-                Objects.equals(secondname, user.secondname) &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName) &&
                 Objects.equals(customer, user.customer) &&
                 Objects.equals(email, user.email) &&
-                Objects.equals(pass, user.pass) &&
+                Objects.equals(password, user.password) &&
                 Objects.equals(role, user.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, secondname, customer, email, pass, role);
+        return Objects.hash(id, firstName, lastName, customer, email, password, role);
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", secondname='" + secondname + '\'' +
+                ", name='" + firstName + '\'' +
+                ", secondname='" + lastName + '\'' +
                 ", customer=" + customer +
                 ", email='" + email + '\'' +
-                ", pass='" + pass + '\'' +
+                ", pass='" + password + '\'' +
                 ", role=" + role +
                 '}';
     }

@@ -1,10 +1,9 @@
 package ua.com.parkhub.persistence.entities;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -13,12 +12,12 @@ import java.util.Objects;
 public class UserRole implements Serializable {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "roleName")
     @NotNull
-//    @Size(min = 3, max = 50)
+    @Size(min = 3, max = 50)
     private String roleName;
 
 

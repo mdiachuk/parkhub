@@ -15,7 +15,7 @@ export class SingupComponent implements OnInit {
 
   userRole:UserRole = new UserRole("1")
 
-  users:User = new User("","",this.customer,"","",this.userRole);
+  users:User = new User("","",this.customer,"","",this.userRole,"");
 
   confirmPass:ConfirmPass = new ConfirmPass("");
 
@@ -28,11 +28,11 @@ export class SingupComponent implements OnInit {
   }
 
   singUpUser(): void {
-    if (this.users.pass==this.confirmPass.confirmPass){
+    if (this.users.password==this.confirmPass.confirmPass){
       this.httpClientService.createUser(this.users)
         .subscribe( data => {
             alert("User SingUp");
-            window.location.href='/';
+            window.location.href='/home';
           },
           err => {
             alert("Email or Telephone are use");

@@ -90,6 +90,7 @@ import {MatDialogModule} from "@angular/material/dialog";
   providers: [ParkingService],
   bootstrap: [AppComponent],
   entryComponents: [AlertDialogComponent]
+
 })
 export class AppModule {
 }
