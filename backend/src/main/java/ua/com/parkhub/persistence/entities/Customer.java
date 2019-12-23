@@ -1,11 +1,11 @@
 package ua.com.parkhub.persistence.entities;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @javax.persistence.Entity
-@Table(name = "customer"
-        , schema="park_hub"
+@Table(name = "customer", schema="park_hub"
 )
 public class Customer implements ua.com.parkhub.persistence.entities.Entity {
 
@@ -15,7 +15,6 @@ public class Customer implements ua.com.parkhub.persistence.entities.Entity {
     private Long id;
 
     @Column (name = "phone_number")
-//    @Pattern(regexp = "^((\\+[1-9]?[0-9])|0)?[0-9][0-9]{10}$")
     private String phoneNumber;
 
     @Column (name = "is_active")
@@ -25,22 +24,14 @@ public class Customer implements ua.com.parkhub.persistence.entities.Entity {
              fetch = FetchType.LAZY, optional = false)
     private User user;
 
-    public Customer() {
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+    @OneToMany(mappedBy = "customer")
+    private List<SupportTicket> supportTickets;
 
     public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -60,22 +51,37 @@ public class Customer implements ua.com.parkhub.persistence.entities.Entity {
         isActive = active;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<SupportTicket> getSupportTickets() {
+        return supportTickets;
+    }
+
+    public void setSupportTickets(List<SupportTicket> supportTickets) {
+        this.supportTickets = supportTickets;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return id == customer.id &&
-                isActive == customer.isActive &&
-                Objects.equals(phoneNumber, customer.phoneNumber)
-                && Objects.equals(user, customer.user);
+        return isActive == customer.isActive &&
+                Objects.equals(id, customer.id) &&
+                Objects.equals(phoneNumber, customer.phoneNumber) &&
+                Objects.equals(user, customer.user) &&
+                Objects.equals(supportTickets, customer.supportTickets);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, phoneNumber, isActive,
-                user
-        );
+        return Objects.hash(id, phoneNumber, isActive, user, supportTickets);
     }
 
     @Override
@@ -84,8 +90,8 @@ public class Customer implements ua.com.parkhub.persistence.entities.Entity {
                 "id=" + id +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", isActive=" + isActive +
-                ", user=" + user + '}';
+                ", user=" + user +
+                ", supportTickets=" + supportTickets +
+                '}';
     }
-
-
 }

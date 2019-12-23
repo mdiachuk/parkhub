@@ -1,5 +1,6 @@
 package ua.com.parkhub.persistence.impl;
 
+import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.persistence.IElementDAO;
 
 import javax.persistence.EntityManager;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+
 public class ElementDAO<E> implements IElementDAO<E> {
 
     @PersistenceContext
@@ -24,7 +26,7 @@ public class ElementDAO<E> implements IElementDAO<E> {
     public ElementDAO(Class<E> elementClass) {
         this.elementClass = elementClass;
     }
-
+@Transactional
     @Override
     public void addElement(E element) {
         emp.persist(element);
@@ -32,12 +34,17 @@ public class ElementDAO<E> implements IElementDAO<E> {
 
     @Override
     public void updateElement(E element) {
-        emp.refresh(element);
+        emp.persist(element);
     }
 
+//    @Override
+//    public E findElementById(long id) {
+//        return emp.find(elementClass, id);
+//    }
     @Override
-    public E findElementById(long id) {
-        return emp.find(elementClass, id);
+    public Optional<E> findElementById(long id) {
+            E element = emp.find( elementClass, id);
+            return Optional.ofNullable(element);
     }
 
     @Override
@@ -66,10 +73,8 @@ public class ElementDAO<E> implements IElementDAO<E> {
             E element = emp.createQuery(criteriaQuery).getSingleResult();
             return Optional.of(element);
         } catch (NoResultException e1) {
-//            logger.debug(e1.getMessage());
             return Optional.empty();
-        } catch (Exception e2) {
-//            logger.error(e2.getMessage(), e2);
+        }  catch (Exception e2) {
             throw new UnsupportedOperationException();
         }
     }

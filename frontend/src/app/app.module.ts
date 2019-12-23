@@ -42,6 +42,13 @@ import {LoginComponent} from "./login/login.component";
 import {AlertDialogComponent} from "./alert-dialog/alert-dialog.component";
 import {ParkoffComponent} from "./parkoff/parkoff.component";
 import {MatDialogModule} from "@angular/material/dialog";
+import {SlotsComponent} from "./slots/slots.component";
+import {BookingDetailComponent} from "./bookings/booking-detail/booking-detail.component";
+import {BookingsComponent} from "./bookings/bookings.component";
+import {MatChipsModule} from "@angular/material/chips";
+import {ParkingsComponentSlots} from "./parkings-ad/parkings.component";
+import {ParkingDetailSlotsComponent} from "./parkings-ad/parking-detail/parking-detail.component";
+import {SlotService} from "./serviceSlot/slot.service";
 
 
 @NgModule({
@@ -68,7 +75,9 @@ import {MatDialogModule} from "@angular/material/dialog";
     MatToolbarModule,
     MatCheckboxModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+
+    MatChipsModule,
 
   ],
   declarations: [
@@ -84,13 +93,18 @@ import {MatDialogModule} from "@angular/material/dialog";
     AdminComponent,
     LoginComponent,
     ParkoffComponent,
-    AlertDialogComponent
+    AlertDialogComponent,
+    SlotsComponent,
+    ParkingDetailSlotsComponent,
+    ParkingsComponentSlots,
+    BookingDetailComponent,
+    BookingsComponent
+
     // UserComponent
   ],
-  providers: [ParkingService],
+  providers: [ParkingService, SlotService],
   bootstrap: [AppComponent],
   entryComponents: [AlertDialogComponent]
-
 })
 export class AppModule {
 }

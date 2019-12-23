@@ -19,7 +19,7 @@ export class ManagerSignupComponent implements OnInit {
   isCreated: boolean;
 
   constructor(private managerService: ManagerService, private fb: FormBuilder,
-    private http: HttpClient, private snackBar: MatSnackBar) { }
+              private http: HttpClient, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.signupForm = this.fb.group({

@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "/api/*":{
     "target":"http://localhost:8080",
     "secure": false,
@@ -6,3 +7,11 @@
     "changeOrigin": false
   }
 }
+=======
+    "/api/*": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "logLevel": "debug"
+    }
+}
+>>>>>>> 442a53eecec877d891fcb5b4290ec91a2e940c43

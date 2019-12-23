@@ -3,6 +3,7 @@ package ua.com.parkhub.dto;
 public enum  RoleDTO {
     ADMIN("ADMIN"),
     USER("USER"),
+    PENDING("PENDING"),
     MANAGER("MANAGER");
 
     private String role;

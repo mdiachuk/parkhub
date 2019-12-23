@@ -1,0 +1,33 @@
+<ul class="parking">
+<div *ngIf="parking">
+  <mat-card class="parking-card">
+    <mat-card-header>
+      <div mat-card-avatar class="parking-header-image"></div>
+      <mat-card-title>{{parking.name}}</mat-card-title>
+      <mat-card-subtitle>{{parking.address}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Park Hub">
+    <mat-card-content>
+      <p>Price per hour: {{parking.tariff}}</p>
+      <mat-chip-list aria-label="Slot selection">
+        <li *ngFor="let slot of parking.slots">
+            <div *ngIf="slot.reserved || !slot.active">
+              <mat-chip color="accent" disabled>{{slot.slotNumber}} </mat-chip>
+            </div>
+            <a [routerLink]="['/booking']" [queryParams]="{slot: slot.id}">
+            <div *ngIf="!slot.reserved">
+              <mat-chip color="primary" selected>{{slot.slotNumber}} </mat-chip>
+            </div>
+          </a>
+        </li>
+      </mat-chip-list>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button>LIKE</button>
+      <button mat-button>SHARE</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+</ul>
+
+

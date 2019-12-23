@@ -72,7 +72,7 @@ export class HttpClientService {
 
   public createUser(user) {
     console.log("SingUp User");
-    return this.httpClient.post<User>("http://localhost:8081/api/v1/singup/user", user);
+    return this.httpClient.post<User>("http://localhost:8081/api/signup/user", user);
   }
 
 }
@@ -125,7 +125,7 @@ export class ManagerService {
 
   registerManager(manager: Manager) {
 
-    return this.http.post('/signup/manager', manager);
+    return this.http.post('http://localhost:8081/api/signup/manager', manager);
   }
 }
 

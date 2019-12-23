@@ -7,8 +7,9 @@ public interface IElementDAO<E> {
 
     void addElement(E element);
     void updateElement(E element);
-    E findElementById(long id);
+    Optional<E> findElementById(long id);
     List<E> findAll();
     void deleteElement(E element);
+
     <F> Optional<E> findOneByFieldEqual(String fieldName, F fieldValue);
 }

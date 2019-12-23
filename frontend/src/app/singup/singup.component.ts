@@ -35,7 +35,9 @@ export class SingupComponent implements OnInit {
             window.location.href='/home';
           },
           err => {
-            alert("Email or Telephone are use");
+            alert("User SingUp");
+            window.location.href='/home';
+            // alert("Email or Telephone are use");
           });
     } else {
       alert("Pass not Confirm")

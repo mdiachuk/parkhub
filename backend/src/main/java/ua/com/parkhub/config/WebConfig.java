@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
@@ -23,7 +24,11 @@ public class WebConfig implements WebMvcConfigurer {
     //https://www.baeldung.com/spring-mvc-tutorial
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
+
 }

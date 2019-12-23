@@ -29,9 +29,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     public UserDTO loginUser(LoginDTO user) {
         return userDAO.findUserByEmail(user.getEmail())
                 .filter(
-//                        userEntity -> user.getPassword().equals(userEntity.getPassword())
                         userEntity -> passwordEncoder.matches(user.getPassword(), userEntity.getPassword())
-//                        TODO: change after Max`s merge
                 )
                 .map(UserMapper::detach)
                 .orElseThrow(() -> new PermissionException("Please enter valid credentials!"));

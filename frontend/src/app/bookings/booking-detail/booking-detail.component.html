@@ -1,0 +1,38 @@
+<div class="booking-container"> 
+    <section>
+        <form [formGroup]="bookingForm" (submit)="saveReactive()">
+            <div>
+            <br>
+            <br>
+               
+                <mat-form-field>
+                    <input matInput type="text" formControlName="carNumber" placeholder="car number"/>
+                </mat-form-field>
+        </div>
+            <br>
+            <br>
+            <div>
+                <mat-form-field>
+                    <input matInput type="text" formControlName="phoneNumber" placeholder="phone number"/>
+                </mat-form-field>
+        </div>
+            <br>
+            <br>
+            <button type="submit" color="primary" mat-button (click)="openSnackBar()" aria-label="snack-bar">
+                Submit
+              </button>
+        </form>
+    </section>
+</div>
+
+
+  
+
+
+
+
+  
+
+
+
+
