@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ParkingService} from "../parking.service";
-import { ParkingDetail} from '../parking-detail';
+import { ParkingService} from "../parking-manager/parking.service";
+import { ParkingDetail} from '../parking-manager/parking-detail';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminService } from '../service/admin.service'
+import { AdminService} from "../service/http-client.service";
 import { Admin } from '../Classes/admin'
 import { ActivatedRoute, Router} from '@angular/router'
 import { HttpClient } from '@angular/common/http'
@@ -24,7 +24,7 @@ export class AdminComponent implements OnInit {
       this.admin.userRole = this.roleControl.value;
       this.adminService.updateRole(this.admin);
   }
-  
+
 
   constructor(
     private route: ActivatedRoute,
@@ -34,7 +34,7 @@ export class AdminComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-  
+
   }
- 
+
 }

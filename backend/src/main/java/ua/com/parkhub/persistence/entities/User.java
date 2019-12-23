@@ -1,47 +1,44 @@
 package ua.com.parkhub.persistence.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.io.Serializable;
-import java.util.List;
+import org.springframework.stereotype.Component;
 
-@Entity
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import java.util.Objects;
+
+@Component
+@javax.persistence.Entity
 @Table(name = "user", schema = "park_hub")
-public class User implements Serializable {
+public class User implements Entity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "first_name")
-    @NotNull
-    private String firstName;
+    private String name;
 
     @Column(name = "last_name")
-    @NotNull
-    private String lastName;
+    private String secondname;
 
-    @Column(unique = true)
-    @NotNull
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    private Customer customer;
+
+    @Column(name = "email")
+    @Email
     private String email;
 
     @Column(name = "password")
-    @NotNull
-    @Size(min = 6, max = 60)
-    private String password;
-
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private UserRole role;
+    private String pass;
 
     @OneToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
+    private UserRole role;
 
-    @ManyToMany(mappedBy = "solvers")
-    private List<SupportTicket> tickets;
+    public User() {
+    }
 
     public User() {
     }
@@ -60,44 +57,20 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getSecondname() {
+        return secondname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public UserRole getRole() {
-        return role;
-    }
-
-    public void setRole(UserRole role) {
-        this.role = role;
+    public void setSecondname(String secondname) {
+        this.secondname = secondname;
     }
 
     public Customer getCustomer() {
@@ -108,11 +81,60 @@ public class User implements Serializable {
         this.customer = customer;
     }
 
-    public List<SupportTicket> getTickets() {
-        return tickets;
+    public String getEmail() {
+        return email;
     }
 
-    public void setTickets(List<SupportTicket> tickets) {
-        this.tickets = tickets;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(secondname, user.secondname) &&
+                Objects.equals(customer, user.customer) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(pass, user.pass) &&
+                Objects.equals(role, user.role);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, secondname, customer, email, pass, role);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", secondname='" + secondname + '\'' +
+                ", customer=" + customer +
+                ", email='" + email + '\'' +
+                ", pass='" + pass + '\'' +
+                ", role=" + role +
+                '}';
     }
 }

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-import { ParkingServiceService } from '../parking-service.service';
-import { Parking } from '../parking';
+import { ParkingServiceService} from "../service/http-client.service";
+import { Parking } from '../parking-manager/parking';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -13,19 +13,19 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./add-parking.component.scss']
 })
 export class AddParkingComponent {
-  
+
   formGroup: FormGroup;
   CityArray: any = ['Kyiv', 'Lviv', 'Chernivtsi', 'Dnipro', 'Kharkiv'];
   nameregex: RegExp = /^[a-zA-Z 0-9-]+$/
-  onlyPositiveIntegersregex: RegExp = /^[1-9]+[0-9]*$/  
+  onlyPositiveIntegersregex: RegExp = /^[1-9]+[0-9]*$/
   streetregex: RegExp = /^([a-zA-Z -]+)$/
   buildingregex: RegExp = /^([a-zA-Z0-9 -]+)$/
   parkNameValidator: any;
- // MatSnackBar: any;
-  
-  constructor(private formBuilder: FormBuilder,private route: ActivatedRoute, 
+  MatSnackBar: any;
+
+  constructor(private formBuilder: FormBuilder,private route: ActivatedRoute,
     private router: Router,private snackBar: MatSnackBar,
-       private parkingService: ParkingServiceService) { 
+       private parkingService: ParkingServiceService) {
        }
 
   ngOnInit() {
@@ -56,19 +56,19 @@ export class AddParkingComponent {
   getErrorSlotsNumber() {
     return this.formGroup.get('slotsNumber').hasError('required') ? 'Field is required' :
       this.formGroup.get('slotsNumber').hasError('pattern') ? 'Not a valid number of slots.Should be positive integer': '';
-       
+
   }
 
   getErrorTariff() {
     return this.formGroup.get('tariff').hasError('required') ? 'Field is required' :
       this.formGroup.get('tariff').hasError('pattern') ? 'Not a valid tariff.Should be positive integer': '';
-       
+
   }
 
   getErrorStreet() {
     return this.formGroup.get('street').hasError('required') ? 'Field is required' :
       this.formGroup.get('street').hasError('pattern') ? 'Not a valid name of street.': '';
-       
+
   }
   getErrorBuilding() {
     return this.formGroup.get('building').hasError('required') ? 'Field is required ' :
@@ -99,7 +99,7 @@ export class AddParkingComponent {
       this.openSnackBar1((err.error));
     });
 
-    
+
 }
 
 

@@ -1,0 +1,83 @@
+<div class="container" *ngIf="!isCreated">
+    <ul>
+        <li>
+            <div class="label">Please, fill in this form to become our partner</div>
+        </li>
+        <form [formGroup]="signupForm">
+            <li class="name-block">
+                <mat-form-field>
+                    <input matInput formControlName="firstName" placeholder="First Name" required minlength="1"
+                        maxlength="50">
+                </mat-form-field>
+                &nbsp;
+                <mat-form-field>
+                    <input matInput formControlName="lastName" placeholder="Last Name" required minlength="1"
+                        maxlength="50">
+                </mat-form-field>
+            </li>
+            <li>
+                <mat-form-field>
+                    <input matInput formControlName="companyName" placeholder="Company" required minlength="1"
+                        maxlength="50">
+                </mat-form-field>
+                &nbsp;
+                <mat-form-field>
+                    <input matInput formControlName="usreouCode" placeholder="USREOU" required pattern="[0-9]{8}">
+                    <mat-error>Must contain 8 numbers</mat-error>
+                </mat-form-field>
+            </li>
+            <li>
+                <mat-form-field>
+                    <input matInput type="email" formControlName="email" placeholder="Email" required
+                        pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}">
+                    <mat-error>Invalid email format</mat-error>
+                </mat-form-field>
+                &nbsp;
+                <mat-form-field>
+                    <input matInput type="tel" formControlName="phoneNumber" placeholder="Phone Number" required
+                        pattern="^\+?3?8?(0\d{9})$">
+                    <mat-error>Invalid phone number format</mat-error>
+                </mat-form-field>
+            </li>
+            <li>
+                <mat-form-field>
+                    <input matInput formControlName="password" type="password" placeholder="Password" required
+                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}">
+                    <mat-error><small>Must contain at least one number, one uppercase and one lowercase letter, and at
+                            least 6 characters</small></mat-error>
+                </mat-form-field>
+                &nbsp;
+                <mat-form-field>
+                    <input matInput formControlName="confirmPassword" type="password" placeholder="Confirm Password"
+                        required>
+                    <mat-error *ngIf="signupForm.get('confirmPassword').errors &&
+                signupForm.get('confirmPassword').errors.ConfirmPassword"><small>Passwords must match!</small>
+                    </mat-error>
+                </mat-form-field>
+            </li>
+            <li class="comment-block">
+                <mat-form-field class="comment">
+                    <textarea matInput formControlName="comment" placeholder="Comment" maxlength="200"
+                        cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5"></textarea>
+                    <mat-hint><small>Max 200 characters</small></mat-hint>
+                </mat-form-field>
+            </li>
+            <li class="checkbox">
+                <mat-checkbox required formControlName="checkbox">I agree with terms, conditions and privacy
+                    policy
+                </mat-checkbox>
+            </li>
+        </form>
+        <li class="buttons-block">
+            <button class="reset" mat-flat-button (click)="reset()">Reset</button>
+            &nbsp;
+            <button class="submit" mat-raised-button [disabled]="!signupForm.valid" (click)="register()">Submit</button>
+        </li>
+    </ul>
+</div>
+
+<div class="success" *ngIf="isCreated">
+    <div><img src="assets/tick.png" class="success-image"></div>
+    <div class="success-message">Your registration request<br>was sent to the administrator!</div>
+    <div class="homepage-link"><a href="home" class="homepage-link">Go to the homepage</a></div>
+</div>

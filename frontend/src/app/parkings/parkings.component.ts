@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
-import { ParkingService} from "../parking.service";
-import { ParkingItem } from '../parking-item';
+import { ParkingService} from "../parking-manager/parking.service";
+import { ParkingItem } from '../parking-manager/parking-item';
 
 
 

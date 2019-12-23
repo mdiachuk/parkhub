@@ -1,2 +1,30 @@
+<div>
+  <section>
+    <div>
+      <mat-toolbar color="primary">
 
-<router-outlet></router-outlet>
+        <span class="example-spacer"></span>
+        <div fxShow="true" fxHide.lt-md="true">
+          <a mat-button [routerLink]='["home"]'>Home</a>
+          <a mat-button [routerLink]='["parkoff"]'>Park Off</a>
+          <a mat-button [routerLink]='["cabinet/addParking"]'>Add Parking</a>
+          <a mat-button [routerLink]='["admin"]'>Admin Cabinet</a>
+          <a mat-button [routerLink]='["signup/user"]'>Sing Up</a>
+          <a mat-button [routerLink]='["signup/manager"]'>Sing Up Manager</a>
+          <a mat-button [routerLink]='["login"]'>Login</a>
+
+        </div>
+        <span class="fill-remaining-space"> Park Hub</span>
+
+      </mat-toolbar>
+      <mat-sidenav-container fxFlexFill class="example-container">
+        <mat-sidenav-content fxFlexFill>
+<!--          CONTENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+        </mat-sidenav-content>
+      </mat-sidenav-container>
+    </div>
+  </section>
+
+
+  <router-outlet></router-outlet>
+</div>

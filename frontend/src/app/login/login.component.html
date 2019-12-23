@@ -1,0 +1,27 @@
+
+  <div class="container">
+    <ul>
+        <li>
+          <div class="header">Login</div>
+        </li>
+        <form [formGroup]="loginForm">
+          <li>
+            <mat-form-field>
+              <input matInput formControlName="username" placeholder="Username" required>
+              <mat-error>Required</mat-error>
+            </mat-form-field>
+          </li>
+          <li>
+            <mat-form-field>
+              <input type="password" matInput formControlName="password" placeholder="Password" required>
+              <mat-error>Required</mat-error>
+            </mat-form-field>
+          </li>
+        </form>
+        <li>
+          <mat-card-actions>
+            <button class="login" mat-raised-button  (click)="login()" color="primary">Login</button>
+          </mat-card-actions>
+        </li>
+    </ul>
+  </div>
