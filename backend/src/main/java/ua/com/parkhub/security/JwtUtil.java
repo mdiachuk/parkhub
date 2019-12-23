@@ -30,8 +30,8 @@ public class JwtUtil {
     @Value("${jwt.refreshing_minutes}")
     private int jwtRefreshingMinutes;
 
-    private final int millisecondsInSecond = 1000;
-    private final int secondsInMinute = 60;
+    private final int MILLISECONDS_IN_SECOND = 1000;
+    private final int SECONDS_IN_MINUTE = 60;
 
     private static Logger logger = LoggerFactory.getLogger(JwtUtil.class.getSimpleName());
 
@@ -44,12 +44,12 @@ public class JwtUtil {
                 .claim("role", role)
                 .claim("id", id)
                 .setExpiration(generateExpDate())
-                .signWith(Constants.jwtSignatureAlgorithm, jwtSecret)
+                .signWith(Constants.JWT_SIGNATURE_ALGORITHM, jwtSecret)
                 .compact();
     }
 
     private Date generateExpDate() {
-        return new Date(System.currentTimeMillis() + jwtLifeMinutes * secondsInMinute * millisecondsInSecond);
+        return new Date(System.currentTimeMillis() + jwtLifeMinutes * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND);
     }
 
     public Authentication getAuthentication(String token) throws InvalidTokenException {

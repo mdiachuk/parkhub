@@ -54,6 +54,10 @@ public class UserDTO {
         return id;
     }
 
+    public int getIdInt(){
+        return ((int) id);
+    }
+
     public void setId(long id) {
         this.id = id;
     }

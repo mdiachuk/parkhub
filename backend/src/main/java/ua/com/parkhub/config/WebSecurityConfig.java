@@ -8,10 +8,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import ua.com.parkhub.filters.JwtAuthenticationFilter;
 
-/*
-    This class extends the WebSecurityConfigurerAdapter.
-    This is a convenience class that allows customization to both WebSecurity and HttpSecurity.
- */
 
 @Configuration
 @EnableWebSecurity
@@ -28,7 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         web.ignoring()
                 .antMatchers("/api/login");
     }

@@ -31,7 +31,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
                 .filter(
                         userEntity -> user.getPassword().equals(userEntity.getPassword())
 //                        userEntity -> passwordEncoder.matches(user.getPassword(), userEntity.getPassword())
-//                        TODO: change after Max`s marge
+//                        TODO: change after Max`s merge
                 )
                 .map(UserMapper::detach)
                 .orElseThrow(() -> new PermissionException("Please enter valid credentials!"));
