@@ -1,19 +1,23 @@
 package ua.com.parkhub.service;
 
-import org.hibernate.Session;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ua.com.parkhub.dto.ParkingDTO;
+import ua.com.parkhub.mapper.ParkingRequestMapper;
+import ua.com.parkhub.mappers.ParkingMapper;
+import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.model.ParkingModelDTO;
+import ua.com.parkhub.persistence.entities.Address;
+import ua.com.parkhub.persistence.entities.Parking;
 import ua.com.parkhub.persistence.entities.Slot;
+import ua.com.parkhub.persistence.impl.AddressDAO;
 import ua.com.parkhub.persistence.impl.ParkingDAO;
+import ua.com.parkhub.persistence.impl.UserDAO;
 
 import java.util.ArrayList;
 import java.util.List;
-import ua.com.parkhub.persistence.entities.Parking;
+import java.util.stream.Collectors;
 
 @Service
 public class ParkingService {
@@ -25,7 +29,7 @@ public class ParkingService {
     private final ParkingRequestMapper parkingRequestMapper;
 
     @Autowired
-    public ParkingService(ParkingDAO parkingDAO){
+    public ParkingService(ParkingDAO parkingDAO, AddressDAO addressDAO, UserDAO userDAO, ParkingMapper parkingMapper){
         this.parkingDAO = parkingDAO;
         this.addressDAO = addressDAO;
         this.parkingMapper = parkingMapper;
