@@ -1,37 +1,48 @@
 package ua.com.parkhub.service;
 
-import org.mapstruct.factory.Mappers;
+import org.hibernate.Session;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ua.com.parkhub.dto.ShortParkingDTO;
-import ua.com.parkhub.mapper.ParkingRequestMapper;
-import ua.com.parkhub.mappers.ParkingMapper;
-import ua.com.parkhub.model.ParkingModel;
-import ua.com.parkhub.persistence.entities.*;
-import ua.com.parkhub.persistence.impl.*;
+import ua.com.parkhub.dto.ParkingDTO;
+import ua.com.parkhub.model.ParkingModelDTO;
+import ua.com.parkhub.persistence.entities.Slot;
+import ua.com.parkhub.persistence.impl.ParkingDAO;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import ua.com.parkhub.persistence.entities.Parking;
 
 @Service
-@Transactional
 public class ParkingService {
 
-    private final ParkingDAO parkingDAO;
+    private ParkingDAO parkingDAO;
     private final AddressDAO addressDAO;
     private ParkingMapper parkingMapper;
     private final UserDAO userDAO;
     private final ParkingRequestMapper parkingRequestMapper;
 
     @Autowired
-    public ParkingService(ParkingDAO parkingDAO, AddressDAO addressDAO,UserDAO userDAO, ParkingMapper parkingMapper) {
+    public ParkingService(ParkingDAO parkingDAO){
         this.parkingDAO = parkingDAO;
         this.addressDAO = addressDAO;
         this.parkingMapper = parkingMapper;
         this.userDAO = userDAO;
         parkingRequestMapper = Mappers.getMapper( ParkingRequestMapper.class);
+    }
+
+    public List<ParkingDTO> findAllParking(){
+        List<Parking> allParking = parkingDAO.findAll();
+        List<ParkingDTO> parkingDTOList = new ArrayList<>();
+        for (Parking parkingDAO:allParking){
+            ParkingDTO parkingDTO = new ParkingModelDTO().transform(parkingDAO);
+            parkingDTO.setAddress(findAddress(parkingDAO));
+            parkingDTO.setFullness(findFullness(parkingDAO));
+            parkingDTOList.add(parkingDTO);
+        }
+        return parkingDTOList;
     }
 
     public boolean isParkingNameUnique(ParkingModel parkingRequestModel) {
@@ -65,5 +76,29 @@ public class ParkingService {
     public ParkingModel findParkingByIdYaroslav(long id){
 
         return parkingMapper.fromEntityToModel(parkingDAO.findElementById(id));
+    }
+
+    public ParkingDTO findParkingById(long id) {
+        Parking parking = parkingDAO.findElementById(id);
+        ParkingDTO parkingDTO = new ParkingModelDTO().transform(parking);
+        parkingDTO.setAddress(findAddress(parking));
+        parkingDTO.setFullness(findFullness(parking));
+        return parkingDTO;
+    }
+
+    protected String findAddress(Parking parking) {
+        String address="";
+        address =
+                parking.getAddress().getCity()+ " " +
+                parking.getAddress().getStreet() + " "
+                + parking.getAddress().getBuilding();
+        return address;
+    }
+    protected String findFullness(Parking parking){
+        String fullness;
+        int busySlots;
+        busySlots = (int) parking.getSlots().stream().filter(Slot::isReserved).count();
+        fullness = busySlots + "/" + parking.getSlotsNumber();
+        return fullness;
     }
 }

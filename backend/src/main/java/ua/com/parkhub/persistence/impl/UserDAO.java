@@ -12,6 +12,6 @@ public class UserDAO extends ElementDAO<User> {
         super(User.class);
     }
 
-
+>>>>>>>>> Temporary merge branch 2
 }
 
