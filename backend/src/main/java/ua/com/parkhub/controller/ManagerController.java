@@ -27,13 +27,13 @@ public class ManagerController {
         this.parkingMapper = parkingMapper;
     }
 
-    @GetMapping(value = "/home/cabinet")
+    @GetMapping(value = "/manager/cabinet")
     public ResponseEntity<List<ShortParkingDTO>> getAllParkings() {
 
         return ResponseEntity.ok(parkingService.findAll().stream().map(parkingMapper::fromModelToShortDto).collect(Collectors.toList()));
     }
 
-    @GetMapping(value = "/home/cabinet/{parkingId}")
+    @GetMapping(value = "/manager/cabinet/{parkingId}")
     public ResponseEntity<DescribedParkingDTO> getParkingById(@PathVariable("parkingId") String parkingId){
 
         return ResponseEntity.ok(parkingMapper.fromModelToDescribedDto(parkingService.findParkingByIdYaroslav(Long.parseLong(parkingId))));

@@ -18,6 +18,7 @@ import ua.com.parkhub.persistence.impl.UserDAO;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,9 +69,10 @@ public class ParkingService {
         Parking parking = parkingRequestMapper.parkingModelToParking(parkingModel);
         parking.setOwner(userDAO.findElementByIdSimple(id));
         address.setId(null);
+        parking.setId(null);
         parking.setAddress(address);
         addressDAO.addElement(address);
-//        parkingDAO.addElement(parking);
+        parkingDAO.addElement(parking);
     }
 
     public List<ParkingModel> findAll(){

@@ -11,7 +11,7 @@ public class ParkingModel {
 
     private AddressModel addressModel;
 
-    public ParkingModel(long id, String parkingName, int slotsNumber, int tariff, AddressModel addressModel) {
+    public ParkingModel(Long id,String parkingName, int slotsNumber, int tariff, AddressModel addressModel) {
         this.id = id;
         this.parkingName = parkingName;
         this.slotsNumber = slotsNumber;

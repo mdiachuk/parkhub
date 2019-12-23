@@ -13,7 +13,7 @@ import java.util.Optional;
 
 import ua.com.parkhub.persistence.IElementDAO;
 
-public class ElementDAO<E> implements IElementDAO<E> {
+public class ElementDAO<E>  {
 
     @PersistenceContext
     EntityManager emp;
@@ -24,26 +24,26 @@ public class ElementDAO<E> implements IElementDAO<E> {
         this.elementClass = elementClass;
     }
 
-    @Override
+
 
     public void addElement(E element) {
         emp.persist(element);
     }
 
-    @Override
+
     @Transactional
     public void updateElement(E element) {
         emp.persist(element);
     }
 
-    @Override
+
     @Transactional
     public Optional<E> findElementById(long id) {
         return Optional.ofNullable(emp.find( elementClass, id));
     }
 
 
-    @Override
+
     @Transactional
     public List<E> findAll() {
         CriteriaBuilder cb = emp.getCriteriaBuilder();
@@ -54,19 +54,19 @@ public class ElementDAO<E> implements IElementDAO<E> {
         return allQuery.getResultList();
     }
 
-    @Override
+
     @Transactional
     public void deleteElement(E element) {
         emp.remove(element);
     }
-
-    @Override
-    @Transactional
+//
+//    @Override
+//
     public E findElementByIdSimple(long id) {
         return emp.find( elementClass, id);
     }
 
-    @Override
+
     @Transactional
     public <F> Optional<E> findOneByFieldEqual(String fieldName, F fieldValue) {
         CriteriaBuilder criteriaBuilder = emp.getCriteriaBuilder();

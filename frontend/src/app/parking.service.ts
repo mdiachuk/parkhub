@@ -13,7 +13,7 @@ export class ParkingService {
   private parkingUrl: string;
 
   constructor(private http: HttpClient) {
-    this.parkingsUrl = '/api/home/cabinet';
+    this.parkingsUrl = '/api/manager/cabinet';
   }
 
   getAllParkings(): Observable<ParkingItem[]> {
