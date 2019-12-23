@@ -8,7 +8,6 @@ public class Customer extends AbstractModel {
     private Long id;
     private String phoneNumber;
     private boolean isActive = true;
-    //TODO ask Dima about equals
     private List<Booking> bookings;
     private List<SupportTicket> supportTickets;
 
@@ -81,9 +80,6 @@ public class Customer extends AbstractModel {
         sb.append("Customer" + ", id: ").append(id);
         sb.append(", phoneNumber: ").append(phoneNumber);
         sb.append(", isActive: ").append(isActive);
-        //TODO ask Dima about cyclic dependence
-        /*sb.append(", bookings: " + bookings);
-        sb.append(", supportTickets: " + supportTickets);*/
         return sb.toString();
 
     }

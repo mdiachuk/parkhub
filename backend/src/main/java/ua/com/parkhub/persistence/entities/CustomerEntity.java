@@ -17,9 +17,9 @@ public class CustomerEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", length = 13)
+    @Size(min = 13, max = 13)
     @NotNull
-    @Size(min = 5, max = 50)
     private String phoneNumber;
 
     @Column

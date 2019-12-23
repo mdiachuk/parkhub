@@ -1,4 +1,4 @@
-package ua.com.parkhub.util.mapper;
+package ua.com.parkhub.util.validator;
 
 import org.modelmapper.PropertyMap;
 import ua.com.parkhub.dto.BookingDTO;

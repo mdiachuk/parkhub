@@ -38,12 +38,14 @@ public class BookingService implements IBookingService {
         Optional<SlotEntity> optionalSlot = slotDAO.findElementById(slotId);
         if (optionalSlot.isPresent()) {
             SlotEntity slotEntity = optionalSlot.get();
-            slotEntity.setReserved(true);
-            slotDAO.updateElement(slotEntity);
-            return mapper.map(slotEntity, Slot.class);
-        } else {
-            throw new ParkHubException("No available slot found by id :" + slotId);
+            if (slotEntity.isActive() && !slotEntity.isReserved()) {
+                slotEntity.setReserved(true);
+                slotDAO.updateElement(slotEntity);
+                return mapper.map(slotEntity, Slot.class);
+            }
+            throw new ParkHubException("Unfortunately this slot is temporary unavailable");
         }
+        throw new ParkHubException("No available slot found by id :" + slotId);
     }
 
     @Transactional
@@ -51,9 +53,7 @@ public class BookingService implements IBookingService {
         Booking booking = new Booking();
         Customer customer = customerService.findCustomerByPhoneNumberOrAdd(phoneNumber);
         booking.setCustomer(customer);
-        System.out.println(customer);
         booking.setCarNumber(carNumber);
-        System.out.println(carNumber);
         Slot slot = findSlotByIdAndUpdate(slotId);
         booking.setSlot(slot);
         booking.setCheckIn(LocalDateTime.now());

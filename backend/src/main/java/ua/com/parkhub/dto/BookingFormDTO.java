@@ -45,9 +45,9 @@ public class BookingFormDTO implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Slot" + ", slotId: " + slotId);
-        sb.append(", carNumber: " + carNumber);
-        sb.append(", phoneNumber: " + phoneNumber);
+        sb.append("Slot" + ", slotId: ").append(slotId);
+        sb.append(", carNumber: ").append(carNumber);
+        sb.append(", phoneNumber: ").append(phoneNumber);
         return sb.toString();
     }
 }

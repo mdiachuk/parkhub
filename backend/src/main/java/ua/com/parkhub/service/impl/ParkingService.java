@@ -28,17 +28,19 @@ public class ParkingService implements IParkingService {
     @Transactional(readOnly = true)
     public Parking findParkingByIdWithSlotList(long id) {
         ParkingEntity parkingEntity = parkingDAO.findElementById(id)
-                .orElseThrow(()->new ParkHubException("No Parking found with id " + id));
+                .orElseThrow(() -> new ParkHubException("No Parking found with id " + id));
         Hibernate.initialize(parkingEntity.getSlots());
-        System.out.println(parkingEntity);
-        return mapper.map(parkingEntity, Parking.class);
+        if (parkingEntity.isActive()) {
+            return mapper.map(parkingEntity, Parking.class);
+        }
+        throw new ParkHubException("Unfortunately this parking is temporary unavailable");
     }
 
     @Transactional(readOnly = true)
     public List<Parking> findAllParking() {
         List<ParkingEntity> parkingList = parkingDAO.findAll();
-        if(parkingList.isEmpty()) {
-            //TODO
+        if (parkingList.isEmpty()) {
+            throw new ParkHubException("Unfortunately all parkings are temporary unavailable");
         }
         return parkingList.stream()
                 .map(parkingEntity -> mapper.map(parkingEntity, Parking.class))

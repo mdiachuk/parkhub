@@ -49,23 +49,16 @@ public class Payment extends AbstractModel {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Payment)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
-
-        if (price != payment.price) return false;
-        if (isPaid != payment.isPaid) return false;
-        if (!Objects.equals(id, payment.id)) return false;
-        return Objects.equals(booking, payment.booking);
+        return price == payment.price &&
+                Objects.equals(id, payment.id) &&
+                Objects.equals(booking, payment.booking);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + price;
-        result = 31 * result + (isPaid ? 1 : 0);
-        result = 31 * result + (booking != null ? booking.hashCode() : 0);
-        return result;
+        return Objects.hash(id, price, booking);
     }
 
     @Override

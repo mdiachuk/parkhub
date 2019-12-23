@@ -86,31 +86,20 @@ public class Parking extends AbstractModel {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Parking)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         Parking parking = (Parking) o;
-
-        if (slotsNumber != parking.slotsNumber) return false;
-        if (tariff != parking.tariff) return false;
-        if (isActive != parking.isActive) return false;
-        if (!Objects.equals(id, parking.id)) return false;
-        if (!Objects.equals(name, parking.name)) return false;
-        if (!Objects.equals(address, parking.address)) return false;
-        if (!Objects.equals(owner, parking.owner)) return false;
-        return Objects.equals(slots, parking.slots);
+        return slotsNumber == parking.slotsNumber &&
+                tariff == parking.tariff &&
+                isActive == parking.isActive &&
+                Objects.equals(id, parking.id) &&
+                Objects.equals(name, parking.name) &&
+                Objects.equals(address, parking.address) &&
+                Objects.equals(owner, parking.owner);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + slotsNumber;
-        result = 31 * result + tariff;
-        result = 31 * result + (isActive ? 1 : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        result = 31 * result + (owner != null ? owner.hashCode() : 0);
-        result = 31 * result + (slots != null ? slots.hashCode() : 0);
-        return result;
+        return Objects.hash(id, name, slotsNumber, tariff, isActive, address, owner);
     }
 
     @Override

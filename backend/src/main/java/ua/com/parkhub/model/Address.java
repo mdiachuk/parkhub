@@ -1,5 +1,7 @@
 package ua.com.parkhub.model;
 
+import java.util.Objects;
+
 public class Address extends AbstractModel {
 
     private Long id;
@@ -37,6 +39,27 @@ public class Address extends AbstractModel {
 
     public void setBuilding(String building) {
         this.building = building;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return Objects.equals(id, address.id) &&
+                Objects.equals(city, address.city) &&
+                Objects.equals(street, address.street) &&
+                Objects.equals(building, address.building);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, city, street, building);
     }
 
     @Override

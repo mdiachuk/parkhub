@@ -62,26 +62,16 @@ public class SupportTicket extends AbstractModel {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof SupportTicket)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         SupportTicket that = (SupportTicket) o;
-
-        if (isSolved != that.isSolved) return false;
-        if (!Objects.equals(id, that.id)) return false;
-        if (!Objects.equals(description, that.description)) return false;
-        if (!Objects.equals(supportTicketType, that.supportTicketType))
-            return false;
-        return Objects.equals(solvers, that.solvers);
+        return Objects.equals(id, that.id) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(supportTicketType, that.supportTicketType);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (isSolved ? 1 : 0);
-        result = 31 * result + (supportTicketType != null ? supportTicketType.hashCode() : 0);
-        result = 31 * result + (solvers != null ? solvers.hashCode() : 0);
-        return result;
+        return Objects.hash(id, description, supportTicketType);
     }
 
     @Override

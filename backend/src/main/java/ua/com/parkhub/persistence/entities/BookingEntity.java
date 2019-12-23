@@ -17,9 +17,9 @@ public class BookingEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(length = 8)
+    @Size(min = 8, max = 8)
     @NotNull
-    /*@Size(min = 8, max = 10)*/
     private String carNumber;
 
     @Column(name = "check_in")

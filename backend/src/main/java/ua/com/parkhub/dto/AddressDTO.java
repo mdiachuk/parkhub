@@ -1,6 +1,8 @@
 package ua.com.parkhub.dto;
 
-public class AddressDTO {
+import java.io.Serializable;
+
+public class AddressDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private String city;

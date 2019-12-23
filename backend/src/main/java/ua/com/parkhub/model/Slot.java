@@ -51,23 +51,15 @@ public class Slot extends AbstractModel {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Slot)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         Slot slot = (Slot) o;
-
-        if (isReserved != slot.isReserved) return false;
-        if (isActive != slot.isActive) return false;
-        if (!Objects.equals(id, slot.id)) return false;
-        return Objects.equals(slotNumber, slot.slotNumber);
+        return Objects.equals(id, slot.id) &&
+                Objects.equals(slotNumber, slot.slotNumber);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (slotNumber != null ? slotNumber.hashCode() : 0);
-        result = 31 * result + (isReserved ? 1 : 0);
-        result = 31 * result + (isActive ? 1 : 0);
-        return result;
+        return Objects.hash(id, slotNumber);
     }
 
     @Override

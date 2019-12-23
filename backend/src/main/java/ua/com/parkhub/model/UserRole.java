@@ -40,21 +40,15 @@ public class UserRole extends AbstractModel {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof UserRole)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         UserRole userRole = (UserRole) o;
-
-        if (isActive != userRole.isActive) return false;
-        if (!Objects.equals(id, userRole.id)) return false;
-        return Objects.equals(roleName, userRole.roleName);
+        return Objects.equals(id, userRole.id) &&
+                Objects.equals(roleName, userRole.roleName);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (roleName != null ? roleName.hashCode() : 0);
-        result = 31 * result + (isActive ? 1 : 0);
-        return result;
+        return Objects.hash(id, roleName);
     }
 
     @Override

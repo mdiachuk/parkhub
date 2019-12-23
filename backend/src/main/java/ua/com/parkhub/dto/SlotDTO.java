@@ -7,7 +7,7 @@ public class SlotDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private Long id;
     private String slotNumber;
-    //TODO
+    //TODO for front-end displaying
     /*private boolean isReserved;
     private boolean isActive;*/
 
@@ -29,9 +29,9 @@ public class SlotDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "SlotDTO{" +
-                "id=" + id +
-                ", slotNumber='" + slotNumber + '\'' +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("SlotDTO" + ", id: ").append(id);
+        sb.append(", slotNumber: ").append(slotNumber);
+        return sb.toString();
     }
 }
