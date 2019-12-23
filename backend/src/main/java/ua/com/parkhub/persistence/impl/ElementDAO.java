@@ -4,7 +4,6 @@ import ua.com.parkhub.persistence.IElementDAO;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -35,25 +34,6 @@ public class ElementDAO<E> implements IElementDAO<E> {
     @Override
     public E findElementById(long id) {
         return emp.find(elementClass, id);
-    }
-
-    @Override
-    public boolean haveEmail(String email) {
-        Query query =
-                emp.createQuery("SELECT email FROM User WHERE email=:email")
-                        .setParameter("email", email).setMaxResults(1);
-
-        return query.getResultList().size()>0?true:false;
-    }
-
-    @Override
-    public boolean havePhoneNumber(String phoneNumber) {
-
-        Query query =
-                emp.createQuery("SELECT phoneNumber FROM Customer WHERE phone_number=:phoneNumber")
-                        .setParameter("phoneNumber", phoneNumber).setMaxResults(1);
-
-        return query.getResultList().size()>0?true:false;
     }
 
     @Override

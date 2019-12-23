@@ -15,6 +15,7 @@ public class Customer implements ua.com.parkhub.persistence.entities.Entity {
     private Long id;
 
     @Column (name = "phone_number")
+//    @Pattern(regexp = "^((\\+[1-9]?[0-9])|0)?[0-9][0-9]{10}$")
     private String phoneNumber;
 
     @Column (name = "is_active")

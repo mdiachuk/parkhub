@@ -3,6 +3,7 @@ package ua.com.parkhub.persistence.entities;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.Objects;
 
 @Component
@@ -26,6 +27,7 @@ public class User implements Entity {
     private Customer customer;
 
     @Column(name = "email")
+    @Email
     private String email;
 
     @Column(name = "password")
