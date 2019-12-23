@@ -1,4 +1,4 @@
-package ua.com.parkhub.mappers;
+package ua.com.parkhub.mapper;
 
 import org.springframework.stereotype.Component;
 import ua.com.parkhub.dto.DescribedParkingDTO;

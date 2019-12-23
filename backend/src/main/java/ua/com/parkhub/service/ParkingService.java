@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.com.parkhub.dto.ParkingDTO;
 import ua.com.parkhub.mapper.ParkingRequestMapper;
-import ua.com.parkhub.mappers.ParkingMapper;
+import ua.com.parkhub.mapper.ParkingMapper;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.model.ParkingModelDTO;
 import ua.com.parkhub.persistence.entities.Address;
@@ -18,7 +18,6 @@ import ua.com.parkhub.persistence.impl.UserDAO;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,8 +67,6 @@ public class ParkingService {
         Address address = parkingRequestMapper.parkingModelToAddress(parkingModel);
         Parking parking = parkingRequestMapper.parkingModelToParking(parkingModel);
         parking.setOwner(userDAO.findElementByIdSimple(id));
-        address.setId(null);
-        parking.setId(null);
         parking.setAddress(address);
         addressDAO.addElement(address);
         parkingDAO.addElement(parking);

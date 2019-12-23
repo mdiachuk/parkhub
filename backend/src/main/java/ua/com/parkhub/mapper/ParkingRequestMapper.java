@@ -17,8 +17,12 @@ public interface ParkingRequestMapper {
             @Mapping(target = "addressModel.building", source = "building"),
     })
     ParkingModel parkingRequestDTOToParkingModel(ParkingRequestDTO parkingRequestDTO);
+    @Mappings({
+            @Mapping(target = "id", ignore = true)
+    })
     Parking parkingModelToParking(ParkingModel parkingModel);
     @Mappings({
+            @Mapping(target = "id", ignore = true),
             @Mapping(target = "city", source = "addressModel.city"),
             @Mapping(target = "street", source = "addressModel.street"),
             @Mapping(target = "building", source = "addressModel.building"),

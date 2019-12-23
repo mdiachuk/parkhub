@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import ua.com.parkhub.dto.DescribedParkingDTO;
 import ua.com.parkhub.dto.ShortParkingDTO;
-import ua.com.parkhub.mappers.ParkingMapper;
-import ua.com.parkhub.persistence.entities.Parking;
+import ua.com.parkhub.mapper.ParkingMapper;
 import ua.com.parkhub.service.ParkingService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

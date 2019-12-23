@@ -1,4 +1,4 @@
-package ua.com.parkhub.mappers;
+package ua.com.parkhub.mapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
