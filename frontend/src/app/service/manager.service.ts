@@ -7,11 +7,11 @@ import { Manager } from '../model/manager';
 })
 export class ManagerService {
 
-  baseUrl = '/api/manager';
+  baseUrl = '/api/signup';
 
   constructor(private http: HttpClient) { }
 
   registerManager(manager: Manager) {
-    return this.http.post(this.baseUrl + '/signup', manager);
+    return this.http.post(this.baseUrl + '/manager', manager);
   }
 }

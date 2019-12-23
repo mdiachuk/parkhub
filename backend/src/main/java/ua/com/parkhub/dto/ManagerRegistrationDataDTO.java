@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @PasswordMatches
-public class ManagerDTO {
+public class ManagerRegistrationDataDTO {
 
     @NotNull(message = "First name must not be null")
     @NotEmpty(message = "First name must not be empty")

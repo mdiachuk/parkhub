@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ua.com.parkhub.dto.ManagerDTO;
+import ua.com.parkhub.dto.ManagerRegistrationDataDTO;
 import ua.com.parkhub.exceptions.EmailIsUsedException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberIsUsedException;
@@ -49,7 +49,7 @@ class SignUpServiceTest {
 
     @Test
     public void test_registerManager_pendingRoleNotFound_exceptionThrown() {
-        ManagerDTO manager = new ManagerDTO();
+        ManagerRegistrationDataDTO manager = new ManagerRegistrationDataDTO();
 
         when(userRoleDAO.findUserRoleByRoleName(anyString()))
                 .thenReturn(Optional.empty());
@@ -61,7 +61,7 @@ class SignUpServiceTest {
 
     @Test
     public void test_registerManager_adminNotFound_exceptionThrown() {
-        ManagerDTO manager = new ManagerDTO();
+        ManagerRegistrationDataDTO manager = new ManagerRegistrationDataDTO();
 
         when(userDAO.findElementById(anyLong()))
                 .thenReturn(Optional.empty());
@@ -73,7 +73,7 @@ class SignUpServiceTest {
 
     @Test
     public void test_registerManager_supportTicketTypeNotFound_exceptionThrown() {
-        ManagerDTO manager = new ManagerDTO();
+        ManagerRegistrationDataDTO manager = new ManagerRegistrationDataDTO();
 
         when(supportTicketTypeDAO.findSupportTicketTypeByType(anyString()))
                 .thenReturn(Optional.empty());
@@ -85,7 +85,7 @@ class SignUpServiceTest {
 
     @Test
     public void test_registerManager_phoneNumberIsUsed_exceptionThrown() {
-        ManagerDTO manager = new ManagerDTO();
+        ManagerRegistrationDataDTO manager = new ManagerRegistrationDataDTO();
         Customer customer = Mockito.mock(Customer.class);
         User user = new User();
 
@@ -101,7 +101,7 @@ class SignUpServiceTest {
 
     @Test
     public void test_registerManager_phoneNumberIsUsedButNorRegistered_everythingCorrect() {
-        ManagerDTO manager = new ManagerDTO();
+        ManagerRegistrationDataDTO manager = new ManagerRegistrationDataDTO();
         Customer customer = new Customer();
         User user = new User();
         UserRole userRole = new UserRole();
@@ -121,7 +121,7 @@ class SignUpServiceTest {
 
     @Test
     public void test_registerManager_emailIsUsed_exceptionThrown() {
-        ManagerDTO manager = new ManagerDTO();
+        ManagerRegistrationDataDTO manager = new ManagerRegistrationDataDTO();
         User user = new User();
 
         when(userDAO.findUserByEmail(manager.getPhoneNumber()))
@@ -134,7 +134,7 @@ class SignUpServiceTest {
 
     @Test
     public void test_registerManager_everythingCorrect() {
-        ManagerDTO manager = new ManagerDTO();
+        ManagerRegistrationDataDTO manager = new ManagerRegistrationDataDTO();
         User user = new User();
         UserRole userRole = new UserRole();
         SupportTicketType supportTicketType = new SupportTicketType();

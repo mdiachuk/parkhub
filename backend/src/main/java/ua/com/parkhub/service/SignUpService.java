@@ -5,13 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ua.com.parkhub.dto.ManagerDTO;
+import ua.com.parkhub.dto.ManagerRegistrationDataDTO;
 import ua.com.parkhub.exceptions.EmailIsUsedException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberIsUsedException;
-import ua.com.parkhub.persistence.entities.Customer;
-import ua.com.parkhub.persistence.entities.SupportTicket;
-import ua.com.parkhub.persistence.entities.User;
+import ua.com.parkhub.persistence.entities.*;
 import ua.com.parkhub.persistence.impl.*;
 
 import javax.transaction.Transactional;
@@ -48,23 +46,23 @@ public class SignUpService {
     }
 
     @Transactional
-    public void registerManager(ManagerDTO managerDto) {
-        Customer customer = createCustomer(managerDto);
-        User user = createUser(managerDto, customer);
+    public void registerManager(ManagerRegistrationDataDTO manager) {
+        Customer customer = createCustomer(manager);
+        User user = createUser(manager, customer);
         if (customer.getId() == null) {
             customerDAO.addElement(customer);
         }
-        SupportTicket supportTicket = createSupportTicket(managerDto, customer);
+        SupportTicket supportTicket = createSupportTicket(manager, customer);
         supportTicketDAO.addElement(supportTicket);
         customerDAO.updateElement(customer);
         userDAO.addElement(user);
     }
 
-    private Customer createCustomer(ManagerDTO managerDTO) {
+    private Customer createCustomer(ManagerRegistrationDataDTO manager) {
         Optional<Customer> optionalCustomer = customerDAO
-                .findCustomerByPhoneNumber(managerDTO.getPhoneNumber());
+                .findCustomerByPhoneNumber(manager.getPhoneNumber());
         if (optionalCustomer.isPresent()) {
-            logger.info("Customer with phone number={} was found", managerDTO.getPhoneNumber());
+            logger.info("Customer with phone number={} was found", manager.getPhoneNumber());
             Optional<User> optionalUser = Optional.ofNullable(optionalCustomer.get().getUser());
             if (optionalUser.isPresent()) {
                 throw new PhoneNumberIsUsedException();
@@ -73,32 +71,29 @@ public class SignUpService {
             return optionalCustomer.get();
         }
         Customer customer = new Customer();
-        customer.setPhoneNumber(managerDTO.getPhoneNumber());
+        customer.setPhoneNumber(manager.getPhoneNumber());
         customer.setActive(true);
         logger.info("New customer was created");
         return customer;
     }
 
-    private User createUser(ManagerDTO managerDTO, Customer customer) {
-        Optional<User> optionalUser = userDAO.findUserByEmail(managerDTO.getEmail());
+    private User createUser(ManagerRegistrationDataDTO manager, Customer customer) {
+        Optional<User> optionalUser = userDAO.findUserByEmail(manager.getEmail());
         if (optionalUser.isPresent()) {
             throw new EmailIsUsedException();
         }
         User user = new User();
         user.setCustomer(customer);
-        user.setFirstName(managerDTO.getFirstName());
-        user.setLastName(managerDTO.getLastName());
-        user.setEmail(managerDTO.getEmail());
-        user.setPassword(passwordEncoder.encode(managerDTO.getPassword()));
-        user.setRole(userRoleDAO
-                .findUserRoleByRoleName(PENDING_ROLE_NAME)
-                .orElseThrow(() -> new NotFoundInDataBaseException("Role was not found by name="
-                        + PENDING_ROLE_NAME)));
-        logger.info("New user created");
+        user.setFirstName(manager.getFirstName());
+        user.setLastName(manager.getLastName());
+        user.setEmail(manager.getEmail());
+        user.setPassword(passwordEncoder.encode(manager.getPassword()));
+        user.setRole(findUserRole(PENDING_ROLE_NAME));
+        logger.info("New user was created");
         return user;
     }
 
-    private SupportTicket createSupportTicket(ManagerDTO managerDTO, Customer customer) {
+    private SupportTicket createSupportTicket(ManagerRegistrationDataDTO manager, Customer customer) {
         SupportTicket supportTicket = new SupportTicket();
         supportTicket.setCustomer(customer);
         List<SupportTicket> supportTickets = Optional
@@ -106,23 +101,33 @@ public class SignUpService {
                 .orElse(new ArrayList<>());
         supportTickets.add(supportTicket);
         customer.setSupportTickets(supportTickets);
-        supportTicket.setDescription(generateDescription(managerDTO));
+        supportTicket.setDescription(generateDescription(manager));
         List<User> solvers = new ArrayList<>();
-        solvers.add(userDAO
-                .findElementById(ADMIN_ID)
-                .orElseThrow(() -> new NotFoundInDataBaseException("Admin was not found by id=" + ADMIN_ID)));
+        solvers.add(findAdmin(ADMIN_ID));
         supportTicket.setSolvers(solvers);
-        supportTicket.setSupportTicketType(supportTicketTypeDAO
-                .findSupportTicketTypeByType(MANAGER_REGISTRATION_REQUEST_TICKET_TYPE)
-                .orElseThrow(() -> new NotFoundInDataBaseException("Support ticket type was not found by type="
-                        + MANAGER_REGISTRATION_REQUEST_TICKET_TYPE)));
+        supportTicket.setSupportTicketType(findSupportTicketType(MANAGER_REGISTRATION_REQUEST_TICKET_TYPE));
         logger.info("New support ticket was created");
         return supportTicket;
     }
 
-    private String generateDescription(ManagerDTO managerDTO) {
-        return "Company: <" + managerDTO.getCompanyName() + "> " +
-                "USREOU: <" + managerDTO.getUsreouCode() + "> " +
-                "Comment: <" + managerDTO.getComment() + ">";
+    private String generateDescription(ManagerRegistrationDataDTO manager) {
+        return "Company: <" + manager.getCompanyName() + "> " +
+                "USREOU: <" + manager.getUsreouCode() + "> " +
+                "Comment: <" + manager.getComment() + ">";
+    }
+
+    private UserRole findUserRole(String name) {
+        return userRoleDAO.findUserRoleByRoleName(name).orElseThrow(() ->
+                new NotFoundInDataBaseException("Role was not found by name=" + name));
+    }
+
+    private User findAdmin(long id) {
+        return userDAO.findElementById(ADMIN_ID).orElseThrow(() -> new
+                NotFoundInDataBaseException("Admin was not found by id=" + id));
+    }
+
+    private SupportTicketType findSupportTicketType(String type) {
+        return supportTicketTypeDAO.findSupportTicketTypeByType(type).orElseThrow(() ->
+                new NotFoundInDataBaseException("Support ticket type was not found by type=" + type));
     }
 }
