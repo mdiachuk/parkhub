@@ -93,4 +93,5 @@ public class Booking implements Serializable {
     public void setSlot(Slot slot) {
         this.slot = slot;
     }
+
 }

@@ -1,12 +1,15 @@
 package ua.com.parkhub.persistence.impl;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Optional;
+
 import ua.com.parkhub.persistence.IElementDAO;
 
 public class ElementDAO<E> implements IElementDAO<E> {
@@ -31,9 +34,10 @@ public class ElementDAO<E> implements IElementDAO<E> {
     }
 
     @Override
-    public E findElementById(long id) {
-        return emp.find( elementClass, id);
+    public Optional<E> findElementById(long id) {
+        return Optional.ofNullable(emp.find( elementClass, id));
     }
+
 
     @Override
     public List<E> findAll() {
@@ -49,4 +53,27 @@ public class ElementDAO<E> implements IElementDAO<E> {
     public void deleteElement(E element) {
         emp.remove(element);
     }
+
+    @Override
+    public E findElementByIdSimple(long id) {
+        return emp.find( elementClass, id);
+    }
+
+    @Override
+    public <F> Optional<E> findOneByFieldEqual(String fieldName, F fieldValue) {
+        CriteriaBuilder criteriaBuilder = emp.getCriteriaBuilder();
+        CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(elementClass);
+        Root<E> elementRoot = criteriaQuery.from(elementClass);
+        criteriaQuery.select(elementRoot).where(criteriaBuilder.equal(elementRoot.get(fieldName), fieldValue));
+
+        try {
+            E element = emp.createQuery(criteriaQuery).getSingleResult();
+            return Optional.of(element);
+        } catch (NoResultException e1) {
+            return Optional.empty();
+        } catch (Exception e2) {
+            throw new UnsupportedOperationException();
+        }
+    }
+
 }

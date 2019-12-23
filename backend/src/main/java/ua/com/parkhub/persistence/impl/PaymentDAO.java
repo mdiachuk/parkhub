@@ -5,7 +5,6 @@ import ua.com.parkhub.persistence.entities.Payment;
 
 @Repository
 public class PaymentDAO extends ElementDAO<Payment> {
-
     public PaymentDAO() {
         super(Payment.class);
     }

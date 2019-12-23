@@ -5,7 +5,6 @@ import ua.com.parkhub.persistence.entities.UserRole;
 
 @Repository
 public class UserRoleDAO extends ElementDAO<UserRole> {
-
     public UserRoleDAO() {
         super(UserRole.class);
     }

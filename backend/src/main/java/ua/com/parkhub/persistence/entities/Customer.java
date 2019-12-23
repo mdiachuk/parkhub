@@ -56,7 +56,6 @@ public class Customer implements Serializable {
         isActive = active;
     }
 
-
     public List<Booking> getBookings() {
         return bookings;
     }

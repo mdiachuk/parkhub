@@ -64,7 +64,7 @@ public class ParkingService {
     public void createParkingByOwnerID(ParkingModel parkingModel, long id) {
         Address address = parkingRequestMapper.parkingModelToAddress(parkingModel);
         Parking parking = parkingRequestMapper.parkingModelToParking(parkingModel);
-        parking.setOwner(userDAO.findElementById(id));
+        parking.setOwner(userDAO.findElementByIdSimple(id));
         parking.setAddress(address);
         addressDAO.addElement(address);
         parkingDAO.addElement(parking);
@@ -79,11 +79,11 @@ public class ParkingService {
 
     public ParkingModel findParkingByIdYaroslav(long id){
 
-        return parkingMapper.fromEntityToModel(parkingDAO.findElementById(id));
+        return parkingMapper.fromEntityToModel(parkingDAO.findElementByIdSimple(id));
     }
 
     public ParkingDTO findParkingById(long id) {
-        Parking parking = parkingDAO.findElementById(id);
+        Parking parking = parkingDAO.findElementByIdSimple(id);
         ParkingDTO parkingDTO = new ParkingModelDTO().transform(parking);
         parkingDTO.setAddress(findAddress(parking));
         parkingDTO.setFullness(findFullness(parking));
