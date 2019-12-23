@@ -16,24 +16,6 @@ public class AdminController {
         this.adminService = adminService;
     }
 
-    /*public AdminDTO adminDTO;
-    @Autowired
-    public AdminController(AdminDTO adminDTO) {
-        this.adminDTO = adminDTO;
-    }*/
-
-
-    /*@GetMapping("/admin/{id}")
-    public User getUserById(@PathVariable("id") long id){
-        User targetUser = adminService.findUserById(id);
-        return targetUser;
-    }*/
-
-    /*@GetMapping("/admin/{id}")
-    public AdminDTO getUserById(@PathVariable("id") long id){
-        return adminDTO.findUserByIdDTO(id);
-    }*/
-
     @GetMapping("/admin/{id}")
     public AdminDTO getUserByID(@PathVariable("id")long id ){
         AdminDTO targetUserDTO = new AdminDTO();
@@ -49,20 +31,4 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
 
-    /*@PostMapping("/admin")
-    public void setUserRole(long id, UserRole role){
-        adminService.setRole(id, role);
-    }*/
-
-
-
-    /*@GetMapping("/test")
-    public TestDTO test() {
-//        User user = adminService.findUserById(id);
-        TestDTO test = new TestDTO();
-        test.setName("Vasya");
-//        test.setName(user.getFirstName());
-//        return test;
-        return test;
-    }*/
 }
