@@ -15,6 +15,7 @@ import ua.com.parkhub.persistence.impl.AddressDAO;
 import ua.com.parkhub.persistence.impl.ParkingDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,19 +62,18 @@ public class ParkingService {
         return count == 0;
     }
 
+    @Transactional
     public void createParkingByOwnerID(ParkingModel parkingModel, long id) {
         Address address = parkingRequestMapper.parkingModelToAddress(parkingModel);
         Parking parking = parkingRequestMapper.parkingModelToParking(parkingModel);
         parking.setOwner(userDAO.findElementByIdSimple(id));
+        address.setId(null);
         parking.setAddress(address);
         addressDAO.addElement(address);
-        parkingDAO.addElement(parking);
+//        parkingDAO.addElement(parking);
     }
 
     public List<ParkingModel> findAll(){
-        List<ParkingModel> parkings= new ArrayList<>();
-        parkings=  parkingDAO.findAll().stream().map(parkingMapper::fromEntityToModel).collect(Collectors.toList());
-        parkings.size();
         return parkingDAO.findAll().stream().map(parkingMapper::fromEntityToModel).collect(Collectors.toList());
     }
 

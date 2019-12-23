@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import 'hammerjs'
 
 import {MaterialModule} from './material.module';
 import {AppComponent} from './app.component';
@@ -12,6 +13,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatCardModule} from "@angular/material/card";
 
 import {PageComponent} from './homePage/homePage.component';
+import { ParkingService1 } from './services/parking.service';
 import {ParkingListComponent} from './parking-list/parking-list.component';
 import {ParkingListComponentManager} from './parking-list-manager/parking-list.component';
 
@@ -42,6 +44,8 @@ import {LoginComponent} from "./login/login.component";
 import {AlertDialogComponent} from "./alert-dialog/alert-dialog.component";
 import {ParkoffComponent} from "./parkoff/parkoff.component";
 import {MatDialogModule} from "@angular/material/dialog";
+
+import { from } from 'rxjs';
 
 
 @NgModule({
@@ -87,7 +91,7 @@ import {MatDialogModule} from "@angular/material/dialog";
     AlertDialogComponent
     // UserComponent
   ],
-  providers: [ParkingService],
+  providers: [ParkingService, ParkingService1],
   bootstrap: [AppComponent],
   entryComponents: [AlertDialogComponent]
 })

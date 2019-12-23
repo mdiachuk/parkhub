@@ -15,7 +15,7 @@ export class SingupComponent implements OnInit {
 
   userRole:UserRole = new UserRole("1")
 
-  users:User = new User("","",this.customer,"","",this.userRole);
+  users:User = new User("","",this.customer,"","",this.userRole, "");
 
   confirmPass:ConfirmPass = new ConfirmPass("");
 

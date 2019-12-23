@@ -7,6 +7,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,22 +25,26 @@ public class ElementDAO<E> implements IElementDAO<E> {
     }
 
     @Override
+
     public void addElement(E element) {
         emp.persist(element);
     }
 
     @Override
+    @Transactional
     public void updateElement(E element) {
         emp.persist(element);
     }
 
     @Override
+    @Transactional
     public Optional<E> findElementById(long id) {
         return Optional.ofNullable(emp.find( elementClass, id));
     }
 
 
     @Override
+    @Transactional
     public List<E> findAll() {
         CriteriaBuilder cb = emp.getCriteriaBuilder();
         CriteriaQuery<E> cq = cb.createQuery(elementClass);
@@ -50,16 +55,19 @@ public class ElementDAO<E> implements IElementDAO<E> {
     }
 
     @Override
+    @Transactional
     public void deleteElement(E element) {
         emp.remove(element);
     }
 
     @Override
+    @Transactional
     public E findElementByIdSimple(long id) {
         return emp.find( elementClass, id);
     }
 
     @Override
+    @Transactional
     public <F> Optional<E> findOneByFieldEqual(String fieldName, F fieldValue) {
         CriteriaBuilder criteriaBuilder = emp.getCriteriaBuilder();
         CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(elementClass);

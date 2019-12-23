@@ -50,9 +50,5 @@ public class AdminDTO {
         this.userRole = userRole;
     }
 
-    public AdminDTO findUserByIdDTO(long id){
-        User userObj = adminService.findUserById(id);
-        AdminDTO userDTO = new AdminDTO(userObj.getId(), userObj.getFirstName(),userObj.getRole().getRoleName());
-        return userDTO;
-    }
+
 }

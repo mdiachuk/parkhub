@@ -1,53 +1,47 @@
 package ua.com.parkhub.persistence.entities;
 
-import org.springframework.stereotype.Component;
-
+import javax.persistence.Entity;
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import java.util.Objects;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.List;
 
-@Component
-@javax.persistence.Entity
+@Entity
 @Table(name = "user", schema = "park_hub")
-public class User implements Entity {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     @Column(name = "first_name")
-    private String name;
+    @NotNull
+    private String firstName;
 
     @Column(name = "last_name")
-    private String secondname;
+    @NotNull
+    private String lastName;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private Customer customer;
-
-    @Column(name = "email")
-    @Email
+    @Column(unique = true)
+    @NotNull
     private String email;
 
     @Column(name = "password")
-    private String pass;
+    @NotNull
+    @Size(min = 6, max = 60)
+    private String password;
 
-    @OneToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "role_id")
     private UserRole role;
 
-    public User() {
-    }
+    @OneToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
-    public User() {
-    }
-
-    public User(long id, String firstName, UserRole role) {
-        this.id = id;
-        this.firstName = firstName;
-        this.role = role;
-    }
+    @ManyToMany(mappedBy = "solvers")
+    private List<SupportTicket> tickets;
 
     public Long getId() {
         return id;
@@ -57,28 +51,20 @@ public class User implements Entity {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getSecondname() {
-        return secondname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSecondname(String secondname) {
-        this.secondname = secondname;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -89,14 +75,13 @@ public class User implements Entity {
         this.email = email;
     }
 
-    public String getPass() {
-        return pass;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setPassword(String password) {
+        this.password = password;
     }
-
 
     public UserRole getRole() {
         return role;
@@ -106,35 +91,19 @@ public class User implements Entity {
         this.role = role;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(name, user.name) &&
-                Objects.equals(secondname, user.secondname) &&
-                Objects.equals(customer, user.customer) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(pass, user.pass) &&
-                Objects.equals(role, user.role);
+    public Customer getCustomer() {
+        return customer;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, secondname, customer, email, pass, role);
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", secondname='" + secondname + '\'' +
-                ", customer=" + customer +
-                ", email='" + email + '\'' +
-                ", pass='" + pass + '\'' +
-                ", role=" + role +
-                '}';
+    public List<SupportTicket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<SupportTicket> tickets) {
+        this.tickets = tickets;
     }
 }
