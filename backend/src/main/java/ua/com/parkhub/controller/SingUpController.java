@@ -28,7 +28,7 @@ public class SingUpController {
      */
     @PostMapping ("/user")
     public ResponseEntity create(@RequestBody User user) {
-
+        System.out.println(user.toString());
         if (singUpService.createUser(user)){
             return ResponseEntity.ok().build();
         } else {

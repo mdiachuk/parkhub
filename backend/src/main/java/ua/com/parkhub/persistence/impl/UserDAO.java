@@ -61,16 +61,23 @@ public class UserDAO extends ElementDAO<User> {
      * @method havePhoneNumber
      */
     public String findUserByCustomerId(String customerId) {
-        int id = Integer.parseInt(customerId);
-        Query query =
-                emp.createQuery("SELECT id FROM User WHERE customer_id=:customerId")
-                        .setParameter("customerId", id).setMaxResults(1);
 
-            if (query.getResultList().isEmpty()) {
+        if (customerId.length()==0){
             return "";
         } else {
-            return query.getResultList().get(0).toString();
+            int id = Integer.parseInt(customerId);
+            Query query =
+                    emp.createQuery("SELECT id FROM User WHERE customer_id=:customerId")
+                            .setParameter("customerId", id).setMaxResults(1);
+
+            if (query.getResultList().isEmpty()) {
+                return "";
+            } else {
+                return query.getResultList().get(0).toString();
+            }
         }
+
+
     }
 
 }

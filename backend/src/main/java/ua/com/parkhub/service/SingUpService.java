@@ -25,9 +25,7 @@ public class SingUpService {
      */
     public boolean createUser(User user) {
 
-
         if (emptyField(user)){
-
             String haveEmail = userDAO.haveEmail(user.getEmail());
             String havePhoneNumber = userDAO.havePhoneNumber(user.getCustomer().getPhoneNumber());
             String customerId = userDAO.findUserByCustomerId(havePhoneNumber);
