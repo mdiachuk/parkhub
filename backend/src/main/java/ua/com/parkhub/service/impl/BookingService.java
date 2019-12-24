@@ -15,8 +15,6 @@ import ua.com.parkhub.service.ICustomerService;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-//import ua.com.parkhub.model.Slot;
-
 @Service
 public class BookingService implements IBookingService {
 
@@ -36,11 +34,11 @@ public class BookingService implements IBookingService {
     private ua.com.parkhub.model.Slot findSlotByIdAndUpdate(long slotId) {
         Optional<Slot> optionalSlot = slotDAO.findElementById(slotId);
         if (optionalSlot.isPresent()) {
-            Slot slotEntity = optionalSlot.get();
-            if (slotEntity.isActive() && !slotEntity.isReserved()) {
-                slotEntity.setReserved(true);
-                slotDAO.updateElement(slotEntity);
-                return mapper.map(slotEntity, ua.com.parkhub.model.Slot.class);
+            Slot slot = optionalSlot.get();
+            if (slot.isActive() && !slot.isReserved()) {
+                slot.setReserved(true);
+                slotDAO.updateElement(slot);
+                return mapper.map(slot, ua.com.parkhub.model.Slot.class);
             }
             throw new ParkHubException("Unfortunately this slot is temporary unavailable");
         }
