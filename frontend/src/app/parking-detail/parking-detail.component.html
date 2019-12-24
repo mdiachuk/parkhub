@@ -22,10 +22,10 @@
       <mat-list-item>Coefficient</mat-list-item>
     </mat-list>
 
-    <mat-list class="rightSide">
+    <mat-list class="rightSide" *ngIf="parkingDetail">
       <mat-list-item>{{parkingDetail.parkingName}}</mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item>{{parkingDetail.parkingAddress}}</mat-list-item>
+      <mat-list-item>{{parkingDetail.address}}</mat-list-item>
       <mat-divider></mat-divider>
       <mat-list-item>{{parkingDetail.slotsNumber}}</mat-list-item>
       <mat-divider></mat-divider>

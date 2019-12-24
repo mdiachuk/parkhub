@@ -1,20 +1,32 @@
 package ua.com.parkhub.model;
 
 
+import java.util.Set;
+
 public class ParkingModel {
 
     private long id;
     private String parkingName;
     private int slotsNumber;
     private int tariff;
-    AddressModel addressModel;
+    private AddressModel addressModel;
+    private Set<SlotModel> slots;
+    private boolean isActive;
 
-    public ParkingModel(long id, String parkingName, int slotsNumber, int tariff, AddressModel addressModel) {
-        this.id = id;
-        this.parkingName = parkingName;
-        this.slotsNumber = slotsNumber;
-        this.tariff = tariff;
-        this.addressModel = addressModel;
+    public Set<SlotModel> getSlots() {
+        return slots;
+    }
+
+    public void setSlots(Set<SlotModel> slots) {
+        this.slots = slots;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public long getId() {

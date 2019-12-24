@@ -4,10 +4,6 @@ public class AddressDTO {
 
     private String address;
 
-    public AddressDTO(String address) {
-        this.address = address;
-    }
-
     public String getAddress() {
         return address;
     }

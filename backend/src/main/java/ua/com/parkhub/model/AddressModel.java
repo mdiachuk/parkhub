@@ -6,9 +6,6 @@ public class AddressModel {
     private String street;
     private String building;
 
-    public AddressModel(){
-    }
-
     public String getCity() {
         return city;
     }

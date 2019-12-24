@@ -7,6 +7,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Optional;
+
 import ua.com.parkhub.persistence.IElementDAO;
 
 public class ElementDAO<E> implements IElementDAO<E> {
@@ -31,8 +33,8 @@ public class ElementDAO<E> implements IElementDAO<E> {
     }
 
     @Override
-    public E findElementById(long id) {
-        return emp.find( elementClass, id);
+    public Optional<E> findElementById(long id) {
+        return Optional.ofNullable(emp.find( elementClass, id));
     }
 
     @Override
