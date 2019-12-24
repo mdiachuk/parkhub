@@ -20,9 +20,9 @@ import java.util.Optional;
 @Service
 public class SignUpService {
 
-    private static final long ADMIN_ID = 1;
-    private static final String PENDING_ROLE_NAME = "Pending";
-    private static final String MANAGER_REGISTRATION_REQUEST_TICKET_TYPE = "Manager registration request";
+    private static final long ADMIN_ROLE_ID = 1;
+    private static final long PENDING_ROLE_ID = 2;
+    private static final long MANAGER_REGISTRATION_REQUEST_TICKET_TYPE_ID = 1;
 
     private static final Logger logger = LoggerFactory.getLogger(SignUpService.class);
 
@@ -49,7 +49,8 @@ public class SignUpService {
     public void registerManager(ManagerRegistrationDataDTO manager) {
         Customer customer = createCustomer(manager);
         User user = createUser(manager, customer);
-        if (customer.getId() == null) {
+        Optional<Long> optionalCustomerId = Optional.ofNullable(customer.getId());
+        if (!optionalCustomerId.isPresent()) {
             customerDAO.addElement(customer);
         }
         SupportTicket supportTicket = createSupportTicket(manager, customer);
@@ -88,7 +89,7 @@ public class SignUpService {
         user.setLastName(manager.getLastName());
         user.setEmail(manager.getEmail());
         user.setPassword(passwordEncoder.encode(manager.getPassword()));
-        user.setRole(findUserRole(PENDING_ROLE_NAME));
+        user.setRole(findUserRole(PENDING_ROLE_ID));
         logger.info("New user was created");
         return user;
     }
@@ -103,9 +104,10 @@ public class SignUpService {
         customer.setSupportTickets(supportTickets);
         supportTicket.setDescription(generateDescription(manager));
         List<User> solvers = new ArrayList<>();
-        solvers.add(findAdmin(ADMIN_ID));
+        solvers.add(findAdmin(ADMIN_ROLE_ID));
         supportTicket.setSolvers(solvers);
-        supportTicket.setSupportTicketType(findSupportTicketType(MANAGER_REGISTRATION_REQUEST_TICKET_TYPE));
+        supportTicket.setSupportTicketType(findSupportTicketType
+                (MANAGER_REGISTRATION_REQUEST_TICKET_TYPE_ID));
         logger.info("New support ticket was created");
         return supportTicket;
     }
@@ -116,18 +118,18 @@ public class SignUpService {
                 "Comment: <" + manager.getComment() + ">";
     }
 
-    private UserRole findUserRole(String name) {
-        return userRoleDAO.findUserRoleByRoleName(name).orElseThrow(() ->
-                new NotFoundInDataBaseException("Role was not found by name=" + name));
+    private UserRole findUserRole(long id) {
+        return userRoleDAO.findElementById(id).orElseThrow(() ->
+                new NotFoundInDataBaseException("Pending role was not found by id=" + id));
     }
 
     private User findAdmin(long id) {
-        return userDAO.findElementById(ADMIN_ID).orElseThrow(() -> new
-                NotFoundInDataBaseException("Admin was not found by id=" + id));
+        return userDAO.findUserByRoleId(id).orElseThrow(() ->
+                new NotFoundInDataBaseException("Admin was not found by admin role id=" + id));
     }
 
-    private SupportTicketType findSupportTicketType(String type) {
-        return supportTicketTypeDAO.findSupportTicketTypeByType(type).orElseThrow(() ->
-                new NotFoundInDataBaseException("Support ticket type was not found by type=" + type));
+    private SupportTicketType findSupportTicketType(long id) {
+        return supportTicketTypeDAO.findElementById(id).orElseThrow(() ->
+                new NotFoundInDataBaseException("Support ticket type was not found by id=" + id));
     }
 }

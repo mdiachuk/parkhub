@@ -1,6 +1,6 @@
 package ua.com.parkhub.validation.validators;
 
-import ua.com.parkhub.dto.ManagerRegistrationDataDTO;
+import ua.com.parkhub.dto.UserDTO;
 import ua.com.parkhub.validation.annotations.PasswordMatches;
 
 import javax.validation.ConstraintValidator;
@@ -15,7 +15,7 @@ public class PasswordMatchesValidator
 
     @Override
     public boolean isValid(Object obj, ConstraintValidatorContext context) {
-        ManagerRegistrationDataDTO user = (ManagerRegistrationDataDTO) obj;
+        UserDTO user = (UserDTO) obj;
         return user.getPassword().equals(user.getMatchingPassword());
     }
 }

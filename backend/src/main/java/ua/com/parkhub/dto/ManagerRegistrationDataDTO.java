@@ -1,73 +1,53 @@
 package ua.com.parkhub.dto;
 
 import ua.com.parkhub.validation.annotations.*;
+import ua.com.parkhub.validation.groups.ManagerChecks;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@PasswordMatches
 public class ManagerRegistrationDataDTO {
 
-    @NotNull(message = "First name must not be null")
-    @NotEmpty(message = "First name must not be empty")
-    @Size(max = 255, message = "First name must be 255 characters at most")
-    private String firstName;
+    @Valid
+    private UserDTO user;
 
-    @NotNull(message = "Last name required")
-    @NotEmpty(message = "Last name must not be empty")
-    @Size(max = 255, message = "Last name must be 255 characters at most")
-    private String lastName;
-
-    @NotNull(message = "Company name required")
-    @NotEmpty(message = "Company name must not be empty")
-    @Size(max = 255, message = "Company name must be 255 characters at most")
+    @NotNull(message = "Company name required", groups = ManagerChecks.class)
+    @NotEmpty(message = "Company name must not be empty", groups = ManagerChecks.class)
+    @Size(max = 255, message = "Company name must be 255 characters at most", groups = ManagerChecks.class)
     private String companyName;
 
-    @ValidUsreouCode
-    @NotNull(message = "USREOU code required")
-    @NotEmpty(message = "USREOU code must not be empty")
+    @ValidUsreouCode(groups = ManagerChecks.class)
+    @NotNull(message = "USREOU code required", groups = ManagerChecks.class)
+    @NotEmpty(message = "USREOU code must not be empty", groups = ManagerChecks.class)
     private String usreouCode;
 
-    @ValidEmail
-    @NotNull(message = "Email must required")
-    @NotEmpty(message = "Email must not be empty")
-    @Size(max = 255, message = "Email must be 255 characters at most")
-    private String email;
-
-    @ValidPhoneNumber
-    @NotNull(message = "Phone number required")
-    @NotEmpty(message = "Phone number must not be empty")
-    private String phoneNumber;
-
-    @ValidPassword
-    @NotNull(message = "Password required")
-    @NotEmpty(message = "Password must not be empty")
-    @Size(max = 60, message = "Password must be 60 characters at most")
-    private String password;
-
-    @NotNull(message = "Matching password required")
-    @NotEmpty(message = "Matching password must not be empty")
-    @Size(max = 60, message = "Matching password must be 60 characters at most")
-    private String matchingPassword;
-
-    @Size(max=200, message = "Comment must be 200 characters at most")
+    @Size(max=200, message = "Comment must be 200 characters at most", groups = ManagerChecks.class)
     private String comment;
 
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
+    }
+
     public String getFirstName() {
-        return firstName;
+        return user.getFirstName();
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        this.user.setFirstName(firstName);
     }
 
     public String getLastName() {
-        return lastName;
+        return user.getLastName();
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.user.setLastName(lastName);
     }
 
     public String getCompanyName() {
@@ -87,35 +67,35 @@ public class ManagerRegistrationDataDTO {
     }
 
     public String getEmail() {
-        return email;
+        return user.getEmail();
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.user.setEmail(email);
     }
 
     public String getPhoneNumber() {
-        return phoneNumber;
+        return user.getPhoneNumber();
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        this.user.setPhoneNumber(phoneNumber);
     }
 
     public String getPassword() {
-        return password;
+        return this.user.getPassword();
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.user.setPassword(password);
     }
 
     public String getMatchingPassword() {
-        return matchingPassword;
+        return this.user.getMatchingPassword();
     }
 
     public void setMatchingPassword(String matchingPassword) {
-        this.matchingPassword = matchingPassword;
+        this.user.setMatchingPassword(matchingPassword);
     }
 
     public String getComment() {

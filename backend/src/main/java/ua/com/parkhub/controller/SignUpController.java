@@ -6,14 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.ManagerRegistrationDataDTO;
 import ua.com.parkhub.exceptions.EmailIsUsedException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberIsUsedException;
 import ua.com.parkhub.service.SignUpService;
+import ua.com.parkhub.validation.groups.CustomerChecks;
+import ua.com.parkhub.validation.groups.ManagerChecks;
+import ua.com.parkhub.validation.groups.UserChecks;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,7 +33,8 @@ public class SignUpController {
     }
 
     @PostMapping(value = "/manager")
-    public ResponseEntity registerManager(@RequestBody @Valid ManagerRegistrationDataDTO manager, BindingResult result) {
+    public ResponseEntity registerManager(@RequestBody @Validated({CustomerChecks.class, UserChecks.class,
+            ManagerChecks.class}) ManagerRegistrationDataDTO manager, BindingResult result) {
         if (result.hasErrors()) {
             List<String> errors = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
@@ -39,7 +43,7 @@ public class SignUpController {
             return ResponseEntity.badRequest().body(errors);
         }
         signUpService.registerManager(manager);
-        logger.info("Manager registration request created");
+        logger.info("Manager registration request was created");
         return ResponseEntity.ok().build();
     }
 

@@ -1,9 +1,6 @@
 package ua.com.parkhub.persistence.impl;
 
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -35,8 +32,12 @@ public class ElementDAO<E> implements IElementDAO<E> {
 
     @Override
     public Optional<E> findElementById(long id) {
-            E element = emp.find( elementClass, id);
+        try {
+            E element = emp.find(elementClass, id);
             return Optional.ofNullable(element);
+        } catch (PersistenceException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
@@ -60,14 +61,11 @@ public class ElementDAO<E> implements IElementDAO<E> {
         CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(elementClass);
         Root<E> elementRoot = criteriaQuery.from(elementClass);
         criteriaQuery.select(elementRoot).where(criteriaBuilder.equal(elementRoot.get(fieldName), fieldValue));
-
         try {
             E element = emp.createQuery(criteriaQuery).getSingleResult();
             return Optional.of(element);
-        } catch (NoResultException e1) {
+        } catch (PersistenceException e) {
             return Optional.empty();
-        } catch (Exception e2) {
-            throw new UnsupportedOperationException();
         }
     }
 }
