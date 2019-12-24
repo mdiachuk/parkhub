@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {SingupComponent} from "./singup/singup.component";
-import {PageComponent} from "./homePage/homePage.component";
 import {AppComponent} from "./app.component";
 import {AddParkingComponent} from "./add-parking/add-parking.component";
 import {ParkingListComponentManager} from "./parking-list-manager/parking-list.component";
@@ -11,10 +10,11 @@ import {AdminComponent} from "./admin/admin.component";
 // import {UserComponent} from "./user/user.component";
 import {LoginComponent} from "./login/login.component";
 import {ParkoffComponent} from "./parkoff/parkoff.component";
-import {ParkingsComponentSlots} from "./parkings-ad/parkings.component";
 import {ParkingDetailSlotsComponent} from "./parkings-ad/parking-detail/parking-detail.component";
 import {SlotsComponent} from "./slots/slots.component";
 import {BookingDetailComponent} from "./bookings/booking-detail/booking-detail.component";
+import { PageComponent } from './homePage/homePage.component';
+
 
 const routes: Routes = [
   {path: 'parkoff', component: ParkoffComponent },

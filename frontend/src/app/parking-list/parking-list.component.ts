@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {ParkingService} from "../service/http-client.service";
+
 import { Observable, empty } from 'rxjs';
 import {DataSource} from '@angular/cdk/collections';
 import { Parking } from '../models/parking.model';
+import { ParkingService1 } from '../services/parking.service';
 
 
 
@@ -20,7 +21,7 @@ export class ParkingListComponent implements OnInit {
   dataSource = new ParkingDataSource(this.parkingService);
   displayedColumns = ['parkingName','address', 'tariff', 'fullness'];
 
-  constructor(private parkingService: ParkingService) {
+  constructor(private parkingService: ParkingService1) {
 
 
    }
@@ -31,7 +32,7 @@ export class ParkingListComponent implements OnInit {
 
 export class ParkingDataSource extends DataSource<any> {
 
-  constructor(private parkingService: ParkingService) {
+  constructor(private parkingService: ParkingService1) {
     super();
   }
 

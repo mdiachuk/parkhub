@@ -54,7 +54,7 @@ export class LoginService {
 
   login(login: Login): Observable<User> {
     const body = {email: login.email, password: login.password};
-    return this.http.post<User>('http://localhost:8081/api/login', body);
+    return this.http.post<User>('http://localhost:8080/api/login', body);
 
     // return this.http.post<User>('/api/login', body);
   }
@@ -72,7 +72,7 @@ export class HttpClientService {
 
   public createUser(user) {
     console.log("SingUp User");
-    return this.httpClient.post<User>("http://localhost:8081/api/signup/user", user);
+    return this.httpClient.post<User>("http://localhost:8080/api/signup/user", user);
   }
 
 }
@@ -125,7 +125,7 @@ export class ManagerService {
 
   registerManager(manager: Manager) {
 
-    return this.http.post('http://localhost:8081/api/signup/manager', manager);
+    return this.http.post('http://localhost:8080/api/signup/manager', manager);
   }
 }
 

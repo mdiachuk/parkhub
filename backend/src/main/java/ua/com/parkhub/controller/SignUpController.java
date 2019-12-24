@@ -13,7 +13,7 @@ import ua.com.parkhub.exceptions.EmailIsUsedException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberIsUsedException;
 import ua.com.parkhub.persistence.entities.User;
-import ua.com.parkhub.service.SignUpService;
+import ua.com.parkhub.service.impl.SignUpService;
 
 import javax.validation.Valid;
 import java.util.List;

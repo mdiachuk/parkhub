@@ -38,7 +38,7 @@ export class ParkoffComponent implements OnInit {
 
       this.openDialog(title, message).afterClosed().subscribe(() => {
         if (status) {
-          window.location.href = '/api/home';
+          window.location.href = '/home';
         } else {
           window.location.reload();
         }

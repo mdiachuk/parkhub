@@ -41,6 +41,7 @@ public class User implements Serializable {
     private Customer customer;
 
 
+
     @ManyToMany(mappedBy = "solvers")
     private List<SupportTicket> tickets;
 

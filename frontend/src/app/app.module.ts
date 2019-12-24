@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import 'hammerjs'
 
 import {MaterialModule} from './material.module';
 import {AppComponent} from './app.component';
@@ -12,6 +13,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatCardModule} from "@angular/material/card";
 
 import {PageComponent} from './homePage/homePage.component';
+import { ParkingService1 } from './services/parking.service';
 import {ParkingListComponent} from './parking-list/parking-list.component';
 import {ParkingListComponentManager} from './parking-list-manager/parking-list.component';
 
@@ -50,6 +52,8 @@ import {ParkingsComponentSlots} from "./parkings-ad/parkings.component";
 import {ParkingDetailSlotsComponent} from "./parkings-ad/parking-detail/parking-detail.component";
 import {SlotService} from "./serviceSlot/slot.service";
 
+import { from } from 'rxjs';
+
 
 @NgModule({
   imports: [
@@ -76,7 +80,6 @@ import {SlotService} from "./serviceSlot/slot.service";
     MatCheckboxModule,
     MatSnackBarModule,
     MatDialogModule,
-
     MatChipsModule,
 
   ],
@@ -102,7 +105,7 @@ import {SlotService} from "./serviceSlot/slot.service";
 
     // UserComponent
   ],
-  providers: [ParkingService, SlotService],
+  providers: [ParkingService, SlotService, ParkingService1],
   bootstrap: [AppComponent],
   entryComponents: [AlertDialogComponent]
 })

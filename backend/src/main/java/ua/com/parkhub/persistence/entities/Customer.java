@@ -28,7 +28,8 @@ public class Customer implements Serializable {
     @JoinColumn(name = "customer_id")
     private List<Booking> bookings;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany
+    @JoinColumn(name = "author_id")
     private List<SupportTicket> supportTickets;
 
     @OneToOne(mappedBy = "customer")

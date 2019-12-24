@@ -5,7 +5,6 @@ import ua.com.parkhub.persistence.entities.Slot;
 
 @Repository
 public class SlotDAO extends ElementDAO<Slot> {
-
     public SlotDAO() {
         super(Slot.class);
     }

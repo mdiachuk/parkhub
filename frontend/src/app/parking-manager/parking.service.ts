@@ -13,7 +13,7 @@ export class ParkingService {
   private parkingUrl: string;
  
   constructor(private http: HttpClient) {
-    this.parkingsUrl = '/api/parkings';
+    this.parkingsUrl = '/api/manager/cabinet';
   }
 
   getAllParkings(): Observable<ParkingItem[]> {
@@ -22,7 +22,6 @@ export class ParkingService {
 
   getParking(id: string) : Observable<ParkingDetail>{
     // let parameters = new HttpParams().set("parkingId", id.toString());
-    this.parkingUrl = `${this.parkingsUrl}/${id}`;
-    return this.http.get<ParkingDetail>(this.parkingUrl);
+    return this.http.get<ParkingDetail>(`${this.parkingsUrl}/${id}`);
   }
 }

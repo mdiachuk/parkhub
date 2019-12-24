@@ -7,7 +7,6 @@ import java.util.Optional;
 
 @Repository
 public class UserRoleDAO extends ElementDAO<UserRole> {
-
     public UserRoleDAO() {
         super(UserRole.class);
     }

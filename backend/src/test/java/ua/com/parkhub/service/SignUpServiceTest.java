@@ -14,6 +14,7 @@ import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberIsUsedException;
 import ua.com.parkhub.persistence.entities.*;
 import ua.com.parkhub.persistence.impl.*;
+import ua.com.parkhub.service.impl.SignUpService;
 
 import java.time.Duration;
 import java.util.Optional;

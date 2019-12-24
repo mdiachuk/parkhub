@@ -1,4 +1,4 @@
-package ua.com.parkhub.service;
+package ua.com.parkhub.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +21,7 @@ import java.util.Optional;
 @Service
 public class SignUpService {
 
-    private static final long ADMIN_ID = 0;
+    private static final long ADMIN_ID = 1;
 //    private static final String PENDING_ROLE_NAME = "Pending";
     private static final String MANAGER_REGISTRATION_REQUEST_TICKET_TYPE = "Manager registration request";
 

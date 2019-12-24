@@ -4,6 +4,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.persistence.IElementDAO;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
@@ -14,7 +15,9 @@ import java.util.List;
 import java.util.Optional;
 
 
-public class ElementDAO<E> implements IElementDAO<E> {
+import ua.com.parkhub.persistence.IElementDAO;
+
+public class ElementDAO<E>  implements IElementDAO<E> {
 
     @PersistenceContext(unitName = "default")
     EntityManager emp;
@@ -31,15 +34,19 @@ public class ElementDAO<E> implements IElementDAO<E> {
         emp.persist(element);
     }
 
-    @Override
+
+    @Transactional
     public void updateElement(E element) {
         emp.persist(element);
     }
 
-    //    @Override
-//    public E findElementById(long id) {
-//        return emp.find(elementClass, id);
-//    }
+
+
+    @Override
+    public E findElementByIdSimple(long id) {
+        return emp.find(elementClass, id);
+    }
+
     @Override
     public Optional<E> findElementById(long id) {
 //<<<<<<< HEAD
@@ -53,9 +60,17 @@ public class ElementDAO<E> implements IElementDAO<E> {
             element = null;
         }
         return Optional.ofNullable(element);
+//=======
+//
+//    @Transactional
+//    public Optional<E> findElementById(long id) {
+//        return Optional.ofNullable(emp.find( elementClass, id));
+//>>>>>>> 414ab46fb119952f8a5186146f76d7060f173f40
     }
 
-    @Override
+
+
+    @Transactional
     public List<E> findAll() {
         CriteriaBuilder cb = emp.getCriteriaBuilder();
         CriteriaQuery<E> cq = cb.createQuery(elementClass);
@@ -65,28 +80,20 @@ public class ElementDAO<E> implements IElementDAO<E> {
         return allQuery.getResultList();
     }
 
-    @Override
+
+    @Transactional
     public void deleteElement(E element) {
         emp.remove(element);
     }
 
-    @Override
+
+    @Transactional
     public <F> Optional<E> findOneByFieldEqual(String fieldName, F fieldValue) {
         CriteriaBuilder criteriaBuilder = emp.getCriteriaBuilder();
         CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(elementClass);
         Root<E> elementRoot = criteriaQuery.from(elementClass);
         criteriaQuery.select(elementRoot).where(criteriaBuilder.equal(elementRoot.get(fieldName), fieldValue));
-//<<<<<<< HEAD
-//
-//        try {
-//            E element = emp.createQuery(criteriaQuery).getSingleResult();
-//            return Optional.of(element);
-//        } catch (NoResultException e1) {
-//            return Optional.empty();
-//        }  catch (Exception e2) {
-//            throw new UnsupportedOperationException();
-//        }
-//=======
+
         E element;
         try {
             element = emp.createQuery(criteriaQuery).getSingleResult();
@@ -94,6 +101,16 @@ public class ElementDAO<E> implements IElementDAO<E> {
             element = null;
         }
         return Optional.ofNullable(element);
-//>>>>>>> 08cb4e34bfe1c3ed0933de34c5242199c348c3f1
     }
-}
+
+//        try {
+//            E element = emp.createQuery(criteriaQuery).getSingleResult();
+//            return Optional.of(element);
+//        } catch (NoResultException e1) {
+//            return Optional.empty();
+//        } catch (Exception e2) {
+//            throw new UnsupportedOperationException();
+//        }
+    }
+
+

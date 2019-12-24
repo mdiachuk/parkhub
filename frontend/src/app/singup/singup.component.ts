@@ -17,6 +17,7 @@ export class SingupComponent implements OnInit {
 
   users:User = new User("","",this.customer,"","",this.userRole,"");
 
+
   confirmPass:ConfirmPass = new ConfirmPass("");
 
   constructor(
@@ -35,7 +36,7 @@ export class SingupComponent implements OnInit {
             window.location.href='/home';
           },
           err => {
-            alert("User SingUp");
+            // alert("User SingUp");
             // window.location.href='/home';
             alert("Email or Telephone are use");
           });
