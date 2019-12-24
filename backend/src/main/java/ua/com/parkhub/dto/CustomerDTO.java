@@ -29,4 +29,5 @@ public class CustomerDTO {
     public void setActive(boolean active) {
         isActive = active;
     }
+
 }

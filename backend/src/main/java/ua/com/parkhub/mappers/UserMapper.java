@@ -50,6 +50,9 @@ public class UserMapper {
                 case "MANAGER":
                     userDto.setRole(RoleDTO.MANAGER);
                     break;
+                case "PENDING":
+                    userDto.setRole(RoleDTO.PENDING);
+                    break;
                 default:
                     throw new ParkHubException(String.format("Not known role name: %s. Role name may be one of the following: %s).", roleName, Arrays.asList(RoleDTO.values())));
             }

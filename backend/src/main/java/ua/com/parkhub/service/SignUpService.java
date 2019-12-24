@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.com.parkhub.dto.ManagerRegistrationDataDTO;
+import ua.com.parkhub.dto.RoleDTO;
 import ua.com.parkhub.exceptions.EmailIsUsedException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberIsUsedException;
@@ -21,7 +22,7 @@ import java.util.Optional;
 public class SignUpService {
 
     private static final long ADMIN_ID = 1;
-    private static final String PENDING_ROLE_NAME = "Pending";
+//    private static final String PENDING_ROLE_NAME = "Pending";
     private static final String MANAGER_REGISTRATION_REQUEST_TICKET_TYPE = "Manager registration request";
 
     private static final Logger logger = LoggerFactory.getLogger(SignUpService.class);
@@ -88,7 +89,7 @@ public class SignUpService {
         user.setLastName(manager.getLastName());
         user.setEmail(manager.getEmail());
         user.setPassword(passwordEncoder.encode(manager.getPassword()));
-        user.setRole(findUserRole(PENDING_ROLE_NAME));
+        user.setRole(findUserRole(String.valueOf(RoleDTO.PENDING)));
         logger.info("New user was created");
         return user;
     }
@@ -141,10 +142,13 @@ public class SignUpService {
     public boolean createUser(User user) {
 
         if (emptyField(user)){
+//            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
             String haveEmail = userDAO.haveEmail(user.getEmail());
+//            System.out.println(haveEmail);
             String havePhoneNumber = userDAO.havePhoneNumber(user.getCustomer().getPhoneNumber());
+//            System.out.println(havePhoneNumber);
             String customerId = userDAO.findUserByCustomerId(havePhoneNumber);
-
+//            System.out.println(customerId);
             if (haveEmail.length() != 0) {
                 return false;
             } else {

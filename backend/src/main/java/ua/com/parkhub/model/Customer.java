@@ -1,38 +1,15 @@
-package ua.com.parkhub.persistence.entities;
+package ua.com.parkhub.model;
 
-import javax.persistence.Entity;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
-@Entity
-@Table(name = "customer", schema = "park_hub")
-public class Customer implements Serializable {
+public class Customer extends AbstractModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column
-    @NotNull
-    @Size(min = 5, max = 50)
     private String phoneNumber;
-
-    @Column
-    @NotNull
     private boolean isActive = true;
-
-    @OneToMany
-    @JoinColumn(name = "customer_id")
     private List<Booking> bookings;
-
-    @OneToMany(mappedBy = "customer")
     private List<SupportTicket> supportTickets;
-
-    @OneToOne(mappedBy = "customer")
-    private User user;
 
     public Long getId() {
         return id;
@@ -74,11 +51,36 @@ public class Customer implements Serializable {
         this.supportTickets = supportTickets;
     }
 
-    public User getUser() {
-        return user;
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Customer)) return false;
+
+        Customer customer = (Customer) o;
+
+        if (!Objects.equals(id, customer.id)) return false;
+        return Objects.equals(phoneNumber, customer.phoneNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Customer" + ", id: ").append(id);
+        sb.append(", phoneNumber: ").append(phoneNumber);
+        sb.append(", isActive: ").append(isActive);
+        return sb.toString();
+
     }
 }

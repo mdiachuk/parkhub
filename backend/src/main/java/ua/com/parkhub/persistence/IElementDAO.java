@@ -10,6 +10,5 @@ public interface IElementDAO<E> {
     Optional<E> findElementById(long id);
     List<E> findAll();
     void deleteElement(E element);
-
     <F> Optional<E> findOneByFieldEqual(String fieldName, F fieldValue);
 }

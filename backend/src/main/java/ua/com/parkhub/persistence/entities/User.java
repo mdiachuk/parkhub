@@ -1,44 +1,48 @@
 package ua.com.parkhub.persistence.entities;
 
-import org.springframework.stereotype.Component;
-
+import javax.persistence.Entity;
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import java.util.Objects;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.List;
 
-@Component
-@javax.persistence.Entity
+@Entity
 @Table(name = "user", schema = "park_hub")
-public class User implements Entity {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     @Column(name = "first_name")
+    @NotNull
     private String firstName;
 
     @Column(name = "last_name")
+    @NotNull
     private String lastName;
+
+    @Column(unique = true)
+    @NotNull
+    private String email;
+
+    @Column(name = "password")
+    @NotNull
+    @Size(min = 6, max = 60)
+    private String password;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private UserRole role;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-    @Column(name = "email")
-    @Email
-    private String email;
 
-    @Column(name = "password")
-    private String password;
-
-    @OneToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "id")
-    private UserRole role;
-
-    public User() {
-    }
+    @ManyToMany(mappedBy = "solvers")
+    private List<SupportTicket> tickets;
 
     public Long getId() {
         return id;
@@ -64,14 +68,6 @@ public class User implements Entity {
         this.lastName = lastName;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -88,7 +84,6 @@ public class User implements Entity {
         this.password = password;
     }
 
-
     public UserRole getRole() {
         return role;
     }
@@ -97,35 +92,19 @@ public class User implements Entity {
         this.role = role;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(firstName, user.firstName) &&
-                Objects.equals(lastName, user.lastName) &&
-                Objects.equals(customer, user.customer) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(role, user.role);
+    public Customer getCustomer() {
+        return customer;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, customer, email, password, role);
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + firstName + '\'' +
-                ", secondname='" + lastName + '\'' +
-                ", customer=" + customer +
-                ", email='" + email + '\'' +
-                ", pass='" + password + '\'' +
-                ", role=" + role +
-                '}';
+    public List<SupportTicket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<SupportTicket> tickets) {
+        this.tickets = tickets;
     }
 }

@@ -15,5 +15,6 @@ public class CustomerDAO extends ElementDAO<Customer> {
     public Optional<Customer> findCustomerByPhoneNumber(String phoneNumber) {
         return findOneByFieldEqual("phoneNumber", phoneNumber);
     }
+
 }
 

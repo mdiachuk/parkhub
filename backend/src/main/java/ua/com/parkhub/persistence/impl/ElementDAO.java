@@ -4,21 +4,19 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.persistence.IElementDAO;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
-
 import java.util.Optional;
-
 
 
 public class ElementDAO<E> implements IElementDAO<E> {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "default")
     EntityManager emp;
 
     Class<E> elementClass;
@@ -26,7 +24,8 @@ public class ElementDAO<E> implements IElementDAO<E> {
     public ElementDAO(Class<E> elementClass) {
         this.elementClass = elementClass;
     }
-@Transactional
+
+    @Transactional
     @Override
     public void addElement(E element) {
         emp.persist(element);
@@ -37,14 +36,23 @@ public class ElementDAO<E> implements IElementDAO<E> {
         emp.persist(element);
     }
 
-//    @Override
+    //    @Override
 //    public E findElementById(long id) {
 //        return emp.find(elementClass, id);
 //    }
     @Override
     public Optional<E> findElementById(long id) {
-            E element = emp.find( elementClass, id);
-            return Optional.ofNullable(element);
+//<<<<<<< HEAD
+//            E element = emp.find( elementClass, id);
+//            return Optional.ofNullable(element);
+//=======
+        E element;
+        try {
+            element = emp.find(elementClass, id);
+        } catch (PersistenceException e) {
+            element = null;
+        }
+        return Optional.ofNullable(element);
     }
 
     @Override
@@ -68,14 +76,24 @@ public class ElementDAO<E> implements IElementDAO<E> {
         CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(elementClass);
         Root<E> elementRoot = criteriaQuery.from(elementClass);
         criteriaQuery.select(elementRoot).where(criteriaBuilder.equal(elementRoot.get(fieldName), fieldValue));
-
+//<<<<<<< HEAD
+//
+//        try {
+//            E element = emp.createQuery(criteriaQuery).getSingleResult();
+//            return Optional.of(element);
+//        } catch (NoResultException e1) {
+//            return Optional.empty();
+//        }  catch (Exception e2) {
+//            throw new UnsupportedOperationException();
+//        }
+//=======
+        E element;
         try {
-            E element = emp.createQuery(criteriaQuery).getSingleResult();
-            return Optional.of(element);
-        } catch (NoResultException e1) {
-            return Optional.empty();
-        }  catch (Exception e2) {
-            throw new UnsupportedOperationException();
+            element = emp.createQuery(criteriaQuery).getSingleResult();
+        } catch (PersistenceException e) {
+            element = null;
         }
+        return Optional.ofNullable(element);
+//>>>>>>> 08cb4e34bfe1c3ed0933de34c5242199c348c3f1
     }
 }

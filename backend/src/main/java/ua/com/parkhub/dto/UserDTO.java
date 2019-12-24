@@ -1,5 +1,7 @@
 package ua.com.parkhub.dto;
 
+import ua.com.parkhub.persistence.entities.Customer;
+
 public class UserDTO {
 
     private long id;
@@ -7,6 +9,7 @@ public class UserDTO {
     private String password;
     private String firstName;
     private String lastName;
+    private CustomerDTO customerDTO;
     private RoleDTO role;
     private String token;
 
@@ -68,5 +71,13 @@ public class UserDTO {
 
     public void setRole(RoleDTO role) {
         this.role = role;
+    }
+
+    public CustomerDTO getCustomerDTO() {
+        return customerDTO;
+    }
+
+    public void setCustomerDTO(CustomerDTO customerDTO) {
+        this.customerDTO = customerDTO;
     }
 }
