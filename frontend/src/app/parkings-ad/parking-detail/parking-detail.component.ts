@@ -5,7 +5,7 @@ import { Parking } from '../../interfaces/parking';
 import { ParkingService } from '../../serviceSlot/parking.service';
 
 @Component({
-  selector: 'app-parking-detail',
+  selector: 'app-parkings-detail',
   templateUrl: './parking-detail.component.html',
   styleUrls: ['./parking-detail.component.scss']
 })

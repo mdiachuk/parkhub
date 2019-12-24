@@ -7,9 +7,25 @@ public class SlotDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private Long id;
     private String slotNumber;
-    //TODO for front-end displaying
-    /*private boolean isReserved;
-    private boolean isActive;*/
+
+    public boolean isReserved() {
+        return isReserved;
+    }
+
+    public void setReserved(boolean reserved) {
+        isReserved = reserved;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    private boolean isReserved;
+    private boolean isActive;
 
     public Long getId() {
         return id;

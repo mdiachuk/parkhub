@@ -51,7 +51,6 @@ import {MatChipsModule} from "@angular/material/chips";
 import {ParkingsComponentSlots} from "./parkings-ad/parkings.component";
 import {ParkingDetailSlotsComponent} from "./parkings-ad/parking-detail/parking-detail.component";
 import {SlotService} from "./serviceSlot/slot.service";
-
 import { from } from 'rxjs';
 
 
