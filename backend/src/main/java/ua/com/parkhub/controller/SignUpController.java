@@ -9,9 +9,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.ManagerRegistrationDataDTO;
-import ua.com.parkhub.exceptions.EmailIsUsedException;
+import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
-import ua.com.parkhub.exceptions.PhoneNumberIsUsedException;
+import ua.com.parkhub.exceptions.PhoneNumberException;
 import ua.com.parkhub.service.SignUpService;
 import ua.com.parkhub.validation.groups.CustomerChecks;
 import ua.com.parkhub.validation.groups.ManagerChecks;
@@ -48,15 +48,15 @@ public class SignUpController {
         return ResponseEntity.ok().build();
     }
 
-    @ExceptionHandler(PhoneNumberIsUsedException.class)
-    public ResponseEntity handlePhoneNumberIsUsedException(PhoneNumberIsUsedException e) {
+    @ExceptionHandler(PhoneNumberException.class)
+    public ResponseEntity handlePhoneNumberIsUsedException(PhoneNumberException e) {
         String message = e.getMessage();
         logger.info(message);
         return ResponseEntity.badRequest().body(message);
     }
 
-    @ExceptionHandler(EmailIsUsedException.class)
-    public ResponseEntity handleEmailIsUsedException(EmailIsUsedException e) {
+    @ExceptionHandler(EmailException.class)
+    public ResponseEntity handleEmailIsUsedException(EmailException e) {
         String message = e.getMessage();
         logger.info(message);
         return ResponseEntity.badRequest().body(message);

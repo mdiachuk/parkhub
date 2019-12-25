@@ -9,9 +9,9 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ua.com.parkhub.dto.ManagerRegistrationDataDTO;
-import ua.com.parkhub.exceptions.EmailIsUsedException;
+import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
-import ua.com.parkhub.exceptions.PhoneNumberIsUsedException;
+import ua.com.parkhub.exceptions.PhoneNumberException;
 import ua.com.parkhub.persistence.entities.*;
 import ua.com.parkhub.persistence.impl.*;
 
@@ -95,7 +95,7 @@ class SignUpServiceTest {
                 .thenReturn(user);
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
-            assertThrows(PhoneNumberIsUsedException.class, () -> signUpService.registerManager(manager));
+            assertThrows(PhoneNumberException.class, () -> signUpService.registerManager(manager));
         });
     }
 
@@ -128,7 +128,7 @@ class SignUpServiceTest {
                 .thenReturn(Optional.of(user));
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
-            assertThrows(EmailIsUsedException.class, () -> signUpService.registerManager(manager));
+            assertThrows(EmailException.class, () -> signUpService.registerManager(manager));
         });
     }
 
