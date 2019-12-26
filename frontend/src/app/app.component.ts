@@ -18,6 +18,7 @@ export class AppComponent {
     this.changeIsAdmin(false);
     this.changeIsManager(false);
     this.changeIsLogged(false);
+    localStorage.removeItem('TOKEN');
   }
 
   public changeIsLogged(isLogged: boolean) {
