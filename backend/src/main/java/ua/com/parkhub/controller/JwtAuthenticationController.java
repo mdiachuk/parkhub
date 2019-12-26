@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.LoginDTO;
 import ua.com.parkhub.dto.UserDTO;
+import ua.com.parkhub.exceptions.PermissionException;
 import ua.com.parkhub.security.JwtUtil;
 import ua.com.parkhub.service.AuthorizationService;
 
@@ -36,4 +37,8 @@ public class JwtAuthenticationController {
         return ResponseEntity.ok(response);
     }
 
+    @ExceptionHandler(PermissionException.class)
+    public ResponseEntity handlePermissionException(PermissionException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
 }

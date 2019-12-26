@@ -1,4 +1,5 @@
 import {Component, NgModule} from '@angular/core';
+import {DataService} from './DataService/data.service';
 
 export class AppModule { }
 @Component({
@@ -8,5 +9,27 @@ export class AppModule { }
 })
 export class AppComponent {
   title = 'frontend';
+
+
+  constructor(private data: DataService) {
+  }
+
+  logout(): void {
+    this.changeIsAdmin(false);
+    this.changeIsManager(false);
+    this.changeIsLogged(false);
+  }
+
+  public changeIsLogged(isLogged: boolean) {
+    this.data.changeIsLogged(isLogged);
+  }
+
+  public changeIsAdmin(isAdmin: boolean) {
+    this.data.changeIsAdmin(isAdmin);
+  }
+
+  public changeIsManager(isManager: boolean) {
+    this.data.changeIsManager(isManager);
+  }
 }
 

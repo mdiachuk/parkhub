@@ -52,6 +52,7 @@ import {ParkingsComponentSlots} from "./parkings-ad/parkings.component";
 import {ParkingDetailSlotsComponent} from "./parkings-ad/parking-detail/parking-detail.component";
 import {SlotService} from "./serviceSlot/slot.service";
 import { from } from 'rxjs';
+import {DataService} from './DataService/data.service';
 
 
 @NgModule({
@@ -104,7 +105,7 @@ import { from } from 'rxjs';
 
     // UserComponent
   ],
-  providers: [ParkingService, SlotService, ParkingService1],
+  providers: [ParkingService, SlotService, ParkingService1, DataService],
   bootstrap: [AppComponent],
   entryComponents: [AlertDialogComponent]
 })

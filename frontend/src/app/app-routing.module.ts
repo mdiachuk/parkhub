@@ -33,7 +33,7 @@ const routes: Routes = [
   { path: 'booking', component: BookingDetailComponent},
 
   // { path: 'user', component: UserComponent },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent }
   // {path: '', redirectTo: 'home', pathMatch: 'full'},
 
 ];
