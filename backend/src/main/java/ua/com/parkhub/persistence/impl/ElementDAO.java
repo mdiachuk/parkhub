@@ -4,7 +4,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.persistence.IElementDAO;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;

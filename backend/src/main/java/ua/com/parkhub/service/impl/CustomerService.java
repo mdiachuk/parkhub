@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.exceptions.ParkHubException;
-//import ua.com.parkhub.model.Customer;
 import ua.com.parkhub.persistence.entities.Customer;
 import ua.com.parkhub.persistence.impl.CustomerDAO;
 import ua.com.parkhub.service.ICustomerService;
