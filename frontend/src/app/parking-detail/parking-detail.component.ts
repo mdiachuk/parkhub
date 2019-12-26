@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ParkingService} from "../parking.service";
-import { ParkingDetail} from '../parking-detail';
+import { ParkingDetail} from './parking-detail';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -16,6 +16,9 @@ export class ParkingDetailComponent implements OnInit {
 
   parkingID: string;
   parkingDetail: ParkingDetail;
+  resourceParkingDTO: ParkingDetail;
+  buttonStatusList: Array<boolean>;
+  
 
   constructor(private parkingService: ParkingService, private route: ActivatedRoute){
   }
@@ -26,7 +29,13 @@ export class ParkingDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.buttonStatusList = new Array(true, true, true, true, true, true);
+    this.resourceParkingDTO = new ParkingDetail;
     this.parkingID = this.route.snapshot.paramMap.get('id');
     this.getData();
+    }
+
+    revert(number: number){
+       this.buttonStatusList[number] = this.buttonStatusList[number]  == true ? false : true;
     }
 }

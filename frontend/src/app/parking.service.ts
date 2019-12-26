@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
-import { ParkingItem } from './parking-item';
+import { ParkingItem } from './parkings/parking-item';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpParams} from "@angular/common/http";
-import { ParkingDetail} from './parking-detail';
+import { ParkingDetail} from './parking-detail/parking-detail';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ParkingService {
 
-  private parkingsUrl: string;
-  private parkingUrl: string;
- 
+  private parkingsUrl: string; 
   constructor(private http: HttpClient) {
     this.parkingsUrl = '/api/parkings';
   }
@@ -22,7 +20,6 @@ export class ParkingService {
 
   getParking(id: string) : Observable<ParkingDetail>{
     // let parameters = new HttpParams().set("parkingId", id.toString());
-    this.parkingUrl = `${this.parkingsUrl}/${id}`;
-    return this.http.get<ParkingDetail>(this.parkingUrl);
+    return this.http.get<ParkingDetail>(`${this.parkingsUrl}/${id}`);
   }
 }
