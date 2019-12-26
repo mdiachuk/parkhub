@@ -1,6 +1,8 @@
 package ua.com.parkhub.model;
 
 
+import ua.com.parkhub.persistence.entities.User;
+
 import java.util.Set;
 
 public class ParkingModel {
@@ -12,9 +14,18 @@ public class ParkingModel {
     private AddressModel addressModel;
     private Set<SlotModel> slots;
     private boolean isActive;
+    private UserModel owner;
 
     public Set<SlotModel> getSlots() {
         return slots;
+    }
+
+    public UserModel getOwner() {
+        return owner;
+    }
+
+    public void setOwner(UserModel owner) {
+        this.owner = owner;
     }
 
     public void setSlots(Set<SlotModel> slots) {
