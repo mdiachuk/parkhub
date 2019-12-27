@@ -13,12 +13,12 @@ import ua.com.parkhub.dto.ManagerRegistrationDataDTO;
 import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberException;
-import ua.com.parkhub.service.SignUpService;
+import ua.com.parkhub.persistence.entities.User;
+import ua.com.parkhub.service.impl.SignUpService;
 import ua.com.parkhub.validation.groups.CustomerChecks;
 import ua.com.parkhub.validation.groups.ManagerChecks;
 import ua.com.parkhub.validation.groups.UserChecks;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 

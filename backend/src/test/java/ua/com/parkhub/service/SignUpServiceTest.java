@@ -110,11 +110,11 @@ class SignUpServiceTest {
 
         when(customerDAO.findCustomerByPhoneNumber(manager.getPhoneNumber()))
                 .thenReturn(Optional.of(customer));
-        when(userRoleDAO.findElementById(anyLong()))
+        when(userRoleDAO.findUserRoleByRoleName(anyString()))
                 .thenReturn(Optional.of(userRole));
-        when(userDAO.findUserByRoleId(anyLong()))
+        when(userDAO.findElementById(anyLong()))
                 .thenReturn(Optional.of(user));
-        when(supportTicketTypeDAO.findElementById(anyLong()))
+        when(supportTicketTypeDAO.findSupportTicketTypeByType(anyString()))
                 .thenReturn(Optional.of(supportTicketType));
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> signUpService.registerManager(manager));
@@ -140,11 +140,11 @@ class SignUpServiceTest {
         UserRole userRole = new UserRole();
         SupportTicketType supportTicketType = new SupportTicketType();
 
-        when(userRoleDAO.findElementById(anyLong()))
+        when(userRoleDAO.findUserRoleByRoleName(anyString()))
                 .thenReturn(Optional.of(userRole));
-        when(userDAO.findUserByRoleId(anyLong()))
+        when(userDAO.findElementById(anyLong()))
                 .thenReturn(Optional.of(user));
-        when(supportTicketTypeDAO.findElementById(anyLong()))
+        when(supportTicketTypeDAO.findSupportTicketTypeByType(anyString()))
                 .thenReturn(Optional.of(supportTicketType));
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> signUpService.registerManager(manager));

@@ -1,6 +1,7 @@
 package ua.com.parkhub.dto;
 
-import ua.com.parkhub.validation.annotations.*;
+import ua.com.parkhub.validation.annotations.ValidEmail;
+import ua.com.parkhub.validation.annotations.ValidPassword;
 import ua.com.parkhub.validation.groups.UserChecks;
 
 import javax.validation.Valid;
@@ -8,8 +9,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@PasswordMatches(groups = UserChecks.class)
 public class UserDTO {
+
+    private long id;
 
     @Valid
     private CustomerDTO customer;
@@ -36,10 +38,18 @@ public class UserDTO {
     @Size(max = 60, message = "Password must be 60 characters at most", groups = UserChecks.class)
     private String password;
 
-    @NotNull(message = "Matching password required")
-    @NotEmpty(message = "Matching password must not be empty")
-    @Size(max = 60, message = "Matching password must be 60 characters at most")
-    private String matchingPassword;
+    private RoleDTO role;
+    private String token;
+
+    public long getId() {
+        return id;
+    }
+
+    public int getIdInt() { return (int) id;}
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public CustomerDTO getCustomer() {
         return customer;
@@ -73,14 +83,6 @@ public class UserDTO {
         this.email = email;
     }
 
-    public String getPhoneNumber() {
-        return customer.getPhoneNumber();
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.customer.setPhoneNumber(phoneNumber);
-    }
-
     public String getPassword() {
         return password;
     }
@@ -89,11 +91,19 @@ public class UserDTO {
         this.password = password;
     }
 
-    public String getMatchingPassword() {
-        return matchingPassword;
+    public RoleDTO getRole() {
+        return role;
     }
 
-    public void setMatchingPassword(String matchingPassword) {
-        this.matchingPassword = matchingPassword;
+    public void setRole(RoleDTO role) {
+        this.role = role;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

@@ -1,4 +1,4 @@
-package ua.com.parkhub.service;
+package ua.com.parkhub.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.com.parkhub.dto.ManagerRegistrationDataDTO;
+import ua.com.parkhub.dto.RoleDTO;
 import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberException;
@@ -21,7 +22,6 @@ import java.util.Optional;
 public class SignUpService {
 
     private static final long ADMIN_ID = 1;
-//    private static final String PENDING_ROLE_NAME = "Pending";
     private static final String MANAGER_REGISTRATION_REQUEST_TICKET_TYPE = "Manager registration request";
 
     private static final Logger logger = LoggerFactory.getLogger(SignUpService.class);
@@ -188,7 +188,5 @@ public class SignUpService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDAO.addElement(user);
         return true;
-
     }
-
 }

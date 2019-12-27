@@ -75,11 +75,11 @@ public class ManagerRegistrationDataDTO {
     }
 
     public String getPhoneNumber() {
-        return user.getPhoneNumber();
+        return user.getCustomer().getPhoneNumber();
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.user.setPhoneNumber(phoneNumber);
+        this.user.getCustomer().setPhoneNumber(phoneNumber);
     }
 
     public String getPassword() {
@@ -88,14 +88,6 @@ public class ManagerRegistrationDataDTO {
 
     public void setPassword(String password) {
         this.user.setPassword(password);
-    }
-
-    public String getMatchingPassword() {
-        return this.user.getMatchingPassword();
-    }
-
-    public void setMatchingPassword(String matchingPassword) {
-        this.user.setMatchingPassword(matchingPassword);
     }
 
     public String getComment() {
