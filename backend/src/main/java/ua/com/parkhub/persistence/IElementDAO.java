@@ -11,3 +11,4 @@ public interface IElementDAO<E> {
     Optional<E> findElementById(long id);
     void deleteElement(E element);
 }
+

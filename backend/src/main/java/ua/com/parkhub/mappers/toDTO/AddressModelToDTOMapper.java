@@ -1,7 +1,8 @@
-package ua.com.parkhub.mappers;
+package ua.com.parkhub.mappers.toDTO;
 
 import org.springframework.stereotype.Component;
 import ua.com.parkhub.dto.AddressDTO;
+import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.AddressModel;
 
 @Component

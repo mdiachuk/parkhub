@@ -1,12 +1,15 @@
 package ua.com.parkhub.persistence.impl;
 
 import org.springframework.stereotype.Repository;
+import ua.com.parkhub.mappers.Mapper;
+import ua.com.parkhub.model.AddressModel;
 import ua.com.parkhub.persistence.entities.Address;
 
 @Repository
-public class AddressDAO  extends ElementDAO<Address>  {
+public class AddressDAO  extends ElementDAO<Address, AddressModel> {
 
-    public AddressDAO() {
-        super(Address.class);
+    public AddressDAO(Mapper<Address, AddressModel> entityToModel, Mapper<AddressModel, Address> modelToEntity) {
+        super(Address.class, modelToEntity, entityToModel);
     }
 }
+

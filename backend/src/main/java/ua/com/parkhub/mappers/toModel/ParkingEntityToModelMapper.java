@@ -32,7 +32,7 @@ public class ParkingEntityToModelMapper implements Mapper<Parking, ParkingModel>
         parkingModel.setTariff(from.getTariff());
         parkingModel.setActive(from.isActive());
         parkingModel.setSlots(from.getSlots().stream().map(slotEntityToModelMapper::transform).collect(Collectors.toSet()));
-        parkingModel.setOwner(userEntityToModelMapper.transform(from.getOwner()));
+//        parkingModel.setOwner(userEntityToModelMapper.transform(from.getOwner()));
         return parkingModel;
     }
 }

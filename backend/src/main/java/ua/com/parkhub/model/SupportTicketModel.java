@@ -8,7 +8,6 @@ public class SupportTicketModel {
     private String description;
     private boolean isSolved;
     private SupportTicketTypeModel supportTicketType;
-    private Set<UserModel> solvers;
 
     public Long getId() {
         return id;
@@ -40,13 +39,5 @@ public class SupportTicketModel {
 
     public void setSupportTicketType(SupportTicketTypeModel supportTicketType) {
         this.supportTicketType = supportTicketType;
-    }
-
-    public Set<UserModel> getSolvers() {
-        return solvers;
-    }
-
-    public void setSolvers(Set<UserModel> solvers) {
-        this.solvers = solvers;
     }
 }

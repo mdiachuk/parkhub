@@ -6,8 +6,6 @@ import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.SupportTicketModel;
 import ua.com.parkhub.persistence.entities.SupportTicket;
 
-import java.util.stream.Collectors;
-
 @Component
 public class SupportTicketEntityToModelMapper implements Mapper<SupportTicket, SupportTicketModel> {
 
@@ -15,9 +13,8 @@ public class SupportTicketEntityToModelMapper implements Mapper<SupportTicket, S
     UserEntityToModelMapper userEntityToModelMapper;
 
     @Autowired
-    public SupportTicketEntityToModelMapper(SupportTicketTypeEntityToModelMapper supportTicketTypeEntityToModelMapper, UserEntityToModelMapper userEntityToModelMapper) {
+    public SupportTicketEntityToModelMapper(SupportTicketTypeEntityToModelMapper supportTicketTypeEntityToModelMapper) {
         this.supportTicketTypeEntityToModelMapper = supportTicketTypeEntityToModelMapper;
-        this.userEntityToModelMapper = userEntityToModelMapper;
     }
 
     @Override
@@ -27,7 +24,6 @@ public class SupportTicketEntityToModelMapper implements Mapper<SupportTicket, S
         supportTicketModel.setId(from.getId());
         supportTicketModel.setSolved(from.isSolved());
         supportTicketModel.setSupportTicketType(supportTicketTypeEntityToModelMapper.transform(from.getSupportTicketType()));
-        supportTicketModel.setSolvers(from.getSolvers().stream().map(userEntityToModelMapper::transform).collect(Collectors.toSet()));
         return supportTicketModel;
     }
 }

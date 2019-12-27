@@ -11,12 +11,10 @@ import java.util.stream.Collectors;
 @Component
 public class CustomerEntityToModelMapper implements Mapper<Customer, CustomerModel> {
 
-    BookingEntityToModelMapper bookingEntityToModelMapper;
     SupportTicketEntityToModelMapper supportTicketEntityToModelMapper;
 
     @Autowired
-    public CustomerEntityToModelMapper(BookingEntityToModelMapper bookingEntityToModelMapper, SupportTicketEntityToModelMapper supportTicketEntityToModelMapper) {
-        this.bookingEntityToModelMapper = bookingEntityToModelMapper;
+    public CustomerEntityToModelMapper(SupportTicketEntityToModelMapper supportTicketEntityToModelMapper) {
         this.supportTicketEntityToModelMapper = supportTicketEntityToModelMapper;
     }
 
@@ -26,7 +24,6 @@ public class CustomerEntityToModelMapper implements Mapper<Customer, CustomerMod
         customerModel.setId(from.getId());
         customerModel.setActive(from.isActive());
         customerModel.setPhoneNumber(from.getPhoneNumber());
-        customerModel.setBookings(from.getBookings().stream().map(bookingEntityToModelMapper::transform).collect(Collectors.toSet()));
         customerModel.setSupportTickets(from.getSupportTickets().stream().map(supportTicketEntityToModelMapper::transform).collect(Collectors.toSet()));
         return customerModel;
     }

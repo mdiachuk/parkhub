@@ -7,7 +7,6 @@ public class CustomerModel {
     private Long id;
     private String phoneNumber;
     private boolean isActive = true;
-    private Set<BookingModel> bookings;
     private Set<SupportTicketModel> supportTickets;
 
     public Long getId() {
@@ -32,14 +31,6 @@ public class CustomerModel {
 
     public void setActive(boolean active) {
         isActive = active;
-    }
-
-    public Set<BookingModel> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(Set<BookingModel> bookings) {
-        this.bookings = bookings;
     }
 
     public Set<SupportTicketModel> getSupportTickets() {

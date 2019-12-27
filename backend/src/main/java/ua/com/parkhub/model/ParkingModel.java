@@ -1,8 +1,6 @@
 package ua.com.parkhub.model;
 
 
-import ua.com.parkhub.persistence.entities.User;
-
 import java.util.Set;
 
 public class ParkingModel {

@@ -3,21 +3,21 @@ package ua.com.parkhub.model;
 
 public class SlotModel {
 
+    private long id;
     private String slotNumber;
     private boolean isReserved = false;
     private boolean isActive = true;
-    private ParkingModel parking;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getSlotNumber() {
         return slotNumber;
-    }
-
-    public ParkingModel getParking() {
-        return parking;
-    }
-
-    public void setParking(ParkingModel parking) {
-        this.parking = parking;
     }
 
     public void setSlotNumber(String slotNumber) {
