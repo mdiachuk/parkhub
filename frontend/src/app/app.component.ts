@@ -1,5 +1,6 @@
 import {Component, NgModule} from '@angular/core';
 import {DataService} from './DataService/data.service';
+import {Router} from '@angular/router';
 
 export class AppModule { }
 @Component({
@@ -11,7 +12,8 @@ export class AppComponent {
   title = 'frontend';
 
 
-  constructor(private data: DataService) {
+  constructor(private router: Router,
+              private data: DataService) {
   }
 
   logout(): void {
@@ -19,6 +21,7 @@ export class AppComponent {
     this.changeIsManager(false);
     this.changeIsLogged(false);
     localStorage.removeItem('TOKEN');
+    this.router.navigate(['/home']);
   }
 
   public changeIsLogged(isLogged: boolean) {
