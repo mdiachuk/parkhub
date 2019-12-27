@@ -8,6 +8,6 @@ public class InvalidTokenException extends PermissionException {
     }
 
     public InvalidTokenException(String message) {
-        super(generalMessage + ": " + message);
+        super(message);
     }
 }
