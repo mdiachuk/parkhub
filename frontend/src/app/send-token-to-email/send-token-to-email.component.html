@@ -1,0 +1,14 @@
+<form [formGroup]="sendTokenToEmailForm" *ngIf="!isSent">
+    <mat-form-field>
+        <input matInput formControlName="email" placeholder="Email" required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}">
+        <mat-error><small>Invalid email format</small></mat-error>
+    </mat-form-field>
+    <button class="submit" mat-raised-button [disabled]="!sendTokenToEmailForm.valid"
+        (click)="sendEmail()">Submit</button>
+
+</form>
+<div class="success" *ngIf="isSent">
+    <div><img src="assets/tick.png" class="success-image"></div>
+    <div class="success-message">Link for resetting password was sent<br>to your email-box!</div>
+    <div class="homepage-link"><a href="" class="homepage-link">Go to the homepage</a></div>
+</div>
