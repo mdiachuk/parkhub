@@ -1,9 +1,9 @@
 package ua.com.parkhub.dto;
 
+<<<<<<< HEAD
 public class CustomerDTO {
 
     private long id;
-    private String phoneNumber;
     private boolean isActive;
 
     public long getId() {
@@ -13,6 +13,11 @@ public class CustomerDTO {
     public void setId(long id) {
         this.id = id;
     }
+
+    @ValidPhoneNumber(groups = CustomerChecks.class)
+    @NotNull(message = "Phone number required", groups = CustomerChecks.class)
+    @NotEmpty(message = "Phone number must not be empty", groups = CustomerChecks.class)
+    private String phoneNumber;
 
     public String getPhoneNumber() {
         return phoneNumber;

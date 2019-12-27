@@ -9,9 +9,9 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ua.com.parkhub.dto.ManagerRegistrationDataDTO;
-import ua.com.parkhub.exceptions.EmailIsUsedException;
+import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
-import ua.com.parkhub.exceptions.PhoneNumberIsUsedException;
+import ua.com.parkhub.exceptions.PhoneNumberException;
 import ua.com.parkhub.persistence.entities.*;
 import ua.com.parkhub.persistence.impl.*;
 import ua.com.parkhub.service.impl.SignUpService;
@@ -50,7 +50,7 @@ class SignUpServiceTest {
 
     @Test
     public void test_registerManager_pendingRoleNotFound_exceptionThrown() {
-        ManagerRegistrationDataDTO manager = new ManagerRegistrationDataDTO();
+        ManagerRegistrationDataDTO manager = Mockito.mock(ManagerRegistrationDataDTO.class);
 
         when(userRoleDAO.findUserRoleByRoleName(anyString()))
                 .thenReturn(Optional.empty());
@@ -62,7 +62,7 @@ class SignUpServiceTest {
 
     @Test
     public void test_registerManager_adminNotFound_exceptionThrown() {
-        ManagerRegistrationDataDTO manager = new ManagerRegistrationDataDTO();
+        ManagerRegistrationDataDTO manager = Mockito.mock(ManagerRegistrationDataDTO.class);
 
         when(userDAO.findElementById(anyLong()))
                 .thenReturn(Optional.empty());
@@ -74,7 +74,7 @@ class SignUpServiceTest {
 
     @Test
     public void test_registerManager_supportTicketTypeNotFound_exceptionThrown() {
-        ManagerRegistrationDataDTO manager = new ManagerRegistrationDataDTO();
+        ManagerRegistrationDataDTO manager = Mockito.mock(ManagerRegistrationDataDTO.class);
 
         when(supportTicketTypeDAO.findSupportTicketTypeByType(anyString()))
                 .thenReturn(Optional.empty());
@@ -86,7 +86,7 @@ class SignUpServiceTest {
 
     @Test
     public void test_registerManager_phoneNumberIsUsed_exceptionThrown() {
-        ManagerRegistrationDataDTO manager = new ManagerRegistrationDataDTO();
+        ManagerRegistrationDataDTO manager = Mockito.mock(ManagerRegistrationDataDTO.class);
         Customer customer = Mockito.mock(Customer.class);
         User user = new User();
 
@@ -96,13 +96,13 @@ class SignUpServiceTest {
                 .thenReturn(user);
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
-            assertThrows(PhoneNumberIsUsedException.class, () -> signUpService.registerManager(manager));
+            assertThrows(PhoneNumberException.class, () -> signUpService.registerManager(manager));
         });
     }
 
     @Test
     public void test_registerManager_phoneNumberIsUsedButNorRegistered_everythingCorrect() {
-        ManagerRegistrationDataDTO manager = new ManagerRegistrationDataDTO();
+        ManagerRegistrationDataDTO manager = Mockito.mock(ManagerRegistrationDataDTO.class);
         Customer customer = new Customer();
         User user = new User();
         UserRole userRole = new UserRole();
@@ -110,11 +110,11 @@ class SignUpServiceTest {
 
         when(customerDAO.findCustomerByPhoneNumber(manager.getPhoneNumber()))
                 .thenReturn(Optional.of(customer));
-        when(userRoleDAO.findUserRoleByRoleName(anyString()))
+        when(userRoleDAO.findElementById(anyLong()))
                 .thenReturn(Optional.of(userRole));
-        when(userDAO.findElementById(anyLong()))
+        when(userDAO.findUserByRoleId(anyLong()))
                 .thenReturn(Optional.of(user));
-        when(supportTicketTypeDAO.findSupportTicketTypeByType(anyString()))
+        when(supportTicketTypeDAO.findElementById(anyLong()))
                 .thenReturn(Optional.of(supportTicketType));
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> signUpService.registerManager(manager));
@@ -122,29 +122,29 @@ class SignUpServiceTest {
 
     @Test
     public void test_registerManager_emailIsUsed_exceptionThrown() {
-        ManagerRegistrationDataDTO manager = new ManagerRegistrationDataDTO();
+        ManagerRegistrationDataDTO manager = Mockito.mock(ManagerRegistrationDataDTO.class);
         User user = new User();
 
         when(userDAO.findUserByEmail(manager.getPhoneNumber()))
                 .thenReturn(Optional.of(user));
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
-            assertThrows(EmailIsUsedException.class, () -> signUpService.registerManager(manager));
+            assertThrows(EmailException.class, () -> signUpService.registerManager(manager));
         });
     }
 
     @Test
     public void test_registerManager_everythingCorrect() {
-        ManagerRegistrationDataDTO manager = new ManagerRegistrationDataDTO();
+        ManagerRegistrationDataDTO manager = Mockito.mock(ManagerRegistrationDataDTO.class);
         User user = new User();
         UserRole userRole = new UserRole();
         SupportTicketType supportTicketType = new SupportTicketType();
 
-        when(userRoleDAO.findUserRoleByRoleName(anyString()))
+        when(userRoleDAO.findElementById(anyLong()))
                 .thenReturn(Optional.of(userRole));
-        when(userDAO.findElementById(anyLong()))
+        when(userDAO.findUserByRoleId(anyLong()))
                 .thenReturn(Optional.of(user));
-        when(supportTicketTypeDAO.findSupportTicketTypeByType(anyString()))
+        when(supportTicketTypeDAO.findElementById(anyLong()))
                 .thenReturn(Optional.of(supportTicketType));
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> signUpService.registerManager(manager));

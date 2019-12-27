@@ -6,9 +6,9 @@ import ua.com.parkhub.persistence.entities.User;
 import javax.persistence.Query;
 import java.util.Optional;
 
-
 @Repository
 public class UserDAO extends ElementDAO<User> {
+
     public UserDAO() {
         super(User.class);
     }
@@ -30,6 +30,10 @@ public class UserDAO extends ElementDAO<User> {
         } else {
             return query.getResultList().get(0).toString();
         }
+    }
+
+    public Optional<User> findUserByRoleId(long id) {
+        return findOneByFieldEqual("role", id);
     }
 
     /**

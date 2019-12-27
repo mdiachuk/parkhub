@@ -1,4 +1,4 @@
-package ua.com.parkhub.service.impl;
+package ua.com.parkhub.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,10 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.com.parkhub.dto.ManagerRegistrationDataDTO;
-import ua.com.parkhub.dto.RoleDTO;
-import ua.com.parkhub.exceptions.EmailIsUsedException;
+import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
-import ua.com.parkhub.exceptions.PhoneNumberIsUsedException;
+import ua.com.parkhub.exceptions.PhoneNumberException;
 import ua.com.parkhub.persistence.entities.*;
 import ua.com.parkhub.persistence.impl.*;
 
@@ -50,7 +49,8 @@ public class SignUpService {
     public void registerManager(ManagerRegistrationDataDTO manager) {
         Customer customer = createCustomer(manager);
         User user = createUser(manager, customer);
-        if (customer.getId() == null) {
+        Optional<Long> optionalCustomerId = Optional.ofNullable(customer.getId());
+        if (!optionalCustomerId.isPresent()) {
             customerDAO.addElement(customer);
         }
         SupportTicket supportTicket = createSupportTicket(manager, customer);
@@ -66,7 +66,7 @@ public class SignUpService {
             logger.info("Customer with phone number={} was found", manager.getPhoneNumber());
             Optional<User> optionalUser = Optional.ofNullable(optionalCustomer.get().getUser());
             if (optionalUser.isPresent()) {
-                throw new PhoneNumberIsUsedException();
+                throw new PhoneNumberException("Account with this phone number already exists!");
             }
             logger.info("Existing customer was assigned");
             return optionalCustomer.get();
@@ -81,7 +81,7 @@ public class SignUpService {
     private User createUser(ManagerRegistrationDataDTO manager, Customer customer) {
         Optional<User> optionalUser = userDAO.findUserByEmail(manager.getEmail());
         if (optionalUser.isPresent()) {
-            throw new EmailIsUsedException();
+            throw new EmailException("Account with this email already exists!");
         }
         User user = new User();
         user.setCustomer(customer);
