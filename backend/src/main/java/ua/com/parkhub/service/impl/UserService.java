@@ -49,7 +49,7 @@ public class UserService {
         String to = email.getEmail();
         String subject = "Reset password";
         String body = "Link: http://localhost:4200/reset-password?token=" + token.getToken()
-                + " (expires at " + beautifyExpirationDate(token.getExpirationDate()) + ")";
+                + " (expires at " + formatExpirationDate(token.getExpirationDate()) + ")";
         sendEmail(to, subject, body);
         logger.info("Email for password resetting was sent to {}", to);
     }
@@ -57,7 +57,7 @@ public class UserService {
     public boolean isLinkActive(String token) {
         UuidToken uuidToken = uuidTokenDAO.findUuidTokenByToken(token)
                 .orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
-        return !isTokenExpired(uuidToken);
+        return !isExpired(uuidToken);
     }
 
     @Transactional
@@ -65,7 +65,7 @@ public class UserService {
         User user = uuidTokenDAO
                 .findUuidTokenByToken(password.getToken())
                 .map(token -> {
-                    if (isTokenExpired(token)) {
+                    if (isExpired(token)) {
                         throw new InvalidTokenException("Token expired!");
                     }
                     return userDAO.findElementById(token.getUser().getId()).orElseThrow(() ->
@@ -97,12 +97,12 @@ public class UserService {
         mailSender.send(message);
     }
 
-    private String beautifyExpirationDate(LocalDateTime date) {
+    private String formatExpirationDate(LocalDateTime date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy");
         return date.format(formatter);
     }
 
-    private boolean isTokenExpired(UuidToken token) {
+    private boolean isExpired(UuidToken token) {
         return token.getExpirationDate().isBefore(LocalDateTime.now());
     }
 }

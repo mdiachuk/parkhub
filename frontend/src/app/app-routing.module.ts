@@ -7,7 +7,6 @@ import { ParkingListComponentManager } from "./parking-list-manager/parking-list
 import { ParkingDetailComponent } from "./parking-detail/parking-detail.component";
 import { ManagerSignupComponent } from "./manager-signup/manager-signup.component";
 import { AdminComponent } from "./admin/admin.component";
-// import {UserComponent} from "./user/user.component";
 import { LoginComponent } from "./login/login.component";
 import { ParkoffComponent } from "./parkoff/parkoff.component";
 import { ParkingDetailSlotsComponent } from "./parkings-ad/parking-detail/parking-detail.component";
@@ -27,18 +26,11 @@ const routes: Routes = [
   { path: 'manager/cabinet', component: ParkingListComponentManager, },
   { path: 'manager/cabinet/:id', component: ParkingDetailComponent, },
   { path: 'admin', component: AdminComponent },
-
-  // { path: 'parkings', component: ParkingsComponentSlots },
   { path: 'parkings/:id', component: ParkingDetailSlotsComponent },
-  // { path: 'slots', component: SlotsComponent },
   { path: 'booking', component: BookingDetailComponent },
-
-  // { path: 'user', component: UserComponent },
   { path: 'login', component: LoginComponent },
-  // {path: '', redirectTo: 'home', pathMatch: 'full'},
   { path: 'forgot-password', component: SendTokenToEmailComponent },
   { path: 'reset-password', component: ResetPasswordComponent }
-
 ];
 
 
