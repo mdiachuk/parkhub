@@ -18,6 +18,7 @@ export class ResetPasswordComponent implements OnInit {
   password: Password;
   message: string;
   token: string;
+  isExpired: boolean;
 
   constructor(private resetPasswordService: ResetPasswordService,
     private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router,
@@ -31,14 +32,26 @@ export class ResetPasswordComponent implements OnInit {
     this.checkIsExpired();
   }
 
-  resetPassword(): void {
+  checkIsExpired() {
     this.activatedRoute.queryParams.subscribe(params => {
       this.token = params.token;
     });
-    this.password = new Password(this.token,
-       this.resetPasswordForm.get('password').value);
+    this.resetPasswordService.checkIsExpired(this.token).subscribe(response => {
+      this.isExpired = false;
+    }, err => {
+      this.isExpired = true;
+      this.message = err.error;
+    });
+  }
+
+  resetPassword(): void {
+    this.password = new Password(this.token, this.resetPasswordForm.get('password').value);
     this.resetPasswordService.resetPassword(this.password).subscribe(response => {
-      this.isResetted = true;
+      this.router.navigate(['login']).then((navigated: boolean) => {
+        if (navigated) {
+          this.openSnackBar('Your password was successfully reseted! Try to log in using your new credentials');
+        }
+      });
     }, err => {
       this.message = err.error;
       this.openSnackBar(this.message);

@@ -1,5 +1,7 @@
 package ua.com.parkhub.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.mail.SimpleMailMessage;
@@ -24,6 +26,8 @@ import java.util.UUID;
 @Service
 public class UserService {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
     private final UserDAO userDAO;
     private final UuidTokenDAO uuidTokenDAO;
     private final JavaMailSender mailSender;
@@ -42,9 +46,18 @@ public class UserService {
     @Transactional
     public void sendToken(EmailDTO email) {
         UuidToken token = createToken(email.getEmail());
-        String body = "Reset password: http://localhost:4200/reset-password?token=" + token.getToken()
-                + " (valid till " + beautifyExpirationDate(token.getExpirationDate()) + ")";
-        sendEmail(email.getEmail(), body);
+        String to = email.getEmail();
+        String subject = "Reset password";
+        String body = "Link: http://localhost:4200/reset-password?token=" + token.getToken()
+                + " (expires at " + beautifyExpirationDate(token.getExpirationDate()) + ")";
+        sendEmail(to, subject, body);
+        logger.info("Email for password resetting was sent to {}", to);
+    }
+
+    public boolean isLinkActive(String token) {
+        UuidToken uuidToken = uuidTokenDAO.findUuidTokenByToken(token)
+                .orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
+        return !isTokenExpired(uuidToken);
     }
 
     @Transactional
@@ -52,7 +65,7 @@ public class UserService {
         User user = uuidTokenDAO
                 .findUuidTokenByToken(password.getToken())
                 .map(token -> {
-                    if (token.getExpirationDate().isBefore(LocalDateTime.now())) {
+                    if (isTokenExpired(token)) {
                         throw new InvalidTokenException("Token expired!");
                     }
                     return userDAO.findElementById(token.getUser().getId()).orElseThrow(() ->
@@ -61,6 +74,7 @@ public class UserService {
                 .orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
         user.setPassword(passwordEncoder.encode(password.getPassword()));
         userDAO.updateElement(user);
+        logger.info("Password was reset");
     }
 
     private UuidToken createToken(String email) {
@@ -70,6 +84,8 @@ public class UserService {
         token.setUser(user);
         token.setToken(UUID.randomUUID().toString());
         uuidTokenDAO.addElement(token);
+        logger.info("Token {} with expiration date at {} was created for user with email={}",
+                token.getToken(), token.getExpirationDate(), email);
         return token;
     }
 
@@ -84,5 +100,9 @@ public class UserService {
     private String beautifyExpirationDate(LocalDateTime date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy");
         return date.format(formatter);
+    }
+
+    private boolean isTokenExpired(UuidToken token) {
+        return token.getExpirationDate().isBefore(LocalDateTime.now());
     }
 }

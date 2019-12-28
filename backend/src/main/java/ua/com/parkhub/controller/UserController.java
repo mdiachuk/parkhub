@@ -40,11 +40,22 @@ public class UserController {
             return ResponseEntity.badRequest().body(errors);
         }
         userService.sendToken(email);
-        logger.info("ok");
+        logger.info("Link with unique token was sent");
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/password")
+    @GetMapping("/check-token/{token}")
+    public ResponseEntity checkToken(@PathVariable("token") String token) {
+        if (userService.isLinkActive(token)) {
+            logger.info("Link is active");
+            return ResponseEntity.ok().build();
+        } else {
+            logger.info("Link expired");
+            return ResponseEntity.badRequest().body("Link is not active anymore");
+        }
+    }
+
+    @PostMapping("/reset-password")
     public ResponseEntity resetPassword(@RequestBody @Valid PasswordDTO password, BindingResult result) {
         if (result.hasFieldErrors()) {
             List<String> errors = result.getAllErrors().stream()
@@ -54,7 +65,7 @@ public class UserController {
             return ResponseEntity.badRequest().body(errors);
         }
         userService.resetPassword(password);
-        logger.info("ok");
+        logger.info("Link with unique token was sent");
         return ResponseEntity.ok().build();
     }
 

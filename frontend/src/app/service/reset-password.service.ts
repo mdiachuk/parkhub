@@ -11,7 +11,11 @@ export class ResetPasswordService {
     constructor(private http: HttpClient) { }
 
     sendTokenToEmail(email: Email) {
-        return this.http.post('/api/email', email);
+        return this.http.post('/api/send-token-to-email', email);
+    }
+
+    checkIsExpired(token: string) {
+        return this.http.get('/api/check-token/' + token);;
     }
 
     resetPassword(password: Password) {
