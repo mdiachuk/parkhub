@@ -11,6 +11,7 @@ import ua.com.parkhub.dto.EmailDTO;
 import ua.com.parkhub.dto.PasswordDTO;
 import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.InvalidTokenException;
+import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.service.impl.UserService;
 
 import javax.validation.Valid;
@@ -29,7 +30,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/email")
+    @PostMapping("/send-token-to-email")
     public ResponseEntity sendToken(@RequestBody @Valid EmailDTO email, BindingResult result) {
         if (result.hasFieldErrors()) {
             List<String> errors = result.getAllErrors().stream()
@@ -69,5 +70,12 @@ public class UserController {
         String message = e.getMessage();
         logger.info(message);
         return ResponseEntity.badRequest().body(message);
+    }
+
+    @ExceptionHandler(NotFoundInDataBaseException.class)
+    public ResponseEntity handleNotFoundInDataBaseException(NotFoundInDataBaseException e) {
+        logger.info(e.getMessage());
+        String message = "Something went wrong on our server. Please, try again later.";
+        return ResponseEntity.status(500).body(message);
     }
 }

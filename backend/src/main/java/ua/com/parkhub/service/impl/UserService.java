@@ -11,6 +11,7 @@ import ua.com.parkhub.dto.EmailDTO;
 import ua.com.parkhub.dto.PasswordDTO;
 import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.InvalidTokenException;
+import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.persistence.entities.UuidToken;
 import ua.com.parkhub.persistence.entities.User;
 import ua.com.parkhub.persistence.impl.UuidTokenDAO;
@@ -55,9 +56,9 @@ public class UserService {
                         throw new InvalidTokenException("Token expired!");
                     }
                     return userDAO.findElementById(token.getUser().getId()).orElseThrow(() ->
-                            new InvalidTokenException("Token is not assigned to any user"));
+                            new NotFoundInDataBaseException("Token is not assigned to any user"));
                 })
-                .orElseThrow(() -> new InvalidTokenException("Token was not found"));
+                .orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
         user.setPassword(passwordEncoder.encode(password.getPassword()));
         userDAO.updateElement(user);
     }
@@ -72,10 +73,10 @@ public class UserService {
         return token;
     }
 
-    private void sendEmail(String to, String body) {
+    private void sendEmail(String to, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
-        message.setSubject("Reset password");
+        message.setSubject(subject);
         message.setText(body);
         mailSender.send(message);
     }

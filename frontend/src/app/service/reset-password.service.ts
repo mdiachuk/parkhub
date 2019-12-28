@@ -15,6 +15,6 @@ export class ResetPasswordService {
     }
 
     resetPassword(password: Password) {
-        return this.http.post('/api/password', password);
+        return this.http.post('/api/reset-password', password);
     }
 }

@@ -41,5 +41,4 @@ export class SendTokenToEmailComponent implements OnInit {
       duration: 4000,
     });
   }
-
 }

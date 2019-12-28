@@ -17,7 +17,6 @@ export class ResetPasswordComponent implements OnInit {
   resetPasswordForm: FormGroup;
   password: Password;
   message: string;
-  isResetted: boolean;
   token: string;
 
   constructor(private resetPasswordService: ResetPasswordService,
@@ -29,7 +28,7 @@ export class ResetPasswordComponent implements OnInit {
       password: [''],
       confirmPassword: ['']
     }, { validator: ConfirmPasswordValidator.matchPassword });
-    this.isResetted = false;
+    this.checkIsExpired();
   }
 
   resetPassword(): void {
