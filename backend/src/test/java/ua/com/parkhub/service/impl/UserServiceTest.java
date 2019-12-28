@@ -73,6 +73,41 @@ class UserServiceTest {
     }
 
     @Test
+    public void test_isLinkActive_tokenNotFound_notFoundInDataBaseExceptionThrown() {
+        when(uuidTokenDAO.findUuidTokenByToken(anyString())).thenReturn(Optional.empty());
+
+        assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
+            assertThrows(NotFoundInDataBaseException.class, () -> userService.isLinkActive("12345"));
+        });
+    }
+
+    @Test
+    public void test_isLinkActive_tokenExpired_returnFalse() {
+        UuidToken token = Mockito.mock(UuidToken.class);
+        LocalDateTime expirationDate  = LocalDateTime.now().minusMinutes(100);
+
+        when(uuidTokenDAO.findUuidTokenByToken(anyString())).thenReturn(Optional.of(token));
+        when(token.getExpirationDate()).thenReturn(expirationDate);
+
+        assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
+            assertFalse(userService.isLinkActive("12345"));
+        });
+    }
+
+    @Test
+    public void test_isLinkActive_everythingCorrect_returnTrue() {
+        UuidToken token = Mockito.mock(UuidToken.class);
+        LocalDateTime expirationDate  = LocalDateTime.now().plusMinutes(100);
+
+        when(uuidTokenDAO.findUuidTokenByToken(anyString())).thenReturn(Optional.of(token));
+        when(token.getExpirationDate()).thenReturn(expirationDate);
+
+        assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
+            assertTrue(userService.isLinkActive("12345"));
+        });
+    }
+
+    @Test
     public void test_resetPassword_tokenExpired_invalidTokenExceptionThrown() {
         PasswordDTO password = Mockito.mock(PasswordDTO.class);
         UuidToken token = Mockito.mock(UuidToken.class);
