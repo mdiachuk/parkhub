@@ -18,13 +18,15 @@ export class ResetPasswordComponent implements OnInit {
   password: Password;
   message: string;
   token: string;
-  isExpired: boolean;
+  loading: boolean;
+  view: number;
 
   constructor(private resetPasswordService: ResetPasswordService,
     private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router,
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.loading = false;
     this.resetPasswordForm = this.fb.group({
       password: [''],
       confirmPassword: ['']
@@ -37,24 +39,39 @@ export class ResetPasswordComponent implements OnInit {
       this.token = params.token;
     });
     this.resetPasswordService.checkIsExpired(this.token).subscribe(response => {
-      this.isExpired = false;
+      this.view = 1;
     }, err => {
-      this.isExpired = true;
+      this.view = 2;
       this.message = err.error;
     });
   }
 
-  resetPassword(): void {
+  resetPassword() {
+    this.loading = true;
     this.password = new Password(this.token, this.resetPasswordForm.get('password').value);
     this.resetPasswordService.resetPassword(this.password).subscribe(response => {
       this.router.navigate(['login']).then((navigated: boolean) => {
         if (navigated) {
+          this.loading = false;
           this.openSnackBar('Your password was successfully reseted! Try to log in using your new credentials');
         }
       });
     }, err => {
+      this.loading = false;
       this.message = err.error;
       this.openSnackBar(this.message);
+    });
+  }
+
+  resendToken() {
+    this.loading = true;
+    this.resetPasswordService.resendTokenToEmail(this.token).subscribe(response => {
+      this.router.navigate(['login']).then((navigated: boolean) => {
+        if (navigated) {
+          this.openSnackBar('New link for resetting password was sent to your email-box');
+          this.loading = false;
+        }
+      });
     });
   }
 

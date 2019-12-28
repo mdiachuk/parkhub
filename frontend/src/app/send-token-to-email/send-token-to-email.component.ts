@@ -15,6 +15,7 @@ export class SendTokenToEmailComponent implements OnInit {
   email: Email;
   message: string;
   isSent: boolean;
+  loading: boolean;
 
   constructor(private resetPasswordService: ResetPasswordService,
     private fb: FormBuilder, private snackBar: MatSnackBar) { }
@@ -24,13 +25,17 @@ export class SendTokenToEmailComponent implements OnInit {
       email: ['']
     });
     this.isSent = false;
+    this.loading = false;
   }
 
   sendEmail() {
+    this.loading = true;
     this.email = new Email(this.sendTokenToEmailForm.get('email').value);
     this.resetPasswordService.sendTokenToEmail(this.email).subscribe(response => {
       this.isSent = true;
+      this.loading = false;
     }, err => {
+      this.loading = false;
       this.message = err.error;
       this.openSnackBar(this.message);
     });

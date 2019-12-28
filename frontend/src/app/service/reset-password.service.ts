@@ -21,4 +21,8 @@ export class ResetPasswordService {
     resetPassword(password: Password) {
         return this.http.post('/api/reset-password', password);
     }
+
+    resendTokenToEmail(token: string) {
+        return this.http.post('/api/resend-token-to-email', token);
+    }
 }

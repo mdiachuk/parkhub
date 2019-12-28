@@ -44,6 +44,12 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/resend-token-to-email")
+    public ResponseEntity resendToken(@RequestBody String token) {
+        userService.resendTokenForResettingPassword(token);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/check-token/{token}")
     public ResponseEntity checkToken(@PathVariable("token") String token) {
         if (userService.isLinkActive(token)) {

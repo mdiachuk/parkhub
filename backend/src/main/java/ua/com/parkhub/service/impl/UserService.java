@@ -56,6 +56,16 @@ public class UserService {
         logger.info("Email for password resetting was sent to {}", to);
     }
 
+    @Transactional
+    public void resendTokenForResettingPassword(String token) {
+        uuidTokenDAO.findUuidTokenByToken(token)
+                .ifPresent(uuidToken -> {
+                    EmailDTO email = new EmailDTO();
+                    email.setEmail(uuidToken.getUser().getEmail());
+                    sendToken(email);
+                });
+    }
+
     public boolean isLinkActive(String token) {
         UuidToken uuidToken = uuidTokenDAO.findUuidTokenByToken(token)
                 .orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
