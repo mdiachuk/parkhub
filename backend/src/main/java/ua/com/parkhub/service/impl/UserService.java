@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +19,8 @@ import ua.com.parkhub.persistence.entities.User;
 import ua.com.parkhub.persistence.impl.UuidTokenDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
@@ -48,8 +50,8 @@ public class UserService {
         UuidToken token = createToken(email.getEmail());
         String to = email.getEmail();
         String subject = "Reset password";
-        String body = "Link: http://localhost:4200/reset-password?token=" + token.getToken()
-                + " (expires at " + formatExpirationDate(token.getExpirationDate()) + ")";
+        String body = "<a href=\"http://localhost:4200/reset-password?token=" + token.getToken()
+                + "\">Reset password</a> (expires at " + formatExpirationDate(token.getExpirationDate()) + ")";
         sendEmail(to, subject, body);
         logger.info("Email for password resetting was sent to {}", to);
     }
@@ -90,11 +92,17 @@ public class UserService {
     }
 
     private void sendEmail(String to, String subject, String body) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(body);
-        mailSender.send(message);
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
+        try {
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(body, true);
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            logger.info(e.getMessage());
+            throw new EmailException("Error occurred while sending email. Please, try again later");
+        }
     }
 
     private String formatExpirationDate(LocalDateTime date) {
