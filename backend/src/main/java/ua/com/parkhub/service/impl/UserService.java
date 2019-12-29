@@ -58,12 +58,13 @@ public class UserService {
 
     @Transactional
     public void resendTokenForResettingPassword(String token) {
-        uuidTokenDAO.findUuidTokenByToken(token)
-                .ifPresent(uuidToken -> {
-                    EmailDTO email = new EmailDTO();
-                    email.setEmail(uuidToken.getUser().getEmail());
-                    sendToken(email);
-                });
+        EmailDTO email = uuidTokenDAO.findUuidTokenByToken(token)
+                .map(uuidToken -> {
+                    EmailDTO emailDTO = new EmailDTO();
+                    emailDTO.setEmail(uuidToken.getUser().getEmail());
+                    return emailDTO;
+                }).orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
+        sendToken(email);
     }
 
     public boolean isLinkActive(String token) {

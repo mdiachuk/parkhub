@@ -73,6 +73,13 @@ class UserServiceTest {
     }
 
     @Test
+    public void test_resendTokenForResettingPassword_tokenNotFound_notFoundInDataBaseExceptionThrown() {
+        assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
+            assertThrows(NotFoundInDataBaseException.class, () -> userService.resendTokenForResettingPassword("12345"));
+        });
+    }
+
+    @Test
     public void test_isLinkActive_tokenNotFound_notFoundInDataBaseExceptionThrown() {
         when(uuidTokenDAO.findUuidTokenByToken(anyString())).thenReturn(Optional.empty());
 
