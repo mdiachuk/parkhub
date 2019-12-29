@@ -18,6 +18,7 @@ import ua.com.parkhub.persistence.entities.UuidToken;
 import ua.com.parkhub.persistence.impl.UserDAO;
 import ua.com.parkhub.persistence.impl.UuidTokenDAO;
 
+import javax.mail.internet.MimeMessage;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -63,9 +64,11 @@ class UserServiceTest {
     public void test_sendToken_everythingCorrect() {
         EmailDTO email = Mockito.mock(EmailDTO.class);
         User user = new User();
+        MimeMessage mimeMessage = Mockito.mock(MimeMessage.class);
 
         when(userDAO.findUserByEmail(anyString())).thenReturn(Optional.of(user));
         when(email.getEmail()).thenReturn("email@test.com");
+        when(mailSender.createMimeMessage()).thenReturn(mimeMessage);
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
             userService.sendToken(email);
