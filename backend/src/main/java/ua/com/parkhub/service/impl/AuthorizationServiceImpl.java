@@ -31,17 +31,22 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Override
     public UserDTO loginUser(LoginDTO user) {
         Optional<User> userEntity = userDAO.findUserByEmail(user.getEmail());
-        if (userEntity.filter(
-                userEnt -> passwordEncoder.matches(user.getPassword(), userEnt.getPassword())
-        ).isPresent()) {
-            return userEntity.filter(
-                    userEnt -> passwordEncoder.matches(user.getPassword(), userEnt.getPassword())
-            ).map(UserMapper::detach)
-                    .orElseThrow(() -> new PermissionException("Please enter valid credentials!"));
+        if (userEntity.get().getNumber_of_faild_pass_entering() >= 3){
+            // ДОБАВИТЬ В ТАБЛИЧКУ ЗАБЛОКАНИХ ЮЗЕРІВ
+            throw new PermissionException("Your account was blocked for 24 hours because of 3 unsuccessful tries to login. Please, try again later.");
         } else {
-            userEntity.get().setNumber_of_faild_pass_entering(userEntity.get().getNumber_of_faild_pass_entering() + 1);
-            userDAO.updateElement(userEntity.get());
-            throw new PermissionException("Please enter valid credentials!");
+            if (userEntity.filter(
+                    userEnt -> passwordEncoder.matches(user.getPassword(), userEnt.getPassword())
+            ).isPresent()) {
+                return userEntity.filter(
+                        userEnt -> passwordEncoder.matches(user.getPassword(), userEnt.getPassword())
+                ).map(UserMapper::detach)
+                        .orElseThrow(() -> new PermissionException("Please enter valid credentials!"));
+            } else {
+                userEntity.get().setNumber_of_faild_pass_entering(userEntity.get().getNumber_of_faild_pass_entering() + 1);
+                userDAO.updateElement(userEntity.get());
+                throw new PermissionException("Please enter valid credentials!");
+            }
         }
     }
 }
