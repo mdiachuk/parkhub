@@ -9,15 +9,18 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.com.parkhub.dto.EmailDTO;
 import ua.com.parkhub.dto.PasswordDTO;
+import ua.com.parkhub.dto.RoleDTO;
 import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.InvalidTokenException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
+import ua.com.parkhub.model.UuidTokenTypeModel;
 import ua.com.parkhub.persistence.entities.UuidToken;
 import ua.com.parkhub.persistence.entities.User;
+import ua.com.parkhub.persistence.entities.UuidTokenType;
 import ua.com.parkhub.persistence.impl.UuidTokenDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
+import ua.com.parkhub.persistence.impl.UuidTokenTypeDAO;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -32,39 +35,51 @@ public class UserService {
 
     private final UserDAO userDAO;
     private final UuidTokenDAO uuidTokenDAO;
+    private final UuidTokenTypeDAO uuidTokenTypeDAO;
+    private final SignUpService signUpService;
     private final JavaMailSender mailSender;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserService(UserDAO userDAO, JavaMailSender mailSender,
-                                UuidTokenDAO uuidTokenDAO,
-                                PasswordEncoder passwordEncoder) {
+                       SignUpService signUpService,
+                       UuidTokenDAO uuidTokenDAO,
+                       UuidTokenTypeDAO uuidTokenTypeDAO,
+                       PasswordEncoder passwordEncoder) {
         this.userDAO = userDAO;
         this.mailSender = mailSender;
+        this.signUpService = signUpService;
         this.uuidTokenDAO = uuidTokenDAO;
+        this.uuidTokenTypeDAO = uuidTokenTypeDAO;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
-    public void sendToken(EmailDTO email) {
-        UuidToken token = createToken(email.getEmail());
-        String to = email.getEmail();
-        String subject = "Reset password";
-        String body = "<a href=\"http://localhost:4200/reset-password?token=" + token.getToken()
-                + "\">Reset password</a> (expires at " + formatExpirationDate(token.getExpirationDate()) + ")";
-        sendEmail(to, subject, body);
-        logger.info("Email for password resetting was sent to {}", to);
+    public void sendToken(String email, UuidTokenTypeModel type) {
+        UuidToken token = createToken(email, type);
+        String subject;
+        String body;
+        switch (type) {
+            case EMAIL:
+                subject = "Verify email";
+                body = "<a href=\"http://localhost:4200/verify-email?token=" + token.getToken()
+                        + "\">Verify email address</a> (expires at " + formatExpirationDate(token.getExpirationDate()) + ")";
+                sendEmail(email, subject, body);
+                logger.info("Email for verifying email address was sent to {}", email);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + type);
+        }
     }
 
     @Transactional
-    public void resendTokenForResettingPassword(String token) {
-        EmailDTO email = uuidTokenDAO.findUuidTokenByToken(token)
-                .map(uuidToken -> {
-                    EmailDTO emailDTO = new EmailDTO();
-                    emailDTO.setEmail(uuidToken.getUser().getEmail());
-                    return emailDTO;
-                }).orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
-        sendToken(email);
+    public void resendToken(String token, UuidTokenTypeModel type) {
+        String email = uuidTokenDAO.findUuidTokenByToken(token)
+                .map(uuidToken -> uuidToken.getUser().getEmail())
+                .orElseThrow(() -> new InvalidTokenException("Invalid link"));
+        logger.info("Resending email");
+        sendToken(email, type);
+        logger.info("Email was resend");
     }
 
     public boolean isLinkActive(String token) {
@@ -82,23 +97,24 @@ public class UserService {
                         throw new InvalidTokenException("Token expired!");
                     }
                     return userDAO.findElementById(token.getUser().getId()).orElseThrow(() ->
-                            new NotFoundInDataBaseException("Token is not assigned to any user"));
+                            new InvalidTokenException("Token is not assigned to any user"));
                 })
                 .orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
         user.setPassword(passwordEncoder.encode(password.getPassword()));
         userDAO.updateElement(user);
-        logger.info("Password was reset");
+        logger.info("Password was reset for user with id={}", user.getId());
     }
 
-    private UuidToken createToken(String email) {
+    private UuidToken createToken(String email, UuidTokenTypeModel type) {
         User user = userDAO.findUserByEmail(email)
                 .orElseThrow(() -> new EmailException("User with this email does not exist!"));
         UuidToken token = new UuidToken();
         token.setUser(user);
         token.setToken(UUID.randomUUID().toString());
+        token.setUuidTokenType(findUuidTokenType(String.valueOf(type)));
         uuidTokenDAO.addElement(token);
-        logger.info("Token {} with expiration date at {} was created for user with email={}",
-                token.getToken(), token.getExpirationDate(), email);
+        logger.info("Token={} with expiration date at {} was created for user with id={}",
+                token.getToken(), token.getExpirationDate(), user.getId());
         return token;
     }
 
@@ -116,12 +132,23 @@ public class UserService {
         }
     }
 
+    public boolean isLinkActive(String token) {
+        UuidToken uuidToken = uuidTokenDAO.findUuidTokenByToken(token)
+                .orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
+        return !isExpired(uuidToken);
+    }
+
+    private boolean isExpired(UuidToken token) {
+        return token.getExpirationDate().isBefore(LocalDateTime.now());
+    }
+
     private String formatExpirationDate(LocalDateTime date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy");
         return date.format(formatter);
     }
 
-    private boolean isExpired(UuidToken token) {
-        return token.getExpirationDate().isBefore(LocalDateTime.now());
+    private UuidTokenType findUuidTokenType(String type) {
+        return uuidTokenTypeDAO.findUuidTokenTypeByType(type).orElseThrow(() ->
+                new IllegalArgumentException("UUID token type was not found by type=" + type));
     }
 }

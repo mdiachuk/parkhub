@@ -1,0 +1,8 @@
+<div class="error" *ngIf="isExpired">
+    <div><img src="assets/cross.png" class="error-image"></div>
+    <div class="error-message">{{message}}</div>
+    <div class="resend-button" *ngIf="!isError">
+        <button class="submit" mat-raised-button [disabled]="loading" [class.spinner]="loading"
+            (click)="resendToken()">Resend link</button>
+    </div>
+</div>

@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ResetPasswordService } from '../service/reset-password.service';
 import { ConfirmPasswordValidator } from '../validation/confirm-password.validator';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Token } from '../model/token';
 
 
 @Component({
@@ -18,8 +19,10 @@ export class ResetPasswordComponent implements OnInit {
   password: Password;
   message: string;
   token: string;
+  tokenDTO: Token;
   loading: boolean;
   view: number;
+  isError: boolean;
 
   constructor(private resetPasswordService: ResetPasswordService,
     private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router,
@@ -41,6 +44,9 @@ export class ResetPasswordComponent implements OnInit {
     this.resetPasswordService.checkIsExpired(this.token).subscribe(response => {
       this.view = 1;
     }, err => {
+      if (err.status === 500) {
+        this.isError = true;
+      }
       this.view = 2;
       this.message = err.error;
     });
@@ -53,7 +59,7 @@ export class ResetPasswordComponent implements OnInit {
       this.router.navigate(['login']).then((navigated: boolean) => {
         if (navigated) {
           this.loading = false;
-          this.openSnackBar('Your password was successfully reseted! Try to log in using your new credentials');
+          this.openSnackBar('Your password was successfully reset! Try to login using your new credentials');
         }
       });
     }, err => {
@@ -65,13 +71,14 @@ export class ResetPasswordComponent implements OnInit {
 
   resendToken() {
     this.loading = true;
-    this.resetPasswordService.resendTokenToEmail(this.token).subscribe(response => {
-      this.router.navigate(['login']).then((navigated: boolean) => {
-        if (navigated) {
-          this.openSnackBar('New link for resetting password was sent to your email-box');
-          this.loading = false;
-        }
-      });
+    this.tokenDTO = new Token(this.token, 'PASSWORD');
+    this.resetPasswordService.resendTokenToEmail(this.tokenDTO).subscribe(response => {
+      this.loading = false;
+      this.view = 3;
+    }, err => {
+      this.loading = false;
+      this.message = err.error;
+      this.view = 2;
     });
   }
 

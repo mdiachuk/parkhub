@@ -52,7 +52,7 @@ import { ParkingsComponentSlots } from "./parkings-ad/parkings.component";
 import { ParkingDetailSlotsComponent } from "./parkings-ad/parking-detail/parking-detail.component";
 import { SlotService } from "./serviceSlot/slot.service";
 import { from } from 'rxjs';
-import { SendTokenToEmailComponent } from './send-token-to-email/send-token-to-email.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
@@ -104,7 +104,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     BookingDetailComponent,
     BookingsComponent,
     ResetPasswordComponent,
-    SendTokenToEmailComponent
+    ForgotPasswordComponent,
     // UserComponent
   ],
   providers: [ParkingService, SlotService, ParkingService1],

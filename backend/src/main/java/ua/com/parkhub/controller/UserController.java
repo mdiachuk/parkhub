@@ -9,9 +9,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.EmailDTO;
 import ua.com.parkhub.dto.PasswordDTO;
+import ua.com.parkhub.dto.TokenDTO;
 import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.InvalidTokenException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
+import ua.com.parkhub.model.UuidTokenTypeModel;
 import ua.com.parkhub.service.impl.UserService;
 
 import javax.validation.Valid;
@@ -31,7 +33,7 @@ public class UserController {
     }
 
     @PostMapping("/send-token-to-email")
-    public ResponseEntity sendToken(@RequestBody @Valid EmailDTO email, BindingResult result) {
+    public ResponseEntity sendToken(@RequestBody @Valid EmailDTO emailDTO, BindingResult result) {
         if (result.hasFieldErrors()) {
             List<String> errors = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
@@ -39,14 +41,24 @@ public class UserController {
             logger.info("Validation errors: {}", errors);
             return ResponseEntity.badRequest().body(errors);
         }
-        userService.sendToken(email);
-        logger.info("Link with unique token was sent");
+        String email = emailDTO.getEmail();
+        UuidTokenTypeModel type = UuidTokenTypeModel.valueOf(emailDTO.getTokenType());
+        userService.sendToken(email, type);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/resend-token-to-email")
-    public ResponseEntity resendToken(@RequestBody String token) {
-        userService.resendTokenForResettingPassword(token);
+    public ResponseEntity resendToken(@RequestBody @Valid TokenDTO tokenDTO, BindingResult result) {
+        if (result.hasFieldErrors()) {
+            List<String> errors = result.getAllErrors().stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .collect(Collectors.toList());
+            logger.info("Validation errors: {}", errors);
+            return ResponseEntity.badRequest().body(errors);
+        }
+        String token = tokenDTO.getToken();
+        UuidTokenTypeModel type = UuidTokenTypeModel.valueOf(tokenDTO.getTokenType());
+        userService.resendToken(token, type);
         return ResponseEntity.ok().build();
     }
 
@@ -83,7 +95,7 @@ public class UserController {
     }
 
     @ExceptionHandler(InvalidTokenException.class)
-    public ResponseEntity handleUuidTokenException(InvalidTokenException e) {
+    public ResponseEntity handleInvalidTokenException(InvalidTokenException e) {
         String message = e.getMessage();
         logger.info(message);
         return ResponseEntity.badRequest().body(message);
@@ -91,6 +103,13 @@ public class UserController {
 
     @ExceptionHandler(NotFoundInDataBaseException.class)
     public ResponseEntity handleNotFoundInDataBaseException(NotFoundInDataBaseException e) {
+        logger.info(e.getMessage());
+        String message = "Invalid link";
+        return ResponseEntity.status(500).body(message);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity handleNotFoundInDataBaseException(IllegalArgumentException e) {
         logger.info(e.getMessage());
         String message = "Something went wrong on our server. Please, try again later.";
         return ResponseEntity.status(500).body(message);

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Email } from '../model/email';
 import { Password } from '../model/password';
+import { Token } from '../model/token';
 
 @Injectable({
     providedIn: 'root'
@@ -22,7 +23,7 @@ export class ResetPasswordService {
         return this.http.post('/api/reset-password', password);
     }
 
-    resendTokenToEmail(token: string) {
+    resendTokenToEmail(token: Token) {
         return this.http.post('/api/resend-token-to-email', token);
     }
 }

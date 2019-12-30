@@ -29,7 +29,7 @@ const routes: Routes = [
   { path: 'parkings/:id', component: ParkingDetailSlotsComponent },
   { path: 'booking', component: BookingDetailComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'forgot-password', component: SendTokenToEmailComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent }
 ];
 
