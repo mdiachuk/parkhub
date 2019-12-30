@@ -1,31 +1,34 @@
 package ua.com.parkhub.persistence.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "uuid_token", schema = "park_hub")
-public class UuidToken {
+public class UuidToken implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @Column
+    @NotNull
     private String token;
 
     @Column(name = "expiration_date")
     @NotNull
     private LocalDateTime expirationDate = LocalDateTime.now().plusMinutes(10);
+
+    @ManyToOne
+    @JoinColumn(name = "token_type_id")
+    private UuidTokenType uuidTokenType;
 
     public Long getId() {
         return id;
@@ -57,5 +60,13 @@ public class UuidToken {
 
     public void setExpirationDate(LocalDateTime expirationDate) {
         this.expirationDate = expirationDate;
+    }
+
+    public UuidTokenType getUuidTokenType() {
+        return uuidTokenType;
+    }
+
+    public void setUuidTokenType(UuidTokenType uuidTokenType) {
+        this.uuidTokenType = uuidTokenType;
     }
 }
