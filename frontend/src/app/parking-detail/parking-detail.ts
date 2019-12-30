@@ -3,6 +3,4 @@ export class ParkingDetail {
     address: string;
     slotsNumber: number;
     tariff: number;
-    floors: number;
-    coefficient: number;
   } 

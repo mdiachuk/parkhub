@@ -5,13 +5,13 @@ import java.util.Set;
 
 public class ParkingModel {
 
-    private long id;
+    private Long id;
     private String parkingName;
-    private int slotsNumber;
-    private int tariff;
+    private Integer slotsNumber;
+    private Integer tariff;
     private AddressModel addressModel;
     private Set<SlotModel> slots;
-    private boolean isActive;
+    private Boolean isActive;
     private UserModel owner;
 
     public Set<SlotModel> getSlots() {

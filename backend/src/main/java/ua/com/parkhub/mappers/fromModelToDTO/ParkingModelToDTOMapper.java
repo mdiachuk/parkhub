@@ -1,4 +1,4 @@
-package ua.com.parkhub.mappers.toDTO;
+package ua.com.parkhub.mappers.fromModelToDTO;
 
 import org.springframework.stereotype.Component;
 import ua.com.parkhub.dto.ParkingDTO;

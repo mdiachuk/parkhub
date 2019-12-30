@@ -1,4 +1,4 @@
-package ua.com.parkhub.mappers.toModel;
+package ua.com.parkhub.mappers.fromEntityToModel;
 
 import org.springframework.stereotype.Component;
 import ua.com.parkhub.mappers.Mapper;

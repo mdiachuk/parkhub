@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ParkingService} from "../parking.service";
 import { ParkingDetail} from './parking-detail';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-
-
+import { MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -15,22 +13,22 @@ import { Observable } from 'rxjs';
 export class ParkingDetailComponent implements OnInit {
 
   parkingID: string;
+  parkingDTO: ParkingDetail;
   parkingDetail: ParkingDetail;
-  resourceParkingDTO: ParkingDetail;
   buttonStatusList: Array<boolean>;
   
 
-  constructor(private parkingService: ParkingService, private route: ActivatedRoute){
+  constructor(private parkingService: ParkingService, private route: ActivatedRoute, private _snackBar: MatSnackBar){
   }
 
 
   getData(): void {
-    this.parkingService.getParking(this.parkingID).subscribe(parking => this.parkingDetail = parking);
+    this.parkingService.getParking(this.parkingID).subscribe(parking => this.parkingDTO = parking);
   }
 
   ngOnInit() {
     this.buttonStatusList = new Array(true, true, true, true, true, true);
-    this.resourceParkingDTO = new ParkingDetail;
+    this.parkingDetail = new ParkingDetail;
     this.parkingID = this.route.snapshot.paramMap.get('id');
     this.getData();
     }
@@ -38,4 +36,17 @@ export class ParkingDetailComponent implements OnInit {
     revert(number: number){
        this.buttonStatusList[number] = this.buttonStatusList[number]  == true ? false : true;
     }
+
+    openSnackBar(parkingAttribute: string) {
+      this._snackBar.open("Saved: ", parkingAttribute,{
+        duration: 2000,
+      });
+    }
+
+    saveToDTO(): void {
+      Object.assign(this.parkingDTO, this.parkingDetail);
+      console.log(this.parkingDTO);
+      this.parkingService.updateParking(this.parkingDTO, this.parkingID);
+    }
 }
+ 

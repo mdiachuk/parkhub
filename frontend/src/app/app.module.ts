@@ -19,7 +19,8 @@ import { MatDividerModule} from '@angular/material/divider';
 import { MatListModule} from '@angular/material/list'; 
 import { MatSidenavModule} from '@angular/material/sidenav';
 import { FormsModule } from '@angular/forms';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule} from '@angular/material/icon';
+import { MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 
@@ -46,7 +47,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatListModule,
     MatSidenavModule,
     FormsModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
