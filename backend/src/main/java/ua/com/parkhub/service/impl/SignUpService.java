@@ -117,7 +117,7 @@ public class SignUpService {
                 "Comment: <" + manager.getComment() + ">";
     }
 
-    private UserRole findUserRole(String name) {
+    UserRole findUserRole(String name) {
         return userRoleDAO.findUserRoleByRoleName(name).orElseThrow(() ->
                 new NotFoundInDataBaseException("Role was not found by name=" + name));
     }
@@ -186,6 +186,7 @@ public class SignUpService {
     private boolean addUser(User user) {
         user.getCustomer().setActive(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(findUserRole(String.valueOf(RoleDTO.PENDING)));
         userDAO.addElement(user);
         return true;
 

@@ -12,8 +12,10 @@ import ua.com.parkhub.dto.ManagerRegistrationDataDTO;
 import ua.com.parkhub.exceptions.EmailIsUsedException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberIsUsedException;
+import ua.com.parkhub.model.UuidTokenTypeModel;
 import ua.com.parkhub.persistence.entities.User;
 import ua.com.parkhub.service.impl.SignUpService;
+import ua.com.parkhub.service.impl.UserService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -25,10 +27,12 @@ public class SignUpController {
     private static final Logger logger = LoggerFactory.getLogger(SignUpController.class);
 
     private final SignUpService signUpService;
+    private final UserService userService;
 
     @Autowired
-    public SignUpController(SignUpService signUpService) {
+    public SignUpController(SignUpService signUpService, UserService userService) {
         this.signUpService = signUpService;
+        this.userService = userService;
     }
 
     @PostMapping(value = "/manager")
@@ -76,7 +80,8 @@ public class SignUpController {
      */
     @PostMapping ("/user")
     public ResponseEntity create(@RequestBody User user) {
-        if (signUpService.createUser(user)){
+        if (signUpService.createUser(user)) {
+            userService.sendToken(user.getEmail(), UuidTokenTypeModel.EMAIL);
             return ResponseEntity.ok().build();
         } else {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -67,6 +67,13 @@ public class UserService {
                 sendEmail(email, subject, body);
                 logger.info("Email for verifying email address was sent to {}", email);
                 break;
+            case PASSWORD:
+                subject = "Reset password";
+                body = "<a href=\"http://localhost:4200/reset-password?token=" + token.getToken()
+                        + "\">Reset password</a> (expires at " + formatExpirationDate(token.getExpirationDate()) + ")";
+                sendEmail(email, subject, body);
+                logger.info("Email for resetting password was sent to {}", email);
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + type);
         }
@@ -82,10 +89,12 @@ public class UserService {
         logger.info("Email was resend");
     }
 
-    public boolean isLinkActive(String token) {
-        UuidToken uuidToken = uuidTokenDAO.findUuidTokenByToken(token)
-                .orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
-        return !isExpired(uuidToken);
+    public void verifyEmail(String token) {
+        User user = uuidTokenDAO.findUuidTokenByToken(token)
+                .map(UuidToken::getUser).orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
+        user.setRole(signUpService.findUserRole(String.valueOf(RoleDTO.USER)));
+        userDAO.updateElement(user);
+        logger.info("Email was verified for user with id={}", user.getId());
     }
 
     @Transactional

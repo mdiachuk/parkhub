@@ -14,7 +14,8 @@ import { SlotsComponent } from "./slots/slots.component";
 import { BookingDetailComponent } from "./bookings/booking-detail/booking-detail.component";
 import { PageComponent } from './homePage/homePage.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { SendTokenToEmailComponent } from './send-token-to-email/send-token-to-email.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { VerifyEmailComponent } from './verify-email/verify-email.component';
 
 const routes: Routes = [
   { path: 'parkoff', component: ParkoffComponent },
@@ -30,7 +31,8 @@ const routes: Routes = [
   { path: 'booking', component: BookingDetailComponent },
   { path: 'login', component: LoginComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'reset-password', component: ResetPasswordComponent }
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'verify-email', component: VerifyEmailComponent }
 ];
 
 

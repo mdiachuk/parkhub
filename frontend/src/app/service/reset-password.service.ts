@@ -26,4 +26,8 @@ export class ResetPasswordService {
     resendTokenToEmail(token: Token) {
         return this.http.post('/api/resend-token-to-email', token);
     }
+
+    verifyEmail(token: string) {
+        return this.http.post('/api/verify-email', token);
+    }
 }

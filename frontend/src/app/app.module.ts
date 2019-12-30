@@ -54,6 +54,7 @@ import { SlotService } from "./serviceSlot/slot.service";
 import { from } from 'rxjs';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { VerifyEmailComponent } from './verify-email/verify-email.component';
 
 
 @NgModule({
@@ -105,6 +106,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     BookingsComponent,
     ResetPasswordComponent,
     ForgotPasswordComponent,
+    VerifyEmailComponent
     // UserComponent
   ],
   providers: [ParkingService, SlotService, ParkingService1],

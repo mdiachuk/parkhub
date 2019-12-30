@@ -73,6 +73,12 @@ public class UserController {
         }
     }
 
+    @PostMapping("/verify-email")
+    public ResponseEntity verifyEmail(@RequestBody String token) {
+        userService.verifyEmail(token);
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping("/reset-password")
     public ResponseEntity resetPassword(@RequestBody @Valid PasswordDTO password, BindingResult result) {
         if (result.hasFieldErrors()) {
