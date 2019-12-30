@@ -20,6 +20,7 @@ public class UserMapper {
         userEntity.setEmail(userDTO.getEmail());
         userEntity.setFirstName(userDTO.getFirstName());
         userEntity.setLastName(userDTO.getLastName());
+        userEntity.setNumber_of_faild_pass_entering(userDTO.getNumber_of_faild_pass_entering());
         UserRole role = new UserRole();
         if (userDTO.getRole() != null) {
             role.setRoleName(userDTO.getRole().getRoleName());
@@ -37,6 +38,7 @@ public class UserMapper {
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
         userDto.setId(user.getId());
+        userDto.setNumber_of_faild_pass_entering(user.getNumber_of_faild_pass_entering());
         UserRole role = user.getRole();
         if(role != null && role.getRoleName() != null) {
             String roleName = role.getRoleName().toUpperCase();

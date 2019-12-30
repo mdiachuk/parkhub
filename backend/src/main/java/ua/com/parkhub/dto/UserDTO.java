@@ -12,6 +12,15 @@ public class UserDTO {
     private CustomerDTO customerDTO;
     private RoleDTO role;
     private String token;
+    private int number_of_faild_pass_entering;
+
+    public int getNumber_of_faild_pass_entering() {
+        return number_of_faild_pass_entering;
+    }
+
+    public void setNumber_of_faild_pass_entering(int number_of_faild_pass_entering) {
+        this.number_of_faild_pass_entering = number_of_faild_pass_entering;
+    }
 
     public String getToken() {
         return token;
