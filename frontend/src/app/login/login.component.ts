@@ -30,8 +30,10 @@ export class LoginComponent implements OnInit {
     this.loginSvc.login({email: this.loginForm.get('username').value,
                               password: this.loginForm.get('password').value}).subscribe(user => {
         if (user) {
-          this.changeIsLogged(true);
-          console.log(user);
+          if (user.role === 'USER') {
+            this.changeIsLogged(true);
+            console.log(user);
+          }
           if (user.role === 'ADMIN') {
             this.changeIsAdmin(true);
             this.changeIsManager(false);
