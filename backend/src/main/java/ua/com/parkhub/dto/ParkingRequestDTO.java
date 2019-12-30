@@ -4,8 +4,19 @@ public class ParkingRequestDTO {
 
     private String parkingName;
     private String address;
+    private String city;
+    private String street;
+    private String building;
     private int slotsNumber;
     private int tariff;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public String getParkingName() {
         return parkingName;
@@ -15,12 +26,28 @@ public class ParkingRequestDTO {
         this.parkingName = parkingName;
     }
 
-    public String getAddress() {
-        return address;
+    public String getCity() {
+        return city;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(String building) {
+        this.building = building;
     }
 
     public int getSlotsNumber() {

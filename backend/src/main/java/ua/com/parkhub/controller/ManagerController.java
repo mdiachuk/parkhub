@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.ParkingDTO;
 import ua.com.parkhub.dto.ParkingRequestDTO;
+import ua.com.parkhub.mappers.fromDtoToModel.ParkingRequestDtoToModelMapper;
 import ua.com.parkhub.mappers.fromModelToDTO.ParkingModelToDTOMapper;
 import ua.com.parkhub.service.ParkingService;
 
@@ -17,11 +18,13 @@ public class ManagerController {
 
     private ParkingService parkingService;
     private ParkingModelToDTOMapper parkingMapper;
+    private ParkingRequestDtoToModelMapper parkingRequestDtoToModelMapper;
 
     @Autowired
-    public ManagerController(ParkingService parkingService, ParkingModelToDTOMapper parkingModelToDTOMapper) {
+    public ManagerController(ParkingService parkingService, ParkingModelToDTOMapper parkingModelToDTOMapper, ParkingRequestDtoToModelMapper parkingRequestDtoToModelMapper) {
         this.parkingService = parkingService;
         this.parkingMapper = parkingModelToDTOMapper;
+        this.parkingRequestDtoToModelMapper = parkingRequestDtoToModelMapper;
     }
 
     @GetMapping()
@@ -31,14 +34,15 @@ public class ManagerController {
     }
 
     @GetMapping(value = "/{parkingId}")
-    public ResponseEntity<ParkingDTO> getParkingById(@PathVariable("parkingId") String parkingId){
+    public ResponseEntity<ParkingDTO> getParkingById(@PathVariable("parkingId") Long parkingId){
 
-        return ResponseEntity.ok(parkingMapper.transform(parkingService.findParkingById(Long.parseLong(parkingId)).get()));
+        return ResponseEntity.ok(parkingMapper.transform(parkingService.findParkingById(parkingId).get()));
     }
 
     @PutMapping(value = "/{parkingId}")
-    public String updateParking(@PathVariable("parkingId") String parkingId, @RequestBody ParkingRequestDTO requestDTO){
-
+    public /*ResponseEntity<Void>*/ String updateParking(@PathVariable("parkingId") Long parkingId, @RequestBody ParkingRequestDTO requestDTO) throws NoSuchFieldException, IllegalAccessException {
+        /*parkingService.updateParking(parkingId, parkingRequestDtoToModelMapper.transform(requestDTO));
+        return ResponseEntity.ok().build();*/
         return "ZDAROVA";
     }
 }

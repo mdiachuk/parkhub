@@ -3,6 +3,9 @@ import { ParkingService} from "../parking.service";
 import { ParkingDetail} from './parking-detail';
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar} from '@angular/material/snack-bar';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { AddressDialog } from './parking-detail-dialog-component';
+
 
 
 @Component({
@@ -18,7 +21,7 @@ export class ParkingDetailComponent implements OnInit {
   buttonStatusList: Array<boolean>;
   
 
-  constructor(private parkingService: ParkingService, private route: ActivatedRoute, private _snackBar: MatSnackBar){
+  constructor(private parkingService: ParkingService, private route: ActivatedRoute, private _snackBar: MatSnackBar, public dialog: MatDialog){
   }
 
 
@@ -43,10 +46,25 @@ export class ParkingDetailComponent implements OnInit {
       });
     }
 
+    openDialog(): void {
+      const dialogRef = this.dialog.open(AddressDialog, {
+        width: '250px',
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.parkingDTO.city = result.city;
+      this.parkingDTO.street = result.street;
+      this.parkingDTO.building = result.building;
+    });
+  }
+
+
     saveToDTO(): void {
       Object.assign(this.parkingDTO, this.parkingDetail);
       console.log(this.parkingDTO);
       this.parkingService.updateParking(this.parkingDTO, this.parkingID);
     }
 }
+
+
  

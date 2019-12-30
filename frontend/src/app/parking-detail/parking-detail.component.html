@@ -33,14 +33,9 @@
       <mat-divider></mat-divider>
 
       <mat-list-item><span>{{parkingDTO.address}}</span> 
-          <mat-form-field class="example-form-field" *ngIf="!buttonStatusList[1]">
-              <input matInput type="text" placeholder="New address" [(ngModel)]="parkingDetail.address">
-              <button mat-button *ngIf="parkingDetail.address" matSuffix mat-icon-button aria-label="Clear" (click)="parkingDetail.address=''">
-                <mat-icon>close</mat-icon>
-              </button>
-            </mat-form-field>
-          <button class="saveButton" mat-raised-button color="accent" [disabled] = "buttonStatusList[1]" (click) = "revert(1); openSnackBar(parkingDetail.address); saveToDTO()">Save</button>
-        <button class="changeButton" mat-raised-button color="accent" [disabled] = "!buttonStatusList[1]" (click) = "revert(1)">Change</button> 
+          <button class="saveButton" mat-raised-button color="accent" [disabled] = "buttonStatusList[1]" (click) = "revert(1); openSnackBar(parkingDetail.city, parkingDetail.street, parkingDetail.building); saveToDTO()">Save</button>
+        <button class="changeButton" mat-raised-button color="accent" [disabled] = "!buttonStatusList[1]" (click) = "revert(1); openDialog()">Change</button> 
+      
       </mat-list-item>
 
       <mat-divider></mat-divider>
@@ -72,4 +67,6 @@
       <mat-divider></mat-divider>
         
 </mat-list>
+
+
   

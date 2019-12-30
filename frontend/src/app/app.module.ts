@@ -21,6 +21,9 @@ import { MatSidenavModule} from '@angular/material/sidenav';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule} from '@angular/material/icon';
 import { MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatExpansionModule} from '@angular/material/expansion';
+import { MatDialogModule} from '@angular/material/dialog';
+import { AddressDialog } from './parking-detail/parking-detail-dialog-component';
 
 
 
@@ -29,7 +32,8 @@ import { MatSnackBarModule} from '@angular/material/snack-bar';
     AppComponent,
     ParkingListComponent,
     ParkingsComponent,
-    ParkingDetailComponent
+    ParkingDetailComponent,
+    AddressDialog
   ],
   imports: [
     BrowserModule,
@@ -48,9 +52,14 @@ import { MatSnackBarModule} from '@angular/material/snack-bar';
     MatSidenavModule,
     FormsModule,
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatExpansionModule,
+    MatDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    AddressDialog
+  ]
 })
 export class AppModule { }
