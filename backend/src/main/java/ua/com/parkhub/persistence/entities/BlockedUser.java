@@ -2,7 +2,6 @@ package ua.com.parkhub.persistence.entities;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Date;
 
@@ -19,7 +18,6 @@ public class BlockedUser implements Serializable {
     private User blocked_user;
 
     @Column(name = "blocking_date")
-    @NotNull
     private Date date;
 
     public User getBlocked_user() {
@@ -36,5 +34,8 @@ public class BlockedUser implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public BlockedUser() {
     }
 }
