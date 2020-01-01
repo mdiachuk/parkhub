@@ -38,7 +38,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     public UserDTO loginUser(LoginDTO user) {
         Optional<User> userEntity = userDAO.findUserByEmail(user.getEmail());
         if (userEntity.get().getNumber_of_faild_pass_entering() >= 3) {
-//            blockedUserDAO.blockUser(userEntity.get());
+            blockedUserDAO.blockUser(userEntity.get());
             throw new PermissionException("Your account was blocked for 24 hours because of 3 unsuccessful tries to login. Please, try again later.");
         } else {
             if (userEntity.filter(

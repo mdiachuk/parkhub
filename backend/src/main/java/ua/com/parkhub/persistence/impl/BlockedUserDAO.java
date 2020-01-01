@@ -29,12 +29,12 @@ public class BlockedUserDAO extends ElementDAO<BlockedUser> {
         }
     }
 
-//    public void blockUser(User user) {
-//        if (!(findOneByFieldEqual("blocked_user", user.getId()).isPresent())) {
-//            BlockedUser blockedUser = new BlockedUser();
-//            blockedUser.setBlocked_user(user);
-//            blockedUser.setDate(new Date(System.currentTimeMillis()));
-//            addElement(blockedUser);
-//        }
-//    }
+    public void blockUser(User user) {
+        if (!(findOneByFieldEqual("blocked_user", user.getId()).isPresent())) {
+            BlockedUser blockedUser = new BlockedUser();
+            blockedUser.setBlocked_user(user);
+            blockedUser.setDate(new Date(System.currentTimeMillis()));
+            addElement(blockedUser);
+        }
+    }
 }
