@@ -62,7 +62,7 @@ export class ParkingDetailComponent implements OnInit {
     saveToDTO(): void {
       Object.assign(this.parkingDTO, this.parkingDetail);
       console.log(this.parkingDTO);
-      this.parkingService.updateParking(this.parkingDTO, this.parkingID);
+      this.parkingService.updateParking(this.parkingDTO, this.parkingID).subscribe(r=>{});
     }
 }
 

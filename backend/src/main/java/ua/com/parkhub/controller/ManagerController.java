@@ -40,10 +40,9 @@ public class ManagerController {
     }
 
     @PutMapping(value = "/{parkingId}")
-    public /*ResponseEntity<Void>*/ String updateParking(@PathVariable("parkingId") Long parkingId, @RequestBody ParkingRequestDTO requestDTO) throws NoSuchFieldException, IllegalAccessException {
-        /*parkingService.updateParking(parkingId, parkingRequestDtoToModelMapper.transform(requestDTO));
-        return ResponseEntity.ok().build();*/
-        return "ZDAROVA";
+    public ResponseEntity<Void> updateParking(@PathVariable("parkingId") Long parkingId, @RequestBody ParkingRequestDTO requestDTO) throws NoSuchFieldException, IllegalAccessException {
+        parkingService.updateParking(parkingId, parkingRequestDtoToModelMapper.transform(requestDTO));
+        return ResponseEntity.ok().build();
     }
 }
 

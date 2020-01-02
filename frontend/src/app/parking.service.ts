@@ -33,9 +33,9 @@ export class ParkingService {
   }
 
   updateParking (parking: ParkingDetail, id: string): Observable<any> {
-    return this.http.put(`${this.parkingsUrl}/${id}`, parking, this.httpOptions).pipe(
-      catchError(this.handleError<any>('updateParking'))
-    );
+    return this.http.put(`${this.parkingsUrl}/${id}`, parking);
+    // , parking, this.httpOptions).pipe(
+    //   catchError(this.handleError<any>('updateParking'))
   }
 
   private handleError<T> (operation = 'operation', result?: T) {

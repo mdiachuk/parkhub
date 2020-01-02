@@ -63,6 +63,5 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
 
     @Override
     public void deleteElement(M element) {
-
     }
 }

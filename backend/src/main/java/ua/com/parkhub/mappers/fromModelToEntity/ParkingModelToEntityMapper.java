@@ -1,24 +1,32 @@
 package ua.com.parkhub.mappers.fromModelToEntity;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.persistence.entities.Address;
 import ua.com.parkhub.persistence.entities.Parking;
+import ua.com.parkhub.persistence.impl.AddressDAO;
 
 @Component
 public class ParkingModelToEntityMapper implements Mapper<ParkingModel, Parking> {
+
+    AddressModelToEntityMapper addressModelToEntityMapper;
+
+    @Autowired
+    public ParkingModelToEntityMapper(AddressModelToEntityMapper addressModelToEntityMapper, AddressDAO addressDAO) {
+        this.addressModelToEntityMapper = addressModelToEntityMapper;
+    }
+
     @Override
     public Parking transform(ParkingModel from) {
         Parking parking = new Parking();
-        Address address = new Address();
-        address.setCity(from.getAddressModel().getCity());
-        address.setStreet(from.getAddressModel().getStreet());
-        address.setBuilding(from.getAddressModel().getBuilding());
+        parking.setId(from.getId());
         parking.setParkingName(from.getParkingName());
-        parking.setAddress(address);
+        parking.setAddress(addressModelToEntityMapper.transform(from.getAddressModel()));
         parking.setTariff(from.getTariff());
         parking.setSlotsNumber(from.getSlotsNumber());
+        parking.setActive(from.isActive());
         return parking;
     }
 }
