@@ -76,9 +76,13 @@ export class ResetPasswordComponent implements OnInit {
       this.loading = false;
       this.view = 3;
     }, err => {
-      this.loading = false;
       this.message = err.error;
-      this.view = 2;
+      if (err.status === 500) {
+        this.view = 2;
+      } else {
+        this.openSnackBar(this.message);
+      }
+      this.loading = false;
     });
   }
 
