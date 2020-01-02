@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     username: [''],
     password: ['']
   });
-  message: string;
+  code: number;
 
   ngOnInit() {
   }
@@ -51,12 +51,25 @@ export class LoginComponent implements OnInit {
           alert('Sorry, you are\'t logged. Try again please!');
         }
       }, err => {
-        // console.log(err.error);
-        // alert(err.error);
-        this.message = err.error;
-        this.openSnackBar(this.message);
+        this.code = err.error;
+        this.openSnackBar(this.checkStatusCode(this.code));
       }
     );
+  }
+
+  checkStatusCode(code: number): string {
+    if (code === 1) {
+      return 'Your account was blocked for 24 hours because of 3 unsuccessful tries to login. Please, try again later.';
+    }
+    if (code === 2) {
+      return 'Cannot activate account: less than 24 hours have passed.';
+    }
+    if (code === 4) {
+      return 'No account with such email was found.';
+    }
+    if (code === 8) {
+      return 'Please enter valid credentials!';
+    }
   }
 
   openSnackBar(message: string) {
