@@ -17,6 +17,7 @@ export class VerifyEmailComponent implements OnInit {
   loading: boolean;
   message: string;
   isError: boolean;
+  view: number;
 
   constructor(private resetPasswordService: ResetPasswordService, private router: Router,
     private activatedRoute: ActivatedRoute, private snackBar: MatSnackBar) { }
@@ -35,7 +36,7 @@ export class VerifyEmailComponent implements OnInit {
       if (err.status === 500) {
         this.isError = true;
       }
-      this.isExpired = true;
+      this.view = 1;
       this.message = err.error;
     });
   }
@@ -54,12 +55,17 @@ export class VerifyEmailComponent implements OnInit {
     this.loading = true;
     this.tokenDTO = new Token(this.token, 'EMAIL');
     this.resetPasswordService.resendTokenToEmail(this.tokenDTO).subscribe(response => {
-      this.router.navigate(['login']).then((navigated: boolean) => {
-        if (navigated) {
-          this.openSnackBar('New link for email verification was sent to your email-box');
-          this.loading = false;
-        }
-      });
+      this.loading = false;
+      this.view = 2;
+    }, err => {
+      this.message = err.error;
+      if (err.status === 500) {
+        this.isError = true;
+        this.view = 1;
+      } else {
+        this.openSnackBar(this.message);
+      }
+      this.loading = false;
     });
   }
 
