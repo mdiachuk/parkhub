@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
 import {DataService} from '../DataService/data.service';
 import {LoginService} from '../services/login.service';
+import {MatSnackBar} from '@angular/material';
 
 
 @Component({
@@ -15,13 +16,15 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router,
               private fb: FormBuilder,
               private loginSvc: LoginService,
-              public data: DataService) {
+              public data: DataService,
+              private snackBar: MatSnackBar) {
   }
 
   loginForm = this.fb.group({
     username: [''],
     password: ['']
   });
+  message: string;
 
   ngOnInit() {
   }
@@ -48,10 +51,18 @@ export class LoginComponent implements OnInit {
           alert('Sorry, you are\'t logged. Try again please!');
         }
       }, err => {
-        console.log(err.error);
-        alert(err.error);
+        // console.log(err.error);
+        // alert(err.error);
+        this.message = err.error;
+        this.openSnackBar(this.message);
       }
     );
+  }
+
+  openSnackBar(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 4000,
+    });
   }
 
   public changeIsLogged(isLogged: boolean) {
