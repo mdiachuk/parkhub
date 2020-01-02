@@ -34,7 +34,7 @@ public class User implements Serializable {
 
     @Column(name = "number_of_faild_pass_entering")
     @NotNull
-    private int number_of_faild_pass_entering;
+    private int numberOfFaildPassEntering;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
@@ -47,12 +47,12 @@ public class User implements Serializable {
     @ManyToMany(mappedBy = "solvers")
     private List<SupportTicket> tickets;
 
-    public int getNumber_of_faild_pass_entering() {
-        return number_of_faild_pass_entering;
+    public int getNumberOfFaildPassEntering() {
+        return numberOfFaildPassEntering;
     }
 
-    public void setNumber_of_faild_pass_entering(int number_of_faild_pass_entering) {
-        this.number_of_faild_pass_entering = number_of_faild_pass_entering;
+    public void setNumberOfFaildPassEntering(int numberOfFaildPassEntering) {
+        this.numberOfFaildPassEntering = numberOfFaildPassEntering;
     }
 
     public Long getId() {
