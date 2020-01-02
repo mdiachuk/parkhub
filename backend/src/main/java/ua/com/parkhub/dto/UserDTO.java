@@ -1,6 +1,6 @@
 package ua.com.parkhub.dto;
 
-import ua.com.parkhub.persistence.entities.Customer;
+import javax.validation.constraints.*;
 
 public class UserDTO {
 
@@ -12,14 +12,14 @@ public class UserDTO {
     private CustomerDTO customerDTO;
     private RoleDTO role;
     private String token;
-    private int number_of_faild_pass_entering;
+    private int numberOfFaildPassEntering;
 
-    public int getNumber_of_faild_pass_entering() {
-        return number_of_faild_pass_entering;
+    public int getNumberOfFaildPassEntering() {
+        return numberOfFaildPassEntering;
     }
 
-    public void setNumber_of_faild_pass_entering(int number_of_faild_pass_entering) {
-        this.number_of_faild_pass_entering = number_of_faild_pass_entering;
+    public void setNumberOfFaildPassEntering(int numberOfFaildPassEntering) {
+        this.numberOfFaildPassEntering = numberOfFaildPassEntering;
     }
 
     public String getToken() {

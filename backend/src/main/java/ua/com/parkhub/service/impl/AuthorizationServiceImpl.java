@@ -6,11 +6,14 @@ import org.springframework.stereotype.Service;
 import ua.com.parkhub.dto.LoginDTO;
 import ua.com.parkhub.dto.UserDTO;
 import ua.com.parkhub.exceptions.PermissionException;
+import ua.com.parkhub.exceptions.StatusCode;
 import ua.com.parkhub.mappers.UserMapper;
 import ua.com.parkhub.persistence.entities.User;
 import ua.com.parkhub.persistence.impl.BlockedUserDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
 import ua.com.parkhub.service.AuthorizationService;
+
+import java.util.Optional;
 
 @Service
 public class AuthorizationServiceImpl implements AuthorizationService {
@@ -32,76 +35,76 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Override
-    public UserDTO loginUser(LoginDTO user) {
-        return userDAO.findUserByEmail(user.getEmail())
-                .map(u -> {
-                    if (u.getNumberOfFaildPassEntering() >= 3) {
-                        if (!(blockedUserDAO.isBlocked(u))) {
-                            blockedUserDAO.blockUser(u);
-                            throw new PermissionException("Your account was blocked for 24 hours because of 3 unsuccessful tries to login. Please, try again later.");
-                        } else {
-                            if (blockedUserDAO.canActivate(u)) {
-                                blockedUserDAO.activateUser(u);
-                                u.setNumberOfFaildPassEntering(0);
-                                userDAO.updateElement(u);
-                            } else {
-                                throw new PermissionException("Cannot activate account: less than 24 hours have passed.");
-                            }
-                        }
-                    }
-                    return checkCredentials(user, u);
-                })
-                .orElseThrow(() -> new PermissionException("No account with such email was found."));
-    }
-
-    private UserDTO checkCredentials(LoginDTO user, User userEntity) {
-        if (passwordEncoder.matches(user.getPassword(), userEntity.getPassword())) {
-            if (!(blockedUserDAO.isBlocked(userEntity))) {
-                return UserMapper.detach(userEntity);
-            } else {
-                throw new PermissionException("Cannot activate account: less than 24 hours have passed.");
-            }
-        } else {
-            userEntity.setNumberOfFaildPassEntering(userEntity.getNumberOfFaildPassEntering() + 1);
-            userDAO.updateElement(userEntity);
-            throw new PermissionException("Please enter valid credentials!");
-        }
-    }
-
 //    @Override
 //    public UserDTO loginUser(LoginDTO user) {
-//        Optional<User> userEntity = userDAO.findUserByEmail(user.getEmail());
-//        if (userEntity.isPresent()) {
-//            if (userEntity.get().getNumberOfFaildPassEntering() >= threeTriesToEnter) {
-//                if (!(blockedUserDAO.isBlocked(userEntity.get()))) {
-//                    blockedUserDAO.blockUser(userEntity.get());
-//                    throw new PermissionException("Your account was blocked for 24 hours because of 3 unsuccessful tries to login. Please, try again later.");
-//                } else {
-//                    if (blockedUserDAO.canActivate(userEntity.get())) {
-//                        blockedUserDAO.activateUser(userEntity.get());
-//                        userEntity.get().setNumberOfFaildPassEntering(0);
-//                        userDAO.updateElement(userEntity.get());
+//        return userDAO.findUserByEmail(user.getEmail())
+//                .map(u -> {
+//                    if (u.getNumberOfFaildPassEntering() >= 3) {
+//                        if (!(blockedUserDAO.isBlocked(u))) {
+//                            blockedUserDAO.blockUser(u);
+//                            throw new PermissionException(StatusCode.ACCOUNT_BLOCKED);
+//                        } else {
+//                            if (blockedUserDAO.canActivate(u)) {
+//                                blockedUserDAO.activateUser(u);
+//                                u.setNumberOfFaildPassEntering(0);
+//                                userDAO.updateElement(u);
+//                            } else {
+//                                throw new PermissionException(StatusCode.CANNOT_ACTIVATE);
+//                            }
+//                        }
 //                    }
-//                }
-//            }
-//            if (userEntity.filter(userEnt -> passwordEncoder.matches(user.getPassword(), userEnt.getPassword())).isPresent()) {
-//                if (!(blockedUserDAO.isBlocked(userEntity.get()))) {
-//                    return userEntity.filter(userEnt -> passwordEncoder.matches(user.getPassword(), userEnt.getPassword())
-//                    ).map(UserMapper::detach)
-//                            .orElseThrow(() -> new PermissionException("Please enter valid credentials!"));
-//                } else {
-//                    throw new PermissionException("Cannot activate account: less than 24 hours have passed.");
-//                }
+//                    return checkCredentials(user, u);
+//                })
+//                .orElseThrow(() -> new PermissionException(StatusCode.NO_ACCOUNT_FOUND));
+//    }
+//
+//    private UserDTO checkCredentials(LoginDTO user, User userEntity) {
+//        if (passwordEncoder.matches(user.getPassword(), userEntity.getPassword())) {
+//            if (!(blockedUserDAO.isBlocked(userEntity))) {
+//                return UserMapper.detach(userEntity);
 //            } else {
-//                userEntity.get().setNumberOfFaildPassEntering(userEntity.get().getNumberOfFaildPassEntering() + oneFaildTrieToEnter);
-//                userDAO.updateElement(userEntity.get());
-//                throw new PermissionException("Please enter valid credentials!");
+//                throw new PermissionException(StatusCode.CANNOT_ACTIVATE);
 //            }
 //        } else {
-//            throw new PermissionException("No account with such email was found.");
+//            userEntity.setNumberOfFaildPassEntering(userEntity.getNumberOfFaildPassEntering() + 1);
+//            userDAO.updateElement(userEntity);
+//            throw new PermissionException(StatusCode.INVALID_CREDENTIALS);
 //        }
 //    }
+
+    @Override
+    public UserDTO loginUser(LoginDTO user) {
+        Optional<User> userEntity = userDAO.findUserByEmail(user.getEmail());
+        if (userEntity.isPresent()) {
+            if (userEntity.get().getNumberOfFaildPassEntering() >= threeTriesToEnter) {
+                if (!(blockedUserDAO.isBlocked(userEntity.get()))) {
+                    blockedUserDAO.blockUser(userEntity.get());
+                    throw new PermissionException(StatusCode.ACCOUNT_BLOCKED);
+                } else {
+                    if (blockedUserDAO.canActivate(userEntity.get())) {
+                        blockedUserDAO.activateUser(userEntity.get());
+                        userEntity.get().setNumberOfFaildPassEntering(0);
+                        userDAO.updateElement(userEntity.get());
+                    }
+                }
+            }
+            if (userEntity.filter(userEnt -> passwordEncoder.matches(user.getPassword(), userEnt.getPassword())).isPresent()) {
+                if (!(blockedUserDAO.isBlocked(userEntity.get()))) {
+                    return userEntity.filter(userEnt -> passwordEncoder.matches(user.getPassword(), userEnt.getPassword())
+                    ).map(UserMapper::detach)
+                            .orElseThrow(() -> new PermissionException(StatusCode.INVALID_CREDENTIALS));
+                } else {
+                    throw new PermissionException(StatusCode.CANNOT_ACTIVATE);
+                }
+            } else {
+                userEntity.get().setNumberOfFaildPassEntering(userEntity.get().getNumberOfFaildPassEntering() + oneFaildTrieToEnter);
+                userDAO.updateElement(userEntity.get());
+                throw new PermissionException(StatusCode.INVALID_CREDENTIALS);
+            }
+        } else {
+            throw new PermissionException(StatusCode.NO_ACCOUNT_FOUND);
+        }
+    }
 
 
 }

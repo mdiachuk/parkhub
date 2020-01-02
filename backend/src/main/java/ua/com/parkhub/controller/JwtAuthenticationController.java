@@ -39,6 +39,7 @@ public class JwtAuthenticationController {
 
     @ExceptionHandler(PermissionException.class)
     public ResponseEntity handlePermissionException(PermissionException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
+        System.out.println(e.getStatusCode());
+        return ResponseEntity.badRequest().body(e.getStatusCode());
     }
 }
