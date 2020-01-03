@@ -9,6 +9,7 @@ import ua.com.parkhub.persistence.entities.UserRole;
 @Component
 public class UserModelToEntityMapper implements Mapper<UserModel, User> {
 
+    @Override
     public User transform(UserModel model) {
         if(model == null) {
             throw new ParkHubException("UserModel to be mapped to User entity is null.");

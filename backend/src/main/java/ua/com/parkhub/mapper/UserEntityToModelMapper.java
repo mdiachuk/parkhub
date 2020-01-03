@@ -15,6 +15,7 @@ import java.util.Arrays;
 @Component
 public class UserEntityToModelMapper implements Mapper<User, UserModel> {
 
+    @Override
     public UserModel transform(User entity) {
         if(entity == null) {
             throw new ParkHubException("User entity to be converted to UserDTO is null.");
