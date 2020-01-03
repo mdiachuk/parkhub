@@ -4,6 +4,7 @@ import java.util.Set;
 
 public class UserModel {
 
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
