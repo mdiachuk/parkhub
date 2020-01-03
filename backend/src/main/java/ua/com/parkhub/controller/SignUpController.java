@@ -13,6 +13,7 @@ import ua.com.parkhub.exceptions.EmailIsUsedException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberIsUsedException;
 import ua.com.parkhub.persistence.entities.User;
+import ua.com.parkhub.service.impl.AddressGeoService;
 import ua.com.parkhub.service.impl.SignUpService;
 
 import javax.validation.Valid;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/signup")
 public class SignUpController {
+
     private static final Logger logger = LoggerFactory.getLogger(SignUpController.class);
 
     private final SignUpService signUpService;
@@ -76,6 +78,14 @@ public class SignUpController {
      */
     @PostMapping ("/user")
     public ResponseEntity create(@RequestBody User user) {
+//        Example example = new Example();
+////        try {
+////            example.getPAram();
+////        } catch (UnsupportedEncodingException e) {
+////            e.printStackTrace();
+////        }
+        AddressGeoService addressGeoService = new AddressGeoService();
+        addressGeoService.getLatLon("київ, леся курбаса 5а");
         if (signUpService.createUser(user)){
             return ResponseEntity.ok().build();
         } else {

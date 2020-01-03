@@ -4,7 +4,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.persistence.IElementDAO;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
@@ -13,9 +12,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
-
-
-import ua.com.parkhub.persistence.IElementDAO;
 
 public class ElementDAO<E>  implements IElementDAO<E> {
 
@@ -49,10 +45,7 @@ public class ElementDAO<E>  implements IElementDAO<E> {
 
     @Override
     public Optional<E> findElementById(long id) {
-//<<<<<<< HEAD
-//            E element = emp.find( elementClass, id);
-//            return Optional.ofNullable(element);
-//=======
+
         E element;
         try {
             element = emp.find(elementClass, id);
@@ -60,15 +53,8 @@ public class ElementDAO<E>  implements IElementDAO<E> {
             element = null;
         }
         return Optional.ofNullable(element);
-//=======
-//
-//    @Transactional
-//    public Optional<E> findElementById(long id) {
-//        return Optional.ofNullable(emp.find( elementClass, id));
-//>>>>>>> 414ab46fb119952f8a5186146f76d7060f173f40
+
     }
-
-
 
     @Transactional
     public List<E> findAll() {

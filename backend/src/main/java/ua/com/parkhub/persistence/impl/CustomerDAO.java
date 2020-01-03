@@ -33,7 +33,8 @@ public class CustomerDAO extends ElementDAO<Customer> {
             Predicate predicate
                     = criteriaBuilder.equal(itemRoot.get("phoneNumber"), phone);
             criteriaQuery.where(predicate);
-            return Optional.of(Optional.ofNullable(this.emp.createQuery(criteriaQuery).getSingleResult())).orElseThrow(NullCustomerException::new);
+            return Optional.of(Optional.ofNullable(this.emp.createQuery(criteriaQuery)
+                    .getSingleResult())).orElseThrow(NullCustomerException::new);
         }catch (Exception e){
             throw new NullCustomerException("Failed to find customer by phone number");
         }

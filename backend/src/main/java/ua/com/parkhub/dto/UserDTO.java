@@ -1,6 +1,5 @@
 package ua.com.parkhub.dto;
 
-import ua.com.parkhub.persistence.entities.Customer;
 
 public class UserDTO {
 

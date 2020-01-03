@@ -142,18 +142,12 @@ public class SignUpService {
     public boolean createUser(User user) {
 
         if (emptyField(user)){
-//            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
-            String haveEmail = userDAO.haveEmail(user.getEmail());
-//            System.out.println(haveEmail);
-            String havePhoneNumber = userDAO.havePhoneNumber(user.getCustomer().getPhoneNumber());
-//            System.out.println(havePhoneNumber);
-            String customerId = userDAO.findUserByCustomerId(havePhoneNumber);
-//            System.out.println(customerId);
-            if (haveEmail.length() != 0) {
+            if (userDAO.haveEmail(user.getEmail()).length() != 0) {
                 return false;
             } else {
+                String havePhoneNumber = userDAO.havePhoneNumber(user.getCustomer().getPhoneNumber());
                 if (havePhoneNumber.length() != 0) {
-                    if (customerId.length() != 0) {
+                    if (userDAO.findUserByCustomerId(havePhoneNumber).length() != 0) {
                         return false;
                     } else {
                         return addUser(user);
