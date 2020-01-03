@@ -2,8 +2,8 @@ package ua.com.parkhub.mappers.fromDtoToModel;
 
 import org.springframework.stereotype.Component;
 import ua.com.parkhub.dto.CustomerDTO;
+import ua.com.parkhub.mapper.Mapper;
 import ua.com.parkhub.model.CustomerModel;
-import ua.com.parkhub.model.Mapper;
 import ua.com.parkhub.model.SupportTicketModel;
 
 import java.util.ArrayList;

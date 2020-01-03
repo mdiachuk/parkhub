@@ -1,6 +1,6 @@
 package ua.com.parkhub.persistence.impl;
 
-import ua.com.parkhub.model.Mapper;
+import ua.com.parkhub.mapper.Mapper;
 import ua.com.parkhub.persistence.IElementDAO;
 
 import javax.persistence.EntityManager;

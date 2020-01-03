@@ -11,21 +11,29 @@ public class BlockedUser implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long blocked_user_id;
+    private Long blockedUserId;
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    private User blocked_user;
+    private User blockedUser;
 
     @Column(name = "blocking_date")
     private Date date;
 
-    public User getBlocked_user() {
-        return blocked_user;
+    public Long getBlockedUserId() {
+        return blockedUserId;
     }
 
-    public void setBlocked_user(User blocked_user) {
-        this.blocked_user = blocked_user;
+    public void setBlockedUserId(Long blockedUserId) {
+        this.blockedUserId = blockedUserId;
+    }
+
+    public User getBlockedUser() {
+        return blockedUser;
+    }
+
+    public void setBlockedUser(User blockedUser) {
+        this.blockedUser = blockedUser;
     }
 
     public Date getDate() {

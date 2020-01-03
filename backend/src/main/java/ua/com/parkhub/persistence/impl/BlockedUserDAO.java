@@ -1,3 +1,4 @@
+//
 //package ua.com.parkhub.persistence.impl;
 //
 //import org.springframework.stereotype.Repository;
@@ -20,12 +21,12 @@
 //
 //    @Transactional
 //    public void activateUser(User user) {
-//        Optional<BlockedUser> blockedUser = findOneByFieldEqual("blocked_user", user.getId());
+//        Optional<BlockedUser> blockedUser = findOneByFieldEqual("blockedUser", user.getId());
 //        deleteElement(blockedUser.get());
 //    }
 //
 //    public Boolean canActivate(User user) {
-//        Optional<BlockedUser> blockedUser = findOneByFieldEqual("blocked_user", user.getId());
+//        Optional<BlockedUser> blockedUser = findOneByFieldEqual("blockedUser", user.getId());
 //        if (isBlocked(user)) {
 //            Date blockingDate = blockedUser.get().getDate();
 //            if (LocalDate.now().minus(1, ChronoUnit.DAYS).isAfter(blockingDate.toLocalDate())) {
@@ -38,7 +39,7 @@
 //    }
 //
 //    public Boolean isBlocked(User user) {
-//        if (findOneByFieldEqual("blocked_user", user.getId()).isPresent()) {
+//        if (findOneByFieldEqual("blockedUser", user.getId()).isPresent()) {
 //            return true;
 //        } else {
 //            return false;
@@ -48,7 +49,7 @@
 //    @Transactional
 //    public void blockUser(User user) {
 //            BlockedUser blockedUser = new BlockedUser();
-//            blockedUser.setBlocked_user(user);
+//            blockedUser.setBlockedUser(user);
 //            blockedUser.setDate(new Date(System.currentTimeMillis()));
 //            addElement(blockedUser);
 //    }

@@ -22,9 +22,9 @@ public class UserMapper {
         userEntity.setLastName(userDTO.getLastName());
         userEntity.setNumberOfFaildPassEntering(userDTO.getNumberOfFaildPassEntering());
         UserRole role = new UserRole();
-//        if (userDTO.getRole() != null) {
-//            role.setRoleName(userDTO.getRole().getRoleName());
-//        }
+        if (userDTO.getRole() != null) {
+            role.setRoleName(userDTO.getRole().getRoleName());
+        }
         userEntity.setRole(role);
         return userEntity;
     }
@@ -43,18 +43,18 @@ public class UserMapper {
         if(role != null && role.getRoleName() != null) {
             String roleName = role.getRoleName().toUpperCase();
             switch (roleName) {
-//                case "ADMIN":
-//                    userDto.setRole(RoleDTO.ADMIN);
-//                    break;
-//                case "USER":
-//                    userDto.setRole(RoleDTO.USER);
-//                    break;
-//                case "MANAGER":
-//                    userDto.setRole(RoleDTO.MANAGER);
-//                    break;
-//                case "PENDING":
-//                    userDto.setRole(RoleDTO.PENDING);
-//                    break;
+                case "ADMIN":
+                    userDto.setRole(RoleDTO.ADMIN);
+                    break;
+                case "USER":
+                    userDto.setRole(RoleDTO.USER);
+                    break;
+                case "MANAGER":
+                    userDto.setRole(RoleDTO.MANAGER);
+                    break;
+                case "PENDING":
+                    userDto.setRole(RoleDTO.PENDING);
+                    break;
                 default:
                     throw new ParkHubException(String.format("Not known role name: %s. Role name may be one of the following: %s).", roleName, Arrays.asList(RoleDTO.values())));
             }

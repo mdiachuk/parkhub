@@ -2,7 +2,7 @@ package ua.com.parkhub.mappers.toModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ua.com.parkhub.model.Mapper;
+import ua.com.parkhub.mapper.Mapper;
 import ua.com.parkhub.model.PaymentModel;
 import ua.com.parkhub.persistence.entities.Payment;
 

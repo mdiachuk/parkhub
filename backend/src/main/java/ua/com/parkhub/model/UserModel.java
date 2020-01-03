@@ -16,6 +16,7 @@ public class UserModel extends AbstractModel {
     private int numberOfFaildPassEntering;
     private List<SupportTicketModel> tickets;
 
+
     public Long getId() {
         return id;
     }

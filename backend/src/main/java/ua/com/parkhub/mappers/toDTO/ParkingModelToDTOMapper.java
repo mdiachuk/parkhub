@@ -2,7 +2,7 @@ package ua.com.parkhub.mappers.toDTO;
 
 import org.springframework.stereotype.Component;
 import ua.com.parkhub.dto.ParkingDTO;
-import ua.com.parkhub.model.Mapper;
+import ua.com.parkhub.mapper.Mapper;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.model.SlotModel;
 

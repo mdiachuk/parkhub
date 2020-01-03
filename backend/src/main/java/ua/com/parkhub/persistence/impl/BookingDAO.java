@@ -1,8 +1,8 @@
 package ua.com.parkhub.persistence.impl;
 
 import org.springframework.stereotype.Repository;
+import ua.com.parkhub.mapper.Mapper;
 import ua.com.parkhub.model.BookingModel;
-import ua.com.parkhub.model.Mapper;
 import ua.com.parkhub.persistence.entities.Booking;
 import ua.com.parkhub.persistence.entities.Customer;
 

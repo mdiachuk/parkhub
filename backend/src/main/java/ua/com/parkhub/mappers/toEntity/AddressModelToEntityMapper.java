@@ -1,8 +1,8 @@
 package ua.com.parkhub.mappers.toEntity;
 
 import org.springframework.stereotype.Component;
+import ua.com.parkhub.mapper.Mapper;
 import ua.com.parkhub.model.AddressModel;
-import ua.com.parkhub.model.Mapper;
 import ua.com.parkhub.persistence.entities.Address;
 
 @Component
