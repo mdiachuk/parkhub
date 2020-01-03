@@ -13,9 +13,13 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 
+
+
+import static javax.persistence.PersistenceContextType.EXTENDED;
+
 public class ElementDAO<E>  implements IElementDAO<E> {
 
-    @PersistenceContext(unitName = "default")
+    @PersistenceContext(unitName = "default", type = EXTENDED)
     EntityManager emp;
 
     Class<E> elementClass;

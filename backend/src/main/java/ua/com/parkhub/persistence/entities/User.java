@@ -32,6 +32,10 @@ public class User implements Serializable {
     @Size(min = 6, max = 60)
     private String password;
 
+    @Column(name = "number_of_faild_pass_entering")
+    @NotNull
+    private int numberOfFaildPassEntering;
+
     @ManyToOne
     @JoinColumn(name = "role_id")
     private UserRole role;
@@ -40,10 +44,16 @@ public class User implements Serializable {
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-
-
     @ManyToMany(mappedBy = "solvers")
     private List<SupportTicket> tickets;
+
+    public int getNumberOfFaildPassEntering() {
+        return numberOfFaildPassEntering;
+    }
+
+    public void setNumberOfFaildPassEntering(int numberOfFaildPassEntering) {
+        this.numberOfFaildPassEntering = numberOfFaildPassEntering;
+    }
 
     public Long getId() {
         return id;

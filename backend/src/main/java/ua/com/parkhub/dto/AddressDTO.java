@@ -56,6 +56,5 @@ public class AddressDTO {
 
     public void setAddress(String address) {
         this.address = address;
-//>>>>>>> 414ab46fb119952f8a5186146f76d7060f173f40
     }
 }

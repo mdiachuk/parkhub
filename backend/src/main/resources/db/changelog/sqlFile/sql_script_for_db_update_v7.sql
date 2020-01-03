@@ -1,0 +1,5 @@
+
+ALTER TABLE park_hub."address"
+    ADD COLUMN lon VARCHAR (255) NOT NULL DEFAULT '';
+ALTER TABLE park_hub."address"
+    ADD COLUMN lat VARCHAR (255) NOT NULL DEFAULT '';

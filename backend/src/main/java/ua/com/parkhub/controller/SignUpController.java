@@ -78,14 +78,9 @@ public class SignUpController {
      */
     @PostMapping ("/user")
     public ResponseEntity create(@RequestBody User user) {
-//        Example example = new Example();
-////        try {
-////            example.getPAram();
-////        } catch (UnsupportedEncodingException e) {
-////            e.printStackTrace();
-////        }
+
         AddressGeoService addressGeoService = new AddressGeoService();
-        addressGeoService.getLatLon("київ, леся курбаса 5а");
+        addressGeoService.getLatLon("київ леся курбаса 5а");
         if (signUpService.createUser(user)){
             return ResponseEntity.ok().build();
         } else {

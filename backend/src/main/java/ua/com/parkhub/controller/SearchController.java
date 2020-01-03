@@ -22,8 +22,7 @@ public class SearchController {
     @PostMapping
     public ResponseEntity searchParking(@RequestBody String query) {
 
-//        addressGeoService.getTatLon(query)
-
+        addressGeoService.getLatLon(query);
 
         return null;
     }

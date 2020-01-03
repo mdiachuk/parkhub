@@ -34,6 +34,7 @@ public class SignUpService {
     private final SupportTicketTypeDAO supportTicketTypeDAO;
     private final PasswordEncoder passwordEncoder;
 
+
     @Autowired
     public SignUpService(CustomerDAO customerDAO, UserDAO userDAO, UserRoleDAO userRoleDAO,
                          SupportTicketDAO supportTicketDAO, SupportTicketTypeDAO supportTicketTypeDAO,
@@ -93,6 +94,9 @@ public class SignUpService {
         logger.info("New user was created");
         return user;
     }
+
+
+
 
     private SupportTicket createSupportTicket(ManagerRegistrationDataDTO manager, Customer customer) {
         SupportTicket supportTicket = new SupportTicket();

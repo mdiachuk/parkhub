@@ -6,7 +6,6 @@ import {Router} from "@angular/router";
 import {Manager} from '../models/manager';
 import {Admin} from '../Classes/admin';
 // import {User} from '../interfaces/user';
-import { Login } from '../interfaces/login';
 
 export class User {
   constructor(
@@ -41,22 +40,6 @@ export class ConfirmPass {
   constructor(
     public confirmPass: string
   ) {
-  }
-}
-
-@Injectable({
-  providedIn: 'root'
-})
-export class LoginService {
-
-  constructor(private http: HttpClient) { }
-
-
-  login(login: Login): Observable<User> {
-    const body = {email: login.email, password: login.password};
-    return this.http.post<User>('http://localhost:8080/api/login', body);
-
-    // return this.http.post<User>('/api/login', body);
   }
 }
 
