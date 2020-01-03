@@ -1,4 +1,33 @@
-div{
-    margin-top: 10px;
-    margin-bottom: 10px;
+#id1{
+    margin-left: 1%;
+}
+#id2{
+    margin-left: 80%;
+}
+
+.leftSide{
+    width: 30%;
+    float: left;
+    border: 1px solid silver;
+}
+
+.rightSide{
+    border: 1px solid silver;
+}
+
+mat-list-item{
+    border: 1px solid pink;
+}
+
+.changeButton{
+    margin-right: 5%;
+}
+
+.saveButton{
+    margin-right: 2px;
+}
+
+.example-form-field{
+    margin-left: auto;
+    margin-right: 20px;
 }
