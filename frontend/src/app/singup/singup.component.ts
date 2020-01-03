@@ -1,5 +1,5 @@
 import {Component, NgModule, OnInit} from '@angular/core';
-import {ConfirmPass, Customer, HttpClientService, User, UserRole} from "../service/http-client.service";
+import {ConfirmPass, Customer, HttpClientService, User, RoleDTO} from "../service/http-client.service";
 
 
 
@@ -13,9 +13,9 @@ export class SingupComponent implements OnInit {
 
   customer:Customer = new Customer("", true);
 
-  userRole:UserRole = new UserRole("1")
+  roleDTO:RoleDTO = new RoleDTO("USER")
 
-  users:User = new User("","",this.customer,"","",this.userRole,"");
+  users:User = new User("","",this.customer,"","",this.roleDTO,"");
 
 
   confirmPass:ConfirmPass = new ConfirmPass("");

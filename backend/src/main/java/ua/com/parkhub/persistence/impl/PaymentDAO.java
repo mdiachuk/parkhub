@@ -1,12 +1,15 @@
 package ua.com.parkhub.persistence.impl;
 
 import org.springframework.stereotype.Repository;
+import ua.com.parkhub.model.Mapper;
+import ua.com.parkhub.model.PaymentModel;
 import ua.com.parkhub.persistence.entities.Payment;
 
 @Repository
-public class PaymentDAO extends ElementDAO<Payment> {
-    public PaymentDAO() {
-        super(Payment.class);
+public class PaymentDAO extends ElementDAO<Payment, PaymentModel> {
+
+    public PaymentDAO(Mapper<Payment, PaymentModel> entityToModel, Mapper<PaymentModel, Payment> modelToEntity) {
+        super(Payment.class, modelToEntity, entityToModel);
     }
 }
 

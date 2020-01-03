@@ -5,21 +5,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.com.parkhub.dto.LoginDTO;
 import ua.com.parkhub.dto.UserDTO;
-import ua.com.parkhub.exceptions.PermissionException;
-import ua.com.parkhub.exceptions.StatusCode;
-import ua.com.parkhub.mappers.UserMapper;
-import ua.com.parkhub.persistence.entities.User;
-import ua.com.parkhub.persistence.impl.BlockedUserDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
 import ua.com.parkhub.service.AuthorizationService;
-
-import java.util.Optional;
 
 @Service
 public class AuthorizationServiceImpl implements AuthorizationService {
 
     private UserDAO userDAO;
-    private BlockedUserDAO blockedUserDAO;
+//    private BlockedUserDAO blockedUserDAO;
     private PasswordEncoder passwordEncoder;
 
     private int threeTriesToEnter = 3;
@@ -29,9 +22,11 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Autowired
-    public AuthorizationServiceImpl(UserDAO userDAO, BlockedUserDAO blockedUserDAO, PasswordEncoder passwordEncoder) {
+    public AuthorizationServiceImpl(UserDAO userDAO,
+//                                    BlockedUserDAO blockedUserDAO,
+                                    PasswordEncoder passwordEncoder) {
         this.userDAO = userDAO;
-        this.blockedUserDAO = blockedUserDAO;
+//        this.blockedUserDAO = blockedUserDAO;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -74,36 +69,38 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Override
     public UserDTO loginUser(LoginDTO user) {
-        Optional<User> userEntity = userDAO.findUserByEmail(user.getEmail());
-        if (userEntity.isPresent()) {
-            if (userEntity.get().getNumberOfFaildPassEntering() >= threeTriesToEnter) {
-                if (!(blockedUserDAO.isBlocked(userEntity.get()))) {
-                    blockedUserDAO.blockUser(userEntity.get());
-                    throw new PermissionException(StatusCode.ACCOUNT_BLOCKED);
-                } else {
-                    if (blockedUserDAO.canActivate(userEntity.get())) {
-                        blockedUserDAO.activateUser(userEntity.get());
-                        userEntity.get().setNumberOfFaildPassEntering(0);
-                        userDAO.updateElement(userEntity.get());
-                    }
-                }
-            }
-            if (userEntity.filter(userEnt -> passwordEncoder.matches(user.getPassword(), userEnt.getPassword())).isPresent()) {
-                if (!(blockedUserDAO.isBlocked(userEntity.get()))) {
-                    return userEntity.filter(userEnt -> passwordEncoder.matches(user.getPassword(), userEnt.getPassword())
-                    ).map(UserMapper::detach)
-                            .orElseThrow(() -> new PermissionException(StatusCode.INVALID_CREDENTIALS));
-                } else {
-                    throw new PermissionException(StatusCode.CANNOT_ACTIVATE);
-                }
-            } else {
-                userEntity.get().setNumberOfFaildPassEntering(userEntity.get().getNumberOfFaildPassEntering() + oneFaildTrieToEnter);
-                userDAO.updateElement(userEntity.get());
-                throw new PermissionException(StatusCode.INVALID_CREDENTIALS);
-            }
-        } else {
-            throw new PermissionException(StatusCode.NO_ACCOUNT_FOUND);
-        }
+//        Optional<User> userEntity = userDAO.findUserByEmail(user.getEmail());
+//        if (userEntity.isPresent()) {
+//            if (userEntity.get().getNumberOfFaildPassEntering() >= threeTriesToEnter) {
+//                if (!(blockedUserDAO.isBlocked(userEntity.get()))) {
+//                    blockedUserDAO.blockUser(userEntity.get());
+//                    throw new PermissionException(StatusCode.ACCOUNT_BLOCKED);
+//                } else {
+//                    if (blockedUserDAO.canActivate(userEntity.get())) {
+//                        blockedUserDAO.activateUser(userEntity.get());
+//                        userEntity.get().setNumberOfFaildPassEntering(0);
+//                        userDAO.updateElement(userEntity.get());
+//                    }
+//                }
+//            }
+//            if (userEntity.filter(userEnt -> passwordEncoder.matches(user.getPassword(), userEnt.getPassword())).isPresent()) {
+//                if (!(blockedUserDAO.isBlocked(userEntity.get()))) {
+//                    return userEntity.filter(userEnt -> passwordEncoder.matches(user.getPassword(), userEnt.getPassword())
+//                    ).map(UserMapper::detach)
+//                            .orElseThrow(() -> new PermissionException(StatusCode.INVALID_CREDENTIALS));
+//                } else {
+//                    throw new PermissionException(StatusCode.CANNOT_ACTIVATE);
+//                }
+//            } else {
+//                userEntity.get().setNumberOfFaildPassEntering(userEntity.get().getNumberOfFaildPassEntering() + oneFaildTrieToEnter);
+//                userDAO.updateElement(userEntity.get());
+//                throw new PermissionException(StatusCode.INVALID_CREDENTIALS);
+//            }
+//        } else {
+//            throw new PermissionException(StatusCode.NO_ACCOUNT_FOUND);
+//        }
+
+        return null;
     }
 
 

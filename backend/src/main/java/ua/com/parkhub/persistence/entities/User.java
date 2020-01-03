@@ -118,4 +118,6 @@ public class User implements Serializable {
     public void setTickets(List<SupportTicket> tickets) {
         this.tickets = tickets;
     }
+
+
 }

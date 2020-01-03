@@ -1,4 +1,4 @@
-package ua.com.parkhub.mapper;
+package ua.com.parkhub.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

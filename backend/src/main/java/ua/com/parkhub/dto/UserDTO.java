@@ -1,6 +1,10 @@
 package ua.com.parkhub.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.List;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDTO {
 
     private long id;
@@ -12,6 +16,15 @@ public class UserDTO {
     private RoleDTO role;
     private String token;
     private int numberOfFaildPassEntering;
+    private List<SupportTicketDTO> tickets;
+
+    public List<SupportTicketDTO> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<SupportTicketDTO> tickets) {
+        this.tickets = tickets;
+    }
 
     public int getNumberOfFaildPassEntering() {
         return numberOfFaildPassEntering;
@@ -87,5 +100,20 @@ public class UserDTO {
 
     public void setCustomerDTO(CustomerDTO customerDTO) {
         this.customerDTO = customerDTO;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", customerDTO=" + customerDTO +
+                ", token='" + token + '\'' +
+                ", numberOfFaildPassEntering=" + numberOfFaildPassEntering +
+                ", tickets=" + tickets +
+                '}';
     }
 }

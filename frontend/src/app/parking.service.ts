@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ParkingItem } from './parking-item';
+import { ParkingItem} from "./parkings/parking-item";
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpParams} from "@angular/common/http";
-import { ParkingDetail} from './parking-detail';
+import { ParkingDetail} from "./parking-detail/parking-detail";
 
 @Injectable({
   providedIn: 'root'

@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "support_ticket_type", schema = "park_hub")
-public class SupportTicketType implements Serializable {
+public class SupportTicketTypeModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

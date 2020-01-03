@@ -24,7 +24,7 @@ public class SupportTicket implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "ticket_type_id")
-    private SupportTicketType supportTicketType;
+    private SupportTicketTypeModel supportTicketType;
 
     @ManyToOne
     @JoinColumn(name = "author_id")
@@ -69,11 +69,11 @@ public class SupportTicket implements Serializable {
         isSolved = solved;
     }
 
-    public SupportTicketType getSupportTicketType() {
+    public SupportTicketTypeModel getSupportTicketType() {
         return supportTicketType;
     }
 
-    public void setSupportTicketType(SupportTicketType supportTicketType) {
+    public void setSupportTicketType(SupportTicketTypeModel supportTicketType) {
         this.supportTicketType = supportTicketType;
     }
 

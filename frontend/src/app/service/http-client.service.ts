@@ -11,19 +11,19 @@ export class User {
   constructor(
     public firstName: string,
     public lastName: string,
-    public customer: Customer,
+    public customerDTO: Customer,
     public email: string,
     public password: string,
-    public role: UserRole,
+    public roleDTO: RoleDTO,
     public token: string
   ) {
   }
 
 }
 
-export class UserRole {
+export class RoleDTO {
   constructor(
-    public id: string
+    public roleDTO: string
   ) {
   }
 }

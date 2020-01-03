@@ -1,6 +1,6 @@
 package ua.com.parkhub.persistence.impl;
 
-import org.springframework.transaction.annotation.Transactional;
+import ua.com.parkhub.model.Mapper;
 import ua.com.parkhub.persistence.IElementDAO;
 
 import javax.persistence.EntityManager;
@@ -12,73 +12,61 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+public class ElementDAO<E, M> implements IElementDAO<M> {
 
-
-import static javax.persistence.PersistenceContextType.EXTENDED;
-
-public class ElementDAO<E>  implements IElementDAO<E> {
-
-    @PersistenceContext(unitName = "default", type = EXTENDED)
+    @PersistenceContext(unitName = "default")
     EntityManager emp;
 
     Class<E> elementClass;
+    Mapper<M, E> modelToEntity;
+    Mapper<E, M> entityToModel;
 
-    public ElementDAO(Class<E> elementClass) {
+    public ElementDAO(Class<E> elementClass, Mapper<M, E> modelToEntity, Mapper<E, M> entityToModel) {
         this.elementClass = elementClass;
-    }
-
-    @Transactional
-    @Override
-    public void addElement(E element) {
-        emp.persist(element);
-    }
-
-
-    @Transactional
-    public void updateElement(E element) {
-        emp.persist(element);
-    }
-
-
-
-    @Override
-    public E findElementByIdSimple(long id) {
-        return emp.find(elementClass, id);
+        this.modelToEntity = modelToEntity;
+        this.entityToModel = entityToModel;
     }
 
     @Override
-    public Optional<E> findElementById(long id) {
+    public void addElement(M element) {
+        emp.persist(modelToEntity.transform(element));
+    }
 
+    @Override
+    public void updateElement(M element) {
+        emp.persist(modelToEntity.transform(element));
+    }
+
+    @Override
+    public List<M> findAll() {
+        CriteriaBuilder cb = emp.getCriteriaBuilder();
+        CriteriaQuery<E> cq = cb.createQuery(elementClass);
+        Root<E> rootEntry = cq.from(elementClass);
+        CriteriaQuery<E> all = cq.select(rootEntry);
+        TypedQuery<E> allQuery = emp.createQuery(all);
+        return allQuery.getResultList().stream().map(entityToModel::transform).collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<M> findElementById(long id) {
         E element;
         try {
             element = emp.find(elementClass, id);
         } catch (PersistenceException e) {
             element = null;
         }
-        return Optional.ofNullable(element);
+        return Optional.ofNullable(entityToModel.transform(element));
+    }
+
+    @Override
+    public void deleteElement(M element) {
 
     }
 
-    @Transactional
-    public List<E> findAll() {
-        CriteriaBuilder cb = emp.getCriteriaBuilder();
-        CriteriaQuery<E> cq = cb.createQuery(elementClass);
-        Root<E> rootEntry = cq.from(elementClass);
-        CriteriaQuery<E> all = cq.select(rootEntry);
-        TypedQuery<E> allQuery = emp.createQuery(all);
-        return allQuery.getResultList();
-    }
 
-
-    @Transactional
-    public void deleteElement(E element) {
-        emp.remove(element);
-    }
-
-
-    @Transactional
-    public <F> Optional<E> findOneByFieldEqual(String fieldName, F fieldValue) {
+    public <F> Optional<M> findOneByFieldEqual(String fieldName, F fieldValue) {
         CriteriaBuilder criteriaBuilder = emp.getCriteriaBuilder();
         CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(elementClass);
         Root<E> elementRoot = criteriaQuery.from(elementClass);
@@ -90,17 +78,6 @@ public class ElementDAO<E>  implements IElementDAO<E> {
         } catch (PersistenceException e) {
             element = null;
         }
-        return Optional.ofNullable(element);
+        return Optional.ofNullable(entityToModel.transform(element));
     }
-
-//        try {
-//            E element = emp.createQuery(criteriaQuery).getSingleResult();
-//            return Optional.of(element);
-//        } catch (NoResultException e1) {
-//            return Optional.empty();
-//        } catch (Exception e2) {
-//            throw new UnsupportedOperationException();
-//        }
-    }
-
-
+}

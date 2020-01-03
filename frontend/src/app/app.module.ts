@@ -53,6 +53,9 @@ import {ParkingDetailSlotsComponent} from "./parkings-ad/parking-detail/parking-
 import {SlotService} from "./serviceSlot/slot.service";
 import { from } from 'rxjs';
 import {DataService} from './DataService/data.service';
+import { MatSidenavModule} from '@angular/material/sidenav';
+
+
 
 
 @NgModule({
@@ -82,6 +85,9 @@ import {DataService} from './DataService/data.service';
     MatDialogModule,
     MatChipsModule,
 
+    MatSidenavModule,
+    FormsModule,
+    MatIconModule
   ],
   declarations: [
     AppComponent,
@@ -109,6 +115,4 @@ import {DataService} from './DataService/data.service';
   bootstrap: [AppComponent],
   entryComponents: [AlertDialogComponent]
 })
-export class AppModule {
-}
-
+export class AppModule { }

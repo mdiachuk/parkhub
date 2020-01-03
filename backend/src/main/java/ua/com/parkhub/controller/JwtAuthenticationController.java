@@ -33,7 +33,8 @@ public class JwtAuthenticationController {
     @PostMapping(value = "/login")
     public ResponseEntity<UserDTO> loginUser(@Valid @RequestBody LoginDTO login) {
         UserDTO response = authenticationService.loginUser(login);
-        response.setToken(jwtUtil.generateToken(response.getEmail(), response.getRole().toString(), response.getId()));
+        response.setToken(jwtUtil.generateToken(response.getEmail(),
+                response.getRole().toString(), response.getId()));
         return ResponseEntity.ok(response);
     }
 
