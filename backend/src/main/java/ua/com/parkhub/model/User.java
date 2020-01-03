@@ -115,4 +115,5 @@ public class User extends AbstractModel {
         sb.append(", tickets: ").append(tickets);
         return sb.toString();
     }
+
 }

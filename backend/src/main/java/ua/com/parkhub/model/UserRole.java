@@ -60,3 +60,4 @@ public class UserRole extends AbstractModel {
         return sb.toString();
     }
 }
+

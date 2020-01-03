@@ -1,6 +1,8 @@
 package ua.com.parkhub.persistence.impl;
 
 import org.springframework.stereotype.Repository;
+import ua.com.parkhub.mapper.Mapper;
+import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.persistence.entities.User;
 
 import javax.persistence.Query;

@@ -1,6 +1,7 @@
 package ua.com.parkhub.model;
 
 import ua.com.parkhub.dto.ParkingDTO;
+import ua.com.parkhub.mapper.Mapper;
 import ua.com.parkhub.persistence.entities.Parking;
 
 public class ParkingModelDTO implements Mapper<Parking, ParkingDTO> {
