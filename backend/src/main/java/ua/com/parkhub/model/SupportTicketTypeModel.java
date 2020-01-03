@@ -1,10 +1,10 @@
 package ua.com.parkhub.model;
 
-public class UserRoleModel {
+public class SupportTicketTypeModel {
 
     private Long id;
-    private String roleName;
-    private boolean isActive;
+    private String type;
+    private boolean isActive = true;
 
     public Long getId() {
         return id;
@@ -14,12 +14,12 @@ public class UserRoleModel {
         this.id = id;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public String getType() {
+        return type;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public boolean isActive() {
@@ -30,4 +30,3 @@ public class UserRoleModel {
         isActive = active;
     }
 }
-
