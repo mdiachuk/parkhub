@@ -18,5 +18,6 @@ public class BlockedUserModelToEntityMapper implements Mapper<BlockedUserModel, 
         blockedUser.setBlockedUser(user);
         blockedUser.setDate(blockedUser.getDate());
         return blockedUser;
+        
     }
 }

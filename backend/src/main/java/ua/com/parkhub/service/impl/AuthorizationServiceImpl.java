@@ -22,8 +22,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     private BlockedUserDAO blockedUserDAO;
     private PasswordEncoder passwordEncoder;
 
-    private int threeTriesToEnter = 3;
-    private int oneFaildTrieToEnter = 1;
+    private final int THREE_TRIES_TO_ENTER = 3;
+    private final int ONE_FAILD_TRIE_TO_ENTER = 1;
 
     public AuthorizationServiceImpl() {
     }
@@ -40,7 +40,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     public UserDTO loginUser(LoginDTO user) {
         Optional<User> userEntity = userDAO.findUserByEmail(user.getEmail());
         if (userEntity.isPresent()) {
-            if (userEntity.get().getNumberOfFaildPassEntering() >= threeTriesToEnter) {
+            if (userEntity.get().getNumberOfFaildPassEntering() >= THREE_TRIES_TO_ENTER) {
                 blockIfNeeded(userEntity.get());
                 activateIfPossible(userEntity.get());
             }
@@ -73,7 +73,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
                 throw new PermissionException(StatusCode.CANNOT_ACTIVATE);
             }
         } else {
-            userEntity.setNumberOfFaildPassEntering(userEntity.getNumberOfFaildPassEntering() + oneFaildTrieToEnter);
+            userEntity.setNumberOfFaildPassEntering(userEntity.getNumberOfFaildPassEntering() + ONE_FAILD_TRIE_TO_ENTER);
             userDAO.updateElement(userEntity);
             if (blockedUserDAO.isBlocked(userEntity)){
                 throw new PermissionException(StatusCode.ACCOUNT_BLOCKED);
