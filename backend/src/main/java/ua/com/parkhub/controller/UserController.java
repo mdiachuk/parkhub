@@ -13,7 +13,7 @@ import ua.com.parkhub.dto.TokenDTO;
 import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.InvalidTokenException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
-import ua.com.parkhub.model.UuidTokenTypeModel;
+import ua.com.parkhub.model.UuidTokenType;
 import ua.com.parkhub.service.impl.UserService;
 
 import javax.validation.Valid;
@@ -42,7 +42,7 @@ public class UserController {
             return ResponseEntity.badRequest().body(errors);
         }
         String email = emailDTO.getEmail();
-        UuidTokenTypeModel type = UuidTokenTypeModel.valueOf(emailDTO.getTokenType());
+        UuidTokenType type = UuidTokenType.valueOf(emailDTO.getTokenType());
         userService.sendToken(email, type);
         return ResponseEntity.ok().build();
     }
@@ -57,7 +57,7 @@ public class UserController {
             return ResponseEntity.badRequest().body(errors);
         }
         String token = tokenDTO.getToken();
-        UuidTokenTypeModel type = UuidTokenTypeModel.valueOf(tokenDTO.getTokenType());
+        UuidTokenType type = UuidTokenType.valueOf(tokenDTO.getTokenType());
         userService.resendToken(token, type);
         return ResponseEntity.ok().build();
     }
@@ -80,7 +80,7 @@ public class UserController {
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity resetPassword(@RequestBody @Valid PasswordDTO password, BindingResult result) {
+    public ResponseEntity resetPassword(@RequestBody @Valid PasswordDTO passwordDTO, BindingResult result) {
         if (result.hasFieldErrors()) {
             List<String> errors = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
@@ -88,7 +88,7 @@ public class UserController {
             logger.info("Validation errors: {}", errors);
             return ResponseEntity.badRequest().body(errors);
         }
-        userService.resetPassword(password);
+        userService.resetPassword(passwordDTO.getToken(), passwordDTO.getPassword());
         logger.info("Link with unique token was sent");
         return ResponseEntity.ok().build();
     }

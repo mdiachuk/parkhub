@@ -1,12 +1,12 @@
 package ua.com.parkhub.model;
 
-public enum UuidTokenTypeModel {
+public enum UuidTokenType {
     EMAIL("EMAIL"),
     PASSWORD("PASSWORD");
 
     private String type;
 
-    UuidTokenTypeModel(String type){
+    UuidTokenType(String type){
         this.type = type;
     }
 

@@ -26,10 +26,6 @@ public class UuidToken implements Serializable {
     @NotNull
     private LocalDateTime expirationDate = LocalDateTime.now().plusMinutes(10);
 
-    @ManyToOne
-    @JoinColumn(name = "token_type_id")
-    private UuidTokenType uuidTokenType;
-
     public Long getId() {
         return id;
     }
@@ -60,13 +56,5 @@ public class UuidToken implements Serializable {
 
     public void setExpirationDate(LocalDateTime expirationDate) {
         this.expirationDate = expirationDate;
-    }
-
-    public UuidTokenType getUuidTokenType() {
-        return uuidTokenType;
-    }
-
-    public void setUuidTokenType(UuidTokenType uuidTokenType) {
-        this.uuidTokenType = uuidTokenType;
     }
 }

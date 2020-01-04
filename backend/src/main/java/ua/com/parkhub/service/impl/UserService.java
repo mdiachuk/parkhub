@@ -9,18 +9,15 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.com.parkhub.dto.PasswordDTO;
 import ua.com.parkhub.dto.RoleDTO;
 import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.InvalidTokenException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
-import ua.com.parkhub.model.UuidTokenTypeModel;
+import ua.com.parkhub.model.UuidTokenType;
 import ua.com.parkhub.persistence.entities.UuidToken;
 import ua.com.parkhub.persistence.entities.User;
-import ua.com.parkhub.persistence.entities.UuidTokenType;
 import ua.com.parkhub.persistence.impl.UuidTokenDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
-import ua.com.parkhub.persistence.impl.UuidTokenTypeDAO;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -35,7 +32,6 @@ public class UserService {
 
     private final UserDAO userDAO;
     private final UuidTokenDAO uuidTokenDAO;
-    private final UuidTokenTypeDAO uuidTokenTypeDAO;
     private final SignUpService signUpService;
     private final JavaMailSender mailSender;
     private final PasswordEncoder passwordEncoder;
@@ -44,19 +40,17 @@ public class UserService {
     public UserService(UserDAO userDAO, JavaMailSender mailSender,
                        SignUpService signUpService,
                        UuidTokenDAO uuidTokenDAO,
-                       UuidTokenTypeDAO uuidTokenTypeDAO,
                        PasswordEncoder passwordEncoder) {
         this.userDAO = userDAO;
         this.mailSender = mailSender;
         this.signUpService = signUpService;
         this.uuidTokenDAO = uuidTokenDAO;
-        this.uuidTokenTypeDAO = uuidTokenTypeDAO;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
-    public void sendToken(String email, UuidTokenTypeModel type) {
-        UuidToken token = createToken(email, type);
+    public void sendToken(String email, UuidTokenType type) {
+        UuidToken token = createToken(email);
         String subject;
         String body;
         switch (type) {
@@ -80,7 +74,7 @@ public class UserService {
     }
 
     @Transactional
-    public void resendToken(String token, UuidTokenTypeModel type) {
+    public void resendToken(String token, UuidTokenType type) {
         String email = uuidTokenDAO.findUuidTokenByToken(token)
                 .map(uuidToken -> uuidToken.getUser().getEmail())
                 .orElseThrow(() -> new InvalidTokenException("Invalid link"));
@@ -98,29 +92,28 @@ public class UserService {
     }
 
     @Transactional
-    public void resetPassword(PasswordDTO password) {
+    public void resetPassword(String token, String password) {
         User user = uuidTokenDAO
-                .findUuidTokenByToken(password.getToken())
-                .map(token -> {
-                    if (isExpired(token)) {
+                .findUuidTokenByToken(token)
+                .map(uuidToken -> {
+                    if (isExpired(uuidToken)) {
                         throw new InvalidTokenException("Token expired!");
                     }
-                    return userDAO.findElementById(token.getUser().getId()).orElseThrow(() ->
+                    return userDAO.findElementById(uuidToken.getUser().getId()).orElseThrow(() ->
                             new InvalidTokenException("Token is not assigned to any user"));
                 })
                 .orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
-        user.setPassword(passwordEncoder.encode(password.getPassword()));
+        user.setPassword(passwordEncoder.encode(password));
         userDAO.updateElement(user);
         logger.info("Password was reset for user with id={}", user.getId());
     }
 
-    private UuidToken createToken(String email, UuidTokenTypeModel type) {
+    private UuidToken createToken(String email) {
         User user = userDAO.findUserByEmail(email)
                 .orElseThrow(() -> new EmailException("User with this email does not exist!"));
         UuidToken token = new UuidToken();
         token.setUser(user);
         token.setToken(UUID.randomUUID().toString());
-        token.setUuidTokenType(findUuidTokenType(String.valueOf(type)));
         uuidTokenDAO.addElement(token);
         logger.info("Token={} with expiration date at {} was created for user with id={}",
                 token.getToken(), token.getExpirationDate(), user.getId());
@@ -154,10 +147,5 @@ public class UserService {
     private String formatExpirationDate(LocalDateTime date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy");
         return date.format(formatter);
-    }
-
-    private UuidTokenType findUuidTokenType(String type) {
-        return uuidTokenTypeDAO.findUuidTokenTypeByType(type).orElseThrow(() ->
-                new IllegalArgumentException("UUID token type was not found by type=" + type));
     }
 }

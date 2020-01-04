@@ -12,7 +12,7 @@ import ua.com.parkhub.dto.ManagerRegistrationDataDTO;
 import ua.com.parkhub.exceptions.EmailIsUsedException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberIsUsedException;
-import ua.com.parkhub.model.UuidTokenTypeModel;
+import ua.com.parkhub.model.UuidTokenType;
 import ua.com.parkhub.persistence.entities.User;
 import ua.com.parkhub.service.impl.SignUpService;
 import ua.com.parkhub.service.impl.UserService;
@@ -81,7 +81,7 @@ public class SignUpController {
     @PostMapping ("/user")
     public ResponseEntity create(@RequestBody User user) {
         if (signUpService.createUser(user)) {
-            userService.sendToken(user.getEmail(), UuidTokenTypeModel.EMAIL);
+            userService.sendToken(user.getEmail(), UuidTokenType.EMAIL);
             return ResponseEntity.ok().build();
         } else {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
