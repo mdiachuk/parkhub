@@ -32,7 +32,7 @@ public class PaymentService {
 
     @Transactional
     public Optional<Customer> checkCustomerIfPresent(String phoneNumber) {
-        return  customerDAO.findElementByPhone(phoneNumber);
+        return  customerDAO.findCustomerByPhoneNumber(phoneNumber);
     }
 
     private int countPrice(Booking booking){
@@ -45,7 +45,7 @@ public class PaymentService {
         }
     }
 
-    private Optional<Payment> createPayment(String phoneNumber){
+    public Optional<Payment> createPayment(String phoneNumber){
         Customer customer = checkCustomerIfPresent(phoneNumber).get();
         Booking booking = bookingDAO.findActiveBookingByCustomer(customer).get();
         booking.setCheckOut(LocalDateTime.now());
