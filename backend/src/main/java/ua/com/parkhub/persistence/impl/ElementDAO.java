@@ -67,7 +67,7 @@ public class ElementDAO<E, M>  implements IElementDAO<M> {
 
     @Transactional
     public void deleteElement(M element) {
-        emp.remove(element);
+        emp.remove(emp.merge(modelToEntity.transform(element)));
     }
 
     @Transactional

@@ -8,7 +8,9 @@ import ua.com.parkhub.model.BlockedUserModel;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.persistence.entities.BlockedUser;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -31,8 +33,8 @@ public class BlockedUserDAO extends ElementDAO<BlockedUser, BlockedUserModel> {
         Optional<BlockedUserModel> blockedUser = findOneByFieldEqual("blockedUser", user.getId());
         if (isBlocked(user)) {
             Date blockingDate = blockedUser.get().getBlockingDate();
-            if (LocalDate.now().minus(1, ChronoUnit.DAYS).isAfter(blockingDate.toInstant()
-                    .atZone(ZoneId.systemDefault())
+            Instant instant = Instant.ofEpochMilli(blockingDate.getTime());
+            if (LocalDate.now().minus(1, ChronoUnit.DAYS).isAfter(LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
                     .toLocalDate())) {
                 return true;
             } else {

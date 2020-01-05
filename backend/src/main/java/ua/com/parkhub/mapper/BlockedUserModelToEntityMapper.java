@@ -5,7 +5,8 @@ import org.springframework.stereotype.Component;
 import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.model.BlockedUserModel;
 import ua.com.parkhub.persistence.entities.BlockedUser;
-import ua.com.parkhub.persistence.entities.User;
+
+import java.sql.Date;
 
 @Component
 public class BlockedUserModelToEntityMapper implements Mapper<BlockedUserModel, BlockedUser> {
@@ -25,7 +26,7 @@ public class BlockedUserModelToEntityMapper implements Mapper<BlockedUserModel, 
         BlockedUser blockedUser = new BlockedUser();
         blockedUser.setBlockedUserId(model.getBlockedUserId());
         blockedUser.setBlockedUser(userModelToEntityMapper.transform(model.getBlockedUser()));
-        blockedUser.setDate(blockedUser.getDate());
+        blockedUser.setDate(new Date(model.getBlockingDate().getTime()));
         return blockedUser;
         
     }
