@@ -10,7 +10,7 @@ public class ParkingModelDTO implements Mapper<Parking, ParkingDTO> {
         ParkingDTO parkingDTO = new ParkingDTO();
          parkingDTO.setId(from.getId());
          parkingDTO.setParkingName(from.getParkingName());
-         parkingDTO.setSlotNumber(from.getSlotsNumber());
+//         parkingDTO.setSlotNumber(from.getSlotsNumber());
          parkingDTO.setTariff(from.getTariff());
         return parkingDTO;
     }

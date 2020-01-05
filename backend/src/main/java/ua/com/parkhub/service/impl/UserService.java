@@ -13,9 +13,9 @@ import ua.com.parkhub.dto.RoleDTO;
 import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.InvalidTokenException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
+import ua.com.parkhub.model.UserModel;
+import ua.com.parkhub.model.UuidTokenModel;
 import ua.com.parkhub.model.UuidTokenType;
-import ua.com.parkhub.persistence.entities.UuidToken;
-import ua.com.parkhub.persistence.entities.User;
 import ua.com.parkhub.persistence.impl.UuidTokenDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
 
@@ -50,7 +50,7 @@ public class UserService {
 
     @Transactional
     public void sendToken(String email, UuidTokenType type) {
-        UuidToken token = createToken(email);
+        UuidTokenModel token = createToken(email);
         String subject;
         String body;
         switch (type) {
@@ -83,40 +83,42 @@ public class UserService {
         logger.info("Email was resend");
     }
 
+    @Transactional
     public void verifyEmail(String token) {
-        User user = uuidTokenDAO.findUuidTokenByToken(token)
-                .map(UuidToken::getUser).orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
+        UserModel user = uuidTokenDAO.findUuidTokenByToken(token)
+                .map(UuidTokenModel::getUser).orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
         user.setRole(signUpService.findUserRole(String.valueOf(RoleDTO.USER)));
         userDAO.updateElement(user);
-        logger.info("Email was verified for user with id={}", user.getId());
+        logger.info("Email was verified for user with email={}", user.getEmail());
     }
 
     @Transactional
     public void resetPassword(String token, String password) {
-        User user = uuidTokenDAO
+        UserModel user = uuidTokenDAO
                 .findUuidTokenByToken(token)
                 .map(uuidToken -> {
                     if (isExpired(uuidToken)) {
                         throw new InvalidTokenException("Token expired!");
                     }
-                    return userDAO.findElementById(uuidToken.getUser().getId()).orElseThrow(() ->
+                    return userDAO.findUserByEmail(uuidToken.getUser().getEmail()).orElseThrow(() ->
                             new InvalidTokenException("Token is not assigned to any user"));
                 })
                 .orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
         user.setPassword(passwordEncoder.encode(password));
         userDAO.updateElement(user);
-        logger.info("Password was reset for user with id={}", user.getId());
+        logger.info("Password was reset for user with email={}", user.getEmail());
     }
 
-    private UuidToken createToken(String email) {
-        User user = userDAO.findUserByEmail(email)
+    private UuidTokenModel createToken(String email) {
+        UserModel user = userDAO.findUserByEmail(email)
                 .orElseThrow(() -> new EmailException("User with this email does not exist!"));
-        UuidToken token = new UuidToken();
+        UuidTokenModel token = new UuidTokenModel();
         token.setUser(user);
         token.setToken(UUID.randomUUID().toString());
+        token.setExpirationDate(LocalDateTime.now().plusMinutes(1000));
         uuidTokenDAO.addElement(token);
-        logger.info("Token={} with expiration date at {} was created for user with id={}",
-                token.getToken(), token.getExpirationDate(), user.getId());
+        logger.info("Token={} with expiration date at {} was created for user with email={}",
+                token.getToken(), token.getExpirationDate(), user.getEmail());
         return token;
     }
 
@@ -135,12 +137,12 @@ public class UserService {
     }
 
     public boolean isLinkActive(String token) {
-        UuidToken uuidToken = uuidTokenDAO.findUuidTokenByToken(token)
+        UuidTokenModel uuidToken = uuidTokenDAO.findUuidTokenByToken(token)
                 .orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
         return !isExpired(uuidToken);
     }
 
-    private boolean isExpired(UuidToken token) {
+    private boolean isExpired(UuidTokenModel token) {
         return token.getExpirationDate().isBefore(LocalDateTime.now());
     }
 

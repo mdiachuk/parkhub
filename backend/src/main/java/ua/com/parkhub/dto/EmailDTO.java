@@ -14,7 +14,6 @@ public class EmailDTO {
     @Size(max = 255, message = "Email must be 255 characters at most")
     private String email;
 
-
     private String tokenType;
 
     public String getEmail() {
