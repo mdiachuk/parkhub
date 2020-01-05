@@ -58,6 +58,10 @@ export class LoginService {
 
     // return this.http.post<User>('/api/login', body);
   }
+
+  oauthlogin(): Observable<User> {
+    return this.http.get<User>('/api/login/google');
+  }
 }
 
 @Injectable({

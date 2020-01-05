@@ -33,6 +33,11 @@ export class LoginComponent implements OnInit {
     );
   }
 
+  onClickMe():void{
+    this.loginSvc.oauthlogin();
+  }
+
+
 
 }
 
