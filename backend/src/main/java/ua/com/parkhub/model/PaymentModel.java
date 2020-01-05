@@ -2,16 +2,17 @@ package ua.com.parkhub.model;
 
 public class PaymentModel {
 
-    private BookingModel booking;
+    private Long id;
     private int price;
-    private boolean isPaid;
+    private boolean isPaid = false;
+    private BookingModel booking;
 
-    public BookingModel getBooking() {
-        return booking;
+    public Long getId() {
+        return id;
     }
 
-    public void setBooking(BookingModel booking) {
-        this.booking = booking;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public int getPrice() {
@@ -28,5 +29,13 @@ public class PaymentModel {
 
     public void setPaid(boolean paid) {
         isPaid = paid;
+    }
+
+    public BookingModel getBooking() {
+        return booking;
+    }
+
+    public void setBooking(BookingModel booking) {
+        this.booking = booking;
     }
 }

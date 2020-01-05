@@ -1,77 +1,84 @@
 package ua.com.parkhub.persistence.impl;
 
-import javax.persistence.*;
+import ua.com.parkhub.mappers.Mapper;
+import ua.com.parkhub.persistence.IElementDAO;
+
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-import ua.com.parkhub.persistence.IElementDAO;
+public class ElementDAO<E, M> implements IElementDAO<M> {
 
-public class ElementDAO<E> implements IElementDAO<E> {
-
-    @PersistenceContext
+    @PersistenceContext(unitName = "default")
     EntityManager emp;
 
     Class<E> elementClass;
+    Mapper<M, E> modelToEntity;
+    Mapper<E, M> entityToModel;
 
-    public ElementDAO(Class<E> elementClass) {
+    public ElementDAO(Class<E> elementClass, Mapper<M, E> modelToEntity, Mapper<E, M> entityToModel) {
         this.elementClass = elementClass;
+        this.modelToEntity = modelToEntity;
+        this.entityToModel = entityToModel;
     }
 
     @Override
-    public void addElement(E element) {
-        emp.persist(element);
+    public void addElement(M element) {
+        emp.persist(modelToEntity.transform(element));
     }
 
     @Override
-    public void updateElement(E element) {
-        emp.persist(element);
+    public void updateElement(M element) {
+        emp.persist(modelToEntity.transform(element));
     }
 
     @Override
-    public E findElementByIdSimple(long id) {
-        return emp.find(elementClass, id);
-    }
-
-    @Override
-    public Optional<E> findElementById(long id) {
-        try {
-            E element = emp.find(elementClass, id);
-            return Optional.ofNullable(element);
-        } catch (PersistenceException e) {
-            return Optional.empty();
-        }
-    }
-
-    @Override
-    public List<E> findAll() {
+    public List<M> findAll() {
         CriteriaBuilder cb = emp.getCriteriaBuilder();
         CriteriaQuery<E> cq = cb.createQuery(elementClass);
         Root<E> rootEntry = cq.from(elementClass);
         CriteriaQuery<E> all = cq.select(rootEntry);
         TypedQuery<E> allQuery = emp.createQuery(all);
-        return allQuery.getResultList();
+        return allQuery.getResultList().stream().map(entityToModel::transform).collect(Collectors.toList());
     }
 
     @Override
-    public void deleteElement(E element) {
-        emp.remove(element);
+    public Optional<M> findElementById(long id) {
+        E element;
+        try {
+            element = emp.find(elementClass, id);
+        } catch (PersistenceException e) {
+            element = null;
+        }
+        return Optional.ofNullable(entityToModel.transform(element));
     }
 
     @Override
-    public <F> Optional<E> findOneByFieldEqual(String fieldName, F fieldValue) {
+    public void deleteElement(M element) {
+
+    }
+
+
+    public <F> Optional<M> findOneByFieldEqual(String fieldName, F fieldValue) {
         CriteriaBuilder criteriaBuilder = emp.getCriteriaBuilder();
         CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(elementClass);
         Root<E> elementRoot = criteriaQuery.from(elementClass);
         criteriaQuery.select(elementRoot).where(criteriaBuilder.equal(elementRoot.get(fieldName), fieldValue));
 
+        E element;
         try {
-            E element = emp.createQuery(criteriaQuery).getSingleResult();
-            return Optional.of(element);
+            element = emp.createQuery(criteriaQuery).getSingleResult();
         } catch (PersistenceException e) {
-            return Optional.empty();
+            element = null;
         }
+        return Optional.ofNullable(entityToModel.transform(element));
     }
 }

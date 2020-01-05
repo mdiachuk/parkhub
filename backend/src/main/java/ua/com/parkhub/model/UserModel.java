@@ -1,21 +1,16 @@
 package ua.com.parkhub.model;
 
+import java.util.Set;
+
 public class UserModel {
 
-    private CustomerModel customer;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-    private UserRoleModel userRole;
-
-    public CustomerModel getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(CustomerModel customer) {
-        this.customer = customer;
-    }
+    private UserRoleModel role;
+    private CustomerModel customer;
+    private Set<SupportTicketModel> tickets;
 
     public String getFirstName() {
         return firstName;
@@ -49,11 +44,27 @@ public class UserModel {
         this.password = password;
     }
 
-    public UserRoleModel getUserRole() {
-        return userRole;
+    public UserRoleModel getRole() {
+        return role;
     }
 
-    public void setUserRole(UserRoleModel userRole) {
-        this.userRole = userRole;
+    public void setRole(UserRoleModel role) {
+        this.role = role;
+    }
+
+    public CustomerModel getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(CustomerModel customer) {
+        this.customer = customer;
+    }
+
+    public Set<SupportTicketModel> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Set<SupportTicketModel> tickets) {
+        this.tickets = tickets;
     }
 }
