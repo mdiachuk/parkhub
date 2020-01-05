@@ -1,8 +1,10 @@
 package ua.com.parkhub.service.impl;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.mappers.fromEntityToModel.ParkingEntityToModelMapper;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.persistence.impl.ParkingDAO;
@@ -51,8 +53,14 @@ public class ParkingService implements IParkingService {
         parkingDAO.updateElement(parkingModel);
     }
 
-    @Override
+    @Transactional(readOnly = true)
     public ParkingModel findParkingByIdWithSlotList(long id) {
-        return null;
+        ParkingModel parking = parkingDAO.findElementById(id)
+                .orElseThrow(() -> new ParkHubException("No Parking found with id " + id));
+        Hibernate.initialize(parking.getSlots());
+        if (parking.isActive()) {
+            return parking;
+        }
+        throw new ParkHubException("Unfortunately this parking is temporary unavailable");
     }
 }

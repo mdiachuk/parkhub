@@ -79,6 +79,7 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
         } catch (PersistenceException e) {
             element = null;
         }
+        System.out.println("ElementDAO :" + element);
         return Optional.ofNullable(entityToModel.transform(element));
     }
 }
