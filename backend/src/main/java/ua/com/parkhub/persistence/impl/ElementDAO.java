@@ -1,7 +1,7 @@
 package ua.com.parkhub.persistence.impl;
 
 import org.springframework.transaction.annotation.Transactional;
-import ua.com.parkhub.mapper.Mapper;
+import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.persistence.IElementDAO;
 
 import javax.persistence.EntityManager;

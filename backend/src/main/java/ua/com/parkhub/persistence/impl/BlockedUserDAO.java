@@ -3,7 +3,7 @@ package ua.com.parkhub.persistence.impl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.exceptions.PermissionException;
-import ua.com.parkhub.mapper.Mapper;
+import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.BlockedUserModel;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.persistence.entities.BlockedUser;

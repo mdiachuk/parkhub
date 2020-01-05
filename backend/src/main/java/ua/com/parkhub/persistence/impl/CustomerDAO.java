@@ -3,7 +3,7 @@ package ua.com.parkhub.persistence.impl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.exceptions.NullCustomerException;
-import ua.com.parkhub.mapper.Mapper;
+import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.CustomerModel;
 import ua.com.parkhub.persistence.entities.Customer;
 
