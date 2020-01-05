@@ -10,7 +10,6 @@ import ua.com.parkhub.persistence.impl.BookingDAO;
 import ua.com.parkhub.persistence.impl.CustomerDAO;
 import ua.com.parkhub.persistence.impl.PaymentDAO;
 
-import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
@@ -32,7 +31,8 @@ public class PaymentService {
 
     @Transactional
     public Optional<Customer> checkCustomerIfPresent(String phoneNumber) {
-        return  customerDAO.findElementByPhone(phoneNumber);
+//        return  customerDAO.findElementByPhone(phoneNumber);
+        return null;
     }
 
     private int countPrice(Booking booking){
@@ -47,18 +47,19 @@ public class PaymentService {
 
     private Optional<Payment> createPayment(String phoneNumber){
         Customer customer = checkCustomerIfPresent(phoneNumber).get();
-        Booking booking = bookingDAO.findActiveBookingByCustomer(customer).get();
-        booking.setCheckOut(LocalDateTime.now());
-        booking.getSlot().setActive(false);
-        booking.setActive(false);
-        bookingDAO.updateElement(booking);
-        int price = countPrice(booking);
-        Payment payment = new Payment();
-        payment.setBooking(booking);
-        payment.setPaid(false);
-        payment.setPrice(price);
-        paymentDAO.addElement(payment);
-        return Optional.of(payment);
+//        Booking booking = bookingDAO.findActiveBookingByCustomer(customer).get();
+//        booking.setCheckOut(LocalDateTime.now());
+//        booking.getSlot().setActive(false);
+//        booking.setActive(false);
+//        bookingDAO.updateElement(booking);
+//        int price = countPrice(booking);
+//        Payment payment = new Payment();
+//        payment.setBooking(booking);
+//        payment.setPaid(false);
+//        payment.setPrice(price);
+//        paymentDAO.addElement(payment);
+//        return Optional.of(payment);
+        return null;
     }
 
     @Transactional

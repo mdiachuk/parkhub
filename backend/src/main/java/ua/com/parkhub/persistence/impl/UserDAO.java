@@ -10,10 +10,12 @@ import java.util.Optional;
 
 
 @Repository
-public class UserDAO extends ElementDAO<User> {
-    public UserDAO() {
-        super(User.class);
+public class UserDAO extends ElementDAO<User, UserModel> {
+
+    public UserDAO(Mapper<User, UserModel> entityToModel, Mapper<UserModel, User> modelToEntity) {
+        super(User.class, modelToEntity, entityToModel);
     }
+
 
     /**
      * Check have this email in DB, and from DB return id of User
@@ -81,7 +83,7 @@ public class UserDAO extends ElementDAO<User> {
 
 
     }
-    public Optional<User> findUserByEmail(String email) { return findOneByFieldEqual("email", email);}
+    public Optional<UserModel> findUserByEmail(String email) { return findOneByFieldEqual("email", email);}
 
 }
 

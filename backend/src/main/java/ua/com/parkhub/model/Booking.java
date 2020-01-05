@@ -10,8 +10,8 @@ public class Booking extends AbstractModel {
     private LocalDateTime checkIn;
     private LocalDateTime checkOut;
     private boolean isActive;
-    private Customer customer;
-    private Slot slot;
+    private CustomerModel customer;
+    private SlotModel slot;
 
     public Long getId() {
         return id;
@@ -53,19 +53,19 @@ public class Booking extends AbstractModel {
         isActive = active;
     }
 
-    public Customer getCustomer() {
+    public CustomerModel getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(CustomerModel customer) {
         this.customer = customer;
     }
 
-    public Slot getSlot() {
+    public SlotModel getSlot() {
         return slot;
     }
 
-    public void setSlot(Slot slot) {
+    public void setSlot(SlotModel slot) {
         this.slot = slot;
     }
 

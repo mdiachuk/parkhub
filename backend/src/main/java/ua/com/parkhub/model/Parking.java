@@ -11,8 +11,8 @@ public class Parking extends AbstractModel {
     private int tariff;
     private boolean isActive;
     private Address address;
-    private User owner;
-    private List<Slot> slots;
+    private UserModel owner;
+    private List<SlotModel> slots;
 
     public Long getId() {
         return id;
@@ -62,19 +62,19 @@ public class Parking extends AbstractModel {
         this.address = address;
     }
 
-    public User getOwner() {
+    public UserModel getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(UserModel owner) {
         this.owner = owner;
     }
 
-    public List<Slot> getSlots() {
+    public List<SlotModel> getSlots() {
         return slots;
     }
 
-    public void setSlots(List<Slot> slots) {
+    public void setSlots(List<SlotModel> slots) {
         this.slots = slots;
     }
 

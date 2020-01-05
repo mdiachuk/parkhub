@@ -4,11 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.com.parkhub.dto.LoginDTO;
-import ua.com.parkhub.dto.UserDTO;
 import ua.com.parkhub.exceptions.PermissionException;
 import ua.com.parkhub.exceptions.StatusCode;
-import ua.com.parkhub.mappers.UserMapper;
-import ua.com.parkhub.persistence.entities.User;
+import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.persistence.impl.BlockedUserDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
 import ua.com.parkhub.service.AuthorizationService;
@@ -35,47 +33,48 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-
     @Override
-    public UserDTO loginUser(LoginDTO user) {
-        Optional<User> userEntity = userDAO.findUserByEmail(user.getEmail());
-        if (userEntity.isPresent()) {
-            if (userEntity.get().getNumberOfFaildPassEntering() >= THREE_TRIES_TO_ENTER) {
-                blockIfNeeded(userEntity.get());
-                activateIfPossible(userEntity.get());
+    public UserModel loginUser(LoginDTO userDTO) {
+        Optional<UserModel> userModel = userDAO.findUserByEmail(userDTO.getEmail());
+        UserModel user;
+        if (userModel.isPresent()) {
+            user = userModel.get();
+            activateIfPossible(user);
+            if (user.getNumberOfFaildPassEntering() >= THREE_TRIES_TO_ENTER) {
+                blockIfNeeded(user);
             }
-              return checkCredentials(user, userEntity.get());
+            return checkCredentials(userDTO, user);
         } else {
             throw new PermissionException(StatusCode.NO_ACCOUNT_FOUND);
         }
     }
 
-    private void blockIfNeeded(User user){
+    private void blockIfNeeded(UserModel user) {
         if (!(blockedUserDAO.isBlocked(user))) {
             blockedUserDAO.blockUser(user);
             throw new PermissionException(StatusCode.ACCOUNT_BLOCKED);
         }
     }
 
-    private void activateIfPossible(User user){
-        if (blockedUserDAO.isBlocked(user) && (blockedUserDAO.canActivate(user))) {
+    private void activateIfPossible(UserModel user) {
+        if ((blockedUserDAO.isBlocked(user)) && (blockedUserDAO.canActivate(user))) {
             blockedUserDAO.activateUser(user);
-                user.setNumberOfFaildPassEntering(0);
-                userDAO.updateElement(user);
+            user.setNumberOfFaildPassEntering(0);
+            userDAO.updateElement(user);
         }
     }
 
-    private UserDTO checkCredentials(LoginDTO user, User userEntity) {
-        if (passwordEncoder.matches(user.getPassword(), userEntity.getPassword())) {
-            if (!(blockedUserDAO.isBlocked(userEntity))) {
-                return UserMapper.detach(userEntity);
+    private UserModel checkCredentials(LoginDTO user, UserModel userModel) {
+        if (passwordEncoder.matches(user.getPassword(), userModel.getPassword())) {
+            if (!(blockedUserDAO.isBlocked(userModel))) {
+                return userModel;
             } else {
                 throw new PermissionException(StatusCode.CANNOT_ACTIVATE);
             }
         } else {
-            userEntity.setNumberOfFaildPassEntering(userEntity.getNumberOfFaildPassEntering() + ONE_FAILD_TRIE_TO_ENTER);
-            userDAO.updateElement(userEntity);
-            if (blockedUserDAO.isBlocked(userEntity)){
+            userModel.setNumberOfFaildPassEntering(userModel.getNumberOfFaildPassEntering() + ONE_FAILD_TRIE_TO_ENTER);
+            userDAO.updateElement(userModel);
+            if (blockedUserDAO.isBlocked(userModel)) {
                 throw new PermissionException(StatusCode.ACCOUNT_BLOCKED);
             }
             throw new PermissionException(StatusCode.INVALID_CREDENTIALS);

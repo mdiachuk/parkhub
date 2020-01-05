@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.LoginDTO;
 import ua.com.parkhub.dto.UserDTO;
 import ua.com.parkhub.exceptions.PermissionException;
+import ua.com.parkhub.mapper.UserModelToUserDtoMapper;
 import ua.com.parkhub.security.JwtUtil;
 import ua.com.parkhub.service.AuthorizationService;
 
@@ -22,17 +23,18 @@ public class JwtAuthenticationController {
     private AuthorizationService authenticationService;
     private static Logger logger = LoggerFactory.getLogger(JwtAuthenticationController.class.getSimpleName());
     private JwtUtil jwtUtil;
-
+    private UserModelToUserDtoMapper userModelToUserDtoMapper;
 
     @Autowired
-    public JwtAuthenticationController(AuthorizationService authenticationService, JwtUtil jwtUtil) {
+    public JwtAuthenticationController(AuthorizationService authenticationService, JwtUtil jwtUtil, UserModelToUserDtoMapper userModelToUserDtoMapper) {
         this.authenticationService = authenticationService;
         this.jwtUtil = jwtUtil;
+        this.userModelToUserDtoMapper = userModelToUserDtoMapper;
     }
 
     @PostMapping(value = "/login")
     public ResponseEntity<UserDTO> loginUser(@Valid @RequestBody LoginDTO login) {
-        UserDTO response = authenticationService.loginUser(login);
+        UserDTO response = userModelToUserDtoMapper.transform(authenticationService.loginUser(login));
         response.setToken(jwtUtil.generateToken(response.getEmail(), response.getRole().toString(), response.getId()));
         return ResponseEntity.ok(response);
     }

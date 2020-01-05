@@ -1,7 +1,7 @@
 package ua.com.parkhub.model;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 public class UserModel extends AbstractModel {
 
@@ -14,7 +14,7 @@ public class UserModel extends AbstractModel {
     private CustomerModel customer;
     private String token;
     private int numberOfFaildPassEntering;
-    private Set<SupportTicket> tickets;
+    private List<SupportTicketModel> tickets;
 
     public Long getId() {
         return id;
@@ -88,11 +88,11 @@ public class UserModel extends AbstractModel {
         this.numberOfFaildPassEntering = numberOfFaildPassEntering;
     }
 
-    public Set<SupportTicket> getTickets() {
+    public List<SupportTicketModel> getTickets() {
         return tickets;
     }
 
-    public void setTickets(Set<SupportTicket> tickets) {
+    public void setTickets(List<SupportTicketModel> tickets) {
         this.tickets = tickets;
     }
 

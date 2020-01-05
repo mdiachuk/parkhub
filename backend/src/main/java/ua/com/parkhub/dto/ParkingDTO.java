@@ -5,7 +5,7 @@ public class ParkingDTO {
     private long id;
     private String parkingName;
     private String address;
-    private int slotNumber;
+    private int slotsNumber;
     private int tariff;
     private String fullness;
 
@@ -25,12 +25,12 @@ public class ParkingDTO {
         return address;
     }
 
-    public int getSlotNumber() {
-        return slotNumber;
+    public int getSlotsNumber() {
+        return slotsNumber;
     }
 
-    public void setSlotNumber(int slotNumber) {
-        this.slotNumber = slotNumber;
+    public void setSlotsNumber(int slotsNumber) {
+        this.slotsNumber = slotsNumber;
     }
 
     public int getTariff() {

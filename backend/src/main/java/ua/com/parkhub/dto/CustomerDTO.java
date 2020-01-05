@@ -1,10 +1,13 @@
 package ua.com.parkhub.dto;
 
+import java.util.List;
+
 public class CustomerDTO {
 
     private long id;
     private String phoneNumber;
     private boolean isActive;
+    private List<SupportTicketDTO> supportTickets;
 
     public long getId() {
         return id;
@@ -30,4 +33,21 @@ public class CustomerDTO {
         isActive = active;
     }
 
+    public List<SupportTicketDTO> getSupportTickets() {
+        return supportTickets;
+    }
+
+    public void setSupportTickets(List<SupportTicketDTO> supportTickets) {
+        this.supportTickets = supportTickets;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomerDTO{" +
+                "id=" + id +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", isActive=" + isActive +
+                ", supportTickets=" + supportTickets +
+                '}';
+    }
 }

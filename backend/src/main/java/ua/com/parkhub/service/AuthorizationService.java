@@ -2,8 +2,9 @@ package ua.com.parkhub.service;
 
 import ua.com.parkhub.dto.LoginDTO;
 import ua.com.parkhub.dto.UserDTO;
+import ua.com.parkhub.model.UserModel;
 
 public interface AuthorizationService {
 
-    UserDTO loginUser(LoginDTO userDTO);
+    UserModel loginUser(LoginDTO userDTO);
 }

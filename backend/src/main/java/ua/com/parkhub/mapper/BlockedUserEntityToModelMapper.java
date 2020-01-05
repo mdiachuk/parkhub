@@ -1,21 +1,29 @@
 package ua.com.parkhub.mapper;
 
-import ua.com.parkhub.exceptions.ParkHubException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ua.com.parkhub.model.BlockedUserModel;
-import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.persistence.entities.BlockedUser;
 
+@Component
 public class BlockedUserEntityToModelMapper implements Mapper<BlockedUser, BlockedUserModel> {
+
+    private UserEntityToModelMapper userEntityToModelMapper;
+
+    @Autowired
+    public BlockedUserEntityToModelMapper(UserEntityToModelMapper userEntityToModelMapper) {
+        this.userEntityToModelMapper = userEntityToModelMapper;
+    }
 
     @Override
     public BlockedUserModel transform(BlockedUser entity) {
         if(entity == null) {
-            throw new ParkHubException("BlockedUser entity to be converted to BlockedUserModel is null.");
+            return null;
+//            throw new ParkHubException("BlockedUser entity to be converted to BlockedUserModel is null.");
         }
         BlockedUserModel model = new BlockedUserModel();
-        UserModel userModel = new UserEntityToModelMapper().transform(entity.getBlockedUser());
         model.setBlockedUserId(entity.getBlockedUserId());
-        model.setBlockedUser(userModel);
+        model.setBlockedUser(userEntityToModelMapper.transform(entity.getBlockedUser()));
         model.setBlockingDate(entity.getDate());
         return model;
     }

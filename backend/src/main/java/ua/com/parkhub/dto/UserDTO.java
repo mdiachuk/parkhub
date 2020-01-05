@@ -1,6 +1,7 @@
 package ua.com.parkhub.dto;
 
 import javax.validation.constraints.*;
+import java.util.List;
 
 public class UserDTO {
 
@@ -13,6 +14,16 @@ public class UserDTO {
     private RoleDTO role;
     private String token;
     private int numberOfFaildPassEntering;
+    private List<SupportTicketDTO> tickets;
+
+    public List<SupportTicketDTO> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<SupportTicketDTO> tickets) {
+        this.tickets = tickets;
+    }
+
 
     public int getNumberOfFaildPassEntering() {
         return numberOfFaildPassEntering;

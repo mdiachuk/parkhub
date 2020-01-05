@@ -3,32 +3,37 @@ package ua.com.parkhub.persistence.impl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.exceptions.PermissionException;
+import ua.com.parkhub.mapper.Mapper;
+import ua.com.parkhub.model.BlockedUserModel;
+import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.persistence.entities.BlockedUser;
-import ua.com.parkhub.persistence.entities.User;
 
-import java.sql.Date;
 import java.time.LocalDate;
-import java.time.temporal.*;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.Optional;
 
 @Repository
-public class BlockedUserDAO extends ElementDAO<BlockedUser> {
+public class BlockedUserDAO extends ElementDAO<BlockedUser, BlockedUserModel> {
 
-    public BlockedUserDAO() {
-        super(BlockedUser.class);
+    public BlockedUserDAO(Mapper<BlockedUser, BlockedUserModel> entityToModel, Mapper<BlockedUserModel, BlockedUser> modelToEntity) {
+        super(BlockedUser.class, modelToEntity, entityToModel);
     }
 
     @Transactional
-    public void activateUser(User user) {
-        Optional<BlockedUser> blockedUser = findOneByFieldEqual("blockedUser", user.getId());
+    public void activateUser(UserModel user) {
+        Optional<BlockedUserModel> blockedUser = findOneByFieldEqual("blockedUser", user.getId());
         deleteElement(blockedUser.get());
     }
 
-    public Boolean canActivate(User user) {
-        Optional<BlockedUser> blockedUser = findOneByFieldEqual("blockedUser", user.getId());
+    public Boolean canActivate(UserModel user) {
+        Optional<BlockedUserModel> blockedUser = findOneByFieldEqual("blockedUser", user.getId());
         if (isBlocked(user)) {
-            Date blockingDate = blockedUser.get().getDate();
-            if (LocalDate.now().minus(1, ChronoUnit.DAYS).isAfter(blockingDate.toLocalDate())) {
+            Date blockingDate = blockedUser.get().getBlockingDate();
+            if (LocalDate.now().minus(1, ChronoUnit.DAYS).isAfter(blockingDate.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate())) {
                 return true;
             } else {
                 return false;
@@ -37,7 +42,7 @@ public class BlockedUserDAO extends ElementDAO<BlockedUser> {
         throw new PermissionException("User is not blocked.");
     }
 
-    public Boolean isBlocked(User user) {
+    public Boolean isBlocked(UserModel user) {
         if (findOneByFieldEqual("blockedUser", user.getId()).isPresent()) {
             return true;
         } else {
@@ -46,10 +51,10 @@ public class BlockedUserDAO extends ElementDAO<BlockedUser> {
     }
 
     @Transactional
-    public void blockUser(User user) {
-            BlockedUser blockedUser = new BlockedUser();
+    public void blockUser(UserModel user) {
+            BlockedUserModel blockedUser = new BlockedUserModel();
             blockedUser.setBlockedUser(user);
-            blockedUser.setDate(new Date(System.currentTimeMillis()));
+            blockedUser.setBlockingDate(new Date(System.currentTimeMillis()));
             addElement(blockedUser);
     }
 }
