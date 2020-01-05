@@ -7,7 +7,7 @@ import ua.com.parkhub.dto.ParkingDTO;
 import ua.com.parkhub.dto.ParkingRequestDTO;
 import ua.com.parkhub.mappers.fromDtoToModel.ParkingRequestDtoToModelMapper;
 import ua.com.parkhub.mappers.fromModelToDTO.ParkingModelToDTOMapper;
-import ua.com.parkhub.service.ParkingService;
+import ua.com.parkhub.service.impl.ParkingService;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -16,6 +16,14 @@ public class BookingModel {
         this.customer = customer;
     }
 
+    public CustomerModel getCustomer() {
+        return customer;
+    }
+
+    public SlotModel getSlot() {
+        return slot;
+    }
+
     public void setSlot(SlotModel slot) {
         this.slot = slot;
     }

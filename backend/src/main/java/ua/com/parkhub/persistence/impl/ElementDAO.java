@@ -58,11 +58,27 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
         } catch (PersistenceException e) {
             element = null;
         }
-            return Optional.ofNullable(entityToModel.transform(element));
-        }
+        return Optional.ofNullable(entityToModel.transform(element));
+    }
 
     @Override
     public void deleteElement(M element) {
 
+    }
+
+    @Override
+    public <F> Optional<M> findOneByFieldEqual(String fieldName, F fieldValue) {
+        CriteriaBuilder criteriaBuilder = emp.getCriteriaBuilder();
+        CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(elementClass);
+        Root<E> elementRoot = criteriaQuery.from(elementClass);
+        criteriaQuery.select(elementRoot).where(criteriaBuilder.equal(elementRoot.get(fieldName), fieldValue));
+
+        E element;
+        try {
+            element = emp.createQuery(criteriaQuery).getSingleResult();
+        } catch (PersistenceException e) {
+            element = null;
+        }
+        return Optional.ofNullable(entityToModel.transform(element));
     }
 }

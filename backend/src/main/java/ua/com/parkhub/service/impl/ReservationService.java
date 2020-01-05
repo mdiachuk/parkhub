@@ -1,4 +1,4 @@
-package ua.com.parkhub.service;
+package ua.com.parkhub.service.impl;
 
 public class ReservationService {
 }

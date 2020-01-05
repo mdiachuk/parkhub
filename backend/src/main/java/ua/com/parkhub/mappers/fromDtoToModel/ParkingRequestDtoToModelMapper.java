@@ -22,3 +22,4 @@ public class ParkingRequestDtoToModelMapper implements Mapper<ParkingRequestDTO,
         return parkingModel;
     }
 }
+

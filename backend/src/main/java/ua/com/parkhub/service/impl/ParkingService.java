@@ -1,12 +1,12 @@
-package ua.com.parkhub.service;
+package ua.com.parkhub.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.mappers.fromEntityToModel.ParkingEntityToModelMapper;
 import ua.com.parkhub.model.ParkingModel;
-import ua.com.parkhub.persistence.entities.Parking;
 import ua.com.parkhub.persistence.impl.ParkingDAO;
+import ua.com.parkhub.service.IParkingService;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class ParkingService {
+public class ParkingService implements IParkingService {
 
     private ParkingDAO parkingDAO;
 
@@ -49,5 +49,10 @@ public class ParkingService {
             field.set(parkingModel, fieldParam.get(parkingModelParam));
         }
         parkingDAO.updateElement(parkingModel);
+    }
+
+    @Override
+    public ParkingModel findParkingByIdWithSlotList(long id) {
+        return null;
     }
 }
