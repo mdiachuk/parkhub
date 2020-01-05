@@ -27,13 +27,16 @@
   </div>
 
 
-  <div class="container unauthenticated">
-    <button (click)="onClickMe()">Click me!</button>
+  <div class="container unauthenticated" >
+    <button mat-raised-button  (click)="onClickMe()">Click me!</button >
+      <a href = "http://localhost:8080/api/login/google"> hdjdhjdh </a>
 </div>
-<script type="text/javascript">
+
+
+<!-- <script type="text/javascript">
   $.get("/user", function(data) {
       $("#user").html(data.userAuthentication.details.name);
       $(".unauthenticated").hide()
       $(".authenticated").show()
   });
-</script>
+</script> -->

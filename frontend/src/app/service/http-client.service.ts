@@ -59,8 +59,22 @@ export class LoginService {
     // return this.http.post<User>('/api/login', body);
   }
 
+
+  
+
   oauthlogin(): Observable<User> {
-    return this.http.get<User>('/api/login/google');
+    // const options = {
+    //   headers: new HttpHeaders().append('Access-Control-Allow-Origin', '*')
+    // }
+    // const httpOptions = {
+    //   headers: new HttpHeaders({ 
+    //     'Access-Control-Allow-Origin':'*'
+    //   })
+    // };
+    console.log("in service");
+    return this.http.get<User>('http://localhost:8080/api/login/google', { withCredentials: true });
+    
+
   }
 }
 
