@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.LoginDTO;
 import ua.com.parkhub.dto.UserDTO;
 import ua.com.parkhub.exceptions.PermissionException;
-import ua.com.parkhub.mappers.UserModelToUserDtoMapper;
+import ua.com.parkhub.mappers.ModelToDto.UserModelToUserDtoMapper;
 import ua.com.parkhub.security.JwtUtil;
 import ua.com.parkhub.service.AuthorizationService;
 
