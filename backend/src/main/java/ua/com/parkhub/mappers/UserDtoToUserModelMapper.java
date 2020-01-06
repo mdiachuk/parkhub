@@ -35,7 +35,7 @@ public class UserDtoToUserModelMapper implements Mapper<UserDTO, UserModel> {
         userModel.setFirstName(from.getFirstName());
         userModel.setLastName(from.getLastName());
         userModel.setId(from.getId());
-        userModel.setNumberOfFaildPassEntering(from.getNumberOfFaildPassEntering());
+        userModel.setNumberOfFailedPassEntering(from.getNumberOfFailedPassEntering());
         userModel.setRole(roleDtoToRoleModelMapper.transform(from.getRole()));
 
         List<SupportTicketModel> list = null;

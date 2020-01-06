@@ -10,6 +10,7 @@ public class RoleModelToEntityMapper implements Mapper<RoleModel,ua.com.parkhub.
     @Override
     public ua.com.parkhub.persistence.entities.UserRole transform(RoleModel model) {
         UserRole role = new UserRole();
+        role.setId(model.getId());
         role.setRoleName(model.getRoleName());
         return role;
     }

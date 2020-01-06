@@ -13,18 +13,27 @@ public class RoleEntityToModelMapper implements Mapper<UserRole, RoleModel> {
     @Override
     public RoleModel transform(UserRole entity) {
         String roleName = entity.getRoleName();
+        RoleModel roleModel;
         switch (roleName) {
             case "ADMIN":
-                return RoleModel.ADMIN;
+                roleModel = RoleModel.ADMIN;
+                roleModel.setId(entity.getId());
+                break;
             case "USER":
-                return RoleModel.USER;
+                roleModel = RoleModel.USER;
+                roleModel.setId(entity.getId());
+                break;
             case "MANAGER":
-                return RoleModel.MANAGER;
+                roleModel = RoleModel.MANAGER;
+                roleModel.setId(entity.getId());
+                break;
             case "PENDING":
-                return RoleModel.PENDING;
+                roleModel = RoleModel.PENDING;
+                roleModel.setId(entity.getId());
+                break;
             default:
                 throw new ParkHubException(String.format("Not known role name: %s. Role name may be one of the following: %s).", roleName, Arrays.asList(RoleModel.values())));
         }
-
+            return roleModel;
     }
 }

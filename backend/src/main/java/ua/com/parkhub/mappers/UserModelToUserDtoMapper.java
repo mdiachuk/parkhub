@@ -27,7 +27,7 @@ public class UserModelToUserDtoMapper implements Mapper<UserModel, UserDTO> {
         userDTO.setEmail(model.getEmail());
         userDTO.setPassword(model.getPassword());
         userDTO.setToken(model.getToken());
-        userDTO.setNumberOfFaildPassEntering(model.getNumberOfFaildPassEntering());
+        userDTO.setNumberOfFailedPassEntering(model.getNumberOfFailedPassEntering());
 //        userDTO.setCustomerDTO(customerModelToDtoMapper.transform(model.getCustomer()));
 //        userDTO.setTickets( ... );
         return userDTO;

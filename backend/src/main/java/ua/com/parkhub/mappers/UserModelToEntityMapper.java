@@ -30,7 +30,7 @@ public class UserModelToEntityMapper implements Mapper<UserModel, User> {
         userEntity.setId(model.getId());
         userEntity.setPassword(model.getPassword());
         userEntity.setCustomer(customerModelToEntityMapper.transform(model.getCustomer()));
-        userEntity.setNumberOfFaildPassEntering(model.getNumberOfFaildPassEntering());
+        userEntity.setNumberOfFailedPassEntering(model.getNumberOfFailedPassEntering());
         userEntity.setRole(roleModelToEntityMapper.transform(model.getRole()));
         return userEntity;
     }

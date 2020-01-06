@@ -21,7 +21,7 @@ public class UserEntityToModelMapper implements Mapper<User, UserModel> {
     @Override
     public UserModel transform(User entity) {
         if(entity == null) {
-            throw new ParkHubException("User entity to be converted to UserDTO is null.");
+            throw new ParkHubException("User entity to be converted to UserModel is null.");
         }
         UserModel userModel = new UserModel();
         userModel.setEmail(entity.getEmail());
@@ -30,7 +30,7 @@ public class UserEntityToModelMapper implements Mapper<User, UserModel> {
         userModel.setId(entity.getId());
         userModel.setPassword(entity.getPassword());
         userModel.setCustomer(customerEntityToModelMapper.transform(entity.getCustomer()));
-        userModel.setNumberOfFaildPassEntering(entity.getNumberOfFaildPassEntering());
+        userModel.setNumberOfFailedPassEntering(entity.getNumberOfFailedPassEntering());
         // set TICKETS
         userModel.setRole(roleEntityToModelMapper.transform(entity.getRole()));
         return userModel;

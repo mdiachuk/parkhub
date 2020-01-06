@@ -12,17 +12,27 @@ public class RoleDtoToRoleModelMapper implements Mapper<RoleDTO, RoleModel> {
 
     @Override
     public RoleModel transform(RoleDTO roleDTO) {
+        RoleModel roleModel;
         switch (roleDTO) {
             case ADMIN:
-                return RoleModel.ADMIN;
+                roleModel = RoleModel.ADMIN;
+                roleModel.setId(roleDTO.getId());
+                break;
             case USER:
-                return RoleModel.USER;
+                roleModel = RoleModel.USER;
+                roleModel.setId(roleDTO.getId());
+                break;
             case MANAGER:
-                return RoleModel.MANAGER;
+                roleModel = RoleModel.MANAGER;
+                roleModel.setId(roleDTO.getId());
+                break;
             case PENDING:
-                return RoleModel.PENDING;
+                roleModel = RoleModel.PENDING;
+                roleModel.setId(roleDTO.getId());
+                break;
             default:
                 throw new ParkHubException(String.format("Not known role name: %s. Role name may be one of the following: %s).", roleDTO.getRoleName(), Arrays.asList(RoleModel.values())));
         }
+        return roleModel;
     }
 }

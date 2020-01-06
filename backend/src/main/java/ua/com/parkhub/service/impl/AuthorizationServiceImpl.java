@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.com.parkhub.dto.LoginDTO;
+import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.exceptions.PermissionException;
 import ua.com.parkhub.exceptions.StatusCode;
 import ua.com.parkhub.model.UserModel;
@@ -35,16 +36,15 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Override
     public UserModel loginUser(LoginDTO userDTO) {
-        Optional<UserModel> userModel = userDAO.findUserByEmail(userDTO.getEmail());
-        UserModel user;
-        if (userModel.isPresent()) {
-            user = userModel.get();
-            activateIfPossible(user);
-            if (user.getNumberOfFaildPassEntering() >= THREE_TRIES_TO_ENTER) {
-                blockIfNeeded(user);
-            }
-            return checkCredentials(userDTO, user);
-        } else {
+        try {
+            Optional<UserModel> userModel = userDAO.findUserByEmail(userDTO.getEmail());
+            UserModel user = userModel.get();
+                activateIfPossible(user);
+                if (user.getNumberOfFailedPassEntering() >= THREE_TRIES_TO_ENTER) {
+                    blockIfNeeded(user);
+                }
+                return checkCredentials(userDTO, user);
+        } catch (ParkHubException e) {
             throw new PermissionException(StatusCode.NO_ACCOUNT_FOUND);
         }
     }
@@ -59,7 +59,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     private void activateIfPossible(UserModel user) {
         if ((blockedUserDAO.isBlocked(user)) && (blockedUserDAO.canActivate(user))) {
             blockedUserDAO.activateUser(user);
-            user.setNumberOfFaildPassEntering(0);
+            user.setNumberOfFailedPassEntering(0);
             userDAO.updateElement(user);
         }
     }
@@ -72,7 +72,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
                 throw new PermissionException(StatusCode.CANNOT_ACTIVATE);
             }
         } else {
-            userModel.setNumberOfFaildPassEntering(userModel.getNumberOfFaildPassEntering() + ONE_FAILD_TRIE_TO_ENTER);
+            userModel.setNumberOfFailedPassEntering(userModel.getNumberOfFailedPassEntering() + ONE_FAILD_TRIE_TO_ENTER);
             userDAO.updateElement(userModel);
             if (blockedUserDAO.isBlocked(userModel)) {
                 throw new PermissionException(StatusCode.ACCOUNT_BLOCKED);

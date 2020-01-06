@@ -32,9 +32,9 @@ public class User implements Serializable {
     @Size(min = 6, max = 60)
     private String password;
 
-    @Column(name = "number_of_faild_pass_entering")
+    @Column(name = "number_of_failed_pass_entering")
     @NotNull
-    private int numberOfFaildPassEntering;
+    private int numberOfFailedPassEntering;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
@@ -47,12 +47,12 @@ public class User implements Serializable {
     @ManyToMany(mappedBy = "solvers")
     private List<SupportTicket> tickets;
 
-    public int getNumberOfFaildPassEntering() {
-        return numberOfFaildPassEntering;
+    public int getNumberOfFailedPassEntering() {
+        return numberOfFailedPassEntering;
     }
 
-    public void setNumberOfFaildPassEntering(int numberOfFaildPassEntering) {
-        this.numberOfFaildPassEntering = numberOfFaildPassEntering;
+    public void setNumberOfFailedPassEntering(int numberOfFailedPassEntering) {
+        this.numberOfFailedPassEntering = numberOfFailedPassEntering;
     }
 
     public Long getId() {
