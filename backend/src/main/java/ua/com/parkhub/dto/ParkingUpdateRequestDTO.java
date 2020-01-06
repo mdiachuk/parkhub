@@ -1,6 +1,6 @@
 package ua.com.parkhub.dto;
 
-public class ParkingRequestDTO {
+public class ParkingUpdateRequestDTO {
 
     private String parkingName;
     private String address;

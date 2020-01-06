@@ -5,11 +5,11 @@ import {ParkingDetailComponent} from './parking-detail/parking-detail.component'
 
 const appRoutes: Routes = [
   {
-    path: 'parkings',
+    path: 'manager/cabinet',
     component: ParkingListComponent,
   },
   {
-    path: 'parkings/:id',
+    path: 'manager/cabinet/:id',
     component: ParkingDetailComponent,
   },
 ];
