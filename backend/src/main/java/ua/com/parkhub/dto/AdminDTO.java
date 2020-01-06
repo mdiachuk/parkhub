@@ -13,17 +13,6 @@ public class AdminDTO {
     public AdminDTO() {
     }
 
-    public AdminDTO(long id, String firstName, String userRole) {
-        this.id = id;
-        this.firstName = firstName;
-        this.userRole = userRole;
-    }
-
-    public AdminService adminService;
-    @Autowired
-    public AdminDTO(AdminService adminService) {
-        this.adminService = adminService;
-    }
 
     public long getId() {
         return id;
