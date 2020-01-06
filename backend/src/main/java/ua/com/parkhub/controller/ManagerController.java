@@ -37,13 +37,19 @@ public class ManagerController {
     @GetMapping(value = "/{parkingId}")
     public ResponseEntity<ParkingDTO> getParkingById(@PathVariable("parkingId") Long parkingId){
 
-        return ResponseEntity.ok(parkingMapper.transform(parkingService.findParkingById(parkingId).orElseThrow(() -> new ParkingDoesntExistException("Such parking doesn't exist"))));
+        return ResponseEntity.ok(parkingMapper.transform(parkingService.findParkingById(parkingId)));
     }
 
     @PutMapping(value = "/{parkingId}")
     public ResponseEntity<Void> updateParking(@PathVariable("parkingId") Long parkingId, @RequestBody ParkingUpdateRequestDTO requestDTO) throws NoSuchFieldException, IllegalAccessException {
         parkingService.updateParking(parkingId, parkingRequestDtoToModelMapper.transform(requestDTO));
         return ResponseEntity.ok().build();
+    }
+
+    @ExceptionHandler(ParkingDoesntExistException.class)
+    public ResponseEntity<String> handleEmailException(ParkingDoesntExistException e) {
+        String message = e.getMessage();
+        return ResponseEntity.badRequest().body(message);
     }
 }
 

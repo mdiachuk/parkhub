@@ -58,10 +58,11 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
         } catch (PersistenceException e) {
             element = null;
         }
-            return Optional.ofNullable(entityToModel.transform(element));
+            return Optional.ofNullable(element).map(entityToModel::transform);
         }
 
     @Override
     public void deleteElement(M element) {
+
     }
 }

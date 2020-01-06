@@ -29,7 +29,7 @@ export class ParkingService {
 
   getParking(id: string) : Observable<ParkingDetail>{
     // let parameters = new HttpParams().set("parkingId", id.toString());
-    return this.http.get<ParkingDetail>(`${this.parkingsUrl}/${id}`);
+    return this.http.get<ParkingDetail>(`${this.parkingsUrl}/${id}`).pipe(catchError(this.handleError<ParkingDetail>('getParking')));
   }
 
   updateParking (parking: ParkingDetail, id: string): Observable<any> {

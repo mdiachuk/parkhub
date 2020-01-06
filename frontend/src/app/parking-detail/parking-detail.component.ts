@@ -3,7 +3,7 @@ import { ParkingService} from "../parking.service";
 import { ParkingDetail} from './parking-detail';
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar} from '@angular/material/snack-bar';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog} from '@angular/material/dialog';
 import { AddressDialog } from './parking-detail-dialog-component';
 
 
