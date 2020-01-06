@@ -1,5 +1,6 @@
 package ua.com.parkhub.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.AuthoritiesExtractor;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.FixedAuthoritiesExtractor;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.FixedPrincipalExtractor;
@@ -16,6 +17,7 @@ import org.springframework.security.oauth2.common.exceptions.InvalidTokenExcepti
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Request;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
+import org.springframework.stereotype.Service;
 import ua.com.parkhub.persistence.entities.Customer;
 import ua.com.parkhub.persistence.entities.User;
 import ua.com.parkhub.persistence.entities.UserRole;
@@ -30,7 +32,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import ua.com.parkhub.persistence.impl.UserRoleDAO;
 
-import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -44,12 +45,23 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
     private AuthoritiesExtractor authoritiesExtractor = new FixedAuthoritiesExtractor();
     private PrincipalExtractor principalExtractor = new FixedPrincipalExtractor();
 
-    private UserDAO userRepo;
+    private UserDAO userDAO;
     private CustomerDAO customerDAO;
     private UserRoleDAO userRoleDAO;
     private PasswordEncoder passwordEncoder;
 
-    public CustomUserInfoTokenServices(){}
+//    public CustomUserInfoTokenServices(){}
+
+
+
+    public CustomUserInfoTokenServices(String userInfoEndpointUrl, String clientId,UserDAO userDAO,UserRoleDAO userRoleDAO,CustomerDAO customerDAO,PasswordEncoder passwordEncoder)
+    {
+        this(userInfoEndpointUrl,clientId);
+        this.userDAO = userDAO;
+        this.userRoleDAO = userRoleDAO;
+        this.customerDAO = customerDAO;
+        this.passwordEncoder = passwordEncoder;
+    }
 
 
     public CustomUserInfoTokenServices(String userInfoEndpointUrl, String clientId)
@@ -58,9 +70,9 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
         this.clientId = clientId;
     }
 
-    public void setUserRepo(UserDAO userRepo)
+    public void setUserDAO(UserDAO userDAO)
     {
-        this.userRepo = userRepo;
+        this.userDAO = userDAO;
     }
 
     public void setPasswordEncoder(PasswordEncoder passwordEncoder)
@@ -99,44 +111,35 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
         this.principalExtractor = principalExtractor;
     }
 
+    private void createUserFromSocialAuth(Map<String, Object> map){
+        if(map.containsKey("sub"))
+        {
+            String name = (String) map.get("given_name");
+            String lastName = (String) map.get("family_name");
+            String email = (String) map.get("email");
+
+            if(!userDAO.findUserByEmail(email).isPresent()){
+                User user = new User();
+                Customer customer = new Customer();
+                customer.setPhoneNumber("0665441958");
+                user.setEmail(email);
+                user.setCustomer(customer);
+                user.setPassword(passwordEncoder.encode("oauth2user"));
+                user.setLastName(lastName);
+                user.setFirstName(name);
+                UserRole userRole = userRoleDAO.findOneByFieldEqual("roleName", "USER").get();
+                user.setRole(userRole);
+                userDAO.addElement(user);
+            }
+    }
+    }
+
     @Override
     public OAuth2Authentication loadAuthentication(String accessToken)
             throws AuthenticationException, InvalidTokenException
     {
         Map<String, Object> map = getMap(this.userInfoEndpointUrl, accessToken);
-
-        if(map.containsKey("sub"))
-        {
-            String googleName = (String) map.get("name");
-            String googleUsername = (String) map.get("email");
-
-            if(!userRepo.findUserByEmail(googleUsername).isPresent()){
-                User user = new User();
-                Customer customer = new Customer();
-                customer.setPhoneNumber("0665441958");
-//                customer.setId(null);
-//                Customer customer = customerDAO.findElementById(2).get();
-                user.setEmail(googleUsername);
-                user.setCustomer(customer);
-                user.setPassword(passwordEncoder.encode("oauth2user"));
-                user.setLastName("Lavid");
-                user.setFirstName(googleName);
-                UserRole userRole = userRoleDAO.findElementById(4).get();
-                user.setRole(userRole);
-                userRepo.addElement(user);
-            }
-
-
-//            user.setName(googleName);
-//            user.setUsername(googleUsername);
-//            user.setGoogleName(googleName);
-//            user.setGoogleUsername(googleUsername);
-//
-//            user.setPassword(passwordEncoder.encode("oauth2user"));
-
-//            userRepo.addElement(user);
-        }
-
+        createUserFromSocialAuth(map);
         if (map.containsKey("error"))
         {
             this.logger.debug("userinfo returned error: " + map.get("error"));
@@ -164,12 +167,6 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
         return new OAuth2Authentication(request, token);
     }
 
-    /**
-     * Return the principal that should be used for the token. The default implementation
-     * delegates to the {@link PrincipalExtractor}.
-     * @param map the source map
-     * @return the principal or {@literal "unknown"}
-     */
     protected Object getPrincipal(Map<String, Object> map) {
         Object principal = this.principalExtractor.extractPrincipal(map);
         return (principal == null ? "unknown" : principal);

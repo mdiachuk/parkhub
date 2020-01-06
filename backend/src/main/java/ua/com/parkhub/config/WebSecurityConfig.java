@@ -1,7 +1,5 @@
 package ua.com.parkhub.config;
 
-import com.google.common.collect.ImmutableList;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -28,18 +26,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import ua.com.parkhub.persistence.impl.CustomerDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
 import ua.com.parkhub.persistence.impl.UserRoleDAO;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 
 @Configuration
@@ -47,11 +36,6 @@ import java.util.Collections;
 @EnableOAuth2Client
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests().antMatchers("/api/login").permitAll().and().csrf().disable();
-//    }
 
 
     @Autowired
@@ -73,14 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         registration.setOrder(-100);
         return registration;
     }
-//    @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//        UrlBasedCorsConfigurationSource source = new
-//                UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
-//        return source;
-//    }
-    //@CrossOrigin
+
     private Filter ssoFilter() {
         OAuth2ClientAuthenticationProcessingFilter googleFilter = new OAuth2ClientAuthenticationProcessingFilter(
                 "/login/google");
@@ -89,14 +66,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         googleFilter.setAuthenticationSuccessHandler(new SimpleUrlAuthenticationSuccessHandler("/home1"));
         //googleFilter.setAuthenticationSuccessHandler(new SimpleUrlAuthenticationSuccessHandler("/home")​);
 
-        CustomUserInfoTokenServices tokenServices = new CustomUserInfoTokenServices(googleResource().getUserInfoUri(),
+//        CustomUserInfoTokenServices tokenServices = new CustomUserInfoTokenServices(googleResource().getUserInfoUri(),
+//                google().getClientId());
+        UserInfoTokenServices tokenServices = new UserInfoTokenServices(googleResource().getUserInfoUri(),
                 google().getClientId());
         tokenServices.setRestTemplate(googleTemplate);
         googleFilter.setTokenServices(tokenServices);
-        tokenServices.setUserRepo(userRepo);
-        tokenServices.setUserRoleDAO(userRoleDAO);
-        tokenServices.setCustomerDAO(customerDAO);
-        tokenServices.setPasswordEncoder(passwordEncoder);
+       // tokenServices.loadAuthentication(acc);
+//        tokenServices.setUserDAO(userRepo);
+//        tokenServices.setUserRoleDAO(userRoleDAO);
+//        tokenServices.setCustomerDAO(customerDAO);
+//        tokenServices.setPasswordEncoder(passwordEncoder);
         return googleFilter;
     }
 
@@ -126,10 +106,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // @formatter:on
     }
 
-//    @Override
-//    protected void configure(HttpSecurity httpSecurity) throws Exception {
-//        httpSecurity.authorizeRequests().antMatchers("/").permitAll().and().csrf().disable();
-//    }
 
     @Override
     public void configure(WebSecurity web) {
@@ -141,36 +117,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     }
 
-//    @Override
-//    protected void configure(HttpSecurity httpSecurity) throws Exception {
-//        httpSecurity.authorizeRequests().antMatchers("/").permitAll().and().csrf().disable();
-//    }
-//@Override
-//protected void configure(HttpSecurity http) throws Exception {
-//    http
-//            .authorizeRequests()
-//            .mvcMatchers("/").permitAll()
-//            .anyRequest().authenticated();
-//}
-//
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-////        http.authorizeRequests()
-////                .anyRequest().authenticated();
-//        http.antMatcher("/**").authorizeRequests().antMatchers("/", "/api/login**", "/webjars/**", "/error**").permitAll().anyRequest()
-//                .authenticated().and().csrf().disable();
-//
-//    }
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/resources/**", "/", "/login**", "/registration").permitAll()
-//                .anyRequest().authenticated()
-//                ;
-//    }
 
 
 }

@@ -102,14 +102,6 @@ public class ElementDAO<E>  implements IElementDAO<E> {
         return Optional.ofNullable(element);
     }
 
-//        try {
-//            E element = emp.createQuery(criteriaQuery).getSingleResult();
-//            return Optional.of(element);
-//        } catch (NoResultException e1) {
-//            return Optional.empty();
-//        } catch (Exception e2) {
-//            throw new UnsupportedOperationException();
-//        }
     }
 
 
