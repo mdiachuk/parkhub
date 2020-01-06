@@ -4,13 +4,10 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.dto.AdminSupportTicketDTO;
 import ua.com.parkhub.dto.AdminTicketCounterDTO;
 import ua.com.parkhub.dto.RoleDTO;
-import ua.com.parkhub.mapper.TicketSupportEntToAdminSupportTicketDTO;
+import ua.com.parkhub.mappers.ModelToDto.TicketSupportModelToAdminSupportTicketDTO;
 import ua.com.parkhub.model.RoleModel;
 import ua.com.parkhub.model.SupportTicketModel;
 import ua.com.parkhub.model.UserModel;
-import ua.com.parkhub.persistence.entities.SupportTicket;
-import ua.com.parkhub.persistence.entities.User;
-import ua.com.parkhub.persistence.entities.UserRole;
 import ua.com.parkhub.persistence.impl.SupportTicketDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
 import ua.com.parkhub.persistence.impl.UserRoleDAO;
@@ -47,7 +44,7 @@ public class AdminService  {
         long ticketCounter = targetSupportList.size();
         List<AdminSupportTicketDTO> adminSupportTicketDTOList = new ArrayList<>();
         for(long i=ticketCounter-1; i>ticketCounter-6; i--){
-            AdminSupportTicketDTO adminSupportTicketDTO = new TicketSupportEntToAdminSupportTicketDTO().transform(targetSupportList.get((int) i));
+            AdminSupportTicketDTO adminSupportTicketDTO = new TicketSupportModelToAdminSupportTicketDTO().transform(targetSupportList.get((int) i));
             adminSupportTicketDTO.setSupportTicketType(targetSupportList.get((int) i).getSupportTicketType().getType());
             adminSupportTicketDTOList.add(adminSupportTicketDTO);
         }
@@ -75,4 +72,3 @@ public class AdminService  {
         return targetUser.get().getId();
     }
 }
-

@@ -28,6 +28,7 @@ import {MatDividerModule} from "@angular/material/divider";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {ManagerSignupComponent} from "./manager-signup/manager-signup.component";
 import {AdminComponent} from "./admin/admin.component";
+import { AdminTicketListComponent } from './admin-ticket-list/admin-ticket-list.component';
 
 import {
   MatPaginatorModule,
@@ -101,7 +102,8 @@ import {DataService} from './DataService/data.service';
     ParkingDetailSlotsComponent,
     ParkingsComponentSlots,
     BookingDetailComponent,
-    BookingsComponent
+    BookingsComponent,
+    AdminTicketListComponent
 
     // UserComponent
   ],

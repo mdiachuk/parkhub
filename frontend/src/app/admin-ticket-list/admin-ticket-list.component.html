@@ -1,0 +1,25 @@
+<mat-card>
+  <mat-card-content>
+    <h3>New tickets: {{ticketCounter.adminTicketCounter}}</h3>
+<mat-table [dataSource]="tickets">
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> Ticket ID </mat-header-cell>
+        <mat-cell *matCellDef="let ticket"> {{ticket.id}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef> Ticket Description </mat-header-cell>
+        <mat-cell *matCellDef="let ticket"> {{ticket.description}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="isSolved">
+        <mat-header-cell *matHeaderCellDef> Solved </mat-header-cell>
+        <mat-cell *matCellDef="let ticket"> {{ticket.isSolved}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="supportTicketType">
+        <mat-header-cell *matHeaderCellDef> Ticket Type </mat-header-cell>
+        <mat-cell *matCellDef="let ticket"> {{ticket.supportTicketType}} </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+</mat-card-content>
+</mat-card>
