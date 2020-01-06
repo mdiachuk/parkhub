@@ -32,7 +32,7 @@ public class User implements Serializable {
     @Size(min = 6, max = 60)
     private String password;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
     private UserRole role;
 
@@ -42,8 +42,8 @@ public class User implements Serializable {
 
 
 
-    @ManyToMany(mappedBy = "solvers")
-    private List<SupportTicket> tickets;
+//    @ManyToMany(mappedBy = "solvers")
+//    private List<SupportTicket> tickets;
 
     public Long getId() {
         return id;
@@ -101,11 +101,11 @@ public class User implements Serializable {
         this.customer = customer;
     }
 
-    public List<SupportTicket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(List<SupportTicket> tickets) {
-        this.tickets = tickets;
-    }
+//    public List<SupportTicket> getTickets() {
+//        return tickets;
+//    }
+//
+//    public void setTickets(List<SupportTicket> tickets) {
+//        this.tickets = tickets;
+//    }
 }

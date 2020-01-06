@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 
 public class UserDTO {
 
-    private long id;
+    private Long id;
 
     @Valid
     private CustomerDTO customer;
@@ -41,11 +41,11 @@ public class UserDTO {
     private RoleDTO role;
     private String token;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public int getIdInt() { return (int) id;}
+//    public int getIdInt() { return (int) id;}
 
     public void setId(long id) {
         this.id = id;

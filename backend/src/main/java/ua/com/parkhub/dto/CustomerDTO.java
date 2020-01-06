@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 public class CustomerDTO {
 
-    private long id;
+    private Long id;
     private boolean isActive;
 
     @ValidPhoneNumber(groups = CustomerChecks.class)
@@ -16,11 +16,11 @@ public class CustomerDTO {
     @NotEmpty(message = "Phone number must not be empty", groups = CustomerChecks.class)
     private String phoneNumber;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -37,7 +37,7 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
 
     @Override
     public void updateElement(M element) {
-        emp.persist(modelToEntity.transform(element));
+        emp.merge(modelToEntity.transform(element));
     }
 
     @Override
