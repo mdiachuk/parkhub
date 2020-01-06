@@ -1,7 +1,8 @@
-package ua.com.parkhub.mappers.modelToEntity;
+package ua.com.parkhub.mappers.toEntity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.UuidTokenModel;
 import ua.com.parkhub.persistence.entities.UuidToken;
@@ -19,13 +20,13 @@ public class UuidTokenModelToEntity implements Mapper<UuidTokenModel, UuidToken>
     @Override
     public UuidToken transform(UuidTokenModel from) {
         if(from == null) {
-            return null;
+            throw new ParkHubException("UuidToken to be mapped to UuidTokenModel entity is null.");
         }
-        UuidToken uuidToken = new UuidToken();
-        uuidToken.setId(from.getId());
-        uuidToken.setToken(from.getToken());
-        uuidToken.setUser(userModelToEntityMapper.transform(from.getUser()));
-        uuidToken.setExpirationDate(from.getExpirationDate());
-        return uuidToken;
+        UuidToken entity = new UuidToken();
+        entity.setId(from.getId());
+        entity.setToken(from.getToken());
+        entity.setUser(userModelToEntityMapper.transform(from.getUser()));
+        entity.setExpirationDate(from.getExpirationDate());
+        return entity;
     }
 }

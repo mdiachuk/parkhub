@@ -1,5 +1,4 @@
-
-<mat-card>
+<mat-card *ngIf="!isSent">
   <mat-card-header>
     <mat-card-title>Sing Up User Form</mat-card-title>
   </mat-card-header>
@@ -7,37 +6,43 @@
   <mat-card-content>
     <mat-form-field>
       <mat-label>Name</mat-label>
-      <input type="text"  matInput  placeholder="First Name" [(ngModel)]="users.firstName"  name="First Name"  required>
+      <input type="text" matInput placeholder="First Name" [(ngModel)]="users.firstName" name="First Name" required>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Second Name</mat-label>
-      <input type="text" matInput  placeholder="Last Name" [(ngModel)]="users.lastName"  name="Last Name"  required>
+      <input type="text" matInput placeholder="Last Name" [(ngModel)]="users.lastName" name="Last Name" required>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Telephone</mat-label>
-      <input type="tel" matInput  placeholder="Telephone"
-             [(ngModel)]="customer.phoneNumber"  name="Phone Number"  required pattern="[0-9]{10}">
+      <input type="tel" matInput placeholder="Telephone" [(ngModel)]="customer.phoneNumber" name="Phone Number" required
+        pattern="[0-9]{10}">
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Email</mat-label>
-      <input type="email" matInput  placeholder="Email" [(ngModel)]="users.email"  name="Email"  required>
+      <input type="email" matInput placeholder="Email" [(ngModel)]="users.email" name="Email" required>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Password</mat-label>
-      <input type="password" matInput  placeholder="Password" [(ngModel)]="users.password"  name="Password"  required>
+      <input type="password" matInput placeholder="Password" [(ngModel)]="users.password" name="Password" required>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Confirm Password</mat-label>
-      <input type="password" matInput  placeholder="Confirm Password"
-             [(ngModel)]="confirmPass.confirmPass" name="Confirm Password"  required>
+      <input type="password" matInput placeholder="Confirm Password" [(ngModel)]="confirmPass.confirmPass"
+        name="Confirm Password" required>
     </mat-form-field>
 
   </mat-card-content>
   <button class="btn btn-success" (click)="singUpUser()">Create</button>
 
 </mat-card>
+
+<div class="success" *ngIf="isSent">
+  <div><img src="assets/tick.png" class="success-image"></div>
+  <div class="success-message">Link for veifying email adress was sent<br>to your email-box!</div>
+  <div class="homepage-link"><a href="home" class="homepage-link">Go to the homepage</a></div>
+</div>

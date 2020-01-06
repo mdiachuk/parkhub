@@ -1,5 +1,5 @@
-import {Component, NgModule, OnInit} from '@angular/core';
-import {ConfirmPass, Customer, HttpClientService, User, UserRole} from "../service/http-client.service";
+import { Component, NgModule, OnInit } from '@angular/core';
+import { ConfirmPass, Customer, HttpClientService, User, UserRole } from "../service/http-client.service";
 
 
 
@@ -11,17 +11,19 @@ import {ConfirmPass, Customer, HttpClientService, User, UserRole} from "../servi
 })
 export class SingupComponent implements OnInit {
 
-  customer:Customer = new Customer("", true);
+  isSent: boolean;
 
-  userRole:UserRole = new UserRole("1")
+  customer: Customer = new Customer("", true);
 
-  users:User = new User("","",this.customer,"","",this.userRole,"");
+  userRole: UserRole = new UserRole("1")
+
+  users: User = new User("", "", this.customer, "", "", this.userRole, "");
 
 
-  confirmPass:ConfirmPass = new ConfirmPass("");
+  confirmPass: ConfirmPass = new ConfirmPass("");
 
   constructor(
-    private httpClientService:HttpClientService
+    private httpClientService: HttpClientService
   ) { }
 
   ngOnInit() {
@@ -29,12 +31,13 @@ export class SingupComponent implements OnInit {
   }
 
   singUpUser(): void {
-    if (this.users.password==this.confirmPass.confirmPass){
+    if (this.users.password == this.confirmPass.confirmPass) {
       this.httpClientService.createUser(this.users)
-        .subscribe( data => {
-            alert("User SingUp");
-            window.location.href='/home';
-          },
+        .subscribe(data => {
+          // alert("User SingUp");
+          // window.location.href='/home';
+          this.isSent = true;
+        },
           err => {
             // alert("User SingUp");
             // window.location.href='/home';
@@ -50,8 +53,7 @@ export class SingupComponent implements OnInit {
 
 
 
-handleSuccessfulResponse(response)
-  {
-    this.users=response;
+  handleSuccessfulResponse(response) {
+    this.users = response;
   }
 }

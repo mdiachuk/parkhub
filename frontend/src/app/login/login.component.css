@@ -20,3 +20,11 @@ ul {
 .login {
   margin-top: 15px;
 }
+
+a.forgot-password-link {
+  text-decoration: none;
+}
+
+div.forgot-password-link {
+  margin-left: -45px;
+}
