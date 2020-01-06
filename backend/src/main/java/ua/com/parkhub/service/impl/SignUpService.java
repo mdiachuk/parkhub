@@ -10,6 +10,8 @@ import ua.com.parkhub.dto.RoleDTO;
 import ua.com.parkhub.exceptions.EmailIsUsedException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberIsUsedException;
+import ua.com.parkhub.model.AuthUserModel;
+import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.persistence.entities.*;
 import ua.com.parkhub.persistence.impl.*;
 
@@ -168,12 +170,22 @@ public class SignUpService {
 
     }
 
-    /**
-     * If some fild is empty, new User can`t create account
-     * @param user
-     * @return false - if have empty field;
-     *         true - if all field not empty
-     */
+
+    public void createUserAfterSocialAuth(AuthUserModel userModel){
+        if(!userDAO.findUserByEmail(userModel.getEmail()).isPresent()){
+            User user = new User();
+            Customer customer = new Customer();
+            customer.setPhoneNumber("0665441958");
+            user.setEmail(userModel.getEmail());
+            user.setCustomer(customer);
+            user.setPassword(passwordEncoder.encode("oauth2user"));
+            user.setLastName(userModel.getLastName());
+            user.setFirstName(userModel.getFirstName());
+            UserRole userRole = userRoleDAO.findOneByFieldEqual("roleName", "USER").get();
+            user.setRole(userRole);
+            userDAO.addElement(user);
+        }
+    }
     private boolean emptyField (User user) {
         return (user.getCustomer().getPhoneNumber().length()==0||
                 user.getEmail().length()==0||
