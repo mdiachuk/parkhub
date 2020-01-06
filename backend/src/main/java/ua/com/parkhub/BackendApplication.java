@@ -14,12 +14,12 @@ import ua.com.parkhub.service.impl.ParkingService;
 @SpringBootApplication
 public class BackendApplication {
 
-    @Bean
+    /*@Bean
     CommandLineRunner init(BookingService bookingService) {
         return args -> {
             bookingService.addBooking("HH1234MM", "+380676767676", 1L);
         };
-    }
+    }*/
 
     public static void main(String[] args) {
         SpringApplication.run(BackendApplication.class, args);

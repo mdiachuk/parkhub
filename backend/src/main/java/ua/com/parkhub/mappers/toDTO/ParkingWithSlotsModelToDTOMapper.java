@@ -24,10 +24,10 @@ public class ParkingWithSlotsModelToDTOMapper implements Mapper<ParkingModel, Pa
     @Override
     public ParkingWithSlotsDTO transform(ParkingModel from) {
         ParkingWithSlotsDTO parkingDTO = new ParkingWithSlotsDTO();
-        parkingDTO.setId(from.getId());
-        parkingDTO.setName(from.getParkingName());
-        parkingDTO.setTariff(String.valueOf(from.getTariff()));
-        parkingDTO.setAddress(addressModelToDTOMapper.transform(from.getAddressModel()).getAddress());
+        parkingDTO.setId(from.getInfo().getId());
+        parkingDTO.setName(from.getInfo().getParkingName());
+        parkingDTO.setTariff(String.valueOf(from.getInfo().getTariff()));
+        parkingDTO.setAddress(addressModelToDTOMapper.transform(from.getInfo().getAddressModel()).getAddress());
         parkingDTO.setSlots(from.getSlots().stream().map(slotModelToDTOMapper::transform).collect(Collectors.toList()));
         return parkingDTO;
     }

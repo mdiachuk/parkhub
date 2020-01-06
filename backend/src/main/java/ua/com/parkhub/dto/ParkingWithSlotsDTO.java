@@ -1,8 +1,5 @@
 package ua.com.parkhub.dto;
 
-import ua.com.parkhub.model.AddressModel;
-
-import java.io.Serializable;
 import java.util.List;
 
 public class ParkingWithSlotsDTO {

@@ -12,12 +12,12 @@ public class ParkingModelToDTOMapper implements Mapper<ParkingModel, ParkingDTO>
     public ParkingDTO transform(ParkingModel from) {
 
         ParkingDTO parkingDTO = new ParkingDTO();
-        parkingDTO.setId(from.getId());
-        parkingDTO.setParkingName(from.getParkingName());
-        parkingDTO.setSlotsNumber(from.getSlotsNumber());
-        parkingDTO.setTariff(from.getTariff());
-        parkingDTO.setAddress(new AddressModelToDTOMapper().transform(from.getAddressModel()).getAddress());//get string address from AddressDTO
-        parkingDTO.setFullness(from.getSlots().stream().filter(SlotModel::isReserved).count()+ "/" + from.getSlotsNumber());
+        parkingDTO.setId(from.getInfo().getId());
+        parkingDTO.setParkingName(from.getInfo().getParkingName());
+        parkingDTO.setSlotsNumber(from.getInfo().getSlotsNumber());
+        parkingDTO.setTariff(from.getInfo().getTariff());
+        parkingDTO.setAddress(new AddressModelToDTOMapper().transform(from.getInfo().getAddressModel()).getAddress());//get string address from AddressDTO
+        parkingDTO.setFullness(from.getSlots().stream().filter(SlotModel::isReserved).count()+ "/" + from.getInfo().getSlotsNumber());
         return parkingDTO;
         }
     }

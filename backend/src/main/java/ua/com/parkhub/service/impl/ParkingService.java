@@ -58,7 +58,7 @@ public class ParkingService implements IParkingService {
         ParkingModel parking = parkingDAO.findElementById(id)
                 .orElseThrow(() -> new ParkHubException("No Parking found with id " + id));
         Hibernate.initialize(parking.getSlots());
-        if (parking.isActive()) {
+        if (parking.getInfo().isActive()) {
             return parking;
         }
         throw new ParkHubException("Unfortunately this parking is temporary unavailable");

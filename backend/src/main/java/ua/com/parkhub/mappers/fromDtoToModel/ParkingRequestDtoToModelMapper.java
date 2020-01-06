@@ -11,14 +11,14 @@ public class ParkingRequestDtoToModelMapper implements Mapper<ParkingRequestDTO,
     @Override
     public ParkingModel transform(ParkingRequestDTO from) {
         ParkingModel parkingModel = new ParkingModel();
-        parkingModel.setParkingName(from.getParkingName());
-        parkingModel.setSlotsNumber(from.getSlotsNumber());
-        parkingModel.setTariff(from.getTariff());
+        parkingModel.getInfo().setParkingName(from.getParkingName());
+        parkingModel.getInfo().setSlotsNumber(from.getSlotsNumber());
+        parkingModel.getInfo().setTariff(from.getTariff());
         AddressModel addressModel = new AddressModel();
         addressModel.setCity(from.getCity());
         addressModel.setBuilding(from.getBuilding());
         addressModel.setStreet(from.getStreet());
-        parkingModel.setAddressModel(addressModel);
+        parkingModel.getInfo().setAddressModel(addressModel);
         return parkingModel;
     }
 }
