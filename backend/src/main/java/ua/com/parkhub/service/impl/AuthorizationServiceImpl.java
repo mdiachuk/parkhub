@@ -22,7 +22,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     private PasswordEncoder passwordEncoder;
 
     private final int THREE_TRIES_TO_ENTER = 3;
-    private final int ONE_FAILD_TRIE_TO_ENTER = 1;
+    private final int ONE_FAILED_TRIE_TO_ENTER = 1;
 
     public AuthorizationServiceImpl() {
     }
@@ -72,7 +72,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
                 throw new PermissionException(StatusCode.CANNOT_ACTIVATE);
             }
         } else {
-            userModel.setNumberOfFailedPassEntering(userModel.getNumberOfFailedPassEntering() + ONE_FAILD_TRIE_TO_ENTER);
+            userModel.setNumberOfFailedPassEntering(userModel.getNumberOfFailedPassEntering() + ONE_FAILED_TRIE_TO_ENTER);
             userDAO.updateElement(userModel);
             if (blockedUserDAO.isBlocked(userModel)) {
                 throw new PermissionException(StatusCode.ACCOUNT_BLOCKED);
