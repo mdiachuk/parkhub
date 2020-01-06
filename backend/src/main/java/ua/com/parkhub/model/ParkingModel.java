@@ -5,6 +5,7 @@ import java.util.List;
 
 public class ParkingModel {
     private ParkingInfoModel info;
+    private List<SlotModel> slots;
 
     public ParkingInfoModel getInfo() {
         return info;
@@ -22,5 +23,5 @@ public class ParkingModel {
         this.slots = slots;
     }
 
-    private List<SlotModel> slots;
+
 }
