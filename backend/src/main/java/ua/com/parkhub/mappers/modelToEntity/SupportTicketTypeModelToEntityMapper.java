@@ -1,0 +1,18 @@
+package ua.com.parkhub.mappers.modelToEntity;
+
+import org.springframework.stereotype.Component;
+import ua.com.parkhub.mappers.Mapper;
+import ua.com.parkhub.model.TicketTypeModel;
+import ua.com.parkhub.persistence.entities.SupportTicketType;
+
+@Component
+public class SupportTicketTypeModelToEntityMapper implements Mapper<TicketTypeModel, SupportTicketType> {
+
+    @Override
+    public SupportTicketType transform(TicketTypeModel from) {
+        SupportTicketType supportTicketType = new SupportTicketType();
+        supportTicketType.setId(from.getId());
+        supportTicketType.setType(from.getType());
+        return supportTicketType;
+    }
+}

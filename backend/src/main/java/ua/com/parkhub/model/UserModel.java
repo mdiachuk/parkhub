@@ -11,7 +11,7 @@ public class UserModel {
     private String password;
     private RoleModel role;
     private CustomerModel customer;
-//    private List<SupportTicketModel> tickets;
+    private List<SupportTicketModel> tickets;
     private String token;
 
     public Long getId() {
@@ -70,13 +70,13 @@ public class UserModel {
         this.customer = customer;
     }
 
-//    public List<SupportTicketModel> getTickets() {
-//        return tickets;
-//    }
-//
-//    public void setTickets(List<SupportTicketModel> tickets) {
-//        this.tickets = tickets;
-//    }
+    public List<SupportTicketModel> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<SupportTicketModel> tickets) {
+        this.tickets = tickets;
+    }
 
 
     public String getToken() {

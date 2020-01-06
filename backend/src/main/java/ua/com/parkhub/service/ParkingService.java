@@ -3,7 +3,7 @@ package ua.com.parkhub.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.com.parkhub.mappers.toModel.ParkingEntityToModelMapper;
+import ua.com.parkhub.mappers.entityToModel.ParkingEntityToModelMapper;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.persistence.impl.ParkingDAO;
 

@@ -40,10 +40,8 @@ public class User implements Serializable {
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-
-
-//    @ManyToMany(mappedBy = "solvers")
-//    private List<SupportTicket> tickets;
+    @ManyToMany(mappedBy = "solvers")
+    private List<SupportTicket> tickets;
 
     public Long getId() {
         return id;
@@ -101,11 +99,11 @@ public class User implements Serializable {
         this.customer = customer;
     }
 
-//    public List<SupportTicket> getTickets() {
-//        return tickets;
-//    }
-//
-//    public void setTickets(List<SupportTicket> tickets) {
-//        this.tickets = tickets;
-//    }
+    public List<SupportTicket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<SupportTicket> tickets) {
+        this.tickets = tickets;
+    }
 }

@@ -4,7 +4,6 @@ import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.persistence.IElementDAO;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
@@ -31,8 +30,8 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
     }
 
     @Override
-    public void addElement(M element) {
-        emp.persist(modelToEntity.transform(element));
+    public Optional<M> addElement(M element) {
+        return Optional.of(entityToModel.transform(emp.merge(modelToEntity.transform(element))));
     }
 
     @Override
