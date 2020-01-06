@@ -15,7 +15,7 @@ public class UserRole implements Serializable {
     @SequenceGenerator(name = "user_role_generator", sequenceName = "park_hub.user_role_id_seq", allocationSize = 1)
     private Long id;
 
-    @Column(name = "roleName")
+    @Column(name = "role_name")
     @NotNull
     @Size(min = 3, max = 50)
     private String roleName;

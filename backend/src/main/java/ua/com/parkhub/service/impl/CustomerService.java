@@ -26,7 +26,6 @@ public class CustomerService implements ICustomerService {
         customerDAO.addElement(customerModel);
         Optional<CustomerModel> optionalUser = customerDAO.findCustomerByPhoneNumber(phoneNumber);
         if (optionalUser.isPresent()) {
-            System.out.println("CustomerService: "+ optionalUser.get());
             return optionalUser.get();
         }
         throw new ParkHubException("No Customer found with phone number " + phoneNumber);

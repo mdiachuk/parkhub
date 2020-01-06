@@ -32,12 +32,13 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
 
     @Override
     public void addElement(M element) {
+        System.out.println(modelToEntity.transform(element));
         emp.persist(modelToEntity.transform(element));
     }
 
     @Override
     public void updateElement(M element) {
-        emp.persist(modelToEntity.transform(element));
+        emp.merge(modelToEntity.transform(element));
     }
 
     @Override
@@ -72,14 +73,12 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
         CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(elementClass);
         Root<E> elementRoot = criteriaQuery.from(elementClass);
         criteriaQuery.select(elementRoot).where(criteriaBuilder.equal(elementRoot.get(fieldName), fieldValue));
-
         E element;
         try {
             element = emp.createQuery(criteriaQuery).getSingleResult();
         } catch (PersistenceException e) {
             element = null;
         }
-        System.out.println("ElementDAO :" + element);
-        return Optional.ofNullable(entityToModel.transform(element));
+        return (element != null ? Optional.ofNullable(entityToModel.transform(element)) : Optional.empty());
     }
 }

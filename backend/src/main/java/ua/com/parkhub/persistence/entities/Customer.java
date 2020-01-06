@@ -5,6 +5,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,11 +28,11 @@ public class Customer implements Serializable {
 
     @OneToMany
     @JoinColumn(name = "customer_id")
-    private Set<Booking> bookings;
+    private List<Booking> bookings;
 
     @OneToMany
     @JoinColumn(name = "author_id")
-    private Set<SupportTicket> supportTickets;
+    private List<SupportTicket> supportTickets;
 
     public Long getId() {
         return id;
@@ -57,19 +58,28 @@ public class Customer implements Serializable {
         isActive = active;
     }
 
-    public Set<Booking> getBookings() {
+    public List<Booking> getBookings() {
         return bookings;
     }
 
-    public void setBookings(Set<Booking> bookings) {
+    public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
     }
 
-    public Set<SupportTicket> getSupportTickets() {
+    public List<SupportTicket> getSupportTickets() {
         return supportTickets;
     }
 
-    public void setSupportTickets(Set<SupportTicket> supportTickets) {
+    public void setSupportTickets(List<SupportTicket> supportTickets) {
         this.supportTickets = supportTickets;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", isActive=" + isActive +
+                '}';
     }
 }

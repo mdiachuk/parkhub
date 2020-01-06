@@ -1,83 +1,26 @@
 package ua.com.parkhub.model;
 
 
-import java.util.Set;
+import java.util.List;
 
 public class ParkingModel {
+    private ParkingInfoModel info;
 
-    private Long id;
-    private String parkingName;
-    private Integer slotsNumber;
-    private Integer tariff;
-    private AddressModel addressModel;
-    private Set<SlotModel> slots;
-    private Boolean isActive;
-    private UserModel owner;
+    public ParkingInfoModel getInfo() {
+        return info;
+    }
 
-    public Set<SlotModel> getSlots() {
+    public void setInfo(ParkingInfoModel info) {
+        this.info = info;
+    }
+
+    public List<SlotModel> getSlots() {
         return slots;
     }
 
-    public UserModel getOwner() {
-        return owner;
-    }
-
-    public void setOwner(UserModel owner) {
-        this.owner = owner;
-    }
-
-    public void setSlots(Set<SlotModel> slots) {
+    public void setSlots(List<SlotModel> slots) {
         this.slots = slots;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getParkingName() {
-        return parkingName;
-    }
-
-    public void setParkingName(String parkingName) {
-        this.parkingName = parkingName;
-    }
-
-    public int getSlotsNumber() {
-        return slotsNumber;
-    }
-
-    public void setSlotsNumber(int slotsNumber) {
-        this.slotsNumber = slotsNumber;
-    }
-
-    public int getTariff() {
-        return tariff;
-    }
-
-    public void setTariff(int tariff) {
-        this.tariff = tariff;
-    }
-
-    public AddressModel getAddressModel() {
-        return addressModel;
-    }
-
-    public void setAddressModel(AddressModel addressModel) {
-        this.addressModel = addressModel;
-    }
-
-
-    //SOME BUSINESS LOGIC
+    private List<SlotModel> slots;
 }

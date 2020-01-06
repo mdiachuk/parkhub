@@ -24,7 +24,8 @@ public class CustomerEntityToModelMapper implements Mapper<Customer, CustomerMod
         customerModel.setId(from.getId());
         customerModel.setActive(from.isActive());
         customerModel.setPhoneNumber(from.getPhoneNumber());
-        customerModel.setSupportTickets(from.getSupportTickets().stream().map(supportTicketEntityToModelMapper::transform).collect(Collectors.toSet()));
+        //TODO
+        /*customerModel.setSupportTickets(from.getSupportTickets().stream().map(supportTicketEntityToModelMapper::transform).collect(Collectors.toList()));*/
         return customerModel;
     }
 }

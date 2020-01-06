@@ -1,13 +1,13 @@
 package ua.com.parkhub.model;
 
-import java.util.Set;
+import java.util.List;
 
 public class CustomerModel {
 
     private Long id;
     private String phoneNumber;
     private boolean isActive = true;
-    private Set<SupportTicketModel> supportTickets;
+    private List<SupportTicketModel> supportTickets;
 
     public Long getId() {
         return id;
@@ -33,11 +33,20 @@ public class CustomerModel {
         isActive = active;
     }
 
-    public Set<SupportTicketModel> getSupportTickets() {
+    public List<SupportTicketModel> getSupportTickets() {
         return supportTickets;
     }
 
-    public void setSupportTickets(Set<SupportTicketModel> supportTickets) {
+    public void setSupportTickets(List<SupportTicketModel> supportTickets) {
         this.supportTickets = supportTickets;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomerModel{" +
+                "id=" + id +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", isActive=" + isActive +
+                '}';
     }
 }
