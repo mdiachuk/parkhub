@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from 'rxjs';
-import {Parking} from '../models/parking.model';
-import {Router} from "@angular/router";
-import {Manager} from '../models/manager';
-import {Admin} from '../Classes/admin';
+import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { Observable } from 'rxjs';
+import { Parking } from '../models/parking.model';
+import { Router } from "@angular/router";
+import { Manager } from '../model/manager';
+import { Admin } from '../Classes/admin';
 // import {User} from '../interfaces/user';
 import { Login } from '../interfaces/login';
 
@@ -53,7 +53,7 @@ export class LoginService {
 
 
   login(login: Login): Observable<User> {
-    const body = {email: login.email, password: login.password};
+    const body = { email: login.email, password: login.password };
     return this.http.post<User>('http://localhost:8080/api/login', body);
 
     // return this.http.post<User>('/api/login', body);

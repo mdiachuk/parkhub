@@ -32,11 +32,11 @@ public class User implements Serializable {
     @Size(min = 6, max = 60)
     private String password;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "role_id")
     private UserRole role;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 

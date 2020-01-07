@@ -12,9 +12,7 @@ import ua.com.parkhub.dto.ManagerRegistrationDataDTO;
 import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberException;
-import ua.com.parkhub.mappers.dtoToModel.CustomerDtoToCustomerModelMapper;
 import ua.com.parkhub.mappers.dtoToModel.ManagerRegistrationRequestDtoToModel;
-import ua.com.parkhub.mappers.dtoToModel.UserDtoToUserModelMapper;
 import ua.com.parkhub.service.impl.SignUpService;
 import ua.com.parkhub.validation.groups.CustomerChecks;
 import ua.com.parkhub.validation.groups.ManagerChecks;
@@ -29,18 +27,12 @@ public class SignUpController {
     private static final Logger logger = LoggerFactory.getLogger(SignUpController.class);
 
     private final SignUpService signUpService;
-    private final CustomerDtoToCustomerModelMapper customerDtoToCustomerModelMapper;
-    private final UserDtoToUserModelMapper userDtoToUserModelMapper;
     private final ManagerRegistrationRequestDtoToModel managerRegistrationRequestDtoToModel;
 
     @Autowired
     public SignUpController(SignUpService signUpService,
-                            CustomerDtoToCustomerModelMapper customerDtoToCustomerModelMapper,
-                            UserDtoToUserModelMapper userDtoToUserModelMapper,
                             ManagerRegistrationRequestDtoToModel managerRegistrationRequestDtoToModel) {
         this.signUpService = signUpService;
-        this.customerDtoToCustomerModelMapper = customerDtoToCustomerModelMapper;
-        this.userDtoToUserModelMapper = userDtoToUserModelMapper;
         this.managerRegistrationRequestDtoToModel = managerRegistrationRequestDtoToModel;
     }
 
@@ -58,24 +50,6 @@ public class SignUpController {
         logger.info("Manager registration request created");
         return ResponseEntity.ok().build();
     }
-
-//    @PostMapping(value = "/create-customer")
-//    public ResponseEntity createCustomer(@RequestBody CustomerDTO customerDTO) {
-//        signUpService.createCustomer(customerDtoToCustomerModelMapper.transform(customerDTO));
-//        return ResponseEntity.ok().build();
-//    }
-//
-//    @PostMapping(value = "/create-user")
-//    public ResponseEntity createUser(@RequestBody UserDTO userDTO) {
-//        signUpService.createUser(userDtoToUserModelMapper.transform(userDTO));
-//        return ResponseEntity.ok().build();
-//    }
-//
-//    @PostMapping(value = "/test-ticket")
-//    public ResponseEntity test(@RequestBody String description) {
-//        signUpService.createTicket(description);
-//        return ResponseEntity.ok().build();
-//    }
 
     @ExceptionHandler(PhoneNumberException.class)
     public ResponseEntity handlePhoneNumberIsUsedException(PhoneNumberException e) {
