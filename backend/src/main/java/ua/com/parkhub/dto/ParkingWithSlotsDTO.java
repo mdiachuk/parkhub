@@ -1,7 +1,5 @@
 package ua.com.parkhub.dto;
 
-import ua.com.parkhub.model.Address;
-
 import java.io.Serializable;
 import java.util.List;
 

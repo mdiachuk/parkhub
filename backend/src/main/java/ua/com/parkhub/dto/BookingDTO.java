@@ -1,6 +1,5 @@
 package ua.com.parkhub.dto;
 
-import ua.com.parkhub.model.Slot;
 import ua.com.parkhub.util.formatter.DateFormatter;
 
 import javax.validation.constraints.NotNull;

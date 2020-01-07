@@ -1,24 +1,12 @@
 package ua.com.parkhub.controller;
 
-import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.*;
 import ua.com.parkhub.exceptions.BookingException;
 import ua.com.parkhub.exceptions.CustomerException;
-import ua.com.parkhub.exceptions.ParkHubException;
-import ua.com.parkhub.exceptions.ParkingNotFoundException;
-import ua.com.parkhub.model.Booking;
-import ua.com.parkhub.model.Parking;
 import ua.com.parkhub.service.IBookingService;
-import ua.com.parkhub.service.IParkingService;
-
-import javax.validation.Valid;
-import javax.validation.constraints.Positive;
 
 //TODO Validation: parkId, slotId, car number, phone number
 

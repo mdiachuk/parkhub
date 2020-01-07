@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.exceptions.BookingException;
 import ua.com.parkhub.exceptions.StatusCode;
-import ua.com.parkhub.model.Booking;
 import ua.com.parkhub.model.BookingModel;
 import ua.com.parkhub.model.CustomerModel;
 import ua.com.parkhub.model.PaymentModel;
