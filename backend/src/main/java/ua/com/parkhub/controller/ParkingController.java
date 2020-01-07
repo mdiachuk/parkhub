@@ -33,7 +33,7 @@ public class ParkingController {
     }
 
     @PostMapping
-    public ResponseEntity addParking(@Valid@RequestBody ParkingRequestDTO parkingRequestDTO, BindingResult result) {
+    public ResponseEntity addParking(@Valid @RequestBody ParkingRequestDTO parkingRequestDTO, BindingResult result) {
         long id = 1;
         if (result.hasErrors()) {
             List<String> errors = result.getAllErrors().stream()

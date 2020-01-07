@@ -9,7 +9,7 @@ export class CustomInterceptor implements HttpInterceptor {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-console.log("de",request);
+        //console.log("de",request);
         request = request.clone({
             withCredentials: true
         });

@@ -11,6 +11,8 @@ import ua.com.parkhub.exceptions.EmailIsUsedException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberIsUsedException;
 import ua.com.parkhub.model.AuthUserModel;
+import ua.com.parkhub.model.CustomerModel;
+import ua.com.parkhub.model.PhoneEmailModel;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.persistence.entities.*;
 import ua.com.parkhub.persistence.impl.*;
@@ -133,7 +135,24 @@ public class SignUpService {
         return supportTicketTypeDAO.findSupportTicketTypeByType(type).orElseThrow(() ->
                 new NotFoundInDataBaseException("Support ticket type was not found by type=" + type));
     }
+    public boolean isUserPresentByEmail(String email) {
+//        return userDAO.findOneByFieldEqual("email",email).orElseThrow(() ->
+//                new NotFoundInDataBaseException("Role was not found by name=" + email));
+        if(userDAO.findOneByFieldEqual("email", email).isPresent()){
+            return true;
+        }
+        return false;
 
+    }
+
+    public void setPhoneNumberForAuthUser(PhoneEmailModel phoneEmailModel) {
+        if(userDAO.findOneByFieldEqual("email", phoneEmailModel.getEmail()).isPresent()){
+         User user = userDAO.findOneByFieldEqual("email", phoneEmailModel.getEmail()).get();
+         Customer customer = user.getCustomer();
+         customer.setPhoneNumber(phoneEmailModel.getPhoneNumber());
+         customerDAO.updateElement(customer);
+        }
+    }
 
     /**
      * To create new user
@@ -181,10 +200,13 @@ public class SignUpService {
             user.setPassword(passwordEncoder.encode("oauth2user"));
             user.setLastName(userModel.getLastName());
             user.setFirstName(userModel.getFirstName());
-            UserRole userRole = userRoleDAO.findOneByFieldEqual("roleName", "USER").get();
+            //TODO after we discuss ,change to  USER
+            UserRole userRole = userRoleDAO.findOneByFieldEqual("roleName", "user").get();
             user.setRole(userRole);
             userDAO.addElement(user);
+            //return true
         }
+        //return false;
     }
     private boolean emptyField (User user) {
         return (user.getCustomer().getPhoneNumber().length()==0||

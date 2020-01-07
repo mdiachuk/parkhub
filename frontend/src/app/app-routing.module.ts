@@ -14,6 +14,7 @@ import {ParkingDetailSlotsComponent} from "./parkings-ad/parking-detail/parking-
 import {SlotsComponent} from "./slots/slots.component";
 import {BookingDetailComponent} from "./bookings/booking-detail/booking-detail.component";
 import { PageComponent } from './homePage/homePage.component';
+import { AddPhoneNumberComponent } from './add-phone-number/add-phone-number.component';
 
 
 const routes: Routes = [
@@ -35,6 +36,7 @@ const routes: Routes = [
   // { path: 'user', component: UserComponent },
   { path: 'login', component: LoginComponent },
   // {path: '', redirectTo: 'home', pathMatch: 'full'},
+  { path: 'phone-number', component: AddPhoneNumberComponent },
 
 ];
 

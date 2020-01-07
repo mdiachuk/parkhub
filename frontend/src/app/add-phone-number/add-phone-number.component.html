@@ -1,3 +1,25 @@
-<p>add-phone-number works!</p>
+<div class="example-form" *ngIf="!post; else forminfo" novalidate>
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form">
+
+    <mat-form-field class="invisible">
+      <input matInput placeholder="Email" formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="PhoneNumber" formControlName="phoneNumber" >
+      <mat-error *ngIf="!formGroup.controls['phoneNumber'].valid && formGroup.controls['phoneNumber'].touched">
+        {{ getErrorPhoneNumber() }}
+      </mat-error>
+    </mat-form-field>
+
+
+
+    <div class="form-element">
+      <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!formGroup.valid">Add parking</button>
+      <a mat-button color="primary" type="submit"
+         class="button-row"  [disabled]="!formGroup.valid" [routerLink]='["/manager/cabinet"]'>Submit phone</a>
+    </div>
+  </form>
+</div>
 
 

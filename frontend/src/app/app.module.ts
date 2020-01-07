@@ -52,7 +52,7 @@ import {ParkingsComponentSlots} from "./parkings-ad/parkings.component";
 import {ParkingDetailSlotsComponent} from "./parkings-ad/parking-detail/parking-detail.component";
 import {SlotService} from "./serviceSlot/slot.service";
 import { from } from 'rxjs';
-import { CustomInterceptor } from './service/CustomInterceptor';
+import { CustomInterceptor } from './service/customInterceptor';
 import { AddPhoneNumberComponent } from './add-phone-number/add-phone-number.component';
 
 
@@ -107,7 +107,8 @@ import { AddPhoneNumberComponent } from './add-phone-number/add-phone-number.com
 
     // UserComponent
   ],
-  providers: [ParkingService, SlotService, ParkingService1,{
+  providers: [ParkingService, SlotService, ParkingService1,
+    {
     provide: HTTP_INTERCEPTORS,
     useClass: CustomInterceptor ,
     multi: true
