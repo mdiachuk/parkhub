@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.mappers.ParkingRequestMapper;
+import ua.com.parkhub.model.AddressModel;
 import ua.com.parkhub.model.ParkingModel;
+import ua.com.parkhub.persistence.entities.Address;
+import ua.com.parkhub.persistence.entities.Parking;
 import ua.com.parkhub.persistence.impl.AddressDAO;
 import ua.com.parkhub.persistence.impl.ParkingDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
@@ -83,13 +86,13 @@ public class ParkingService implements IParkingService {
 
     @javax.transaction.Transactional
     public void createParkingByOwnerID(ParkingModel parkingModel, long id) {
-//        Address address = parkingRequestMapper.parkingModelToAddress(parkingModel);
-//        Parking parking = parkingRequestMapper.parkingModelToParking(parkingModel);
-//        if (userDAO.findElementById(id).isPresent()) {
-//            parking.setOwner(userDAO.findElementById(id).get());}
-//        parking.setAddress(address);
-//        addressDAO.addElement(address);
-//        parkingDAO.addElement(parking);
+        AddressModel address = parkingRequestMapper.parkingModelToAddressModel(parkingModel);
+       // Parking parking = parkingRequestMapper.parkingModelToParking(parkingModel);
+        if (userDAO.findElementById(id).isPresent()) {
+            parkingModel.setOwner(userDAO.findElementById(id).get());}
+        addressDAO.addElement(address);
+        parkingModel.setAddressModel(address);
+        parkingDAO.addElement(parkingModel);
     }
 
     public List<ParkingModel> findAllParkingModel(){

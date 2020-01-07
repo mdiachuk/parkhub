@@ -5,6 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
 import ua.com.parkhub.dto.ParkingRequestDTO;
+import ua.com.parkhub.model.AddressModel;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.persistence.entities.Address;
 import ua.com.parkhub.persistence.entities.Parking;
@@ -27,5 +28,5 @@ public interface ParkingRequestMapper {
             @Mapping(target = "street", source = "addressModel.street"),
             @Mapping(target = "building", source = "addressModel.building"),
     })
-    Address parkingModelToAddress(ParkingModel parkingModel);
+    AddressModel parkingModelToAddressModel(ParkingModel parkingModel);
 }
