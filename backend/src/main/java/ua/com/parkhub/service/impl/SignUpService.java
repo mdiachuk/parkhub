@@ -44,10 +44,6 @@ public class SignUpService {
     @Transactional
     public void registerManager(ManagerRegistrationDataModel manager) {
         CustomerModel customer = createCustomer(manager.getUser().getCustomer());
-//        if (customer.getId() == null) {
-//            customer = customerDAO.addElement(customer).orElseThrow(() ->
-//                    new NotFoundInDataBaseException("Customer not found"));
-//        }
         customer = customerDAO.addElement(customer).orElseThrow(() ->
                 new NotFoundInDataBaseException("Customer not found"));
         UserModel user = createUser(manager.getUser(), customer);
@@ -112,7 +108,7 @@ public class SignUpService {
                 new NotFoundInDataBaseException("Role was not found by name=" + name));
     }
 
-    TicketTypeModel findSupportTicketType(String type) {
+    private TicketTypeModel findSupportTicketType(String type) {
         return supportTicketTypeDAO.findSupportTicketTypeByType(type).orElseThrow(() ->
                 new NotFoundInDataBaseException("Support ticket type was not found by type=" + type));
     }
