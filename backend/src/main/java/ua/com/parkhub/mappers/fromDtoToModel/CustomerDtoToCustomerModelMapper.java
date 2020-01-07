@@ -34,7 +34,6 @@ public class CustomerDtoToCustomerModelMapper implements Mapper<CustomerDTO, Cus
             }
         }
         customerModel.setSupportTickets(list);
-
         return customerModel;
     }
 }

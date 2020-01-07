@@ -1,4 +1,4 @@
-DROP  SCHEMA IF EXISTS park_hub CASCADE;
+-- DROP  SCHEMA IF EXISTS park_hub CASCADE;
 /*-----------------------------------------------------*/
 
 	/*!!!!!!!!!!Second transactive!!!!!!!!*/

@@ -26,17 +26,16 @@ public class UserDtoToUserModelMapper implements Mapper<UserDTO, UserModel> {
 
     @Override
     public UserModel transform(UserDTO from) {
-
         UserModel userModel = new UserModel();
         userModel.setPassword(from.getPassword());
         userModel.setEmail(from.getEmail());
-
         userModel.setCustomer(customerDtoToCustomerModelMapper.transform(from.getCustomerDTO()));
 
         userModel.setFirstName(from.getFirstName());
         userModel.setLastName(from.getLastName());
         userModel.setId(from.getId());
         userModel.setNumberOfFaildPassEntering(from.getNumberOfFaildPassEntering());
+
         userModel.setRole(roleDtoToRoleModelMapper.transform(from.getRole()));
 
         List<SupportTicketModel> list = null;

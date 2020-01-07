@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.com.parkhub.model.UserModel;
-import ua.com.parkhub.persistence.entities.User;
 import ua.com.parkhub.persistence.impl.*;
 
 import javax.transaction.Transactional;
@@ -39,7 +38,6 @@ public class SignUpService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Transactional
 //    public void registerManager(ManagerRegistrationDataDTO manager) {
 //        Customer customer = createCustomer(manager);
 //        User user = createUser(manager, customer);
@@ -133,56 +131,29 @@ public class SignUpService {
      * @return false - if user not create;
      * true - if user create
      */
+    @Transactional
     public boolean createUser(UserModel userModel) {
 
-        userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
+        if (emptyField(userModel)) {
+            userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
+            userModel.setRole(userRoleDAO.findUserRoleByRoleName(userModel.getRole().getRoleName()).get());
+            userDAO.addElement(userModel);
+            return true;
+        }
 
-        userDAO.addElement(userModel);
-        return true;
-
-//        if (emptyField(user)){
-//            if (userDAO.haveEmail(user.getEmail()).length() != 0) {
-//                return false;
-//            } else {
-//                String havePhoneNumber = userDAO.havePhoneNumber(user.getCustomer().getPhoneNumber());
-//                if (havePhoneNumber.length() != 0) {
-//                    if (userDAO.findUserByCustomerId(havePhoneNumber).length() != 0) {
-//                        return false;
-//                    } else {
-//                        return addUser(user);
-//                    }
-//                } else  {
-//                    return addUser(user);
-//                }
-//            }
-//        } else {
-//            return false;
-//        }
-
+        return false;
     }
 
-    /**
-     * If some fild is empty, new User can`t create account
-     *
-     * @param user
-     * @return false - if have empty field;
-     * true - if all field not empty
-     */
-    private boolean emptyField(User user) {
-        return (user.getCustomer().getPhoneNumber().length() == 0 ||
-                user.getEmail().length() == 0 ||
-                user.getFirstName().length() == 0 ||
-                user.getPassword().length() == 0 ||
-                user.getLastName().length() == 0 ||
-                user.getRole().getId() != 1) ? false : true;
+
+    private boolean emptyField(UserModel userModel) {
+
+        return userModel.getCustomer().getPhoneNumber().length() != 0 &&
+                userModel.getEmail().length() != 0 &&
+                userModel.getFirstName().length() != 0 &&
+                userModel.getPassword().length() != 0 &&
+                userModel.getLastName().length() != 0;
     }
 
-    private boolean addUser(UserModel userModel) {
-//        user.getCustomer().setActive(true);
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        userDAO.addElement(user);
-        return true;
 
-    }
 
 }

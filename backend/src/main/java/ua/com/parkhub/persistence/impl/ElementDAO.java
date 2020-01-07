@@ -3,10 +3,7 @@ package ua.com.parkhub.persistence.impl;
 import ua.com.parkhub.mapper.Mapper;
 import ua.com.parkhub.persistence.IElementDAO;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -30,6 +27,7 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
     }
 
     @Override
+    @Transient
     public void addElement(M element) {
         emp.persist(modelToEntity.transform(element));
     }

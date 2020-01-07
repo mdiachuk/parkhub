@@ -5,7 +5,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "user", schema = "park_hub")
@@ -13,6 +12,7 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id",unique=true, nullable = false)
     private Long id;
 
     @Column(name = "first_name")
@@ -44,8 +44,8 @@ public class User implements Serializable {
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-    @ManyToMany(mappedBy = "solvers")
-    private List<SupportTicket> tickets;
+//    @ManyToMany(mappedBy = "solvers")
+//    private List<SupportTicket> tickets;
 
     public int getNumberOfFaildPassEntering() {
         return numberOfFaildPassEntering;
@@ -111,13 +111,14 @@ public class User implements Serializable {
         this.customer = customer;
     }
 
-    public List<SupportTicket> getTickets() {
-        return tickets;
-    }
+//    public List<SupportTicket> getTickets() {
+//        return tickets;
+//    }
+//
+//    public void setTickets(List<SupportTicket> tickets) {
+//        this.tickets = tickets;
+//    }
 
-    public void setTickets(List<SupportTicket> tickets) {
-        this.tickets = tickets;
-    }
 
 
 }

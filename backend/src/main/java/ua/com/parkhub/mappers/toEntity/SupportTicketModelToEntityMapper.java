@@ -9,6 +9,7 @@ import ua.com.parkhub.persistence.entities.SupportTicket;
 public class SupportTicketModelToEntityMapper implements Mapper<SupportTicketModel, SupportTicket> {
     @Override
     public SupportTicket transform(SupportTicketModel from) {
+
         return null;
     }
 }

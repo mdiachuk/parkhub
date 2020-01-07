@@ -4,16 +4,16 @@ import java.util.List;
 
 public class CustomerDTO {
 
-    private long id;
+    private Long id;
     private String phoneNumber;
     private boolean isActive;
     private List<SupportTicketDTO> supportTickets;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

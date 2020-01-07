@@ -9,6 +9,24 @@ import ua.com.parkhub.model.RoleModel;
 public class RoleDtoToRoleModelMapper implements Mapper<RoleDTO, RoleModel> {
     @Override
     public RoleModel transform(RoleDTO from) {
-        return null;
+
+        switch (from.getRoleName()) {
+            case "ADMIN":
+                return RoleModel.ADMIN;
+
+            case "USER":
+                return RoleModel.USER;
+
+            case "MANAGER":
+                return RoleModel.MANAGER;
+
+            case "PENDING":
+                return RoleModel.PENDING;
+
+            default:
+                return null;
+        }
+
+
     }
 }
