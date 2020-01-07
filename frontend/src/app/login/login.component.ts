@@ -39,13 +39,13 @@ export class LoginComponent implements OnInit {
             this.changeIsManager(false);
             this.changeIsAdmin(false);
             console.log(user);
-          }
+          } else
           if (user.role === 'ADMIN') {
             this.changeIsAdmin(true);
             this.changeIsManager(false);
             this.changeIsUser(false);
             this.changeIsLogged(true);
-          }
+          } else
           if (user.role === 'MANAGER') {
             this.changeIsManager(true);
             this.changeIsAdmin(false);
@@ -99,7 +99,7 @@ export class LoginComponent implements OnInit {
   }
 
   public changeIsUser(isUser: boolean) {
-    this.data.changeIsManager(isUser);
+    this.data.changeIsUser(isUser);
   }
 
   public  openModal(text: string) {

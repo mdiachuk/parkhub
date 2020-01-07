@@ -36,7 +36,7 @@ public class User implements Serializable {
     @NotNull
     private int numberOfFailedPassEntering;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "role_id")
     private UserRole role;
 
