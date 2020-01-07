@@ -3,7 +3,6 @@ package ua.com.parkhub.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ua.com.parkhub.dto.LoginDTO;
 import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.exceptions.PermissionException;
 import ua.com.parkhub.exceptions.StatusCode;
@@ -35,15 +34,15 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public UserModel loginUser(LoginDTO userDTO) {
+    public UserModel loginUser(UserModel loginUser) {
         try {
-            Optional<UserModel> userModel = userDAO.findUserByEmail(userDTO.getEmail());
+            Optional<UserModel> userModel = userDAO.findUserByEmail(loginUser.getEmail());
             UserModel user = userModel.get();
                 activateIfPossible(user);
                 if (user.getNumberOfFailedPassEntering() >= THREE_TRIES_TO_ENTER) {
                     blockIfNeeded(user);
                 }
-                return checkCredentials(userDTO, user);
+                return checkCredentials(loginUser, user);
         } catch (ParkHubException e) {
             throw new PermissionException(StatusCode.NO_ACCOUNT_FOUND);
         }
@@ -64,8 +63,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         }
     }
 
-    private UserModel checkCredentials(LoginDTO user, UserModel userModel) {
-        if (passwordEncoder.matches(user.getPassword(), userModel.getPassword())) {
+    private UserModel checkCredentials(UserModel loginUser, UserModel userModel) {
+        if (passwordEncoder.matches(loginUser.getPassword(), userModel.getPassword())) {
             if (!(blockedUserDAO.isBlocked(userModel))) {
                 return userModel;
             } else {
