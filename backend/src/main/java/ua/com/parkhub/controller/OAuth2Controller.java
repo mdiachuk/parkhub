@@ -81,8 +81,21 @@ public class OAuth2Controller {
         authUser.setEmail(email);
         AuthUserModel model = authUserDTOtoAuthUserModelMapper.transform(authUser);
         if (!signUpService.isUserPresentByEmail(model.getEmail())){
-        signUpService.createUserAfterSocialAuth(model);
-        response.sendRedirect(frontUrl+"/phone-number?email="+email);}
+            signUpService.createUserAfterSocialAuth(model);
+            response.sendRedirect(frontUrl+"/phone-number?email="+email);
+        }
+        else if(signUpService.isCustomerNumberEmpty(email)){
+            response.sendRedirect(frontUrl+"/phone-number?email="+email);
+        }
+        else{
+            response.sendRedirect(frontUrl+"/home");
+        }
+            //check if cust number!=0 if it is null then go 84 85 else пропустить
+            // if exists customers phone number  only redirect to home page
+            // if customer phone number empty redirect to page for create phone number
+            // TODO create cron for deleted unused cosial accounts
+
+
     }
 
     @PutMapping("/customer")

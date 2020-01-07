@@ -145,6 +145,7 @@ public class SignUpService {
 
     }
 
+    //TODO to move this to dao
     public void setPhoneNumberForAuthUser(PhoneEmailModel phoneEmailModel) {
         if(userDAO.findOneByFieldEqual("email", phoneEmailModel.getEmail()).isPresent()){
          User user = userDAO.findOneByFieldEqual("email", phoneEmailModel.getEmail()).get();
@@ -223,6 +224,15 @@ public class SignUpService {
         userDAO.addElement(user);
         return true;
 
+    }
+
+    public boolean isCustomerNumberEmpty(String email) {
+        User user = userDAO.findOneByFieldEqual("email", email).get();
+        Customer customer = user.getCustomer();
+        if(customerDAO.findOneByFieldEqual("phoneNumber","0665441958").isPresent()){
+        return true;
+        }
+        return false;
     }
 
 }
