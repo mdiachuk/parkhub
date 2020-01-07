@@ -1,6 +1,6 @@
 package ua.com.parkhub.model;
 
-public class UserRoleModel {
+public class RoleModel {
 
     private Long id;
     private String roleName;

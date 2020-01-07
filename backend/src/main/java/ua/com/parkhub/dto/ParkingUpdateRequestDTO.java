@@ -6,20 +6,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class ParkingUpdateRequestDTO {
 
     private String parkingName;
-    private String address;
     private String city;
     private String street;
     private String building;
     private int slotsNumber;
     private int tariff;
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public String getParkingName() {
         return parkingName;

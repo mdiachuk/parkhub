@@ -14,11 +14,13 @@ public class ParkingRequestDtoToModelMapper implements Mapper<ParkingUpdateReque
         parkingModel.setParkingName(from.getParkingName());
         parkingModel.setSlotsNumber(from.getSlotsNumber());
         parkingModel.setTariff(from.getTariff());
-        AddressModel addressModel = new AddressModel();
-        addressModel.setCity(from.getCity());
-        addressModel.setBuilding(from.getBuilding());
-        addressModel.setStreet(from.getStreet());
-        parkingModel.setAddressModel(addressModel);
+        if (from.getCity() != null || from.getStreet() != null || from.getBuilding() != null) {
+            AddressModel addressModel = new AddressModel();
+            addressModel.setCity(from.getCity());
+            addressModel.setBuilding(from.getBuilding());
+            addressModel.setStreet(from.getStreet());
+            parkingModel.setAddressModel(addressModel);
+        }
         return parkingModel;
     }
 }

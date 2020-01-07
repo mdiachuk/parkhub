@@ -26,15 +26,15 @@
                 <mat-icon>close</mat-icon>
               </button>
             </mat-form-field>
-      <button class="saveButton" mat-raised-button color="accent" [disabled] = "buttonStatusList[0]" (click) = "revert(0); openSnackBar(parkingDetail.parkingName); saveToDTO()">Save</button>
-      <button class="changeButton" mat-raised-button color="accent" [disabled] = "!buttonStatusList[0]" (click) = "revert(0)">Change</button>
+      <button class="saveButton" mat-raised-button color="accent" [disabled] = "buttonStatusList[0]" (click) = "revert(0); openSnackBar(parkingDetail.parkingName)">Save</button>
+      <button class="changeButton" mat-raised-button color="accent" [disabled] = "!buttonStatusList[0]" (click) = "revert(0); buttonStatusList[4] = false">Change</button>
     </mat-list-item>
 
       <mat-divider></mat-divider>
 
       <mat-list-item><span>{{parkingDTO.address}}</span> 
-          <button class="saveButton" mat-raised-button color="accent" [disabled] = "buttonStatusList[1]" (click) = "revert(1); openSnackBar(parkingDetail.city, parkingDetail.street, parkingDetail.building); saveToDTO()">Save</button>
-        <button class="changeButton" mat-raised-button color="accent" [disabled] = "!buttonStatusList[1]" (click) = "revert(1); openDialog()">Change</button> 
+          <button class="saveButton" mat-raised-button color="accent" [disabled] = "buttonStatusList[1]" (click) = "revert(1); openSnackBar(parkingDetail.street + ' ' + parkingDetail.building + ', ' + parkingDetail.city)">Save</button>
+        <button class="changeButton" mat-raised-button color="accent" [disabled] = "!buttonStatusList[1]" (click) = "revert(1); openDialog(); buttonStatusList[4] = false">Change</button> 
       
       </mat-list-item>
 
@@ -47,8 +47,8 @@
                 <mat-icon>close</mat-icon>
               </button>
             </mat-form-field>
-          <button class="saveButton" mat-raised-button color="accent" [disabled] = "buttonStatusList[2]" (click)="revert(2); openSnackBar(parkingDetail.slotsNumber); saveToDTO(); saveToDTO()">Save</button>
-          <button class="changeButton" mat-raised-button color="accent" [disabled] = "!buttonStatusList[2]" (click)="revert(2)">Change</button>
+          <button class="saveButton" mat-raised-button color="accent" [disabled] = "buttonStatusList[2]" (click)="revert(2); openSnackBar(parkingDetail.slotsNumber)">Save</button>
+          <button class="changeButton" mat-raised-button color="accent" [disabled] = "!buttonStatusList[2]" (click)="revert(2); buttonStatusList[4] = false">Change</button>
          </mat-list-item>
 
       <mat-divider></mat-divider>
@@ -60,13 +60,15 @@
                 <mat-icon>close</mat-icon>
               </button>
             </mat-form-field>
-          <button class="saveButton" mat-raised-button color="accent" [disabled] = "buttonStatusList[3]" (click)="revert(3); openSnackBar(parkingDetail.tariff); saveToDTO()">Save</button>
-          <button class="changeButton" mat-raised-button color="accent" [disabled] = "!buttonStatusList[3]" (click)="revert(3)">Change</button> 
+          <button class="saveButton" mat-raised-button color="accent" [disabled] = "buttonStatusList[3]" (click)="revert(3); openSnackBar(parkingDetail.tariff)">Save</button>
+          <button class="changeButton" mat-raised-button color="accent" [disabled] = "!buttonStatusList[3]" (click)="revert(3); buttonStatusList[4] = false">Change</button> 
         </mat-list-item>
 
       <mat-divider></mat-divider>
         
 </mat-list>
+
+<button  class="submitButton" mat-raised-button color="primary" [disabled] = "buttonStatusList[4]" (click)="revert(4); updateParking(); refresh()">Submit</button>
 
 
   

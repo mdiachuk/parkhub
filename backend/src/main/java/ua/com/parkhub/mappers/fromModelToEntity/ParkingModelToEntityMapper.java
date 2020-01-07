@@ -29,7 +29,7 @@ public class ParkingModelToEntityMapper implements Mapper<ParkingModel, Parking>
         parking.setTariff(from.getTariff());
         parking.setSlotsNumber(from.getSlotsNumber());
         parking.setActive(from.isActive());
-
+        parking.setOwner(userModelToEntityMapper.transform(from.getOwner()));
         return parking;
     }
 }

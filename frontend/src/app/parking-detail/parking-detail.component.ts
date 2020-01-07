@@ -24,16 +24,15 @@ export class ParkingDetailComponent implements OnInit {
   constructor(private parkingService: ParkingService, private route: ActivatedRoute, private _snackBar: MatSnackBar, public dialog: MatDialog){
   }
 
-
-  getData(): void {
-    this.parkingService.getParking(this.parkingID).subscribe(parking => this.parkingDTO = parking);
-  }
-
   ngOnInit() {
-    this.buttonStatusList = new Array(true, true, true, true);
+    this.buttonStatusList = new Array(true, true, true, true, true);
     this.parkingDetail = new ParkingDetail;
     this.parkingID = this.route.snapshot.paramMap.get('id');
     this.getData();
+    }
+
+    getData(): void {
+      this.parkingService.getParking(this.parkingID).subscribe(parking => this.parkingDTO = parking);
     }
 
     revert(number: number){
@@ -52,33 +51,27 @@ export class ParkingDetailComponent implements OnInit {
       });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.parkingDTO.city = result.city;
-      this.parkingDTO.street = result.street;
-      this.parkingDTO.building = result.building;
+      this.parkingDetail.city = result.city;
+      this.parkingDetail.street = result.street;
+      this.parkingDetail.building = result.building;
     });
   }
 
-   nulify(): void {
-    let setAll = (val: any) => Object.keys(this.parkingDTO).forEach(k => this.parkingDTO[k] = val);
-    let setNull = () => setAll(null);
-    setNull;
-
-  //   function setAll(val: any) {
-  //     Object.keys(this.parkingDTO).forEach(function(index) {
-  //       this.parkingDTO[index] = val;
-  //     });
-  // }
-  // function setNull() {
-  //     setAll(null);
-  // }
-  };
+  //  nulify(): void {
+  //   let setAll = (val: any) => Object.keys(this.parkingDTO).forEach(k => this.parkingDTO[k] = val);
+  //   let setNull = () => setAll(null);
+  //   setNull;
 
 
-    saveToDTO(): void {
-      Object.assign(this.parkingDTO, this.parkingDetail);
-      console.log(this.parkingDTO);
-      this.parkingService.updateParking(this.parkingDTO, this.parkingID).subscribe(r=>{});
+    updateParking(): void {
+      console.log(this.parkingDetail);
+
+      this.parkingService.updateParking(this.parkingDetail, this.parkingID).subscribe(r=>{});
     }
+
+    refresh(): void {
+      window.location.reload();
+  }
 }
 
 

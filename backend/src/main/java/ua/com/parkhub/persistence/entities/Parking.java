@@ -30,11 +30,11 @@ public class Parking {
     @Column
     private boolean isActive = true;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "parking_owner_id")
     private User owner;
 

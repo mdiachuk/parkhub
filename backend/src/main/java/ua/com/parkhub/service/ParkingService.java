@@ -32,37 +32,34 @@ public class ParkingService {
         this.addressDAO = addressDAO;
     }
 
-    public List<ParkingModel> findAllParking(){
+    public List<ParkingModel> findAllParking() {
 
         return parkingDAO.findAll();
     }
 
-    public ParkingModel findParkingById(long id){
+    public ParkingModel findParkingById(long id) {
 
         return parkingDAO.findElementById(id).orElseThrow(() -> new ParkingDoesntExistException("Such parking doesn't exist"));
     }
 
-    public void updateParking(Long id, ParkingModel parkingModelParam){
+    public void updateParking(Long id, ParkingModel parkingModelParam) {
         ParkingModel parkingModel = findParkingById(id);
         Field[] paramFields = parkingModelParam.getClass().getDeclaredFields();
         List<String> fieldsNameList = Arrays.stream(paramFields).filter(field -> {
             try {
                 field.setAccessible(true);
-                return field.get(parkingModelParam) != null;
+                Object value = field.get(parkingModelParam);
+                if (value instanceof Integer){
+                    return (Integer) value != 0;
+                }
+                else
+                return value != null;
             } catch (IllegalAccessException ex) {
                 return false;
             }
         }).map(Field::getName).collect(Collectors.toList());
 
-        /*for (String name : fieldsNameList) {
-            Field fieldParam = parkingModelParam.getClass().getDeclaredField(name);
-            Field field = parkingModelParam.getClass().getDeclaredField(name);
-            field.setAccessible(true);
-            fieldParam.setAccessible(true);
-            field.set(parkingModel, fieldParam.get(parkingModelParam));
-        }*/
-
-        fieldsNameList.stream().peek(name -> {
+        for (String name : fieldsNameList) {
             try {
                 Field fieldParam = parkingModelParam.getClass().getDeclaredField(name);
                 Field field = parkingModel.getClass().getDeclaredField(name);
@@ -72,14 +69,26 @@ public class ParkingService {
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 e.printStackTrace();
             }
-        });
+
+        /*fieldsNameList.stream().peek(name -> {
+            try {
+                Field fieldParam = parkingModelParam.getClass().getDeclaredField(name);
+                Field field = parkingModel.getClass().getDeclaredField(name);
+                field.setAccessible(true);
+                fieldParam.setAccessible(true);
+                field.set(parkingModel, fieldParam.get(parkingModelParam));
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });*/
 
 
-        if (fieldsNameList.contains("addressModel")){
-            AddressModel a = addressDAO.addWithResponse(parkingModelParam.getAddressModel()); //from non id model gets model with id
-            parkingModel.setAddressModel(a);
+            if (fieldsNameList.contains("addressModel")) {
+                AddressModel a = addressDAO.addWithResponse(parkingModelParam.getAddressModel()); //from non id model gets model with id
+                parkingModel.setAddressModel(a);
+            }
+
+            parkingDAO.updateElement(parkingModel);
         }
-
-        parkingDAO.updateElement(parkingModel);
     }
 }

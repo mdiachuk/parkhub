@@ -9,7 +9,7 @@ public class UserModel {
     private String lastName;
     private String email;
     private String password;
-    private UserRoleModel role;
+    private RoleModel role;
     private CustomerModel customer;
     private Set<SupportTicketModel> tickets;
 
@@ -45,11 +45,11 @@ public class UserModel {
         this.password = password;
     }
 
-    public UserRoleModel getRole() {
+    public RoleModel getRole() {
         return role;
     }
 
-    public void setRole(UserRoleModel role) {
+    public void setRole(RoleModel role) {
         this.role = role;
     }
 
