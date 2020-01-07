@@ -25,6 +25,14 @@ public class Address implements Serializable {
     @NotNull
     private String building;
 
+//    @Column
+//    @NotNull
+//    private String lat;
+//
+//    @Column
+//    @NotNull
+//    private String lon;
+
     public Long getId() {
         return id;
     }
@@ -56,4 +64,20 @@ public class Address implements Serializable {
     public void setBuilding(String building) {
         this.building = building;
     }
+
+//    public String getLat() {
+//        return lat;
+//    }
+//
+//    public void setLat(String lat) {
+//        this.lat = lat;
+//    }
+//
+//    public String getLon() {
+//        return lon;
+//    }
+//
+//    public void setLon(String lon) {
+//        this.lon = lon;
+//    }
 }

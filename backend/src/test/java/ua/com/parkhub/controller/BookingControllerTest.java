@@ -8,20 +8,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import ua.com.parkhub.dto.BookingFormDTO;
+import ua.com.parkhub.exceptions.AddBookingException;
+import ua.com.parkhub.exceptions.ParkingNotFoundException;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import ua.com.parkhub.dto.BookingDTO;
-import ua.com.parkhub.dto.BookingFormDTO;
-import ua.com.parkhub.exceptions.AddBookingException;
-import ua.com.parkhub.exceptions.ParkingNotFoundException;
-import ua.com.parkhub.model.Booking;
-import ua.com.parkhub.model.Customer;
-import ua.com.parkhub.model.Slot;
 
 @SpringBootTest
 @AutoConfigureMockMvc

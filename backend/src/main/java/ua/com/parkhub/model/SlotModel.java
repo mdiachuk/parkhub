@@ -1,18 +1,20 @@
 package ua.com.parkhub.model;
 
-public class SlotModel {
+import java.util.Objects;
 
-    private ParkingModel parking;
+public class SlotModel extends AbstractModel {
+
+    private Long id;
     private String slotNumber;
     private boolean isReserved;
     private boolean isActive;
 
-    public ParkingModel getParking() {
-        return parking;
+    public Long getId() {
+        return id;
     }
 
-    public void setParking(ParkingModel parking) {
-        this.parking = parking;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getSlotNumber() {
@@ -37,5 +39,34 @@ public class SlotModel {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SlotModel slot = (SlotModel) o;
+        return Objects.equals(id, slot.id) &&
+                Objects.equals(slotNumber, slot.slotNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, slotNumber);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Slot" + ", id: ").append(id);
+        sb.append(", slotNumber: ").append(slotNumber);
+        sb.append(", isReserved: ").append(isReserved);
+        sb.append(", isActive: ").append(isActive);
+        return sb.toString();
     }
 }

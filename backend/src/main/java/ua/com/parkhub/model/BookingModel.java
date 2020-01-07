@@ -60,13 +60,13 @@ public class BookingModel {
         isActive = active;
     }
 
-    public int countPrice() {
-        if (checkOut != null) {
-            int hours = (int) ChronoUnit.HOURS.between(checkIn, checkOut);
-            int tariff = slot.getParking().getTariff();
-            return hours * tariff;
-        } else {
-            return 0;
-        }
-    }
+//    public int countPrice() {
+//        if (checkOut != null) {
+//            int hours = (int) ChronoUnit.HOURS.between(checkIn, checkOut);
+//            int tariff = slot.getParking().getTariff();
+//            return hours * tariff;
+//        } else {
+//            return 0;
+//        }
+//    }
 }

@@ -9,7 +9,7 @@ import ua.com.parkhub.persistence.entities.Customer;
 import ua.com.parkhub.persistence.impl.CustomerDAO;
 import ua.com.parkhub.service.ICustomerService;
 
-import java.util.Optional;
+//import ua.com.parkhub.model.Customer;
 
 @Service
 public class CustomerService implements ICustomerService {
@@ -24,19 +24,21 @@ public class CustomerService implements ICustomerService {
     }
 
     private Customer addCustomerAndGet(String phoneNumber) {
-        Customer customerEntity = new Customer();
-        customerEntity.setPhoneNumber(phoneNumber);
-        customerDAO.addElement(customerEntity);
-        Optional<Customer> optionalUser = customerDAO.findCustomerByPhoneNumber(phoneNumber);
-        if (optionalUser.isPresent()) {
-            return optionalUser.get();
-        }
-        throw new ParkHubException("No Customer found with phone number " + phoneNumber);
+//        Customer customerEntity = new Customer();
+//        customerEntity.setPhoneNumber(phoneNumber);
+//        customerDAO.addElement(customerEntity);
+//        Optional<Customer> optionalUser = customerDAO.findCustomerByPhoneNumber(phoneNumber);
+//        if (optionalUser.isPresent()) {
+//            return optionalUser.get();
+//        }
+//        throw new ParkHubException("No Customer found with phone number " + phoneNumber);
+        return null;
     }
 
     @Transactional
-    public ua.com.parkhub.model.Customer findCustomerByPhoneNumberOrAdd(String phoneNumber) {
-        Customer customerEntity = customerDAO.findCustomerByPhoneNumber(phoneNumber).orElseGet(() -> addCustomerAndGet(phoneNumber));
-        return mapper.map(customerEntity, ua.com.parkhub.model.Customer.class);
+    public ua.com.parkhub.model.CustomerModel findCustomerByPhoneNumberOrAdd(String phoneNumber) {
+//        Customer customerEntity = customerDAO.findCustomerByPhoneNumber(phoneNumber).orElseGet(() -> addCustomerAndGet(phoneNumber));
+//        return mapper.map(customerEntity, ua.com.parkhub.model.Customer.class);
+        return null;
     }
 }

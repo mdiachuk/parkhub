@@ -5,7 +5,7 @@ import {Parking} from '../models/parking.model';
 import {Router} from "@angular/router";
 import {Manager} from '../models/manager';
 import {Admin} from '../Classes/admin';
-// import {User} from '../interfaces/user';
+import {UserInfo} from '../interfaces/userInfo';
 import { Login } from '../interfaces/login';
 
 export class User {
@@ -25,6 +25,16 @@ export class User {
 export class UserRole {
   constructor(
     public id: string
+  ) {
+  }
+}
+
+export class UserPassword {
+  constructor(
+    public id: string,
+    public password: string,
+    public newPassword: string,
+
   ) {
   }
 }
@@ -161,5 +171,47 @@ export class AdminService {
 
   updateRole(admin: Admin) {
     this.http.post("/api/admin/{id}", admin).subscribe(res => console.log("ok"));
+  }
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UserService {
+
+
+  constructor(private http: HttpClient) {
+
+
+  }
+
+  getUserID(){
+    // localStorage.setItem('TOKEN', '{id}: 1 , email : lolkek');
+    var idUser = '';
+    var test= '';
+    var i = localStorage.getItem('TOKEN').indexOf('id');
+    while(test != ','){
+      if(localStorage.getItem('TOKEN')[i] === ','){
+        break;
+      }else{
+        test = localStorage.getItem('TOKEN')[i];
+        if(( parseInt(localStorage.getItem('TOKEN')[i])) >= 0 ){
+          idUser = idUser + localStorage.getItem('TOKEN')[i];
+        }
+        i++;
+      }
+    }
+
+
+    return idUser;
+  }
+  getData(){
+    return this.http.get('/api/user/' + this.getUserID());
+  }
+  PostData(userInfo : UserInfo){
+    return this.http.post('api/user', userInfo);
+  }
+  PostDataPassword(userPass : UserPassword){
+    return this.http.post('/api/user/password', userPass);
   }
 }

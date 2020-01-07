@@ -1,10 +1,10 @@
 package ua.com.parkhub.dto;
 
-import ua.com.parkhub.persistence.entities.Customer;
+import java.util.List;
 
 public class UserDTO {
 
-    private long id;
+    private Long id;
     private String email;
     private String password;
     private String firstName;
@@ -12,6 +12,25 @@ public class UserDTO {
     private CustomerDTO customerDTO;
     private RoleDTO role;
     private String token;
+    private int numberOfFailedPassEntering;
+    private List<SupportTicketDTO> tickets;
+
+    public List<SupportTicketDTO> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<SupportTicketDTO> tickets) {
+        this.tickets = tickets;
+    }
+
+
+    public int getNumberOfFailedPassEntering() {
+        return numberOfFailedPassEntering;
+    }
+
+    public void setNumberOfFailedPassEntering(int numberOfFailedPassEntering) {
+        this.numberOfFailedPassEntering = numberOfFailedPassEntering;
+    }
 
     public String getToken() {
         return token;
@@ -53,15 +72,15 @@ public class UserDTO {
         this.lastName = lastName;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public int getIdInt(){
-        return ((int) id);
-    }
+//    public int getIdInt(){
+//        return ((int) id);
+//    }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
