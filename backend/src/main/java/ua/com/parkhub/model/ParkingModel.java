@@ -1,6 +1,7 @@
 package ua.com.parkhub.model;
 
 
+import java.util.List;
 import java.util.Set;
 
 public class ParkingModel {
@@ -10,11 +11,11 @@ public class ParkingModel {
     private int slotsNumber;
     private int tariff;
     private AddressModel addressModel;
-    private Set<SlotModel> slots;
+    private List<SlotModel> slots;
     private boolean isActive;
     private UserModel owner;
 
-    public Set<SlotModel> getSlots() {
+    public List<SlotModel> getSlots() {
         return slots;
     }
 
@@ -26,7 +27,7 @@ public class ParkingModel {
         this.owner = owner;
     }
 
-    public void setSlots(Set<SlotModel> slots) {
+    public void setSlots(List<SlotModel> slots) {
         this.slots = slots;
     }
 

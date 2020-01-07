@@ -1,3 +1,5 @@
+
+<p>{{'Cancel Prepayment' | translate}}</p>
 <form class="input-form">
 
   <mat-form-field class="example-full-width">
@@ -8,13 +10,13 @@
       required
       name="phoneInput"
       matInput
-      placeholder="Enter phone number"
+      [placeholder]="'PhoneNumberPlaceholder.value' | translate"
       maxlength="12"
-      [(ngModel)]="pn.phoneNumber">
+      [(ngModel)]="pn.phoneNumber"/>
     <mat-hint align="end">{{phoneInput.value.length}} / 12</mat-hint>
   </mat-form-field>
 
   <div class="button-wrapper">
-    <button mat-raised-button color="primary" (click)="submit()">Send</button>
+    <button mat-raised-button color="primary" (click)="submit()">{{ 'Send' | translate}}</button>
   </div>
 </form>

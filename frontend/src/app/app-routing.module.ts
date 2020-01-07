@@ -17,7 +17,7 @@ import { PageComponent } from './homePage/homePage.component';
 
 
 const routes: Routes = [
-  {path: 'parkoff', component: ParkoffComponent },
+  {path: 'cancel', component: ParkoffComponent },
   {path: 'signup/user', component:SingupComponent},
   {path: 'home', component:PageComponent},
   {path: 'signup/manager', component:ManagerSignupComponent},
@@ -33,7 +33,7 @@ const routes: Routes = [
   { path: 'booking', component: BookingDetailComponent},
 
   // { path: 'user', component: UserComponent },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent }
   // {path: '', redirectTo: 'home', pathMatch: 'full'},
 
 ];

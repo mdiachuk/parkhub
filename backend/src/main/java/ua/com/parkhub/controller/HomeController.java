@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 public class HomeController {
+/*
 
     private final ParkingService parkingService;
 
@@ -22,6 +23,7 @@ public class HomeController {
         return ResponseEntity.ok(parkingService.findAllParkings());
     }
 
+*/
 
 
 }

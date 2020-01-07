@@ -6,10 +6,10 @@ import {MatTableModule} from '@angular/material/table';
   templateUrl: './parking-list.component.html',
   styleUrls: ['./parking-list.component.scss']
 })
-export class ParkingListComponentManager implements OnInit{
+export class ParkingListComponentManager implements OnInit {
 
   constructor() { }
 
-  ngOnInit(){}
+  ngOnInit() {}
 
 }

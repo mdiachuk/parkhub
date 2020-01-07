@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import ua.com.parkhub.dto.ParkingDTO;
 import ua.com.parkhub.mappers.toDTO.ParkingModelToDTOMapper;
-import ua.com.parkhub.service.ParkingService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +14,7 @@ import java.util.stream.Collectors;
 @RestController
 public class ManagerController {
 
-    private ParkingService parkingService;
+ /*   private ParkingService parkingService;
     private ParkingModelToDTOMapper parkingMapper;
 
     @Autowired
@@ -35,5 +34,5 @@ public class ManagerController {
 
         return ResponseEntity.ok(parkingMapper.transform(parkingService.findParkingById(Long.parseLong(parkingId)).get()));
     }
-
+*/
 }

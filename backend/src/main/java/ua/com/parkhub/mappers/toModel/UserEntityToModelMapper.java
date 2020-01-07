@@ -31,7 +31,7 @@ public class UserEntityToModelMapper implements Mapper<User, UserModel> {
         userModel.setLastName(from.getLastName());
         userModel.setPassword(from.getPassword());
         userModel.setRole(userRoleEntityToModelMapper.transform(from.getRole()));
-        userModel.setTickets(from.getTickets().stream().map(supportTicketEntityToModelMapper::transform).collect(Collectors.toSet()));
+        userModel.setTickets(from.getTickets().stream().map(supportTicketEntityToModelMapper::transform).collect(Collectors.toList()));
         return userModel;
     }
 }

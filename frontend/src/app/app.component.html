@@ -2,23 +2,30 @@
   <section>
     <div>
       <mat-toolbar color="primary">
-
+        <span class="fill-remaining-space"> {{ 'ParkHub' | translate }}</span>
         <span class="example-spacer"></span>
         <div fxShow="true" fxHide.lt-md="true">
-          <a mat-button [routerLink]='["home"]'>Home</a>
-          <a mat-button [routerLink]='["parkoff"]'>Park Off</a>
+          <a mat-button [routerLink]='["home"]'>{{ 'Home' | translate }}</a>
+          <a mat-button [routerLink]='["cancel"]'>{{ 'CancelPrepayment' | translate }}</a>
 <!--          <a mat-button [routerLink]='["parkings"]'>Parking</a>-->
-          <a mat-button [routerLink]='["cabinet/addParking"]'>Add Parking</a>
-          <a mat-button [routerLink]='["manager/cabinet"]'>Manager Cabinet</a>
-          <a mat-button [routerLink]='["admin"]'>Admin Cabinet</a>
-          <a mat-button [routerLink]='["signup/user"]'>Sing Up</a>
-          <a mat-button [routerLink]='["signup/manager"]'>Sing Up Manager</a>
-          <a mat-button [routerLink]='["login"]'>Login</a>
-
-
+          <a mat-button [routerLink]='["cabinet/addParking"]'>{{ 'Add parking' | translate }}</a>
+          <a mat-button [routerLink]='["manager/cabinet"]'>{{ 'Manager cabinet' | translate }}</a>
+          <a mat-button [routerLink]='["admin"]'>{{ 'Admin cabinet' | translate }}</a>
+          <a mat-button [routerLink]='["signup/user"]'>{{ 'Sign up' | translate }}</a>
+          <a mat-button [routerLink]='["signup/manager"]'>{{ 'Sign up Manager' | translate }}</a>
+          <a mat-button [routerLink]='["login"]'>{{ 'Login' | translate }}</a>
+          <a mat-button (click)="logout()" >{{ 'LogOut' | translate }}</a>
+         <!-- <mat-form-field>
+            <mat-label>Select language</mat-label>
+            <mat-select #select (change)="translate.use(select.value.toString())">
+              <mat-option *ngFor="let lang of translate.getLangs()" [value]="lang">
+                {{ lang }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>-->
+          <button class="btn btn-primary" (click)="useLanguage('en')">{{'en' | translate}}</button>
+          <button class="btn btn-primary" (click)="useLanguage('ua')">{{'ua' | translate}}</button>
         </div>
-        <span class="fill-remaining-space"> Park Hub</span>
-
       </mat-toolbar>
       <mat-sidenav-container fxFlexFill class="example-container">
         <mat-sidenav-content fxFlexFill>
@@ -27,8 +34,6 @@
       </mat-sidenav-container>
     </div>
   </section>
-
-
   <router-outlet></router-outlet>
 </div>
 

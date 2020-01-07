@@ -1,5 +1,6 @@
 package ua.com.parkhub.model;
 
+import java.util.List;
 import java.util.Set;
 
 public class UserModel {
@@ -10,7 +11,7 @@ public class UserModel {
     private String password;
     private UserRoleModel role;
     private CustomerModel customer;
-    private Set<SupportTicketModel> tickets;
+    private List<SupportTicketModel> tickets;
 
     public String getFirstName() {
         return firstName;
@@ -60,11 +61,11 @@ public class UserModel {
         this.customer = customer;
     }
 
-    public Set<SupportTicketModel> getTickets() {
+    public List<SupportTicketModel> getTickets() {
         return tickets;
     }
 
-    public void setTickets(Set<SupportTicketModel> tickets) {
+    public void setTickets(List<SupportTicketModel> tickets) {
         this.tickets = tickets;
     }
 }

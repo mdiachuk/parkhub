@@ -48,7 +48,7 @@ public class SignUpService {
 
     @Transactional
     public void registerManager(ManagerRegistrationDataDTO manager) {
-        Customer customer = createCustomer(manager);
+      /*  Customer customer = createCustomer(manager);
         User user = createUser(manager, customer);
         if (customer.getId() == null) {
             customerDAO.addElement(customer);
@@ -56,11 +56,11 @@ public class SignUpService {
         SupportTicket supportTicket = createSupportTicket(manager, customer);
         supportTicketDAO.addElement(supportTicket);
         customerDAO.updateElement(customer);
-        userDAO.addElement(user);
+        userDAO.addElement(user);*/
     }
 
     private Customer createCustomer(ManagerRegistrationDataDTO manager) {
-        Optional<Customer> optionalCustomer = customerDAO
+     /*   Optional<Customer> optionalCustomer = customerDAO
                 .findCustomerByPhoneNumber(manager.getPhoneNumber());
         if (optionalCustomer.isPresent()) {
             logger.info("Customer with phone number={} was found", manager.getPhoneNumber());
@@ -75,11 +75,12 @@ public class SignUpService {
         customer.setPhoneNumber(manager.getPhoneNumber());
         customer.setActive(true);
         logger.info("New customer was created");
-        return customer;
+        return customer;*/
+     return null;
     }
 
     private User createUser(ManagerRegistrationDataDTO manager, Customer customer) {
-        Optional<User> optionalUser = userDAO.findUserByEmail(manager.getEmail());
+        /*Optional<User> optionalUser = userDAO.findUserByEmail(manager.getEmail());
         if (optionalUser.isPresent()) {
             throw new EmailIsUsedException();
         }
@@ -91,7 +92,8 @@ public class SignUpService {
         user.setPassword(passwordEncoder.encode(manager.getPassword()));
         user.setRole(findUserRole(String.valueOf(RoleDTO.PENDING)));
         logger.info("New user was created");
-        return user;
+        return user;*/
+        return null;
     }
 
     private SupportTicket createSupportTicket(ManagerRegistrationDataDTO manager, Customer customer) {
@@ -118,18 +120,23 @@ public class SignUpService {
     }
 
     private UserRole findUserRole(String name) {
-        return userRoleDAO.findUserRoleByRoleName(name).orElseThrow(() ->
-                new NotFoundInDataBaseException("Role was not found by name=" + name));
+       /* return userRoleDAO.findUserRoleByRoleName(name).orElseThrow(() ->
+                new NotFoundInDataBaseException("Role was not found by name=" + name));*/
+       return null;
     }
 
     private User findAdmin(long id) {
-        return userDAO.findElementById(ADMIN_ID).orElseThrow(() -> new
-                NotFoundInDataBaseException("Admin was not found by id=" + id));
+       /* return userDAO.findElementById(ADMIN_ID).orElseThrow(() -> new
+                NotFoundInDataBaseException("Admin was not found by id=" + id));*/
+
+       return null;
     }
 
     private SupportTicketType findSupportTicketType(String type) {
-        return supportTicketTypeDAO.findSupportTicketTypeByType(type).orElseThrow(() ->
-                new NotFoundInDataBaseException("Support ticket type was not found by type=" + type));
+      /*  return supportTicketTypeDAO.findSupportTicketTypeByType(type).orElseThrow(() ->
+                new NotFoundInDataBaseException("Support ticket type was not found by type=" + type));*/
+
+      return null;
     }
 
 
@@ -184,9 +191,9 @@ public class SignUpService {
     }
 
     private boolean addUser(User user) {
-        user.getCustomer().setActive(true);
+        /*user.getCustomer().setActive(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userDAO.addElement(user);
+        userDAO.addElement(user);*/
         return true;
 
     }

@@ -84,7 +84,7 @@ public class UserDAO extends ElementDAO<User, UserModel> {
 
 
     }
-    public Optional<User> findUserByEmail(String email) { return findOneByFieldEqual("email", email);}
+    //public Optional<User> findUserByEmail(String email) { return findOneByFieldEqual("email", email);}
 
 }
 

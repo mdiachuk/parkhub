@@ -1,18 +1,18 @@
 <mat-card>
-<h2>Admins page</h2>
-<h3>Get User by Id</h3>
+<h2>{{'AdminCabinet' | translate}}</h2>
+<h3>{{'GetUserById' | translate}}</h3>
 <mat-card-content>
 <div>
     <mat-form-field>
-        <input matInput type="number" min="1" [formControl]="idGetter" placeholder="Type User ID">
+        <input matInput type="number" min="1" [formControl]="idGetter" [placeholder]="'TypeUserIDPlaceholder.value' | translate">
     </mat-form-field>
     <p>
-    <button mat-raised-button color="primary" (click)="idGetterMethod()">Get User by Id</button>
+    <button mat-raised-button color="primary" (click)="idGetterMethod()">{{'GetUserById' | translate}}</button>
     </p>
     <mat-card-content>
-    <div>Id: {{admin.id}}</div>
-    <div>Name: {{admin.firstName}}</div>
-    <div>Role: {{admin.userRole}}</div>
+    <div>{{'ID' | translate}}: {{admin.id}}</div>
+    <div>{{'Name' | translate}}: {{admin.firstName}}</div>
+    <div>{{'Role' | translate}}: {{admin.userRole}}</div>
     </mat-card-content>
 </div>
 <mat-divider></mat-divider>
@@ -20,14 +20,14 @@
 </mat-card>
 <mat-card>
     <mat-card-content>
-        <h3>Update Role Form</h3>
+        <h3>{{'UpdateRoleForm' | translate}}</h3>
         <div>
         <mat-form-field>
-            <input matInput type="text" [formControl]="roleControl" placeholder="Type User Role">
+            <input matInput type="text" [formControl]="roleControl" [placeholder]="'TypeUserRolePlaceholder.value' | translate">
         </mat-form-field>
 
     <p>
-        <button mat-raised-button color="primary" (click)="updateRoleName()">Update Role</button>
+        <button mat-raised-button color="primary" (click)="updateRoleName()">{{'UpdateRole' | translate}}</button>
     </p>
 </div>
     </mat-card-content>

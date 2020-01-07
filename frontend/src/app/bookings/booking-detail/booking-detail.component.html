@@ -1,12 +1,12 @@
-<div class="booking-container"> 
+<div class="booking-container">
     <section>
         <form [formGroup]="bookingForm" (submit)="saveReactive()">
             <div>
             <br>
             <br>
-               
+
                 <mat-form-field>
-                    <input matInput type="text" formControlName="carNumber" placeholder="car number"/>
+                    <input matInput type="text" formControlName="carNumber" [placeholder]="'bookingDetailCarNumberPlaceholder.value' | translate"/>
                 </mat-form-field>
         </div>
             <br>
@@ -26,12 +26,12 @@
 </div>
 
 
-  
 
 
 
 
-  
+
+
 
 
 

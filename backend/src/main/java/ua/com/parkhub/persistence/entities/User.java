@@ -40,8 +40,6 @@ public class User implements Serializable {
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-
-
     @ManyToMany(mappedBy = "solvers")
     private List<SupportTicket> tickets;
 

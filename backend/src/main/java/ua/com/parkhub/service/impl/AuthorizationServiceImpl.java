@@ -27,12 +27,13 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Override
     public UserDTO loginUser(LoginDTO user) {
-        return userDAO.findUserByEmail(user.getEmail())
+       /* return userDAO.findUserByEmail(user.getEmail())
                 .filter(
                         userEntity -> passwordEncoder.matches(user.getPassword(), userEntity.getPassword())
                 )
                 .map(UserMapper::detach)
-                .orElseThrow(() -> new PermissionException("Please enter valid credentials!"));
+                .orElseThrow(() -> new PermissionException("Please enter valid credentials!"));*/
+       return null;
     }
 
 }

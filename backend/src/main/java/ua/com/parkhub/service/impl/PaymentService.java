@@ -3,6 +3,9 @@ package ua.com.parkhub.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.com.parkhub.exceptions.PaymentException;
+import ua.com.parkhub.model.BookingModel;
+import ua.com.parkhub.model.PaymentModel;
 import ua.com.parkhub.persistence.entities.Booking;
 import ua.com.parkhub.persistence.entities.Customer;
 import ua.com.parkhub.persistence.entities.Payment;
@@ -15,54 +18,26 @@ import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class PaymentService {
 
-    private BookingDAO bookingDAO;
-    private CustomerDAO customerDAO;
     private PaymentDAO paymentDAO;
 
     @Autowired
-    public PaymentService(BookingDAO bookingDAO,
-                          CustomerDAO customerDAO,
-                          PaymentDAO paymentDAO) {
-        this.bookingDAO = bookingDAO;
-        this.customerDAO = customerDAO;
+    public PaymentService(PaymentDAO paymentDAO) {
         this.paymentDAO = paymentDAO;
     }
 
-    @Transactional
-    public Optional<Customer> checkCustomerIfPresent(String phoneNumber) {
-        return  customerDAO.findCustomerByPhoneNumber(phoneNumber);
+    public PaymentDAO getPaymentDAO() {
+        return paymentDAO;
     }
 
-    private int countPrice(Booking booking){
-        if (booking.getCheckOut() != null){
-            int hours = (int) ChronoUnit.HOURS.between(booking.getCheckIn(), booking.getCheckOut());
-            int tariff = booking.getSlot().getParking().getTariff();
-            return hours * tariff;
+    public PaymentModel findPaymentByBooking(BookingModel bookingModel){
+        Optional<PaymentModel> paymentModel = paymentDAO.findPaymentByBooking(bookingModel);
+        if (paymentModel.isPresent()){
+            return paymentModel.get();
         }else {
-            return 0;
+            throw new PaymentException("Failed to find payment by booking");
         }
-    }
-
-    public Optional<Payment> createPayment(String phoneNumber){
-        Customer customer = checkCustomerIfPresent(phoneNumber).get();
-        Booking booking = bookingDAO.findActiveBookingByCustomer(customer).get();
-        booking.setCheckOut(LocalDateTime.now());
-        booking.getSlot().setActive(false);
-        booking.setActive(false);
-        bookingDAO.updateElement(booking);
-        int price = countPrice(booking);
-        Payment payment = new Payment();
-        payment.setBooking(booking);
-        payment.setPaid(false);
-        payment.setPrice(price);
-        paymentDAO.addElement(payment);
-        return Optional.of(payment);
-    }
-
-    @Transactional
-    public int getPrice(String phoneNumber) {
-        return createPayment(phoneNumber).get().getPrice();
     }
 }

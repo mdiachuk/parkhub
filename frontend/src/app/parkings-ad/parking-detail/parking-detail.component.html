@@ -8,7 +8,7 @@
       </mat-card-header>
       <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Park Hub">
       <mat-card-content>
-        <p>Price per hour: {{parking.tariff}}</p>
+        <p>{{'PricePerHour' | translate}}: {{parking.tariff}}</p>
         <mat-chip-list aria-label="Slot selection">
           <li *ngFor="let slot of parking.slots">
             <div *ngIf="slot.reserved || !slot.active">

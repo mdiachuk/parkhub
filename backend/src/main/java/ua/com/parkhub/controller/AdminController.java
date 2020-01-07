@@ -9,7 +9,7 @@ import ua.com.parkhub.service.impl.AdminService;
 
 @RestController
 public class AdminController {
-    public AdminService adminService;
+    /*public AdminService adminService;
 
     @Autowired
     public AdminController(AdminService adminService) {
@@ -29,6 +29,6 @@ public class AdminController {
     public ResponseEntity setRole(@RequestBody AdminDTO adminDTO){
         adminService.setRole(adminDTO.getId(), adminDTO.getUserRole());
         return ResponseEntity.ok().build();
-    }
+    }*/
 
 }

@@ -3,6 +3,7 @@ import org.springframework.stereotype.Repository;
 import ua.com.parkhub.exceptions.NullCustomerException;
 import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.BookingModel;
+import ua.com.parkhub.model.CustomerModel;
 import ua.com.parkhub.persistence.entities.Booking;
 import ua.com.parkhub.persistence.entities.Customer;
 
@@ -11,7 +12,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class BookingDAO extends ElementDAO<Booking, BookingModel> {
@@ -20,23 +23,14 @@ public class BookingDAO extends ElementDAO<Booking, BookingModel> {
         super(Booking.class, modelToEntity, entityToModel);
     }
 
-    public Optional<BookingModel> findActiveBookingByCustomer(Customer customer) {
+    public List<BookingModel> findBookingsByCustomer(CustomerModel customer) {
         CriteriaBuilder criteriaBuilder = this.emp.getCriteriaBuilder();
         CriteriaQuery<Booking> criteriaQuery = criteriaBuilder.createQuery(Booking.class);
         Root<Booking> itemRoot = criteriaQuery.from(Booking.class);
         Predicate predicateForCustomer
-                = criteriaBuilder.equal(itemRoot.get("customer"), customer);
-        Predicate predicateForActiveStatus
-                = criteriaBuilder.equal(itemRoot.get("isActive"), true);
-        Predicate predicateForActiveBookingByCustomer =
-                criteriaBuilder.and(predicateForCustomer, predicateForActiveStatus);
-        criteriaQuery.where(predicateForActiveBookingByCustomer);
-        try{
-            Booking booking = this.emp.createQuery(criteriaQuery).getSingleResult();
-            return Optional.ofNullable(entityToModel.transform(booking));
-        }catch (NoResultException e){
-            throw new NullCustomerException();
-        }
+                = criteriaBuilder.equal(itemRoot.get("customer"), customer.getId());
+        criteriaQuery.where(predicateForCustomer);
+        return this.emp.createQuery(criteriaQuery).getResultList().stream().map(x -> entityToModel.transform(x)).collect(Collectors.toList());
     }
 }
 

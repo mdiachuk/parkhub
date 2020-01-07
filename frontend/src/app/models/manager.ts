@@ -10,10 +10,10 @@ export class Manager {
     comment: string;
 
     constructor(firstName: string, lastName: string,
-        companyName: string, usreouCode: string,
-        email: string, phoneNumber: string,
-        password: string, matchingPassword: string,
-        comment: string) {
+                companyName: string, usreouCode: string,
+                email: string, phoneNumber: string,
+                password: string, matchingPassword: string,
+                comment: string) {
 
         this.firstName = firstName;
         this.lastName = lastName;

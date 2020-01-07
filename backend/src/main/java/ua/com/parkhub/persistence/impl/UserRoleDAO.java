@@ -16,8 +16,8 @@ public class UserRoleDAO extends ElementDAO<UserRole, UserRoleModel> {
         super(UserRole.class, modelToEntity, entityToModel);
     }
 
-    public Optional<UserRole> findUserRoleByRoleName(String roleName) {
+  /*  public Optional<UserRole> findUserRoleByRoleName(String roleName) {
         return findOneByFieldEqual("roleName", roleName);
-    }
+    }*/
 }
 
