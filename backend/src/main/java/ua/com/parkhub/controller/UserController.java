@@ -89,7 +89,6 @@ public class UserController {
             return ResponseEntity.badRequest().body(errors);
         }
         userService.resetPassword(passwordDTO.getToken(), passwordDTO.getPassword());
-        logger.info("Link with unique token was sent");
         return ResponseEntity.ok().build();
     }
 
