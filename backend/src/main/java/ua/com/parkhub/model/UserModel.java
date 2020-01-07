@@ -68,4 +68,12 @@ public class UserModel {
     public void setTickets(Set<SupportTicketModel> tickets) {
         this.tickets = tickets;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

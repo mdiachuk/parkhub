@@ -30,7 +30,7 @@ export class ParkingDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.buttonStatusList = new Array(true, true, true, true, true, true);
+    this.buttonStatusList = new Array(true, true, true, true);
     this.parkingDetail = new ParkingDetail;
     this.parkingID = this.route.snapshot.paramMap.get('id');
     this.getData();
@@ -57,6 +57,21 @@ export class ParkingDetailComponent implements OnInit {
       this.parkingDTO.building = result.building;
     });
   }
+
+   nulify(): void {
+    let setAll = (val: any) => Object.keys(this.parkingDTO).forEach(k => this.parkingDTO[k] = val);
+    let setNull = () => setAll(null);
+    setNull;
+
+  //   function setAll(val: any) {
+  //     Object.keys(this.parkingDTO).forEach(function(index) {
+  //       this.parkingDTO[index] = val;
+  //     });
+  // }
+  // function setNull() {
+  //     setAll(null);
+  // }
+  };
 
 
     saveToDTO(): void {

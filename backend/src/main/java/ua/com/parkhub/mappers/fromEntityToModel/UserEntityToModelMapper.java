@@ -25,6 +25,7 @@ public class UserEntityToModelMapper implements Mapper<User, UserModel> {
     @Override
     public UserModel transform(User from) {
         UserModel userModel = new UserModel();
+        userModel.setId(from.getId());
         userModel.setCustomer(customerEntityToModelMapper.transform(from.getCustomer()));
         userModel.setEmail(from.getEmail());
         userModel.setFirstName(from.getFirstName());

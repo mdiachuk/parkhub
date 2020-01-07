@@ -42,12 +42,13 @@ public class ParkingService {
         return parkingDAO.findElementById(id).orElseThrow(() -> new ParkingDoesntExistException("Such parking doesn't exist"));
     }
 
-    public void updateParking(Long id, ParkingModel parkingModelParam) throws NoSuchFieldException, IllegalAccessException {
+    public void updateParking(Long id, ParkingModel parkingModelParam){
         ParkingModel parkingModel = findParkingById(id);
         Field[] paramFields = parkingModelParam.getClass().getDeclaredFields();
         List<String> fieldsNameList = Arrays.stream(paramFields).filter(field -> {
             try {
-                return field.get(parkingModel) != null;
+                field.setAccessible(true);
+                return field.get(parkingModelParam) != null;
             } catch (IllegalAccessException ex) {
                 return false;
             }
@@ -61,6 +62,17 @@ public class ParkingService {
             field.set(parkingModel, fieldParam.get(parkingModelParam));
         }*/
 
+        fieldsNameList.stream().peek(name -> {
+            try {
+                Field fieldParam = parkingModelParam.getClass().getDeclaredField(name);
+                Field field = parkingModel.getClass().getDeclaredField(name);
+                field.setAccessible(true);
+                fieldParam.setAccessible(true);
+                field.set(parkingModel, fieldParam.get(parkingModelParam));
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });
 
 
         if (fieldsNameList.contains("addressModel")){

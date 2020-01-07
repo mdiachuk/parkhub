@@ -21,7 +21,7 @@
 
       <mat-list-item> <span>{{parkingDTO.parkingName}}</span>
           <mat-form-field class="example-form-field" *ngIf="!buttonStatusList[0]">
-              <input matInput type="text" placeholder="parkingName" #parkingName [(ngModel)]="parkingDetail.parkingName"> 
+              <input matInput type="text" placeholder="New name" #parkingName [(ngModel)]="parkingDetail.parkingName"> 
               <button mat-button *ngIf="parkingDetail.parkingName" matSuffix mat-icon-button aria-label="Clear" (click)="parkingDetail.parkingName=''">
                 <mat-icon>close</mat-icon>
               </button>

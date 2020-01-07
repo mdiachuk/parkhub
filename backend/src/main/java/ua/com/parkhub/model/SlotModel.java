@@ -3,7 +3,7 @@ package ua.com.parkhub.model;
 
 public class SlotModel {
 
-    private long id;
+    private Long id;
     private String slotNumber;
     private boolean isReserved = false;
     private boolean isActive = true;

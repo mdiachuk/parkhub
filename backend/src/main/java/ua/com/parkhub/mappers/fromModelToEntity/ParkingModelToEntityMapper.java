@@ -12,10 +12,12 @@ import ua.com.parkhub.persistence.impl.AddressDAO;
 public class ParkingModelToEntityMapper implements Mapper<ParkingModel, Parking> {
 
     AddressModelToEntityMapper addressModelToEntityMapper;
+    UserModelToEntityMapper userModelToEntityMapper;
 
     @Autowired
-    public ParkingModelToEntityMapper(AddressModelToEntityMapper addressModelToEntityMapper, AddressDAO addressDAO) {
+    public ParkingModelToEntityMapper(AddressModelToEntityMapper addressModelToEntityMapper, UserModelToEntityMapper userModelToEntityMapper) {
         this.addressModelToEntityMapper = addressModelToEntityMapper;
+        this.userModelToEntityMapper = userModelToEntityMapper;
     }
 
     @Override
@@ -27,6 +29,7 @@ public class ParkingModelToEntityMapper implements Mapper<ParkingModel, Parking>
         parking.setTariff(from.getTariff());
         parking.setSlotsNumber(from.getSlotsNumber());
         parking.setActive(from.isActive());
+
         return parking;
     }
 }

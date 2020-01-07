@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "parking",schema = "park_hub")
-public class Parking implements Serializable {
+public class Parking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "parking_generator")
