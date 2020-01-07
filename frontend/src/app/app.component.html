@@ -11,10 +11,12 @@
           <a mat-button [routerLink]='["cabinet/addParking"]'>Add Parking</a>
           <a *ngIf="data.currentIsManager | async" mat-button [routerLink]='["manager/cabinet"]'>Manager Cabinet</a>
           <a *ngIf="data.currentIsAdmin | async" mat-button [routerLink]='["admin"]'>Admin Cabinet</a>
+          <a *ngIf="data.currentIsUser | async" mat-button [routerLink]='["userPage"]'>User Cabinet</a>
           <a mat-button [routerLink]='["signup/user"]'>Sing Up</a>
           <a mat-button [routerLink]='["signup/manager"]'>Sing Up Manager</a>
           <a mat-button [routerLink]='["login"]'>Login</a>
           <a mat-button (click)="logout()" >LogOut</a>
+
 
 
         </div>

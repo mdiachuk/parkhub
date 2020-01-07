@@ -35,14 +35,22 @@ export class LoginComponent implements OnInit {
         if (user) {
           if (user.role === 'USER') {
             this.changeIsLogged(true);
+            this.changeIsUser(true);
+            this.changeIsManager(false);
+            this.changeIsAdmin(false);
             console.log(user);
           }
           if (user.role === 'ADMIN') {
             this.changeIsAdmin(true);
             this.changeIsManager(false);
-          } else if (user.role === 'MANAGER') {
+            this.changeIsUser(false);
+            this.changeIsLogged(true);
+          }
+          if (user.role === 'MANAGER') {
             this.changeIsManager(true);
             this.changeIsAdmin(false);
+            this.changeIsUser(false);
+            this.changeIsLogged(true);
           }
           localStorage.setItem('TOKEN', user.token);
           this.router.navigate(['/home']);
@@ -62,7 +70,7 @@ export class LoginComponent implements OnInit {
       return 'Your account was blocked for 24 hours because of 3 unsuccessful tries to login. Please, try again later.';
     }
     if (code === 2) {
-      return 'Cannot activate account: less than 24 hours have passed.';
+      return 'Your account was blocked. Cannot activate account: less than 24 hours have passed.';
     }
     if (code === 4) {
       return 'No account with such email was found.';
@@ -88,6 +96,10 @@ export class LoginComponent implements OnInit {
 
   public changeIsManager(isManager: boolean) {
     this.data.changeIsManager(isManager);
+  }
+
+  public changeIsUser(isUser: boolean) {
+    this.data.changeIsManager(isUser);
   }
 
   public  openModal(text: string) {

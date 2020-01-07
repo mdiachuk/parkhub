@@ -17,7 +17,7 @@ import { ParkingService1 } from './services/parking.service';
 import {ParkingListComponent} from './parking-list/parking-list.component';
 import {ParkingListComponentManager} from './parking-list-manager/parking-list.component';
 
-import {ParkingService} from "./service/http-client.service";
+import {ParkingService, UserService} from './service/http-client.service';
 import {AddParkingComponent} from "./add-parking/add-parking.component";
 import {ParkingsComponent} from "./parkings/parkings.component";
 import {ParkingDetailComponent} from "./parking-detail/parking-detail.component";
@@ -38,8 +38,8 @@ import {
   MatIconModule,
   MatCheckboxModule,
   MatSnackBarModule
-} from "@angular/material";
-// import {UserComponent} from "./user/user.component";
+} from '@angular/material';
+import {UserComponent} from "./user/userPage.component";
 import {LoginComponent} from "./login/login.component";
 import {AlertDialogComponent} from "./alert-dialog/alert-dialog.component";
 import {ParkoffComponent} from "./parkoff/parkoff.component";
@@ -101,11 +101,10 @@ import {DataService} from './DataService/data.service';
     ParkingDetailSlotsComponent,
     ParkingsComponentSlots,
     BookingDetailComponent,
-    BookingsComponent
-
-    // UserComponent
+    BookingsComponent,
+    UserComponent
   ],
-  providers: [ParkingService, SlotService, ParkingService1, DataService],
+  providers: [ParkingService, SlotService, ParkingService1, DataService, UserService],
   bootstrap: [AppComponent],
   entryComponents: [AlertDialogComponent]
 })

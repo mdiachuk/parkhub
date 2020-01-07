@@ -22,6 +22,7 @@ export class UserComponent implements OnInit {
   user: UserInfo;
   updateForm: FormGroup;
 
+  // tslint:disable-next-line:no-shadowed-variable
   constructor( private uf: FormBuilder, private UserService: UserService) { }
 
   ngOnInit() {
