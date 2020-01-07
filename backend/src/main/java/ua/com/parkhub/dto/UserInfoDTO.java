@@ -4,18 +4,18 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserInfoDTO {
-    private long id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNumber;
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

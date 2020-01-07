@@ -4,7 +4,7 @@ import java.util.List;
 
 public class UserDTO {
 
-    private long id;
+    private Long id;
     private String email;
     private String password;
     private String firstName;
@@ -72,15 +72,15 @@ public class UserDTO {
         this.lastName = lastName;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public int getIdInt(){
-        return ((int) id);
-    }
+//    public int getIdInt(){
+//        return ((int) id);
+//    }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
