@@ -32,10 +32,10 @@ public class AdminService  {
 
     @Transactional
     public void setRole(Long id){
-        List<RoleModel> r = userRoleDAO.findAll().stream().filter(ro -> ro.getRoleName().equals(RoleDTO.MANAGER.toString())).collect(Collectors.toList());
+        List<RoleModel> roleList = userRoleDAO.findAll().stream().filter(role -> role.getRoleName().equals(RoleDTO.MANAGER.toString())).collect(Collectors.toList());
         Optional<UserModel> targetOptionalUser = userDAO.findElementById(id);
         UserModel targetUser = targetOptionalUser.get();
-        targetUser.setRole(r.get(0));
+        targetUser.setRole(roleList.get(0));
         userDAO.updateElement(targetUser);
     }
 
@@ -64,7 +64,8 @@ public class AdminService  {
 
     public String getFirstName(long id){
         Optional<UserModel> targetUser = userDAO.findElementById(id);
-        return targetUser.get().getFirstName();
+        String name = targetUser.get().getFirstName() + " " + targetUser.get().getLastName();
+        return name;
     }
 
     public long getId(long id){
