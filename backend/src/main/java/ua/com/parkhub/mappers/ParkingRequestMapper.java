@@ -29,4 +29,11 @@ public interface ParkingRequestMapper {
             @Mapping(target = "building", source = "addressModel.building"),
     })
     AddressModel parkingModelToAddressModel(ParkingModel parkingModel);
+    @Mappings({
+            @Mapping(target = "id", ignore = true),
+            @Mapping(target = "city", source = "addressModel.city"),
+            @Mapping(target = "street", source = "addressModel.street"),
+            @Mapping(target = "building", source = "addressModel.building"),
+    })
+    Address parkingModelToAddress(ParkingModel parkingModel);
 }

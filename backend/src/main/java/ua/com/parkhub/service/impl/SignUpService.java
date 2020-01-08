@@ -5,16 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ua.com.parkhub.model.UserModel;
+import ua.com.parkhub.model.*;
 import ua.com.parkhub.persistence.entities.User;
 import ua.com.parkhub.dto.ManagerRegistrationDataDTO;
 import ua.com.parkhub.dto.RoleDTO;
 import ua.com.parkhub.exceptions.EmailIsUsedException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberIsUsedException;
-import ua.com.parkhub.model.AuthUserModel;
-import ua.com.parkhub.model.CustomerModel;
-import ua.com.parkhub.model.PhoneEmailModel;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.persistence.entities.*;
 import ua.com.parkhub.persistence.impl.*;
@@ -49,7 +46,7 @@ public class SignUpService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Transactional
+//    @Transactional
 //    public void registerManager(ManagerRegistrationDataDTO manager) {
 //        Customer customer = createCustomer(manager);
 //        User user = createUser(manager, customer);
@@ -135,15 +132,23 @@ public class SignUpService {
 //                new NotFoundInDataBaseException("Support ticket type was not found by type=" + type));
 //    }
 
+//    }
+
+    public boolean isUserPresentByEmail(String email) {
+//        return userDAO.findOneByFieldEqual("email",email).orElseThrow(() ->
+//                new NotFoundInDataBaseException("Role was not found by name=" + email));
+        if(userDAO.findOneByFieldEqual("email", email).isPresent()){
+            return true;
+        }
+        return false;
+
     }
 
     //TODO to move this to dao
     public void setPhoneNumberForAuthUser(PhoneEmailModel phoneEmailModel) {
         if(userDAO.findOneByFieldEqual("email", phoneEmailModel.getEmail()).isPresent()){
-         User user = userDAO.findOneByFieldEqual("email", phoneEmailModel.getEmail()).get();
-         Customer customer = user.getCustomer();
-         customer.setPhoneNumber(phoneEmailModel.getPhoneNumber());
-         customerDAO.updateElement(customer);
+         CustomerModel customerModel = userDAO.hrhr(phoneEmailModel);
+         customerDAO.updateElement(customerModel);
         }
     }
 
@@ -195,12 +200,31 @@ public class SignUpService {
                 user.getFirstName().length() == 0 ||
                 user.getPassword().length() == 0 ||
                 user.getLastName().length() == 0 ||
-                user.getRole().getId() != 1) ? false : true;
+                user.getRole().getId() != 1) ? false : true;}
+
+//        public void createUserAfterSocialAuth(AuthUserModel userModel){
+//            if(!userDAO.findUserByEmail(userModel.getEmail()).isPresent()){
+//                User user = new User();
+//                Customer customer = new Customer();
+//                customer.setPhoneNumber("0665441958");
+//                user.setEmail(userModel.getEmail());
+//                user.setCustomer(customer);
+//                user.setPassword(passwordEncoder.encode("oauth2user"));
+//                user.setLastName(userModel.getLastName());
+//                user.setFirstName(userModel.getFirstName());
+//                //TODO after we discuss ,change to  USER
+//                RoleModel userRole = userRoleDAO.findOneByFieldEqual("roleName", "USER").get();
+//                user.setRole(userRole);
+//                userDAO.addElement(user);
+//                //return true
+//            }
+//            //return false;
+//        }
 
     public void createUserAfterSocialAuth(AuthUserModel userModel){
         if(!userDAO.findUserByEmail(userModel.getEmail()).isPresent()){
-            User user = new User();
-            Customer customer = new Customer();
+            UserModel user = new UserModel();
+            CustomerModel customer = new CustomerModel();
             customer.setPhoneNumber("0665441958");
             user.setEmail(userModel.getEmail());
             user.setCustomer(customer);
@@ -208,34 +232,28 @@ public class SignUpService {
             user.setLastName(userModel.getLastName());
             user.setFirstName(userModel.getFirstName());
             //TODO after we discuss ,change to  USER
-            UserRole userRole = userRoleDAO.findOneByFieldEqual("roleName", "user").get();
+            RoleModel userRole = userRoleDAO.findOneByFieldEqual("roleName", "USER").get();
             user.setRole(userRole);
+            customerDAO.addElement(customer);
             userDAO.addElement(user);
             //return true
         }
         //return false;
     }
-    private boolean emptyField (User user) {
-        return (user.getCustomer().getPhoneNumber().length()==0||
-                user.getEmail().length()==0||
-                user.getFirstName().length()==0||
-                user.getPassword().length()==0||
-                user.getLastName().length()==0||
-                user.getRole().getId()!=1)?false:true;
-    }
 
-    private boolean addUser(UserModel userModel) {
+//    private boolean addUser(UserModel userModel) {
 //        user.getCustomer().setActive(true);
 //        user.setPassword(passwordEncoder.encode(user.getPassword()));
 //        userDAO.addElement(user);
-        return true;
+//        return true;
 
-    }
+//    }
 
     public boolean isCustomerNumberEmpty(String email) {
-        User user = userDAO.findOneByFieldEqual("email", email).get();
-        Customer customer = user.getCustomer();
+        UserModel user = userDAO.findOneByFieldEqual("email", email).get();
+        CustomerModel customer = user.getCustomer();
         if(customerDAO.findOneByFieldEqual("phoneNumber","0665441958").isPresent()){
+         CustomerModel customer1 =    customerDAO.findOneByFieldEqual("phoneNumber","0665441958").get();
         return true;
         }
         return false;

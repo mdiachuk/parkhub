@@ -35,6 +35,8 @@ public class ElementDAO<E, M>  implements IElementDAO<M> {
     @Override
     public void addElement(M element) {
         emp.merge(modelToEntity.transform(element));
+        //emp.flush();
+       // return Optional.of(entityToModel.transform(emp.merge(modelToEntity.transform(element))));
     }
 
 
@@ -52,7 +54,7 @@ public class ElementDAO<E, M>  implements IElementDAO<M> {
         } catch (PersistenceException e) {
             element = null;
         }
-        return Optional.ofNullable(entityToModel.transform(element));
+        return Optional.ofNullable(element).map(entityToModel::transform);
     }
 
     @Override
@@ -83,9 +85,13 @@ public class ElementDAO<E, M>  implements IElementDAO<M> {
         } catch (PersistenceException e) {
             element = null;
         }
-        return Optional.ofNullable(entityToModel.transform(element));
+        return Optional.ofNullable(element).map(entityToModel::transform);
     }
 
 }
+
+
+
+
 
 

@@ -104,14 +104,13 @@ import {DataService} from './DataService/data.service';
     ParkingsComponentSlots,
     BookingDetailComponent,
     BookingsComponent,
-    UserComponent
+    UserComponent,
     BookingsComponent,
     AddPhoneNumberComponent
 
     // UserComponent
   ],
-  providers: [ParkingService, SlotService, ParkingService1, DataService, UserService],
-  providers: [ParkingService, SlotService, ParkingService1,
+  providers: [ParkingService, SlotService, ParkingService1,DataService, UserService,
     {
     provide: HTTP_INTERCEPTORS,
     useClass: CustomInterceptor ,

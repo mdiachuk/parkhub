@@ -29,7 +29,7 @@ public class Parking implements Serializable {
     @Column
     private boolean isActive = true;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id")
     private Address address;
 

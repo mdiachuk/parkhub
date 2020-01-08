@@ -16,7 +16,20 @@ export class LoginService {
     const body = {email: login.email, password: login.password};
     return this.http.post<User>('/api/login', body);
   }
+  oauthlogin(): Observable<User> {
+    // const options = {
+    //   headers: new HttpHeaders().append('Access-Control-Allow-Origin', '*')
+    // }
+    // const httpOptions = {
+    //   headers: new HttpHeaders({ 
+    //     'Access-Control-Allow-Origin':'*'
+    //   })
+    // };
+    console.log("in service");
+    return this.http.get<User>('http://localhost:8080/api/login/google', { withCredentials: true });
+    
 
+  }
+}
 
   
-}

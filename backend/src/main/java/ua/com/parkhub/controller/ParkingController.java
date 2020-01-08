@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/cabinet/addParking")
+@RequestMapping("/app-parkings")
 public class ParkingController {
 
     private final ParkingService parkingService;
@@ -34,7 +34,7 @@ public class ParkingController {
 
     @PostMapping
     public ResponseEntity addParking(@Valid @RequestBody ParkingRequestDTO parkingRequestDTO, BindingResult result) {
-        long id = 1;
+        long id = 17;
         if (result.hasErrors()) {
             List<String> errors = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)

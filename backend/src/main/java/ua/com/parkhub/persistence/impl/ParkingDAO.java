@@ -2,8 +2,7 @@ package ua.com.parkhub.persistence.impl;
 
 import org.springframework.stereotype.Repository;
 import ua.com.parkhub.mappers.Mapper;
-import ua.com.parkhub.model.AddressModel;
-import ua.com.parkhub.model.ParkingModel;
+import ua.com.parkhub.model.*;
 import ua.com.parkhub.persistence.entities.Address;
 import ua.com.parkhub.persistence.entities.Parking;
 
@@ -40,6 +39,12 @@ public class ParkingDAO extends ElementDAO<Parking, ParkingModel> {
                         (cb.equal(root.get("building"), addressModel.getBuilding())));
         TypedQuery<Long> count = emp.createQuery(cr);
         return count.getSingleResult();
+    }
+
+    public Parking hrhr(Address address,ParkingModel parkingModel){
+        Parking parking = modelToEntity.transform(parkingModel);
+        parking.setAddress(address);
+        return  parking;
     }
 }
 

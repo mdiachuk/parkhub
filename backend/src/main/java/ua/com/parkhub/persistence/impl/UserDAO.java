@@ -2,7 +2,8 @@ package ua.com.parkhub.persistence.impl;
 
 import org.springframework.stereotype.Repository;
 import ua.com.parkhub.mappers.Mapper;
-import ua.com.parkhub.model.UserModel;
+import ua.com.parkhub.model.*;
+import ua.com.parkhub.persistence.entities.Customer;
 import ua.com.parkhub.persistence.entities.User;
 
 import javax.persistence.Query;
@@ -54,6 +55,8 @@ public class UserDAO extends ElementDAO<User, UserModel> {
         } else {
             return query.getResultList().get(0).toString();
         }
+
+
     }
 
     /**
@@ -84,6 +87,14 @@ public class UserDAO extends ElementDAO<User, UserModel> {
 
     }
     public Optional<UserModel> findUserByEmail(String email) { return findOneByFieldEqual("email", email);}
+    public CustomerModel hrhr(PhoneEmailModel phoneEmailModel){
+        UserModel user = findOneByFieldEqual("email", phoneEmailModel.getEmail()).get();
+        CustomerModel customer = user.getCustomer();
+        customer.setPhoneNumber(phoneEmailModel.getPhoneNumber());
+        return  customer;
+    }
+
+
 
 }
 

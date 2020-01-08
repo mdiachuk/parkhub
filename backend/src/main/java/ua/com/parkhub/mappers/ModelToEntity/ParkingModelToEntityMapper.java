@@ -10,6 +10,8 @@ import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.persistence.entities.Parking;
 import ua.com.parkhub.persistence.entities.User;
 
+import java.util.stream.Collectors;
+
 @Component
 public class ParkingModelToEntityMapper implements Mapper<ParkingModel, Parking> {
 
@@ -28,9 +30,11 @@ public class ParkingModelToEntityMapper implements Mapper<ParkingModel, Parking>
         parking.setId(from.getId());
         parking.setTariff(from.getTariff());
         parking.setParkingName(from.getParkingName());
-        parking.setSlotsNumber(from.getSlotsNumber());
-        parking.setOwner(userModelToEntityMapper.transform(from.getOwner()));
+        if(from.getSlots() != null){
+            parking.setSlotsNumber(from.getSlotsNumber());
+        }
         parking.setAddress(addressModelToEntityMapper.transform(from.getAddressModel()));
+        parking.setOwner(userModelToEntityMapper.transform(from.getOwner()));
         return parking;
 
     }

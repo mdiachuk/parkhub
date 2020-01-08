@@ -77,7 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors()
-                .and().antMatcher("/**").authorizeRequests().antMatchers("/","/home","/login**", "/webjars/**", "/error**").permitAll().anyRequest()
+                .and().antMatcher("/**").authorizeRequests().antMatchers("/","/home","/login**", "/webjars/**", "/error**","/app-parkings").permitAll().anyRequest()
                 .authenticated().and().exceptionHandling()
                 .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/")).and().logout()
                 .logoutSuccessUrl("/").permitAll().and().csrf().disable()

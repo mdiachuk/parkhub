@@ -24,7 +24,7 @@ const routes: Routes = [
   {path: 'home', component:PageComponent},
   {path: 'signup/manager', component:ManagerSignupComponent},
   {path: 'cabinet', component: AppComponent },
-  {path: 'cabinet/addParking', component: AddParkingComponent},
+  {path: 'app-parkings', component: AddParkingComponent},
   {path: 'manager/cabinet', component: ParkingListComponentManager,},
   {path: 'manager/cabinet/:id', component: ParkingDetailComponent,},
   {path: 'admin', component: AdminComponent},
@@ -36,9 +36,9 @@ const routes: Routes = [
 
   // { path: 'user', component: UserPageComponent },
   { path: 'userPage', component: UserComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
   // {path: '', redirectTo: 'home', pathMatch: 'full'},
-  { path: 'phone-number', component: AddPhoneNumberComponent },
+  { path: 'phone-number', component: AddPhoneNumberComponent }
 
 ];
 

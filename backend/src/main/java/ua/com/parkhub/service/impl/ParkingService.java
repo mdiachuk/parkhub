@@ -91,7 +91,9 @@ public class ParkingService implements IParkingService {
         if (userDAO.findElementById(id).isPresent()) {
             parkingModel.setOwner(userDAO.findElementById(id).get());}
         addressDAO.addElement(address);
-        parkingModel.setAddressModel(address);
+        AddressModel ad = addressDAO.addWithResponse(address);
+        parkingModel.setAddressModel(ad);
+        parkingModel.setId(null);
         parkingDAO.addElement(parkingModel);
     }
 
