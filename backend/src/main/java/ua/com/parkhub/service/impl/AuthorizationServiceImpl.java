@@ -32,16 +32,15 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Override
     public UserModel loginUser(UserModel loginUser) {
-            UserModel user = userDAO.findUserByEmail(loginUser.getEmail())
-                    .orElseThrow(() -> new PermissionException(StatusCode.NO_ACCOUNT_FOUND));
+            UserModel user = userDAO.findUserByEmail(loginUser.getEmail());
                 activateIfPossible(user);
                 if (user.getNumberOfFailedPassEntering() >= THREE_TRIES_TO_ENTER) {
-                    blockIfNeeded(user);
+                    blockUser(user);
                 }
                 return checkCredentials(loginUser, user);
     }
 
-    private void blockIfNeeded(UserModel user) {
+    private void blockUser(UserModel user) {
         if (!(blockedUserDAO.isBlocked(user))) {
             blockedUserDAO.blockUser(user);
             throw new PermissionException(StatusCode.ACCOUNT_BLOCKED);

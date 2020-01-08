@@ -2,7 +2,6 @@ package ua.com.parkhub.mappers.EntityToModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.persistence.entities.User;
@@ -21,9 +20,6 @@ public class UserEntityToModelMapper implements Mapper<User, UserModel> {
 
     @Override
     public UserModel transform(User entity) {
-        if(entity == null) {
-            throw new ParkHubException("User entity to be converted to UserModel is null.");
-        }
         UserModel userModel = new UserModel();
         userModel.setEmail(entity.getEmail());
         userModel.setFirstName(entity.getFirstName());
