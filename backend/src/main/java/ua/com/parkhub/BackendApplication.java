@@ -4,22 +4,27 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import ua.com.parkhub.model.CustomerModel;
+import ua.com.parkhub.model.BookingModel;
 import ua.com.parkhub.model.ParkingModel;
-import ua.com.parkhub.model.SlotModel;
 import ua.com.parkhub.service.impl.BookingService;
-import ua.com.parkhub.service.impl.CustomerService;
 import ua.com.parkhub.service.impl.ParkingService;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @SpringBootApplication
 public class BackendApplication {
+    String checkIn = "2019-12-23 14:58";
+    String checkOut = "2020-01-07 20:30";
 
-    /*@Bean
-    CommandLineRunner init(BookingService bookingService) {
+    @Bean
+    CommandLineRunner init(ParkingService parkingService) {
         return args -> {
-            bookingService.addBooking("HH1234MM", "+380676767676", 1L);
+            ParkingModel parkingModel = parkingService.findParkingByIdWithSlotListAndDateRange(1L, checkIn, checkOut);
+            System.out.println(parkingModel);
         };
-    }*/
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(BackendApplication.class, args);

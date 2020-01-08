@@ -1,10 +1,8 @@
-package ua.com.parkhub.mappers.fromModelToEntity;
+package ua.com.parkhub.mappers.modelToEntity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.com.parkhub.mappers.Mapper;
-import ua.com.parkhub.mappers.fromEntityToModel.CustomerEntityToModelMapper;
-import ua.com.parkhub.mappers.fromEntityToModel.SlotEntityToModelMapper;
 import ua.com.parkhub.model.BookingModel;
 import ua.com.parkhub.persistence.entities.Booking;
 

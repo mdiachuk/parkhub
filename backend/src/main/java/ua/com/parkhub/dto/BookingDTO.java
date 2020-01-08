@@ -17,7 +17,7 @@ public class BookingDTO {
     }
 
     public void setCheckIn(LocalDateTime checkIn) {
-        this.checkIn = DateFormatter.format(checkIn);
+        this.checkIn = DateFormatter.convertDateTimeToString(checkIn);
     }
 
     public String getSlot() {

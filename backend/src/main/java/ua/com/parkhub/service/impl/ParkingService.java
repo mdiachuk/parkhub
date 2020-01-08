@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.exceptions.ParkHubException;
-import ua.com.parkhub.mappers.fromEntityToModel.ParkingEntityToModelMapper;
+import ua.com.parkhub.mappers.entityToModel.ParkingEntityToModelMapper;
+import ua.com.parkhub.model.BookingModel;
 import ua.com.parkhub.model.ParkingModel;
+import ua.com.parkhub.model.SlotModel;
 import ua.com.parkhub.persistence.impl.ParkingDAO;
 import ua.com.parkhub.service.IParkingService;
 
@@ -23,18 +25,20 @@ import java.util.stream.Collectors;
 public class ParkingService implements IParkingService {
 
     private ParkingDAO parkingDAO;
+    private BookingService bookingService;
 
     @Autowired
-    public ParkingService(ParkingDAO parkingDAO, ParkingEntityToModelMapper parkingEntityToModelMapper) {
+    public ParkingService(ParkingDAO parkingDAO, BookingService bookingService) {
         this.parkingDAO = parkingDAO;
+        this.bookingService = bookingService;
     }
 
-    public List<ParkingModel> findAllParking(){
+    public List<ParkingModel> findAllParking() {
 
         return parkingDAO.findAll();
     }
 
-    public Optional<ParkingModel> findParkingById(long id){
+    public Optional<ParkingModel> findParkingById(long id) {
 
         return parkingDAO.findElementById(id);
     }
@@ -43,7 +47,7 @@ public class ParkingService implements IParkingService {
         ParkingModel parkingModel = findParkingById(id).get();
         Field[] paramFields = parkingModelParam.getClass().getDeclaredFields();
         List<String> fieldsNameList = Arrays.stream(paramFields).filter(Objects::nonNull).map(Field::getName).collect(Collectors.toList());
-        for ( String name : fieldsNameList) {
+        for (String name : fieldsNameList) {
             Field fieldParam = parkingModelParam.getClass().getDeclaredField(name);
             Field field = parkingModelParam.getClass().getDeclaredField(name);
             field.setAccessible(true);
@@ -62,5 +66,18 @@ public class ParkingService implements IParkingService {
             return parking;
         }
         throw new ParkHubException("Unfortunately this parking is temporary unavailable");
+    }
+
+    @Override
+    public ParkingModel findParkingByIdWithSlotListAndDateRange(long id, String checkIn, String checkOut) {
+        ParkingModel parkingModel = findParkingByIdWithSlotList(id);
+        List<SlotModel> slotList = parkingModel.getSlots();
+        for (SlotModel slotModel : slotList) {
+            Optional<BookingModel> bookingModel = bookingService.findBookingByIdAndDateTimeRange(slotModel.getId(), checkIn, checkOut);
+            if (bookingModel.isPresent()) {
+                slotModel.setReserved(true);
+            }
+        }
+        return parkingModel;
     }
 }

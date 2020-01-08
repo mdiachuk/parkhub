@@ -5,8 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.ParkingDTO;
 import ua.com.parkhub.dto.ParkingRequestDTO;
-import ua.com.parkhub.mappers.fromDtoToModel.ParkingRequestDtoToModelMapper;
-import ua.com.parkhub.mappers.fromModelToDTO.ParkingModelToDTOMapper;
+import ua.com.parkhub.mappers.dtoToModel.ParkingRequestDtoToModelMapper;
+import ua.com.parkhub.mappers.modelToDto.ParkingModelToDTOMapper;
 import ua.com.parkhub.service.impl.ParkingService;
 
 import java.util.List;

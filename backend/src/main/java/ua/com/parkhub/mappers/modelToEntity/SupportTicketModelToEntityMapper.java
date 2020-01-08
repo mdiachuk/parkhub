@@ -1,4 +1,4 @@
-package ua.com.parkhub.mappers.fromModelToEntity;
+package ua.com.parkhub.mappers.modelToEntity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

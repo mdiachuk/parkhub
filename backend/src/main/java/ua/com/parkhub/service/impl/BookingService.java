@@ -1,17 +1,20 @@
 package ua.com.parkhub.service.impl;
 
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.model.BookingModel;
 import ua.com.parkhub.model.CustomerModel;
+import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.model.SlotModel;
 import ua.com.parkhub.persistence.impl.BookingDAO;
 import ua.com.parkhub.persistence.impl.SlotDAO;
 import ua.com.parkhub.service.IBookingService;
 import ua.com.parkhub.service.ICustomerService;
+import ua.com.parkhub.util.formatter.DateFormatter;
 
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
@@ -60,5 +63,15 @@ public class BookingService implements IBookingService {
         booking.setActive(true);
         bookingDAO.addElement(booking);
         return booking;
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<BookingModel> findBookingByIdAndDateTimeRange(long id, String checkIn, String checkOut) {
+        LocalDateTime localDateTimeCheckIn = DateFormatter.convertStringToLocalDateTime(checkIn);
+        LocalDateTime localDateTimeCheckOut = DateFormatter.convertStringToLocalDateTime(checkOut);
+        String fieldNameId = "slot";
+        String fieldNameCheckIn = "checkIn";
+        String fieldNameCheckOut = "checkOut";
+        return bookingDAO.findElementByFieldsEqual(id, localDateTimeCheckIn, localDateTimeCheckOut, fieldNameId, fieldNameCheckIn, fieldNameCheckOut);
     }
 }

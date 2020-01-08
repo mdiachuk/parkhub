@@ -39,4 +39,14 @@ public class SlotModel {
     public void setActive(boolean active) {
         isActive = active;
     }
+
+    @Override
+    public String toString() {
+        return "SlotModel{" +
+                "id=" + id +
+                ", slotNumber='" + slotNumber + '\'' +
+                ", isReserved=" + isReserved +
+                ", isActive=" + isActive +
+                '}';
+    }
 }

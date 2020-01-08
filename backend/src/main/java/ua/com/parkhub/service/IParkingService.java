@@ -11,5 +11,6 @@ public interface IParkingService {
     List<ParkingModel> findAllParking();
     void updateParking(Long id, ParkingModel parkingModelParam) throws NoSuchFieldException, IllegalAccessException;
     ParkingModel findParkingByIdWithSlotList(long id);
+    ParkingModel findParkingByIdWithSlotListAndDateRange(long id, String checkIn, String checkOut);
 
 }
