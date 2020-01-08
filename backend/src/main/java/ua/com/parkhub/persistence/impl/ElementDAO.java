@@ -32,7 +32,10 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
 
     @Override
     public Optional<M> addElement(M element) {
-        return Optional.of(entityToModel.transform(emp.merge(modelToEntity.transform(element))));
+        E entity = modelToEntity.transform(element);
+        emp.merge(entity);
+        emp.flush();
+        return Optional.of(entityToModel.transform(entity));
     }
 
     @Override
@@ -58,15 +61,15 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
         } catch (PersistenceException e) {
             element = null;
         }
-        return Optional.ofNullable(entityToModel.transform(element));
+        return Optional.ofNullable(element).map(entityToModel::transform);
     }
 
     @Override
     public void deleteElement(M element) {
-
+        emp.remove(emp.merge(modelToEntity.transform(element)));
     }
 
-
+    @Override
     public <F> Optional<M> findOneByFieldEqual(String fieldName, F fieldValue) {
         CriteriaBuilder criteriaBuilder = emp.getCriteriaBuilder();
         CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(elementClass);
@@ -79,9 +82,10 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
         } catch (PersistenceException e) {
             element = null;
         }
-        return Optional.ofNullable(entityToModel.transform(element));
+        return Optional.ofNullable(element).map(entityToModel::transform);
     }
 
+    @Override
     public <F> List<M> findManyByFieldEqual(String fieldName, F fieldValue) {
         CriteriaBuilder criteriaBuilder = emp.getCriteriaBuilder();
         CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(elementClass);
