@@ -26,14 +26,14 @@ public class    CustomerDtoToCustomerModelMapper implements Mapper<CustomerDTO, 
         customerModel.setId(from.getId());
         customerModel.setActive(from.isActive());
         customerModel.setPhoneNumber(from.getPhoneNumber());
-        List<SupportTicketModel> list = null;
+        /*List<SupportTicketModel> list = null;
         if (from.getSupportTickets()!=null){
             list = new ArrayList<>();
             for (int i = 0; i < from.getSupportTickets().size(); i++) {
                 list.add(supportTicketDtoToSupportTicketModelMapper.transform(from.getSupportTickets().get(i)));
             }
         }
-        customerModel.setSupportTickets(list);
+        customerModel.setSupportTickets(list);*/
 
         return customerModel;
     }

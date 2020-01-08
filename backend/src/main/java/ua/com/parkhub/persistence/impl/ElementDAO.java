@@ -40,7 +40,7 @@ public class ElementDAO<E, M>  implements IElementDAO<M> {
 
     @Transactional
     public void updateElement(M element) {
-        emp.persist(modelToEntity.transform(element));
+        emp.merge(modelToEntity.transform(element));
     }
 
 

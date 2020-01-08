@@ -8,7 +8,7 @@ public class SupportTicketModel {
     private String description;
     private boolean isSolved;
     private SupportTicketTypeModel supportTicketType;
-    private Customer customer;
+    private CustomerModel customer;
 
 
     public Long getId() {
@@ -43,11 +43,11 @@ public class SupportTicketModel {
         this.supportTicketType = supportTicketType;
     }
 
-    public Customer getCustomer() {
+    public CustomerModel getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(CustomerModel customer) {
         this.customer = customer;
     }
 }

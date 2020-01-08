@@ -1,5 +1,6 @@
 package ua.com.parkhub.dto;
 
+import ua.com.parkhub.model.CustomerModel;
 import ua.com.parkhub.persistence.entities.Customer;
 
 import java.util.Objects;
@@ -15,7 +16,7 @@ public class SupportTicketDTO {
 
     private SupportTicketTypeDTO supportTicketType;
 
-    private Customer customer;
+    private CustomerModel customer;
 
     public Long getId() {
         return id;
@@ -49,11 +50,11 @@ public class SupportTicketDTO {
         this.supportTicketType = supportTicketType;
     }
 
-    public Customer getCustomer() {
+    public CustomerModel getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(CustomerModel customer) {
         this.customer = customer;
     }
 

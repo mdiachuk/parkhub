@@ -9,7 +9,7 @@ public class CustomerModel extends AbstractModel {
     private String phoneNumber;
     private boolean isActive = true;
     private List<BookingModel> bookings;
-    private List<SupportTicketModel> supportTickets;
+    //private List<SupportTicketModel> supportTickets;
 
     public Long getId() {
         return id;
@@ -43,13 +43,13 @@ public class CustomerModel extends AbstractModel {
         this.bookings = bookings;
     }
 
-    public List<SupportTicketModel> getSupportTickets() {
+    /*public List<SupportTicketModel> getSupportTickets() {
         return supportTickets;
     }
 
     public void setSupportTickets(List<SupportTicketModel> supportTickets) {
         this.supportTickets = supportTickets;
-    }
+    }*/
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
