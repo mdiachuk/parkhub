@@ -1,6 +1,7 @@
 import {Component, NgModule} from '@angular/core';
 import {DataService} from './DataService/data.service';
 import {Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
 
 export class AppModule { }
 @Component({
@@ -13,7 +14,16 @@ export class AppComponent {
 
 
   constructor(private router: Router,
-              private data: DataService) {
+              private data: DataService,
+              public http: HttpClient) {
+  }
+
+  ping(): void {
+    this.http.get('/api/*')
+      .subscribe(
+        data => console.log(data),
+        err => console.log(err)
+      );
   }
 
   logout(): void {

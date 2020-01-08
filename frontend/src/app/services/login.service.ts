@@ -11,6 +11,10 @@ export class LoginService {
 
   constructor(private http: HttpClient) { }
 
+  public getToken(): string {
+    return localStorage.getItem('TOKEN');
+  }
+
 
   login(login: Login): Observable<User> {
     const body = {email: login.email, password: login.password};

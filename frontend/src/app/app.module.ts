@@ -8,7 +8,7 @@ import {MaterialModule} from './material.module';
 import {AppComponent} from './app.component';
 import {SingupComponent} from "./singup/singup.component";
 import {AppRoutingModule} from "./app-routing.module";
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClientModule} from '@angular/common/http';
 import {MatInputModule} from "@angular/material/input";
 import {MatCardModule} from "@angular/material/card";
 
@@ -53,7 +53,8 @@ import {ParkingDetailSlotsComponent} from "./parkings-ad/parking-detail/parking-
 import {SlotService} from "./serviceSlot/slot.service";
 import { from } from 'rxjs';
 import {DataService} from './DataService/data.service';
-
+import { ParkhubInterceptorComponent } from './parkhub-interceptor/parkhub-interceptor.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -104,7 +105,12 @@ import {DataService} from './DataService/data.service';
     BookingsComponent,
     UserComponent
   ],
-  providers: [ParkingService, SlotService, ParkingService1, DataService, UserService],
+  providers: [ParkingService, SlotService, ParkingService1, DataService, UserService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ParkhubInterceptorComponent,
+      multi: true
+    }],
   bootstrap: [AppComponent],
   entryComponents: [AlertDialogComponent]
 })
