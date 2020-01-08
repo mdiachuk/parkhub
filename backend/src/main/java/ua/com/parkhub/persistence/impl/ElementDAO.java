@@ -10,6 +10,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -79,5 +80,20 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
             element = null;
         }
         return Optional.ofNullable(entityToModel.transform(element));
+    }
+
+    public <F> List<M> findManyByFieldEqual(String fieldName, F fieldValue) {
+        CriteriaBuilder criteriaBuilder = emp.getCriteriaBuilder();
+        CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(elementClass);
+        Root<E> elementRoot = criteriaQuery.from(elementClass);
+        criteriaQuery.select(elementRoot).where(criteriaBuilder.equal(elementRoot.get(fieldName), fieldValue));
+
+        List<M> elements;
+        try {
+            elements = emp.createQuery(criteriaQuery).getResultList().stream().map(entityToModel::transform).collect(Collectors.toList());
+        } catch (PersistenceException e) {
+            elements = new ArrayList<>();
+        }
+        return elements;
     }
 }

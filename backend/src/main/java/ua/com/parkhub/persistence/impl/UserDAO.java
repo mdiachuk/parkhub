@@ -2,12 +2,11 @@ package ua.com.parkhub.persistence.impl;
 
 import org.springframework.stereotype.Repository;
 import ua.com.parkhub.mappers.Mapper;
-import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.model.UserModel;
-import ua.com.parkhub.persistence.entities.Parking;
 import ua.com.parkhub.persistence.entities.User;
 
 import javax.persistence.Query;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -85,10 +84,16 @@ public class UserDAO extends ElementDAO<User, UserModel> {
 
     }
 
-    public Optional<UserModel> findUserByEmail(String email) { return findOneByFieldEqual("email", email);}
+    public Optional<UserModel> findUserByEmail(String email) {
+        return findOneByFieldEqual("email", email);
+    }
 
     public Optional<UserModel> findUserByCustomerId(Long id) {
         return findOneByFieldEqual("customer", id);
+    }
+
+    public List<UserModel> findUsersByRoleId(Long id) {
+        return findManyByFieldEqual("role", id);
     }
 }
 

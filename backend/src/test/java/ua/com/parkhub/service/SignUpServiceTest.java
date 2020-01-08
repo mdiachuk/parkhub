@@ -16,6 +16,7 @@ import ua.com.parkhub.persistence.impl.*;
 import ua.com.parkhub.service.impl.SignUpService;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.*;
@@ -114,6 +115,7 @@ class SignUpServiceTest {
         CustomerModel customer = new CustomerModel();
         UserModel user = Mockito.mock(UserModel.class);
         RoleModel role = RoleModel.PENDING;
+        role.setId((long) 1);
         TicketTypeModel ticketType = TicketTypeModel.MANAGER_REGISTRATION_REQUEST;
 
         when(manager.getUser()).thenReturn(user);
@@ -121,6 +123,7 @@ class SignUpServiceTest {
         when(customerDAO.findCustomerByPhoneNumber(customer.getPhoneNumber())).thenReturn(Optional.of(customer));
         when(customerDAO.addElement(customer)).thenReturn(Optional.of(customer));
         when(userRoleDAO.findUserRoleByRoleName(anyString())).thenReturn(Optional.of(role));
+        when(userDAO.findUsersByRoleId(anyLong())).thenReturn(Arrays.asList(user));
         when(userDAO.findElementById(anyLong())).thenReturn(Optional.of(user));
         when(supportTicketTypeDAO.findSupportTicketTypeByType(anyString())).thenReturn(Optional.of(ticketType));
 
@@ -149,12 +152,14 @@ class SignUpServiceTest {
         CustomerModel customer = new CustomerModel();
         UserModel user = Mockito.mock(UserModel.class);
         RoleModel role = RoleModel.PENDING;
+        role.setId((long) 1);
         TicketTypeModel ticketType = TicketTypeModel.MANAGER_REGISTRATION_REQUEST;
 
         when(manager.getUser()).thenReturn(user);
         when(user.getCustomer()).thenReturn(customer);
         when(customerDAO.addElement(customer)).thenReturn(Optional.of(customer));
         when(userRoleDAO.findUserRoleByRoleName(anyString())).thenReturn(Optional.of(role));
+        when(userDAO.findUsersByRoleId(anyLong())).thenReturn(Arrays.asList(user));
         when(userDAO.findElementById(anyLong())).thenReturn(Optional.of(user));
         when(supportTicketTypeDAO.findSupportTicketTypeByType(anyString())).thenReturn(Optional.of(ticketType));
 

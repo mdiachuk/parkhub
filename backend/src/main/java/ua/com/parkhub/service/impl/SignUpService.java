@@ -12,13 +12,11 @@ import ua.com.parkhub.model.*;
 import ua.com.parkhub.persistence.impl.*;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class SignUpService {
-
-    private static final long ADMIN_ID = 1;
 
     private static final Logger logger = LoggerFactory.getLogger(SignUpService.class);
 
@@ -56,21 +54,19 @@ public class SignUpService {
 
     @Transactional
     public CustomerModel createCustomer(CustomerModel customer) {
-        Optional<CustomerModel> optionalCustomer = customerDAO
-                .findCustomerByPhoneNumber(customer.getPhoneNumber());
-        if (optionalCustomer.isPresent()) {
+        return customerDAO.findCustomerByPhoneNumber(customer.getPhoneNumber()).map(existingCustomer -> {
             logger.info("Customer with phone number={} was found", customer.getPhoneNumber());
-            Optional<UserModel> optionalUser = userDAO
-                    .findUserByCustomerId(optionalCustomer.get().getId());
+            Optional<UserModel> optionalUser = userDAO.findUserByCustomerId(existingCustomer.getId());
             if (optionalUser.isPresent()) {
                 throw new PhoneNumberException("Account with this phone number already exists!");
             }
             logger.info("Existing customer was assigned");
-            return optionalCustomer.get();
-        }
-        customer.setActive(true);
-        logger.info("New customer was created");
-        return customer;
+            return existingCustomer;
+        }).orElseGet(() -> {
+            customer.setActive(true);
+            logger.info("New customer was created");
+            return customer;
+        });
     }
 
     @Transactional
@@ -92,7 +88,7 @@ public class SignUpService {
         ticket.setDescription(description);
         ticket.setCustomer(customer);
         ticket.setType(findSupportTicketType(TicketTypeModel.MANAGER_REGISTRATION_REQUEST.getType()));
-        ticket.setSolvers(Arrays.asList(findAdmin(1)));
+        ticket.setSolvers(findSolvers(RoleModel.ADMIN.getRoleName()));
         logger.info("New support ticket was created");
         return ticket;
     }
@@ -113,9 +109,12 @@ public class SignUpService {
                 new NotFoundInDataBaseException("Support ticket type was not found by type=" + type));
     }
 
-    private UserModel findAdmin(long id) {
-        return userDAO.findElementById(ADMIN_ID).orElseThrow(() -> new
-                NotFoundInDataBaseException("Admin was not found by id=" + id));
+    private List<UserModel> findSolvers(String role) {
+        List<UserModel> solvers = userDAO.findUsersByRoleId(findUserRole(role).getId());
+        if (solvers.isEmpty()) {
+            throw new NotFoundInDataBaseException("Solvers were not found by role=" + role);
+        }
+        return solvers;
     }
 
     /**

@@ -28,10 +28,6 @@ public class Customer implements Serializable {
     @JoinColumn(name = "customer_id")
     private List<Booking> bookings;
 
-    @OneToMany
-    @JoinColumn(name = "author_id")
-    private List<SupportTicket> supportTickets;
-
     @OneToOne(mappedBy = "customer")
     private User user;
 
@@ -65,14 +61,6 @@ public class Customer implements Serializable {
 
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
-    }
-
-    public List<SupportTicket> getSupportTickets() {
-        return supportTickets;
-    }
-
-    public void setSupportTickets(List<SupportTicket> supportTickets) {
-        this.supportTickets = supportTickets;
     }
 
     public User getUser() {
