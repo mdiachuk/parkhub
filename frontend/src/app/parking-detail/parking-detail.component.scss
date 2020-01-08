@@ -5,20 +5,6 @@
     margin-left: 80%;
 }
 
-.leftSide{
-    width: 30%;
-    float: left;
-    border: 1px solid silver;
-}
-
-.rightSide{
-    border: 1px solid silver;
-}
-
-mat-list-item{
-    border: 1px solid pink;
-}
-
 .changeButton{
     margin-right: 5%;
 }
@@ -27,15 +13,22 @@ mat-list-item{
     margin-left: auto;
 }
 
+.submitButtonCenter{
+    text-align: center;
+}
+
 .submitButton{
-    margin-left: 50%;
     margin-top: 4px;
 }
 
 .example-form-field{
-    margin-left: 45%;
+    margin-left: 450px;
     margin-right: auto;
 }
- span{
-     width: 113px;
+ .title{
+     width: 400px;
+ }
+
+ .parkingValue{
+    width: 115px;
  }

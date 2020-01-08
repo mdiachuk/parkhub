@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar} from '@angular/material/snack-bar';
 import { MatDialog} from '@angular/material/dialog';
 import { AddressDialog } from './parking-detail-dialog-component';
+import { FormControl, Validators} from '@angular/forms';
 
 
 
@@ -19,8 +20,9 @@ export class ParkingDetailComponent implements OnInit {
   parkingDTO: ParkingDetail;
   parkingDetail: ParkingDetail;
   buttonStatusList: Array<boolean>;
+  input = new FormControl('', [Validators.required]);
+  code: number = 0;
   
-
   constructor(private parkingService: ParkingService, private route: ActivatedRoute, private _snackBar: MatSnackBar, public dialog: MatDialog){
   }
 
@@ -32,7 +34,10 @@ export class ParkingDetailComponent implements OnInit {
     }
 
     getData(): void {
-      this.parkingService.getParking(this.parkingID).subscribe(parking => this.parkingDTO = parking);
+      this.parkingService.getParking(this.parkingID).subscribe(parking => this.parkingDTO = parking, err => {
+        this.openErrorSnackBar(this.checkStatusCode(err));
+      }
+      );
     }
 
     revert(number: number){
@@ -41,9 +46,21 @@ export class ParkingDetailComponent implements OnInit {
 
     openSnackBar(parkingAttribute: string) {
       this._snackBar.open("Saved: ", parkingAttribute,{
-        duration: 2000,
+        duration: 4000,
       });
     }
+    
+    checkStatusCode(code: number): string {
+      if (code === 16) {
+        return 'Such parking doesn\'t exist!';
+      }
+    }
+  
+    openErrorSnackBar(message: string) {
+    this._snackBar.open(message, 'Close', {
+      duration: 4000,
+    });
+  }
 
     openDialog(): void {
       const dialogRef = this.dialog.open(AddressDialog, {
@@ -62,7 +79,6 @@ export class ParkingDetailComponent implements OnInit {
   //   let setNull = () => setAll(null);
   //   setNull;
 
-
     updateParking(): void {
       console.log(this.parkingDetail);
 
@@ -71,6 +87,11 @@ export class ParkingDetailComponent implements OnInit {
 
     refresh(): void {
       window.location.reload();
+  }
+
+  getErrorMessage() {
+   if (this.input.hasError('required'))
+   return 'You must enter a value';
   }
 }
 

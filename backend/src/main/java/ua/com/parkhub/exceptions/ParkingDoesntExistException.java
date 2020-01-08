@@ -6,4 +6,13 @@ public class ParkingDoesntExistException extends RuntimeException {
         super(message);
     }
 
+    public ParkingDoesntExistException(StatusCode statusCode){
+        this.statusCode = statusCode;
+    }
+
+    private StatusCode statusCode;
+
+    public StatusCode getStatusCode() {
+        return statusCode;
+    }
 }

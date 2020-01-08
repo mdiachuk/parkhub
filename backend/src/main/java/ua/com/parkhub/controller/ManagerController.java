@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.ParkingDTO;
 import ua.com.parkhub.dto.ParkingUpdateRequestDTO;
 import ua.com.parkhub.exceptions.ParkingDoesntExistException;
+import ua.com.parkhub.exceptions.StatusCode;
 import ua.com.parkhub.mappers.fromDtoToModel.ParkingRequestDtoToModelMapper;
 import ua.com.parkhub.mappers.fromModelToDTO.ParkingModelToDTOMapper;
 import ua.com.parkhub.service.ParkingService;
@@ -47,9 +48,8 @@ public class ManagerController {
     }
 
     @ExceptionHandler(ParkingDoesntExistException.class)
-    public ResponseEntity<String> handleEmailException(ParkingDoesntExistException e) {
-        String message = e.getMessage();
-        return ResponseEntity.badRequest().body(message);
+    public ResponseEntity<Integer> handleEmailException(ParkingDoesntExistException e) {
+        return ResponseEntity.badRequest().body(e.getStatusCode().getCode());
     }
 }
 

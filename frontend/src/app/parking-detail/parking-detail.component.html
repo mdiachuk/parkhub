@@ -6,22 +6,12 @@
 </mat-toolbar-row>
 </mat-toolbar>
 
-    <mat-list class = "leftSide">
-      <mat-list-item>Name</mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item>Address</mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item>Places</mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item>Tariff</mat-list-item>
-      <mat-divider></mat-divider>
-    </mat-list>
+    <mat-list *ngIf="parkingDTO">
 
-    <mat-list class="rightSide" *ngIf="parkingDTO">
-
-      <mat-list-item> <span>{{parkingDTO.parkingName}}</span>
+      <mat-list-item> <span class="title">Name:</span> <span class="parkingValue">{{parkingDTO.parkingName}}</span>
           <mat-form-field class="example-form-field" *ngIf="!buttonStatusList[0]">
-              <input matInput type="text" placeholder="New name" #parkingName [(ngModel)]="parkingDetail.parkingName"> 
+              <input matInput type="text" placeholder="New name" #parkingName [(ngModel)]="parkingDetail.parkingName" required> 
+              <mat-error *ngIf="input.invalid">{{getErrorMessage()}}</mat-error>
               <button mat-button *ngIf="parkingDetail.parkingName" matSuffix mat-icon-button aria-label="Clear" (click)="parkingDetail.parkingName=''">
                 <mat-icon>close</mat-icon>
               </button>
@@ -32,7 +22,7 @@
 
       <mat-divider></mat-divider>
 
-      <mat-list-item><span>{{parkingDTO.address}}</span> 
+      <mat-list-item><span class="title">Address:</span><span class="parkingValue">{{parkingDTO.address}}</span> 
           <button class="saveButton" mat-raised-button color="accent" [disabled] = "buttonStatusList[1]" (click) = "revert(1); openSnackBar(parkingDetail.street + ' ' + parkingDetail.building + ', ' + parkingDetail.city)">Save</button>
         <button class="changeButton" mat-raised-button color="accent" [disabled] = "!buttonStatusList[1]" (click) = "revert(1); openDialog(); buttonStatusList[4] = false">Change</button> 
       
@@ -40,7 +30,7 @@
 
       <mat-divider></mat-divider>
 
-      <mat-list-item><span>{{parkingDTO.slotsNumber}}</span>
+      <mat-list-item><span class="title">Places:</span><span class="parkingValue">{{parkingDTO.slotsNumber}}</span>
           <mat-form-field  class="example-form-field" *ngIf="!buttonStatusList[2]">
               <input matInput type="number" placeholder="New places quantity" [(ngModel)]="parkingDetail.slotsNumber">
               <button mat-button *ngIf="parkingDetail.slotsNumber" matSuffix mat-icon-button aria-label="Clear" (click)="parkingDetail.slotsNumber=''">
@@ -53,7 +43,7 @@
 
       <mat-divider></mat-divider>
 
-      <mat-list-item><span>{{parkingDTO.tariff}}</span>
+      <mat-list-item><span class="title">Tariff:</span><span class="parkingValue">{{parkingDTO.tariff}}</span>
           <mat-form-field class="example-form-field" *ngIf="!buttonStatusList[3]">
               <input matInput type="number" placeholder="New tariff" [(ngModel)]="parkingDetail.tariff">
               <button mat-button *ngIf="parkingDetail.tariff" matSuffix mat-icon-button aria-label="Clear" (click)="parkingDetail.tariff=''">
@@ -68,7 +58,10 @@
         
 </mat-list>
 
-<button  class="submitButton" mat-raised-button color="primary" [disabled] = "buttonStatusList[4]" (click)="revert(4); updateParking(); refresh()">Submit</button>
+<div class="submitButtonCenter">
+  <button class="submitButton" mat-raised-button color="primary" [disabled] = "buttonStatusList[4]" (click)="revert(4); updateParking(); refresh()">Submit</button>
+</div>
+
 
 
   

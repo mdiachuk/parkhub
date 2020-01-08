@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.exceptions.ParkingDoesntExistException;
+import ua.com.parkhub.exceptions.StatusCode;
 import ua.com.parkhub.mappers.fromEntityToModel.ParkingEntityToModelMapper;
 import ua.com.parkhub.mappers.fromModelToEntity.AddressModelToEntityMapper;
 import ua.com.parkhub.mappers.fromModelToEntity.ParkingModelToEntityMapper;
@@ -39,7 +40,7 @@ public class ParkingService {
 
     public ParkingModel findParkingById(long id) {
 
-        return parkingDAO.findElementById(id).orElseThrow(() -> new ParkingDoesntExistException("Such parking doesn't exist"));
+        return parkingDAO.findElementById(id).orElseThrow(() -> new ParkingDoesntExistException(StatusCode.PARKING_DOESNT_EXIST));
     }
 
     public void updateParking(Long id, ParkingModel parkingModelParam) {
