@@ -25,7 +25,7 @@ public class HomeController {
     }
 
 
-    @GetMapping("/home")
+    @GetMapping("/api/home")
     public ResponseEntity<List<ParkingDTO>> getAllParking() {
         return ResponseEntity.ok(parkingService.findAllParkingModel().stream().map(parkingMapper::transform).collect(Collectors.toList()));
         //return ResponseEntity.ok(parkingMapper.transform(parkingService.findAllParking()))

@@ -22,7 +22,7 @@ public class PaymentController {
         this.paymentService = paymentService;
     }
 
-    @RequestMapping(value = "/parkoff", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/api/parkoff", method = {RequestMethod.GET, RequestMethod.POST})
     public ResponseEntity<PaymentResponseDTO> getPhoneNumber(@RequestBody PhoneNumberDTO phoneNumber) {
 
         PaymentResponseDTO paymentResponseDTO = new PaymentResponseDTO();

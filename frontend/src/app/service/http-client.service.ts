@@ -7,6 +7,7 @@ import {Manager} from '../models/manager';
 import {Admin} from '../Classes/admin';
 import {UserInfo} from '../interfaces/userInfo';
 import { Login } from '../interfaces/login';
+import * as jwt_decode from "jwt-decode";
 
 export class User {
   constructor(
@@ -168,24 +169,13 @@ export class UserService {
   }
 
   getUserID(){
-    // localStorage.setItem('TOKEN', '{id}: 1 , email : lolkek');
-    var idUser = '';
-    var test= '';
-    var i = localStorage.getItem('TOKEN').indexOf('id');
-    while(test != ','){
-      if(localStorage.getItem('TOKEN')[i] === ','){
-        break;
-      }else{
-        test = localStorage.getItem('TOKEN')[i];
-        if(( parseInt(localStorage.getItem('TOKEN')[i])) >= 0 ){
-          idUser = idUser + localStorage.getItem('TOKEN')[i];
-        }
-        i++;
-      }
+    const token = localStorage.getItem('TOKEN');
+    if (token) {
+      const decoded = jwt_decode(token);
+      return decoded.id;
+    } else {
+      return -1;
     }
-
-
-    return idUser;
   }
   getData(){
     return this.http.get('/api/user/' + this.getUserID());

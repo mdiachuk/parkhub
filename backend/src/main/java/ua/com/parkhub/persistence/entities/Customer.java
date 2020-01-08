@@ -15,7 +15,7 @@ public class Customer implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "phone_number")
     @NotNull
     @Size(min = 5, max = 50)
     private String phoneNumber;

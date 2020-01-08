@@ -15,6 +15,7 @@ import {SlotsComponent} from "./slots/slots.component";
 import {BookingDetailComponent} from "./bookings/booking-detail/booking-detail.component";
 import { PageComponent } from './homePage/homePage.component';
 import {UserComponent} from "./user/userPage.component";
+import { AdminGuard } from './guards/admin.guard';
 
 
 const routes: Routes = [
@@ -26,7 +27,7 @@ const routes: Routes = [
   {path: 'cabinet/addParking', component: AddParkingComponent},
   {path: 'manager/cabinet', component: ParkingListComponentManager,},
   {path: 'manager/cabinet/:id', component: ParkingDetailComponent,},
-  {path: 'admin', component: AdminComponent},
+  {path: 'admin', component: AdminComponent, canActivate: [AdminGuard]},
 
   // { path: 'parkings', component: ParkingsComponentSlots },
   { path: 'parkings/:id', component: ParkingDetailSlotsComponent },

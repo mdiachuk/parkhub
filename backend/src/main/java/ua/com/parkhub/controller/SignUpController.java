@@ -15,7 +15,7 @@ import ua.com.parkhub.mappers.DtoToModel.UserDtoToUserModelMapper;
 import ua.com.parkhub.service.impl.SignUpService;
 
 @RestController
-@RequestMapping("/signup")
+@RequestMapping("/api/signup")
 public class SignUpController {
 
     private static final Logger logger = LoggerFactory.getLogger(SignUpController.class);
@@ -72,7 +72,7 @@ public class SignUpController {
      * @return 200 Status if new User be create
      *         500 Status if new User not be create
      */
-    @PostMapping ("/user")
+    @PostMapping ("/api/user")
     public ResponseEntity create(@RequestBody UserDTO userDTO) {
         userDTO.setRole(RoleDTO.USER);
         System.out.println(userDTO.toString());

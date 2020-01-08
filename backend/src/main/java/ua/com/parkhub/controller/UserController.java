@@ -2,6 +2,7 @@ package ua.com.parkhub.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.PasswordDTO;
 import ua.com.parkhub.dto.UserDTO;
@@ -25,20 +26,22 @@ public class UserController {
         this.userDTOtoModelMapper = userDTOtoModelMapper;
     }
 
-
-    @GetMapping("/user/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
+    @GetMapping("/api/user/{id}")
     @ResponseBody
     public ResponseEntity<UserDTO> findUserById(@PathVariable Long id){
         return ResponseEntity.ok(userModelToDTOMapper.transform(userService.findUserById(id).get()));
     }
 
-    @PostMapping("/user")
+    @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
+    @PostMapping("/api/user")
     ///TODO this method with update
     public ResponseEntity updateUser( @RequestBody UserInfoDTO userDTO){
         userService.updateUser(userDTO);
         return ResponseEntity.ok().build();
     }
-    @PostMapping("/user/password")
+    @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
+    @PostMapping("/api/user/password")
     public ResponseEntity updateUserPassword(@RequestBody PasswordDTO passwordDTO){
         //passwordDTO.setId(id);
         userService.changePassword(passwordDTO);

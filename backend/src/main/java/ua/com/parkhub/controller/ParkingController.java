@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/cabinet/addParking")
+@RequestMapping("/api/cabinet/addParking")
 public class ParkingController {
 
     private final ParkingService parkingService;
@@ -32,6 +33,7 @@ public class ParkingController {
         parkingRequestMapper = Mappers.getMapper( ParkingRequestMapper.class);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping
     public ResponseEntity addParking(@Valid@RequestBody ParkingRequestDTO parkingRequestDTO, BindingResult result) {
         long id = 1;
