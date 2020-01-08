@@ -16,14 +16,6 @@ public class UserDAO extends ElementDAO<User, UserModel> {
         super(User.class, modelToEntity, entityToModel);
     }
 
-
-    /**
-     * Check have this email in DB, and from DB return id of User
-     * if this email have in DB
-     *
-     * @param email - User email
-     * @return return id User
-     */
     public String haveEmail(String email) {
         Query query =
                 emp.createQuery("SELECT id FROM User WHERE email=:email")
@@ -36,13 +28,6 @@ public class UserDAO extends ElementDAO<User, UserModel> {
         }
     }
 
-    /**
-     * Check have this phone Number in DB, and from DB return id of Customer
-     * if this email have in DB
-     *
-     * @param phoneNumber - phoneNumber email
-     * @return id Customer
-     */
 
     public String havePhoneNumber(String phoneNumber) {
         Query query =
@@ -56,14 +41,6 @@ public class UserDAO extends ElementDAO<User, UserModel> {
         }
     }
 
-    /**
-     * Find User by Customer is
-     *
-     * @param customerId Customer id you can find use phone Number
-     *                   and use
-     * @return id User
-     * @method havePhoneNumber
-     */
     public String findUserByCustomerId(String customerId) {
 
         if (customerId.length()==0){

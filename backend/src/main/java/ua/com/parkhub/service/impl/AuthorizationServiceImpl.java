@@ -3,15 +3,12 @@ package ua.com.parkhub.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.exceptions.PermissionException;
 import ua.com.parkhub.exceptions.StatusCode;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.persistence.impl.BlockedUserDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
 import ua.com.parkhub.service.AuthorizationService;
-
-import java.util.Optional;
 
 @Service
 public class AuthorizationServiceImpl implements AuthorizationService {
@@ -35,17 +32,13 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Override
     public UserModel loginUser(UserModel loginUser) {
-        try {
-            Optional<UserModel> userModel = userDAO.findUserByEmail(loginUser.getEmail());
-            UserModel user = userModel.get();
+            UserModel user = userDAO.findUserByEmail(loginUser.getEmail())
+                    .orElseThrow(() -> new PermissionException(StatusCode.NO_ACCOUNT_FOUND));
                 activateIfPossible(user);
                 if (user.getNumberOfFailedPassEntering() >= THREE_TRIES_TO_ENTER) {
                     blockIfNeeded(user);
                 }
                 return checkCredentials(loginUser, user);
-        } catch (ParkHubException e) {
-            throw new PermissionException(StatusCode.NO_ACCOUNT_FOUND);
-        }
     }
 
     private void blockIfNeeded(UserModel user) {

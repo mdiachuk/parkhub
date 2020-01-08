@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.LoginDTO;
 import ua.com.parkhub.dto.UserDTO;
 import ua.com.parkhub.exceptions.PermissionException;
+import ua.com.parkhub.exceptions.StatusCode;
 import ua.com.parkhub.mappers.DtoToModel.LoginDtoToUserModelMapper;
 import ua.com.parkhub.mappers.ModelToDto.UserModelToUserDtoMapper;
 import ua.com.parkhub.security.JwtUtil;
@@ -37,6 +38,7 @@ public class JwtAuthenticationController {
 
     @PostMapping(value = "/login")
     public ResponseEntity<UserDTO> loginUser(@Valid @RequestBody LoginDTO login) {
+        if (login == null){ throw new PermissionException(StatusCode.NO_ACCOUNT_FOUND); }
         UserDTO response = userModelToUserDtoMapper.transform(authenticationService.loginUser(loginDtoToUserModelMapper.transform(login)));
         response.setToken(jwtUtil.generateToken(response.getEmail(), response.getRole().toString(), response.getId()));
         return ResponseEntity.ok(response);
