@@ -63,8 +63,7 @@ public class AdminService  {
 
     public String ticketHighlightBuilder(String incomingString){
         String[]array= incomingString.split(" ");
-        String highlight = array[0] + " " + array[1] + " " + "...";
-        return highlight;
+        return array[0] + " " + array[1] + " " + "...";
     }
 
     public AdminSupportTicketDTO getSingleTicketById(long id){
@@ -90,8 +89,7 @@ public class AdminService  {
 
     public String getFullName(long id){
         Optional<UserModel> targetUser = userDAO.findElementById(id);
-        String name = targetUser.get().getFirstName() + " " + targetUser.get().getLastName();
-        return name;
+        return targetUser.get().getFirstName() + " " + targetUser.get().getLastName();
     }
 
     public long getId(long id){
