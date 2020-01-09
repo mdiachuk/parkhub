@@ -3,6 +3,7 @@ package ua.com.parkhub.dto;
 public class AdminSupportTicketDTO {
     private Long id;
     private String description;
+    private String ticketHighlight;
     private boolean isSolved;
     private String supportTicketType;
 
@@ -36,5 +37,12 @@ public class AdminSupportTicketDTO {
 
     public void setSupportTicketType(String supportTicketType) {
         this.supportTicketType = supportTicketType;
+    }
+    public String getTicketHighlight() {
+        return ticketHighlight;
+    }
+
+    public void setTicketHighlight(String ticketHighlight) {
+        this.ticketHighlight = ticketHighlight;
     }
 }

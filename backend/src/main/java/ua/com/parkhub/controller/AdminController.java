@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 public class AdminController {
-    public AdminService adminService;
+    private AdminService adminService;
 
     @Autowired
     public AdminController(AdminService adminService) {
@@ -24,7 +24,7 @@ public class AdminController {
     public AdminDTO getUserByID(@PathVariable("id")long id ){
         AdminDTO targetUserDTO = new AdminDTO();
         targetUserDTO.setUserRole(adminService.getRole(id));
-        targetUserDTO.setFirstName(adminService.getFirstName(id));
+        targetUserDTO.setFirstName(adminService.getFullName(id));
         targetUserDTO.setId(adminService.getId(id));
         return targetUserDTO;
     }

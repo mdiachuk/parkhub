@@ -3,4 +3,5 @@ export class AdminTicketDetail{
     description: String
     isSolved: boolean
     supportTicketType: String
+    ticketHighlight: String
 }           

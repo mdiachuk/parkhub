@@ -1,4 +1,5 @@
 package ua.com.parkhub.service.impl;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.dto.AdminSupportTicketDTO;
@@ -13,6 +14,7 @@ import ua.com.parkhub.persistence.impl.UserDAO;
 import ua.com.parkhub.persistence.impl.UserRoleDAO;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,19 +42,34 @@ public class AdminService  {
     }
 
     public List<AdminSupportTicketDTO> getTicketsList(){
-        List<SupportTicketModel> targetSupportList = supportTicketDAO.findAll().stream().filter(isAct -> !isAct.isSolved()).collect(Collectors.toList());
+        List<SupportTicketModel> targetSupportList = supportTicketDAO.findAll().stream().filter(isActive -> !isActive.isSolved()).collect(Collectors.toList());
         long ticketCounter = targetSupportList.size();
         List<AdminSupportTicketDTO> adminSupportTicketDTOList = new ArrayList<>();
-        for(long i=ticketCounter-1; i>ticketCounter-6; i--){
-            AdminSupportTicketDTO adminSupportTicketDTO = new TicketSupportModelToAdminSupportTicketDTO().transform(targetSupportList.get((int) i));
-            adminSupportTicketDTO.setSupportTicketType(targetSupportList.get((int) i).getSupportTicketType().getType());
-            adminSupportTicketDTOList.add(adminSupportTicketDTO);
+        if (ticketCounter>5) {
+            for (long i = ticketCounter - 1; i > ticketCounter - 6; i--) {
+                AdminSupportTicketDTO adminSupportTicketDTO = new TicketSupportModelToAdminSupportTicketDTO().transform(targetSupportList.get((int) i));
+                adminSupportTicketDTO.setSupportTicketType(targetSupportList.get((int) i).getSupportTicketType().getType());
+                adminSupportTicketDTO.setTicketHighlight(ticketHighlightBuilder(targetSupportList.get((int) i).getDescription()));
+                adminSupportTicketDTOList.add(adminSupportTicketDTO);
+            }
+        }else if (ticketCounter<=5){
+            for(SupportTicketModel supportTicketList: targetSupportList){
+                AdminSupportTicketDTO adminSupportTicketDTO = new TicketSupportModelToAdminSupportTicketDTO().transform(supportTicketList);
+                adminSupportTicketDTO.setSupportTicketType(supportTicketList.getSupportTicketType().getType());
+                adminSupportTicketDTOList.add(adminSupportTicketDTO);
+            }
         }
         return adminSupportTicketDTOList;
     }
 
+    public String ticketHighlightBuilder(String incomingString){
+        String[]array= incomingString.split(" ");
+        String highlight = array[0] + " " + array[1] + " " + "...";
+        return highlight;
+    }
+
     public AdminTicketCounterDTO getTicketCounter(){
-        long ticketCounter = supportTicketDAO.findAll().stream().filter(isAct -> !isAct.isSolved()).count();
+        long ticketCounter = supportTicketDAO.findAll().stream().filter(isActive -> !isActive.isSolved()).count();
         AdminTicketCounterDTO targetAdminTicketCounterDTO = new AdminTicketCounterDTO();
         targetAdminTicketCounterDTO.setAdminTicketCounter(ticketCounter);
         return targetAdminTicketCounterDTO;
@@ -62,7 +79,7 @@ public class AdminService  {
         return targetUser.get().getRole().getRoleName();
     }
 
-    public String getFirstName(long id){
+    public String getFullName(long id){
         Optional<UserModel> targetUser = userDAO.findElementById(id);
         String name = targetUser.get().getFirstName() + " " + targetUser.get().getLastName();
         return name;

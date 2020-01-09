@@ -15,7 +15,7 @@ export class AdminTicketListComponent implements OnInit {
 
   tickets: AdminTicketDetail[];
   dataSource = new AdminTicketListDataSource(this.adminTicketService);
-  displayedColumns = ['id','description','isSolved','supportTicketType']
+  displayedColumns = ['id','ticketHighlight','supportTicketType','isSolved']
   ticketCounter: AdminTicketCounter;
 
   constructor(private adminTicketService: AdminTicketService) { 
