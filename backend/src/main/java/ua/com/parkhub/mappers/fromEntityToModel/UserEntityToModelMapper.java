@@ -12,13 +12,13 @@ import java.util.stream.Collectors;
 public class UserEntityToModelMapper implements Mapper<User, UserModel> {
 
     CustomerEntityToModelMapper customerEntityToModelMapper;
-    UserRoleEntityToModelMapper userRoleEntityToModelMapper;
+    RoleEntityToModelMapper roleEntityToModelMapper;
     SupportTicketEntityToModelMapper supportTicketEntityToModelMapper;
 
     @Autowired
-    public UserEntityToModelMapper(CustomerEntityToModelMapper customerEntityToModelMapper, UserRoleEntityToModelMapper userRoleEntityToModelMapper, SupportTicketEntityToModelMapper supportTicketEntityToModelMapper) {
+    public UserEntityToModelMapper(CustomerEntityToModelMapper customerEntityToModelMapper, RoleEntityToModelMapper roleEntityToModelMapper, SupportTicketEntityToModelMapper supportTicketEntityToModelMapper) {
         this.customerEntityToModelMapper = customerEntityToModelMapper;
-        this.userRoleEntityToModelMapper = userRoleEntityToModelMapper;
+        this.roleEntityToModelMapper = roleEntityToModelMapper;
         this.supportTicketEntityToModelMapper = supportTicketEntityToModelMapper;
     }
 
@@ -31,7 +31,7 @@ public class UserEntityToModelMapper implements Mapper<User, UserModel> {
         userModel.setFirstName(from.getFirstName());
         userModel.setLastName(from.getLastName());
         userModel.setPassword(from.getPassword());
-        userModel.setRole(userRoleEntityToModelMapper.transform(from.getRole()));
+        userModel.setRole(roleEntityToModelMapper.transform(from.getRole()));
         userModel.setTickets(from.getTickets().stream().map(supportTicketEntityToModelMapper::transform).collect(Collectors.toSet()));
         return userModel;
     }

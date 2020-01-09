@@ -1,10 +1,22 @@
 package ua.com.parkhub.model;
 
-public class RoleModel {
+public enum RoleModel {
 
+    ADMIN("ADMIN"),
+    USER("USER"),
+    PENDING("PENDING"),
+    MANAGER("MANAGER");
+
+    private String role;
     private Long id;
-    private String roleName;
-    private boolean isActive;
+
+    RoleModel(String role){
+        this.role = role;
+    }
+
+    public String getRoleName(){
+        return this.role;
+    }
 
     public Long getId() {
         return id;
@@ -14,20 +26,5 @@ public class RoleModel {
         this.id = id;
     }
 
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
 }
 

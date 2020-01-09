@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/manager/cabinet")
+@RequestMapping("/api/manager/cabinet")
 public class ManagerController {
 
     private ParkingService parkingService;

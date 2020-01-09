@@ -12,6 +12,7 @@ public class UserModel {
     private RoleModel role;
     private CustomerModel customer;
     private Set<SupportTicketModel> tickets;
+    private String token;
 
     public String getFirstName() {
         return firstName;
@@ -75,5 +76,13 @@ public class UserModel {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

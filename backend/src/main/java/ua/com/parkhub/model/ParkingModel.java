@@ -1,7 +1,7 @@
 package ua.com.parkhub.model;
 
 
-import java.util.Set;
+import java.util.List;
 
 public class ParkingModel {
 
@@ -10,12 +10,36 @@ public class ParkingModel {
     private Integer slotsNumber;
     private Integer tariff;
     private AddressModel addressModel;
-    private Set<SlotModel> slots;
+    private List<SlotModel> slots;
     private Boolean isActive;
     private UserModel owner;
 
-    public Set<SlotModel> getSlots() {
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setSlotsNumber(Integer slotsNumber) {
+        this.slotsNumber = slotsNumber;
+    }
+
+    public void setTariff(Integer tariff) {
+        this.tariff = tariff;
+    }
+
+    public List<SlotModel> getSlots() {
         return slots;
+    }
+
+    public void setSlots(List<SlotModel> slots) {
+        this.slots = slots;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 
     public UserModel getOwner() {
@@ -24,10 +48,6 @@ public class ParkingModel {
 
     public void setOwner(UserModel owner) {
         this.owner = owner;
-    }
-
-    public void setSlots(Set<SlotModel> slots) {
-        this.slots = slots;
     }
 
     public boolean isActive() {
@@ -77,7 +97,4 @@ public class ParkingModel {
     public void setAddressModel(AddressModel addressModel) {
         this.addressModel = addressModel;
     }
-
-
-    //SOME BUSINESS LOGIC
 }
