@@ -20,9 +20,6 @@ public class PaymentEntityToModelMapper implements Mapper<Payment, PaymentModel>
 
     @Override
     public PaymentModel transform(Payment from) {
-        if (from == null){
-            throw new BookingException(StatusCode.BOOKING_NOT_FOUND);
-        }
         PaymentModel paymentModel = new PaymentModel();
         paymentModel.setId(from.getId());
         paymentModel.setPaid(from.isPaid());

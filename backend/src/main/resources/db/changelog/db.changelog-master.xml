@@ -7,6 +7,5 @@
     <include file="classpath:/db/changelog/production-table-init.xml"/>
     <include file="classpath:/db/changelog/09_12_2019_db_update.xml"/>
     <include file="classpath:/db/changelog/12_12_2019_db_update.xml"/>
-
-
+    <include file="classpath:/db/changelog/09_01_2020_db_update.xml"/>
     </databaseChangeLog>

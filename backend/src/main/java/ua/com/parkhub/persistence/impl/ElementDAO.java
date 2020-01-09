@@ -4,13 +4,13 @@ import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.persistence.IElementDAO;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,9 +31,13 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
     }
 
     @Override
-    public void addElement(M element) {
-        emp.persist(modelToEntity.transform(element));
+    public Optional<M> addElement(M element) {
+        E entity = modelToEntity.transform(element);
+        emp.merge(entity);
+        emp.flush();
+        return Optional.of(entityToModel.transform(entity));
     }
+
 
     @Override
     public void updateElement(M element) {
@@ -79,6 +83,23 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
         } catch (PersistenceException e) {
             element = null;
         }
-        return Optional.ofNullable(entityToModel.transform(element));
+        return Optional.ofNullable(element).map(entityToModel::transform);
     }
+
+    @Override
+    public <F> List<M> findManyByFieldEqual(String fieldName, F fieldValue) {
+        CriteriaBuilder criteriaBuilder = emp.getCriteriaBuilder();
+        CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(elementClass);
+        Root<E> elementRoot = criteriaQuery.from(elementClass);
+        criteriaQuery.select(elementRoot).where(criteriaBuilder.equal(elementRoot.get(fieldName), fieldValue));
+
+        List<M> elements;
+        try {
+            elements = emp.createQuery(criteriaQuery).getResultList().stream().map(entityToModel::transform).collect(Collectors.toList());
+        } catch (PersistenceException e) {
+            elements = new ArrayList<>();
+        }
+        return elements;
+    }
+
 }

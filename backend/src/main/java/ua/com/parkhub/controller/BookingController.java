@@ -66,7 +66,7 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-    @PostMapping(value = "/cancel")
+    @PostMapping(value = "/api/cancel")
     public ResponseEntity<PaymentResponseDTO> getPhoneNumber(@RequestBody PhoneNumberDTO phoneNumber) {
         PaymentResponseDTO paymentResponseDTO = new PaymentResponseDTO();
             int price = bookingService.findPrice(phoneNumber.getPhoneNumber());
