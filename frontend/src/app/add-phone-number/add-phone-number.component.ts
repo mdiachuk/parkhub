@@ -20,7 +20,6 @@ export class AddPhoneNumberComponent implements OnInit {
   }
 
   ngOnInit() {
-
   console.log(  this.route.snapshot.queryParamMap.get('email'));
   this.phoneNumber.email= this.route.snapshot.queryParamMap.get('email');
     this.createForm();

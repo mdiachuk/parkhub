@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.com.parkhub.dto.ParkingRequestDTO;
-import ua.com.parkhub.mappers.DtoToModel.ParkingRequestDTOtoParkingModel;
+import ua.com.parkhub.mappers.dtoToModel.ParkingRequestDTOtoParkingModel;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.service.impl.ParkingService;
 
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/app-parkings")
+@RequestMapping("/manager/parking")
 public class ParkingController {
 
     private final ParkingService parkingService;

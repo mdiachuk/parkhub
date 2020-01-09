@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.PasswordDTO;
 import ua.com.parkhub.dto.UserDTO;
 import ua.com.parkhub.dto.UserInfoDTO;
-import ua.com.parkhub.mappers.DtoToModel.UserDtoToUserModelMapper;
-import ua.com.parkhub.mappers.ModelToDto.UserModelToUserDtoMapper;
+import ua.com.parkhub.mappers.dtoToModel.UserDtoToUserModelMapper;
+import ua.com.parkhub.mappers.modelToDto.UserModelToUserDtoMapper;
 import ua.com.parkhub.service.impl.UserService;
 
 

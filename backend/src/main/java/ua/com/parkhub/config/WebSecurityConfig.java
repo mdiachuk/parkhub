@@ -2,6 +2,7 @@ package ua.com.parkhub.config;
 
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -31,10 +32,15 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
+
 @Configuration
 @EnableWebSecurity
 @EnableOAuth2Client
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Value("${frontUrl}")
+    private String frontUrl;
 
     @Autowired
     OAuth2ClientContext oauth2ClientContext;
@@ -64,7 +70,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/login/google");
         OAuth2RestTemplate googleTemplate = new OAuth2RestTemplate(google(), oauth2ClientContext);
         googleFilter.setRestTemplate(googleTemplate);
-        googleFilter.setAuthenticationSuccessHandler(new SimpleUrlAuthenticationSuccessHandler("/home1"));
+        googleFilter.setAuthenticationSuccessHandler(new SimpleUrlAuthenticationSuccessHandler("/oauthSuccess"));//redirect to frontURL
         UserInfoTokenServices tokenServices = new UserInfoTokenServices(googleResource().getUserInfoUri(),
                 google().getClientId());
         tokenServices.setRestTemplate(googleTemplate);
@@ -77,7 +83,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors()
-                .and().antMatcher("/**").authorizeRequests().antMatchers("/","/home","/login**", "/webjars/**", "/error**","/app-parkings").permitAll().anyRequest()
+                .and().antMatcher("/**").authorizeRequests().antMatchers("/","/home","/login**", "/webjars/**", "/error**","/manager/parking").permitAll().anyRequest()
                 .authenticated().and().exceptionHandling()
                 .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/")).and().logout()
                 .logoutSuccessUrl("/").permitAll().and().csrf().disable()

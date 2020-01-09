@@ -24,7 +24,7 @@ const routes: Routes = [
   {path: 'home', component:PageComponent},
   {path: 'signup/manager', component:ManagerSignupComponent},
   {path: 'cabinet', component: AppComponent },
-  {path: 'app-parkings', component: AddParkingComponent},
+  {path: 'manager/parking', component: AddParkingComponent},
   {path: 'manager/cabinet', component: ParkingListComponentManager,},
   {path: 'manager/cabinet/:id', component: ParkingDetailComponent,},
   {path: 'admin', component: AdminComponent},

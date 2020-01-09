@@ -8,7 +8,7 @@
           <a mat-button [routerLink]='["home"]'>Home</a>
           <a mat-button [routerLink]='["parkoff"]'>Park Off</a>
 <!--          <a mat-button [routerLink]='["parkings"]'>Parking</a>-->
-          <a mat-button [routerLink]='["app-parkings"]'>Add Parking</a>
+          <a mat-button [routerLink]='["/manager/parking"]'>Add Parking</a>
           <a *ngIf="data.currentIsManager | async" mat-button [routerLink]='["manager/cabinet"]'>Manager Cabinet</a>
           <a *ngIf="data.currentIsAdmin | async" mat-button [routerLink]='["admin"]'>Admin Cabinet</a>
           <a *ngIf="data.currentIsUser | async" mat-button [routerLink]='["userPage"]'>User Cabinet</a>

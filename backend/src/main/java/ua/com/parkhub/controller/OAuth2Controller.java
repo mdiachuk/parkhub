@@ -9,8 +9,8 @@ import ua.com.parkhub.dto.AuthUserDTO;
 import ua.com.parkhub.dto.PhoneEmailDTO;
 import ua.com.parkhub.dto.UserDTO;
 
-import ua.com.parkhub.mappers.DtoToModel.AuthUserDTOtoAuthUserModelMapper;
-import ua.com.parkhub.mappers.DtoToModel.PhoneEmailDTOtoPhoneEmailMapper;
+import ua.com.parkhub.mappers.dtoToModel.AuthUserDTOtoAuthUserModelMapper;
+import ua.com.parkhub.mappers.dtoToModel.PhoneEmailDTOtoPhoneEmailMapper;
 import ua.com.parkhub.model.AuthUserModel;
 import ua.com.parkhub.model.PhoneEmailModel;
 import ua.com.parkhub.security.JwtUtil;
@@ -39,10 +39,9 @@ public class OAuth2Controller {
         this.authUserDTOtoAuthUserModelMapper = Mapper;
         this.phoneEmailDTOtoPhoneEmailMapper = phoneEmailDTOtoPhoneEmailMapper;
         this.jwtUtil = jwtUtil;
-
     }
 
-    @RequestMapping("/home1")
+    @RequestMapping("/oauthSuccess")
     public void handleFoo(HttpServletResponse response,OAuth2Authentication user) throws IOException {
         LinkedHashMap<String,String> authMap = (LinkedHashMap<String,String>) user.getUserAuthentication().getDetails();
         String firstName = authMap.get("given_name");
@@ -64,9 +63,8 @@ public class OAuth2Controller {
             response.sendRedirect(frontUrl+"/home");
         }
             //TODO create cron for deleted unused cosial accounts
-
-
     }
+
 
     @PutMapping("/customer")
     public void updatePhone(@RequestBody PhoneEmailDTO phoneEmailDTO) {
