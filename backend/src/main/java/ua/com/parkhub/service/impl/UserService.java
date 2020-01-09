@@ -1,56 +1,56 @@
 package ua.com.parkhub.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ua.com.parkhub.dto.PasswordDTO;
-import ua.com.parkhub.dto.UserInfoDTO;
+import ua.com.parkhub.exceptions.PasswordException;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.persistence.impl.UserDAO;
 import ua.com.parkhub.service.IUserService;
 
+
 import java.util.Optional;
+
 
 @Service
 public class UserService implements IUserService {
+    private static final Logger logger = LoggerFactory.getLogger(SignUpService.class);
     private UserDAO userDAO;
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserDAO userDAO){
+    public UserService(UserDAO userDAO, PasswordEncoder passwordEncoder){
         this.userDAO = userDAO;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Optional<UserModel> findUserById(long id){
         return userDAO.findElementById(id);
     }
-    public void updateUser(UserInfoDTO userUp) {
-        UserModel userModel = findUserById(userUp.getId()).get();
-        if (userUp.getFirstName() != null){
-            userModel.setFirstName(userUp.getFirstName());
-        }
-        if (userUp.getLastName() != null){
-            userModel.setLastName(userUp.getLastName());
-        }
-        if (userUp.getEmail()!= null){
-            userModel.setEmail(userUp.getEmail());
-        }
-        if (userUp.getPhoneNumber() != null){
-            userModel.getCustomer().setPhoneNumber(userUp.getPhoneNumber());
-        }
+
+    @Override
+    public void updateUser(long id, UserModel userUp) {
+        UserModel userModel = findUserById(id).get();
+        userModel.setFirstName(userUp.getFirstName());
+        userModel.setLastName(userUp.getLastName());
+        userModel.setEmail(userUp.getEmail());
+        userModel.getCustomer().setPhoneNumber(userUp.getCustomer().getPhoneNumber());
         userDAO.updateElement(userModel);
+        logger.info("User information was updated");
     }
-    public void changePassword(PasswordDTO passwordDTO){
-        UserModel user = findUserById(passwordDTO.getId()).get();
-        System.out.println(passwordDTO.getPassword());
-        System.out.println(user.getPassword());
-        System.out.println(passwordDTO.getNewPassword());
-        if (passwordDTO.getPassword().equals(user.getPassword())){
-            user.setPassword(passwordDTO.getNewPassword());
-            System.out.println(user.getPassword());
+
+    @Override
+    public void changePassword(long id, String newPassword, UserModel userModel){
+        UserModel user = findUserById(id).get();
+        if (passwordEncoder.matches(userModel.getPassword(), user.getPassword())){
+            user.setPassword(passwordEncoder.encode(newPassword));
             userDAO.updateElement(user);
+            logger.info("Password was updated");
         } else {
-            new RuntimeException();
+            logger.info("Password was not updated");
+            new PasswordException();
         }
     }
 }
