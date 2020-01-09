@@ -1,9 +1,10 @@
 package ua.com.parkhub.model;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class User extends AbstractModel {
+public class User implements Serializable, Cloneable {
 
     private Long id;
     private String firstName;

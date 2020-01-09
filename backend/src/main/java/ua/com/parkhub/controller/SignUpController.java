@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/signup")
+@RequestMapping("/api/signup")
 public class SignUpController {
     private static final Logger logger = LoggerFactory.getLogger(SignUpController.class);
 

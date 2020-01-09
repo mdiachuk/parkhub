@@ -12,22 +12,19 @@ import java.util.stream.Collectors;
 public class UserModelToEntityMapper implements Mapper<UserModel, User> {
 
     private CustomerModelToEntityMapper customerModelToEntityMapper;
-    private SupportTicketModelToEntityMapper supportTicketModelToEntityMapper;
     private RoleModelToEntityMapper roleModelToEntityMapper;
 
     @Autowired
     public UserModelToEntityMapper(CustomerModelToEntityMapper customerModelToEntityMapper,
-                                   SupportTicketModelToEntityMapper supportTicketModelToEntityMapper,
                                    RoleModelToEntityMapper roleModelToEntityMapper) {
         this.customerModelToEntityMapper = customerModelToEntityMapper;
-        this.supportTicketModelToEntityMapper = supportTicketModelToEntityMapper;
         this.roleModelToEntityMapper = roleModelToEntityMapper;
     }
 
     @Override
     public User transform(UserModel from) {
         if(from == null) {
-            return null;
+            return null; //exception?
         }
         User user = new User();
         user.setId(from.getId());
@@ -36,8 +33,8 @@ public class UserModelToEntityMapper implements Mapper<UserModel, User> {
         user.setFirstName(from.getFirstName());
         user.setLastName(from.getLastName());
         user.setPassword(from.getPassword());
+        user.setNumberOfFailedPassEntering(from.getNumberOfFailedPassEntering());
         user.setRole(roleModelToEntityMapper.transform(from.getRole()));
-//        user.setTickets(from.getTickets().stream().map(supportTicketModelToEntityMapper::transform).collect(Collectors.toList()));
         return user;
     }
 }

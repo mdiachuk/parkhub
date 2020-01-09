@@ -10,6 +10,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,12 +31,12 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
         this.entityToModel = entityToModel;
     }
 
+    @Transactional
     @Override
     public Optional<M> addElement(M element) {
-        E entity = modelToEntity.transform(element);
-        emp.merge(entity);
+        E e = emp.merge(modelToEntity.transform(element));
         emp.flush();
-        return Optional.of(entityToModel.transform(entity));
+        return Optional.of(entityToModel.transform(e));
     }
 
     @Override
@@ -69,6 +70,7 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
         emp.remove(emp.merge(modelToEntity.transform(element)));
     }
 
+    @Transactional
     @Override
     public <F> Optional<M> findOneByFieldEqual(String fieldName, F fieldValue) {
         CriteriaBuilder criteriaBuilder = emp.getCriteriaBuilder();

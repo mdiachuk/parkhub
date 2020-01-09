@@ -1,8 +1,9 @@
 package ua.com.parkhub.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Address extends AbstractModel {
+public class Address implements Serializable, Cloneable {
 
     private Long id;
     private String city;

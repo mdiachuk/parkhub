@@ -40,12 +40,11 @@ public class UserDTO {
 
     private RoleDTO role;
     private String token;
+    private int numberOfFailedPassEntering;
 
     public Long getId() {
         return id;
     }
-
-//    public int getIdInt() { return (int) id;}
 
     public void setId(long id) {
         this.id = id;
@@ -105,5 +104,13 @@ public class UserDTO {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public int getNumberOfFailedPassEntering() {
+        return numberOfFailedPassEntering;
+    }
+
+    public void setNumberOfFailedPassEntering(int numberOfFailedPassEntering) {
+        this.numberOfFailedPassEntering = numberOfFailedPassEntering;
     }
 }

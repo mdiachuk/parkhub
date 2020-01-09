@@ -5,7 +5,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "user", schema = "park_hub")
@@ -32,6 +31,10 @@ public class User implements Serializable {
     @Size(min = 6, max = 60)
     private String password;
 
+    @Column(name = "number_of_failed_pass_entering")
+    @NotNull
+    private int numberOfFailedPassEntering;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
     private UserRole role;
@@ -40,8 +43,14 @@ public class User implements Serializable {
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-    @ManyToMany(mappedBy = "solvers")
-    private List<SupportTicket> tickets;
+
+    public int getNumberOfFailedPassEntering() {
+        return numberOfFailedPassEntering;
+    }
+
+    public void setNumberOfFailedPassEntering(int numberOfFailedPassEntering) {
+        this.numberOfFailedPassEntering = numberOfFailedPassEntering;
+    }
 
     public Long getId() {
         return id;
@@ -99,11 +108,4 @@ public class User implements Serializable {
         this.customer = customer;
     }
 
-    public List<SupportTicket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(List<SupportTicket> tickets) {
-        this.tickets = tickets;
-    }
 }

@@ -13,13 +13,11 @@ public class UserEntityToModelMapper implements Mapper<User, UserModel> {
 
     CustomerEntityToModelMapper customerEntityToModelMapper;
     RoleEntityToModelMapper roleEntityToModelMapper;
-    SupportTicketEntityToModelMapper supportTicketEntityToModelMapper;
 
     @Autowired
     public UserEntityToModelMapper(CustomerEntityToModelMapper customerEntityToModelMapper, RoleEntityToModelMapper roleEntityToModelMapper, SupportTicketEntityToModelMapper supportTicketEntityToModelMapper) {
         this.customerEntityToModelMapper = customerEntityToModelMapper;
         this.roleEntityToModelMapper = roleEntityToModelMapper;
-        this.supportTicketEntityToModelMapper = supportTicketEntityToModelMapper;
     }
 
     @Override
@@ -35,7 +33,6 @@ public class UserEntityToModelMapper implements Mapper<User, UserModel> {
         userModel.setLastName(from.getLastName());
         userModel.setPassword(from.getPassword());
         userModel.setRole(roleEntityToModelMapper.transform(from.getRole()));
-//        userModel.setTickets(from.getTickets().stream().map(supportTicketEntityToModelMapper::transform).collect(Collectors.toList()));
         return userModel;
     }
 }

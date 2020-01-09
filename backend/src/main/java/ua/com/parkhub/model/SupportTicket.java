@@ -2,10 +2,11 @@ package ua.com.parkhub.model;
 
 import ua.com.parkhub.persistence.entities.SupportTicketType;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class SupportTicket extends AbstractModel {
+public class SupportTicket implements Serializable, Cloneable {
 
     private Long id;
     private String description;

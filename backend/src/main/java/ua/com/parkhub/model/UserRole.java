@@ -1,8 +1,9 @@
 package ua.com.parkhub.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class UserRole extends AbstractModel {
+public class UserRole implements Serializable, Cloneable {
 
     private Long id;
     private String roleName;

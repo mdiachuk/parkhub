@@ -1,9 +1,10 @@
 package ua.com.parkhub.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Booking extends AbstractModel {
+public class Booking implements Serializable, Cloneable {
 
     private Long id;
     private String carNumber;

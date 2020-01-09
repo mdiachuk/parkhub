@@ -1,8 +1,9 @@
 package ua.com.parkhub.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Payment extends AbstractModel {
+public class Payment implements Serializable, Cloneable {
 
     private Long id;
     private int price;

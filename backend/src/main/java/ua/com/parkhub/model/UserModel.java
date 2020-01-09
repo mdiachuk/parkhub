@@ -1,6 +1,6 @@
 package ua.com.parkhub.model;
 
-import java.util.List;
+import java.util.Objects;
 
 public class UserModel {
 
@@ -11,8 +11,8 @@ public class UserModel {
     private String password;
     private RoleModel role;
     private CustomerModel customer;
-    private List<SupportTicketModel> tickets;
     private String token;
+    private int numberOfFailedPassEntering;
 
     public Long getId() {
         return id;
@@ -70,20 +70,55 @@ public class UserModel {
         this.customer = customer;
     }
 
-    public List<SupportTicketModel> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(List<SupportTicketModel> tickets) {
-        this.tickets = tickets;
-    }
-
-
     public String getToken() {
         return token;
     }
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public int getNumberOfFailedPassEntering() {
+        return numberOfFailedPassEntering;
+    }
+
+    public void setNumberOfFailedPassEntering(int numberOfFailedPassEntering) {
+        this.numberOfFailedPassEntering = numberOfFailedPassEntering;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserModel user = (UserModel) o;
+        return numberOfFailedPassEntering == user.numberOfFailedPassEntering &&
+                Objects.equals(id, user.id) &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(password, user.password) &&
+                role == user.role &&
+                Objects.equals(customer, user.customer) &&
+                Objects.equals(token, user.token);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, email, password, role, customer, token, numberOfFailedPassEntering);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", customer=" + customer +
+                ", token='" + token + '\'' +
+                ", numberOfFaildPassEntering=" + numberOfFailedPassEntering +
+                '}';
     }
 }

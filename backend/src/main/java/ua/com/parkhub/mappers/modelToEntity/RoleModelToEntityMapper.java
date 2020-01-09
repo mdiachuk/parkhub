@@ -9,7 +9,7 @@ import ua.com.parkhub.persistence.entities.UserRole;
 public class RoleModelToEntityMapper implements Mapper<RoleModel, UserRole> {
 
     @Override
-    public ua.com.parkhub.persistence.entities.UserRole transform(RoleModel from) {
+    public UserRole transform(RoleModel from) {
         if (from == null) {
             return null;
         }
