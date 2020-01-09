@@ -5,7 +5,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "user", schema = "park_hub")
@@ -36,7 +35,7 @@ public class User implements Serializable {
     @NotNull
     private int numberOfFailedPassEntering;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
     private UserRole role;
 
@@ -44,8 +43,6 @@ public class User implements Serializable {
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-    @ManyToMany(mappedBy = "solvers")
-    private List<SupportTicket> tickets;
 
     public int getNumberOfFailedPassEntering() {
         return numberOfFailedPassEntering;
@@ -111,11 +108,4 @@ public class User implements Serializable {
         this.customer = customer;
     }
 
-    public List<SupportTicket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(List<SupportTicket> tickets) {
-        this.tickets = tickets;
-    }
 }

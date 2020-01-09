@@ -2,7 +2,6 @@ package ua.com.parkhub.mappers.modelToEntity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.persistence.entities.User;
@@ -20,19 +19,19 @@ public class UserModelToEntityMapper implements Mapper<UserModel, User> {
     }
 
     @Override
-    public User transform(UserModel model) {
-        if(model == null) {
-            throw new ParkHubException("UserModel to be mapped to User entity is null.");
+    public User transform(UserModel from) {
+        if(from == null) {
+            return null; //exception?
         }
-        User userEntity = new User();
-        userEntity.setEmail(model.getEmail());
-        userEntity.setFirstName(model.getFirstName());
-        userEntity.setLastName(model.getLastName());
-        userEntity.setId(model.getId());
-        userEntity.setPassword(model.getPassword());
-        userEntity.setCustomer(customerModelToEntityMapper.transform(model.getCustomer()));
-        userEntity.setNumberOfFailedPassEntering(model.getNumberOfFailedPassEntering());
-        userEntity.setRole(roleModelToEntityMapper.transform(model.getRole()));
-        return userEntity;
+        User user = new User();
+        user.setEmail(from.getEmail());
+        user.setFirstName(from.getFirstName());
+        user.setLastName(from.getLastName());
+        user.setId(from.getId());
+        user.setPassword(from.getPassword());
+        user.setCustomer(customerModelToEntityMapper.transform(from.getCustomer()));
+        user.setNumberOfFailedPassEntering(from.getNumberOfFailedPassEntering());
+        user.setRole(roleModelToEntityMapper.transform(from.getRole()));
+        return user;
     }
 }

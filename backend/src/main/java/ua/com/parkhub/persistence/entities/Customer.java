@@ -15,7 +15,7 @@ public class Customer implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "phone_number")
+    @Column
     @NotNull
     @Size(min = 5, max = 50)
     private String phoneNumber;
@@ -27,10 +27,6 @@ public class Customer implements Serializable {
     @OneToMany
     @JoinColumn(name = "customer_id")
     private List<Booking> bookings;
-
-    @OneToMany
-    @JoinColumn(name = "author_id")
-    private List<SupportTicket> supportTickets;
 
     @OneToOne(mappedBy = "customer")
     private User user;
@@ -65,14 +61,6 @@ public class Customer implements Serializable {
 
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
-    }
-
-    public List<SupportTicket> getSupportTickets() {
-        return supportTickets;
-    }
-
-    public void setSupportTickets(List<SupportTicket> supportTickets) {
-        this.supportTickets = supportTickets;
     }
 
     public User getUser() {

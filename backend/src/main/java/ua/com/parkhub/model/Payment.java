@@ -2,7 +2,7 @@ package ua.com.parkhub.model;
 
 import java.util.Objects;
 
-public class Payment extends AbstractModel {
+public class Payment {
 
     private Long id;
     private int price;

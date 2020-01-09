@@ -2,7 +2,7 @@ package ua.com.parkhub.model;
 
 import java.util.Objects;
 
-public class SlotModel extends AbstractModel {
+public class SlotModel {
 
     private Long id;
     private String slotNumber;

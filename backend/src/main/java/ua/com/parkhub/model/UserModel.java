@@ -1,9 +1,8 @@
 package ua.com.parkhub.model;
 
-import java.util.List;
 import java.util.Objects;
 
-public class UserModel extends AbstractModel {
+public class UserModel {
 
     private Long id;
     private String firstName;
@@ -14,7 +13,6 @@ public class UserModel extends AbstractModel {
     private CustomerModel customer;
     private String token;
     private int numberOfFailedPassEntering;
-    private List<SupportTicketModel> tickets;
 
     public Long getId() {
         return id;
@@ -88,13 +86,6 @@ public class UserModel extends AbstractModel {
         this.numberOfFailedPassEntering = numberOfFailedPassEntering;
     }
 
-    public List<SupportTicketModel> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(List<SupportTicketModel> tickets) {
-        this.tickets = tickets;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -109,13 +100,12 @@ public class UserModel extends AbstractModel {
                 Objects.equals(password, user.password) &&
                 role == user.role &&
                 Objects.equals(customer, user.customer) &&
-                Objects.equals(token, user.token) &&
-                Objects.equals(tickets, user.tickets);
+                Objects.equals(token, user.token);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email, password, role, customer, token, numberOfFailedPassEntering, tickets);
+        return Objects.hash(id, firstName, lastName, email, password, role, customer, token, numberOfFailedPassEntering);
     }
 
     @Override
@@ -130,7 +120,6 @@ public class UserModel extends AbstractModel {
                 ", customer=" + customer +
                 ", token='" + token + '\'' +
                 ", numberOfFaildPassEntering=" + numberOfFailedPassEntering +
-                ", tickets=" + tickets +
                 '}';
     }
 }

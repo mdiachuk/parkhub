@@ -1,7 +1,5 @@
 package ua.com.parkhub.dto;
 
-import ua.com.parkhub.persistence.entities.Customer;
-
 import java.util.Objects;
 
 public class SupportTicketDTO {
@@ -13,9 +11,9 @@ public class SupportTicketDTO {
 
     private boolean isSolved = false;
 
-    private SupportTicketTypeDTO supportTicketType;
+    private TicketTypeDTO type;
 
-    private Customer customer;
+    private CustomerDTO customer;
 
     public Long getId() {
         return id;
@@ -41,19 +39,19 @@ public class SupportTicketDTO {
         isSolved = solved;
     }
 
-    public SupportTicketTypeDTO getSupportTicketType() {
-        return supportTicketType;
+    public TicketTypeDTO getSupportTicketType() {
+        return type;
     }
 
-    public void setSupportTicketType(SupportTicketTypeDTO supportTicketType) {
-        this.supportTicketType = supportTicketType;
+    public void setSupportTicketType(TicketTypeDTO supportTicketType) {
+        this.type = supportTicketType;
     }
 
-    public Customer getCustomer() {
+    public CustomerDTO getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(CustomerDTO customer) {
         this.customer = customer;
     }
 
@@ -65,13 +63,13 @@ public class SupportTicketDTO {
         return isSolved == that.isSolved &&
                 Objects.equals(id, that.id) &&
                 Objects.equals(description, that.description) &&
-                Objects.equals(supportTicketType, that.supportTicketType) &&
+                Objects.equals(type, that.type) &&
                 Objects.equals(customer, that.customer);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, isSolved, supportTicketType, customer);
+        return Objects.hash(id, description, isSolved, type, customer);
     }
 
     @Override
@@ -80,7 +78,7 @@ public class SupportTicketDTO {
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", isSolved=" + isSolved +
-                ", supportTicketType=" + supportTicketType +
+                ", supportTicketType=" + type +
                 ", customer=" + customer +
                 '}';
     }

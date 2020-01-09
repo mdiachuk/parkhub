@@ -10,8 +10,6 @@ import ua.com.parkhub.model.UserModel;
 public class UserModelToUserDtoMapper implements Mapper<UserModel, UserDTO> {
 
     private RoleModelToDTOMapper roleModelToDTOMapper;
-//    private CustomerModelToDtoMapper customerModelToDtoMapper;
-//    private SupportTicketModelToSupportTicketDtoMapper supportTicketModelToSupportTicketDtoMapper;
 
     @Autowired
     public UserModelToUserDtoMapper(RoleModelToDTOMapper roleModelToDTOMapper) {
@@ -29,8 +27,6 @@ public class UserModelToUserDtoMapper implements Mapper<UserModel, UserDTO> {
         userDTO.setPassword(model.getPassword());
         userDTO.setToken(model.getToken());
         userDTO.setNumberOfFailedPassEntering(model.getNumberOfFailedPassEntering());
-//        userDTO.setCustomerDTO(customerModelToDtoMapper.transform(model.getCustomer()));
-//        userDTO.setTickets( ... );
         return userDTO;
     }
 }

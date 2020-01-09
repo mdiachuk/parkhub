@@ -1,59 +1,61 @@
 package ua.com.parkhub.dto;
 
-import java.util.List;
+import ua.com.parkhub.validation.annotations.ValidEmail;
+import ua.com.parkhub.validation.annotations.ValidPassword;
+import ua.com.parkhub.validation.groups.UserChecks;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class UserDTO {
 
     private Long id;
-    private String email;
-    private String password;
+
+    @Valid
+    private CustomerDTO customer;
+
+    @NotNull(message = "First name must not be null", groups = UserChecks.class)
+    @NotEmpty(message = "First name must not be empty", groups = UserChecks.class)
+    @Size(max = 255, message = "First name must be 255 characters at most", groups = UserChecks.class)
     private String firstName;
+
+    @NotNull(message = "Last name required", groups = UserChecks.class)
+    @NotEmpty(message = "Last name must not be empty", groups = UserChecks.class)
+    @Size(max = 255, message = "Last name must be 255 characters at most", groups = UserChecks.class)
     private String lastName;
-    private CustomerDTO customerDTO;
+
+    @ValidEmail(groups = UserChecks.class)
+    @NotNull(message = "Email must required", groups = UserChecks.class)
+    @NotEmpty(message = "Email must not be empty", groups = UserChecks.class)
+    @Size(max = 255, message = "Email must be 255 characters at most", groups = UserChecks.class)
+    private String email;
+
+    @ValidPassword(groups = UserChecks.class)
+    @NotNull(message = "Password required", groups = UserChecks.class)
+    @NotEmpty(message = "Password must not be empty", groups = UserChecks.class)
+    @Size(max = 60, message = "Password must be 60 characters at most", groups = UserChecks.class)
+    private String password;
+
     private RoleDTO role;
     private String token;
     private int numberOfFailedPassEntering;
-    private List<SupportTicketDTO> tickets;
 
-    public List<SupportTicketDTO> getTickets() {
-        return tickets;
+    public Long getId() {
+        return id;
     }
 
-    public void setTickets(List<SupportTicketDTO> tickets) {
-        this.tickets = tickets;
+    public void setId(long id) {
+        this.id = id;
     }
 
-
-    public int getNumberOfFailedPassEntering() {
-        return numberOfFailedPassEntering;
+    public CustomerDTO getCustomer() {
+        return customer;
     }
 
-    public void setNumberOfFailedPassEntering(int numberOfFailedPassEntering) {
-        this.numberOfFailedPassEntering = numberOfFailedPassEntering;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setCustomer(CustomerDTO customer) {
+        this.customer = customer;
     }
 
     public String getFirstName() {
@@ -72,16 +74,20 @@ public class UserDTO {
         this.lastName = lastName;
     }
 
-    public Long getId() {
-        return id;
+    public String getEmail() {
+        return email;
     }
 
-//    public int getIdInt(){
-//        return ((int) id);
-//    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public RoleDTO getRole() {
@@ -92,11 +98,19 @@ public class UserDTO {
         this.role = role;
     }
 
-    public CustomerDTO getCustomerDTO() {
-        return customerDTO;
+    public String getToken() {
+        return token;
     }
 
-    public void setCustomerDTO(CustomerDTO customerDTO) {
-        this.customerDTO = customerDTO;
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public int getNumberOfFailedPassEntering() {
+        return numberOfFailedPassEntering;
+    }
+
+    public void setNumberOfFailedPassEntering(int numberOfFailedPassEntering) {
+        this.numberOfFailedPassEntering = numberOfFailedPassEntering;
     }
 }

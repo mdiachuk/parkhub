@@ -12,7 +12,7 @@ import ua.com.parkhub.exceptions.StatusCode;
 import ua.com.parkhub.mappers.dtoToModel.LoginDtoToUserModelMapper;
 import ua.com.parkhub.mappers.modelToDto.UserModelToUserDtoMapper;
 import ua.com.parkhub.security.JwtUtil;
-import ua.com.parkhub.service.AuthorizationService;
+import ua.com.parkhub.service.IAuthorizationService;
 
 import javax.validation.Valid;
 
@@ -22,14 +22,14 @@ import javax.validation.Valid;
 @CrossOrigin
 public class JwtAuthenticationController {
 
-    private AuthorizationService authenticationService;
+    private IAuthorizationService authenticationService;
     private static Logger logger = LoggerFactory.getLogger(JwtAuthenticationController.class.getSimpleName());
     private JwtUtil jwtUtil;
     private UserModelToUserDtoMapper userModelToUserDtoMapper;
     private LoginDtoToUserModelMapper loginDtoToUserModelMapper;
 
     @Autowired
-    public JwtAuthenticationController(AuthorizationService authenticationService, JwtUtil jwtUtil, UserModelToUserDtoMapper userModelToUserDtoMapper, LoginDtoToUserModelMapper loginDtoToUserModelMapper) {
+    public JwtAuthenticationController(IAuthorizationService authenticationService, JwtUtil jwtUtil, UserModelToUserDtoMapper userModelToUserDtoMapper, LoginDtoToUserModelMapper loginDtoToUserModelMapper) {
         this.authenticationService = authenticationService;
         this.jwtUtil = jwtUtil;
         this.userModelToUserDtoMapper = userModelToUserDtoMapper;

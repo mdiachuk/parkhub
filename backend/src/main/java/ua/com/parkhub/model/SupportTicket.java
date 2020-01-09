@@ -5,7 +5,7 @@ import ua.com.parkhub.persistence.entities.SupportTicketType;
 import java.util.List;
 import java.util.Objects;
 
-public class SupportTicket extends AbstractModel {
+public class SupportTicket {
 
     private Long id;
     private String description;

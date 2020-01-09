@@ -22,11 +22,11 @@ public class SupportTicket implements Serializable {
     @NotNull
     private boolean isSolved = false;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ticket_type_id")
     private SupportTicketType supportTicketType;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id")
     private Customer customer;
 

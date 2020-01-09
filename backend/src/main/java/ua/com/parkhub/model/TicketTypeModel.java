@@ -1,6 +1,7 @@
 package ua.com.parkhub.model;
 
 public enum TicketTypeModel {
+
     MANAGER_REGISTRATION_REQUEST("Manager registration request");
 
     private String type;

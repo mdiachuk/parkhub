@@ -3,7 +3,7 @@ package ua.com.parkhub.model;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Booking extends AbstractModel {
+public class Booking {
 
     private Long id;
     private String carNumber;

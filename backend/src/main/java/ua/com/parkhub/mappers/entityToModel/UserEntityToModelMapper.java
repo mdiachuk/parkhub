@@ -19,17 +19,19 @@ public class UserEntityToModelMapper implements Mapper<User, UserModel> {
     }
 
     @Override
-    public UserModel transform(User entity) {
+    public UserModel transform(User from) {
+        if (from == null){
+            return null;
+        }
         UserModel userModel = new UserModel();
-        userModel.setEmail(entity.getEmail());
-        userModel.setFirstName(entity.getFirstName());
-        userModel.setLastName(entity.getLastName());
-        userModel.setId(entity.getId());
-        userModel.setPassword(entity.getPassword());
-        userModel.setCustomer(customerEntityToModelMapper.transform(entity.getCustomer()));
-        userModel.setNumberOfFailedPassEntering(entity.getNumberOfFailedPassEntering());
-        // set TICKETS
-        userModel.setRole(roleEntityToModelMapper.transform(entity.getRole()));
+        userModel.setEmail(from.getEmail());
+        userModel.setFirstName(from.getFirstName());
+        userModel.setLastName(from.getLastName());
+        userModel.setId(from.getId());
+        userModel.setPassword(from.getPassword());
+        userModel.setCustomer(customerEntityToModelMapper.transform(from.getCustomer()));
+        userModel.setNumberOfFailedPassEntering(from.getNumberOfFailedPassEntering());
+        userModel.setRole(roleEntityToModelMapper.transform(from.getRole()));
         return userModel;
     }
 }

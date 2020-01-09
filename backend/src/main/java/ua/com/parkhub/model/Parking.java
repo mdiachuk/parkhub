@@ -3,7 +3,7 @@ package ua.com.parkhub.model;
 import java.util.List;
 import java.util.Objects;
 
-public class Parking extends AbstractModel {
+public class Parking {
 
     private Long id;
     private String name;

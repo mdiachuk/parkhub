@@ -2,7 +2,7 @@ package ua.com.parkhub.model;
 
 import java.util.Objects;
 
-public class SupportTicketType extends AbstractModel {
+public class SupportTicketType {
 
     private Long id;
     private String type;

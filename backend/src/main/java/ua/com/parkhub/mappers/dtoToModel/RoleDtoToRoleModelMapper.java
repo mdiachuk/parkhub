@@ -13,6 +13,9 @@ public class RoleDtoToRoleModelMapper implements Mapper<RoleDTO, RoleModel> {
 
     @Override
     public RoleModel transform(RoleDTO roleDTO) {
+        if (roleDTO == null) {
+            return null;
+        }
         RoleModel roleModel;
         switch (roleDTO) {
             case ADMIN:

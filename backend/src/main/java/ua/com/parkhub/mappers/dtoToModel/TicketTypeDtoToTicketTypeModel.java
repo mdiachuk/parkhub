@@ -1,5 +1,6 @@
 package ua.com.parkhub.mappers.dtoToModel;
 
+import org.springframework.stereotype.Component;
 import ua.com.parkhub.dto.TicketTypeDTO;
 import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.mappers.Mapper;
@@ -7,6 +8,7 @@ import ua.com.parkhub.model.TicketTypeModel;
 
 import java.util.Arrays;
 
+@Component
 public class TicketTypeDtoToTicketTypeModel implements Mapper<TicketTypeDTO, TicketTypeModel> {
 
     @Override
