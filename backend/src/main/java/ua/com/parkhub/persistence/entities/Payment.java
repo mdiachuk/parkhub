@@ -21,9 +21,9 @@ public class Payment implements Serializable {
     @NotNull
     private boolean isPaid = false;
 
-    @Column
+    /*@Column
     @NotNull
-    private boolean isCancelled = false;
+    private boolean isCancelled = false;*/
 
     @OneToOne
     @JoinColumn(name = "booking_id")
@@ -51,14 +51,6 @@ public class Payment implements Serializable {
 
     public void setPaid(boolean paid) {
         isPaid = paid;
-    }
-
-    public boolean isCancelled() {
-        return isCancelled;
-    }
-
-    public void setCancelled(boolean cancelled) {
-        isCancelled = cancelled;
     }
 
     public Booking getBooking() {

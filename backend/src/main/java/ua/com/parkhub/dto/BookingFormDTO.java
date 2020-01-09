@@ -17,6 +17,11 @@ public class BookingFormDTO implements Serializable {
     private String phoneNumber;
     @Positive
     private Long slotId;
+    @Positive
+    private Long rangeFrom;
+    @Positive
+    private Long rangeTo;
+
 
     public String getCarNumber() {
         return carNumber;
@@ -42,12 +47,30 @@ public class BookingFormDTO implements Serializable {
         this.slotId = slotId;
     }
 
+    public Long getRangeFrom() {
+        return rangeFrom;
+    }
+
+    public void setRangeFrom(Long rangeFrom) {
+        this.rangeFrom = rangeFrom;
+    }
+
+    public Long getRangeTo() {
+        return rangeTo;
+    }
+
+    public void setRangeTo(Long rangeTo) {
+        this.rangeTo = rangeTo;
+    }
+
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Slot" + ", slotId: ").append(slotId);
-        sb.append(", carNumber: ").append(carNumber);
-        sb.append(", phoneNumber: ").append(phoneNumber);
-        return sb.toString();
+        return "BookingFormDTO{" +
+                "carNumber='" + carNumber + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", slotId=" + slotId +
+                ", rangeFrom=" + rangeFrom +
+                ", rangeTo=" + rangeTo +
+                '}';
     }
 }

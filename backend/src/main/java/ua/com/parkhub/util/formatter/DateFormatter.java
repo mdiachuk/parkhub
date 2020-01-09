@@ -1,6 +1,8 @@
 package ua.com.parkhub.util.formatter;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 public class DateFormatter {
@@ -14,6 +16,10 @@ public class DateFormatter {
 
     public static LocalDateTime convertStringToLocalDateTime(String dateTime) {
         return LocalDateTime.parse(dateTime, formatter2);
+    }
+
+    public static LocalDateTime covertMillisToLocalDateTime(long millis) {
+        return LocalDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault());
     }
 
     public static void main(String[] args) {
