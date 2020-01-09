@@ -6,7 +6,7 @@ public enum StatusCode {
     CANNOT_ACTIVATE(2),
     NO_ACCOUNT_FOUND(4),
     INVALID_CREDENTIALS(8),
-    PARKING_DOESNT_EXIST(16);
+    PARKING_DOESNT_EXIST(128);
 
     private int code;
 

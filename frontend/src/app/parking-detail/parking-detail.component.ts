@@ -52,7 +52,7 @@ export class ParkingDetailComponent implements OnInit {
     }
     
     checkStatusCode(code: number): string {
-      if (code === 16) {
+      if (code === 128) {
         return 'Such parking doesn\'t exist!';
       }
     }
