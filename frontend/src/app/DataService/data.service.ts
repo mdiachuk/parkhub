@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import * as jwt_decode from "jwt-decode";
+import * as jwt_decode from 'jwt-decode';
+import {User} from '../interfaces/user';
 
 @Injectable()
 export class DataService {
@@ -11,7 +12,8 @@ export class DataService {
   private isManager = new BehaviorSubject(false);
   private isUser = new BehaviorSubject(false);
 
-  currentMessage = this.messageSource.asObservable();
+  private user: User;
+
   currentIsLogged = this.isLogged.asObservable();
   currentIsAdmin = this.isAdmin.asObservable();
   currentIsManager = this.isManager.asObservable();
@@ -21,19 +23,19 @@ export class DataService {
     const token = localStorage.getItem('TOKEN');
     if (token) {
       this.changeIsLogged(true);
-      const user = jwt_decode(token);
-      if (user) {
-        if (user.role === 'USER') {
+      this.user = jwt_decode(token);
+      if (this.user) {
+        if (this.user.role === 'USER') {
           this.changeIsUser(true);
           this.changeIsManager(false);
           this.changeIsAdmin(false);
         } else
-          if (user.role === 'ADMIN') {
+          if (this.user.role === 'ADMIN') {
             this.changeIsAdmin(true);
             this.changeIsManager(false);
             this.changeIsUser(false);
           } else
-            if (user.role === 'MANAGER') {
+            if (this.user.role === 'MANAGER') {
               this.changeIsManager(true);
               this.changeIsAdmin(false);
               this.changeIsUser(false);

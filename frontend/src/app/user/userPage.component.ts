@@ -75,7 +75,7 @@ export class UserComponent implements OnInit {
   }
 
   PostPassword(){
-    this.UserService.PostDataPassword({id:this.UserService.getUserID(),
+    this.UserService.PostDataPassword({id: this.UserService.getUserID(),
       password: this.updateForm.get('userPassword').value,
       newPassword: this.updateForm.get('newPassword').value}).subscribe(res => {
       console.log(res);

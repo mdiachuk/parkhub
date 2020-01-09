@@ -102,11 +102,6 @@ export class LoginComponent implements OnInit {
     this.data.changeIsUser(isUser);
   }
 
-  public  openModal(text: string) {
-    this.data.changeMessage(text);
-    // this.modalService.show(CongratulationComponent);
-  }
-
 
 }
 

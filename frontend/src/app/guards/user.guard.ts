@@ -7,7 +7,7 @@ import {User} from '../interfaces/user';
 @Injectable({
   providedIn: 'root'
 })
-export class AdminGuard implements CanActivate {
+export class UserGuard implements CanActivate {
 
   private decoded: User;
 
@@ -17,7 +17,7 @@ export class AdminGuard implements CanActivate {
       const token = localStorage.getItem('TOKEN');
       if (token) {
         this.decoded = jwt_decode(token);
-        return this.decoded.role === 'ADMIN';
+        return this.decoded.role === 'USER';
       } else {
         return false;
       }

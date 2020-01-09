@@ -16,17 +16,19 @@ import {BookingDetailComponent} from "./bookings/booking-detail/booking-detail.c
 import { PageComponent } from './homePage/homePage.component';
 import {UserComponent} from "./user/userPage.component";
 import { AdminGuard } from './guards/admin.guard';
+import { ManagerGuard } from './guards/manager.guard';
+import { UserGuard } from './guards/user.guard';
 
 
 const routes: Routes = [
   {path: 'parkoff', component: ParkoffComponent },
-  {path: 'signup/user', component:SingupComponent},
-  {path: 'home', component:PageComponent},
-  {path: 'signup/manager', component:ManagerSignupComponent},
+  {path: 'signup/user', component: SingupComponent},
+  {path: 'home', component: PageComponent},
+  {path: 'signup/manager', component: ManagerSignupComponent},
   {path: 'cabinet', component: AppComponent },
   {path: 'cabinet/addParking', component: AddParkingComponent},
-  {path: 'manager/cabinet', component: ParkingListComponentManager,},
-  {path: 'manager/cabinet/:id', component: ParkingDetailComponent,},
+  {path: 'manager/cabinet', component: ParkingListComponentManager, canActivate: [ManagerGuard]},
+  {path: 'manager/cabinet/:id', component: ParkingDetailComponent, canActivate: [ManagerGuard]},
   {path: 'admin', component: AdminComponent, canActivate: [AdminGuard]},
 
   // { path: 'parkings', component: ParkingsComponentSlots },
@@ -35,7 +37,7 @@ const routes: Routes = [
   { path: 'booking', component: BookingDetailComponent},
 
   // { path: 'user', component: UserPageComponent },
-  { path: 'userPage', component: UserComponent },
+  { path: 'userPage', component: UserComponent, canActivate: [UserGuard] },
   { path: 'login', component: LoginComponent }
   // {path: '', redirectTo: 'home', pathMatch: 'full'},
 

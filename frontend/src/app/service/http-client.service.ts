@@ -162,17 +162,17 @@ export class AdminService {
 })
 export class UserService {
 
+  private decoded: UserInfo;
 
   constructor(private http: HttpClient) {
 
-
   }
 
-  getUserID(){
+  getUserID(): number{
     const token = localStorage.getItem('TOKEN');
     if (token) {
-      const decoded = jwt_decode(token);
-      return decoded.id;
+     this.decoded = jwt_decode(token);
+     return this.decoded.id;
     } else {
       return -1;
     }
@@ -183,7 +183,8 @@ export class UserService {
   PostData(userInfo : UserInfo){
     return this.http.post('api/user', userInfo);
   }
-  PostDataPassword(userPass : UserPassword){
+
+  PostDataPassword(userPass: { password: any; newPassword: any; id: number }){
     return this.http.post('/api/user/password', userPass);
   }
 }
