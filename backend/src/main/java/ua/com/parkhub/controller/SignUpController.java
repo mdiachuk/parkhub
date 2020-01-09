@@ -74,6 +74,7 @@ public class SignUpController {
      */
     @PostMapping ("/user")
     public ResponseEntity create(@RequestBody UserDTO userDTO) {
+
         userDTO.setRole(RoleDTO.USER);
 
         if (signUpService.createUser(userDtoToUserModelMapper.transform(userDTO))){

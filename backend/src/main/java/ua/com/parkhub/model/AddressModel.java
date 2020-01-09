@@ -6,6 +6,8 @@ public class AddressModel {
     private String city;
     private String street;
     private String building;
+    private String lat;
+    private String lon;
 
     public Long getId() {
         return id;
@@ -42,6 +44,22 @@ public class AddressModel {
     @Override
     public String toString() {
         return street + " " + building + ", " + city;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLon() {
+        return lon;
+    }
+
+    public void setLon(String lon) {
+        this.lon = lon;
     }
 
     //SOME BUSINESS LOGIC

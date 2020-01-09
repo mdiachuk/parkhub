@@ -14,6 +14,8 @@ public class AddressEntityToModelMapper implements Mapper<Address, AddressModel>
         addressModel.setCity(from.getCity());
         addressModel.setStreet(from.getStreet());
         addressModel.setBuilding(from.getBuilding());
+        addressModel.setLat(from.getLat());
+        addressModel.setLon(from.getLon());
         return addressModel;
     }
 }
