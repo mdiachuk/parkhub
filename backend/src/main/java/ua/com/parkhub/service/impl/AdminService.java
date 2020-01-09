@@ -51,7 +51,7 @@ public class AdminService  {
                 adminSupportTicketDTO.setTicketHighlight(ticketHighlightBuilder(targetSupportList.get((int) i).getDescription()));
                 adminSupportTicketDTOList.add(adminSupportTicketDTO);
             }
-        }else if (ticketCounter<=5){
+        }else {
             for(SupportTicketModel supportTicketList: targetSupportList){
                 AdminSupportTicketDTO adminSupportTicketDTO = new TicketSupportModelToAdminSupportTicketDTO().transform(supportTicketList);
                 adminSupportTicketDTO.setSupportTicketType(supportTicketList.getSupportTicketType().getType());
