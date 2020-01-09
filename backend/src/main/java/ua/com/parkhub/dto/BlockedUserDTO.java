@@ -4,31 +4,31 @@ import java.util.Date;
 
 public class BlockedUserDTO {
 
-    private Long blocked_user_id;
-    private UserDTO blocked_user;
-    private Date blocking_date;
+    private Long blockedUserId;
+    private UserDTO blockedUser;
+    private Date blockingDate;
 
-    public Long getBlocked_user_id() {
-        return blocked_user_id;
+    public Long getBlockedUserId() {
+        return blockedUserId;
     }
 
-    public void setBlocked_user_id(Long blocked_user_id) {
-        this.blocked_user_id = blocked_user_id;
+    public void setBlockedUserId(Long blockedUserId) {
+        this.blockedUserId = blockedUserId;
     }
 
-    public UserDTO getBlocked_user() {
-        return blocked_user;
+    public UserDTO getBlockedUser() {
+        return blockedUser;
     }
 
-    public void setBlocked_user(UserDTO blocked_user) {
-        this.blocked_user = blocked_user;
+    public void setBlockedUser(UserDTO blockedUser) {
+        this.blockedUser = blockedUser;
     }
 
-    public Date getBlocking_date() {
-        return blocking_date;
+    public Date getBlockingDate() {
+        return blockingDate;
     }
 
-    public void setBlocking_date(Date blocking_date) {
-        this.blocking_date = blocking_date;
+    public void setBlockingDate(Date blockingDate) {
+        this.blockingDate = blockingDate;
     }
 }
