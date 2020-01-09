@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 
 
 @Service
-@Transactional
 public class ParkingService {
 
     private ParkingDAO parkingDAO;
@@ -44,6 +43,7 @@ public class ParkingService {
     }
 
 
+    @Transactional
     public void updateParking(Long id, ParkingModel parkingModelParam) {
         ParkingModel parkingModel = findParkingById(id);
         Field[] paramFields = parkingModelParam.getClass().getDeclaredFields();
@@ -54,8 +54,9 @@ public class ParkingService {
                 if (value instanceof Integer){
                     return (Integer) value != 0;
                 }
-                else
-                return value != null;
+                else {
+                    return value != null;
+                }
             } catch (IllegalAccessException ex) {
                 return false;
             }

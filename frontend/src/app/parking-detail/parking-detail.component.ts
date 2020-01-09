@@ -22,6 +22,7 @@ export class ParkingDetailComponent implements OnInit {
   buttonStatusList: Array<boolean>;
   input = new FormControl('', [Validators.required]);
   code: number = 0;
+  inputValidationStatus: boolean = false;
   
   constructor(private parkingService: ParkingService, private route: ActivatedRoute, private _snackBar: MatSnackBar, public dialog: MatDialog){
   }
@@ -89,8 +90,9 @@ export class ParkingDetailComponent implements OnInit {
       window.location.reload();
   }
 
-  getErrorMessage() {
+  getErrorMessage(inputId: number) {
    if (this.input.hasError('required'))
+   this.buttonStatusList[inputId] = true;
    return 'You must enter a value';
   }
 }
