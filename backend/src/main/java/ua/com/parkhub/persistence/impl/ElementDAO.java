@@ -33,10 +33,11 @@ public class ElementDAO<E, M>  implements IElementDAO<M> {
 
     @Transactional
     @Override
-    public void addElement(M element) {
-        emp.merge(modelToEntity.transform(element));
-        //emp.flush();
-       // return Optional.of(entityToModel.transform(emp.merge(modelToEntity.transform(element))));
+    public Optional<M> addElement(M element) {
+        E entity = modelToEntity.transform(element);
+        emp.merge(entity);
+        emp.flush();
+        return Optional.of(entityToModel.transform(entity));
     }
 
 

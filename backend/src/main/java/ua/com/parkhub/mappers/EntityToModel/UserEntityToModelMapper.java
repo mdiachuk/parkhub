@@ -7,33 +7,40 @@ import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.persistence.entities.User;
 
+import java.util.stream.Collectors;
+
 @Component
 public class UserEntityToModelMapper implements Mapper<User, UserModel> {
 
-    private CustomerEntityToModelMapper customerEntityToModelMapper;
-    private RoleEntityToModelMapper roleEntityToModelMapper;
+    CustomerEntityToModelMapper customerEntityToModelMapper;
+    RoleEntityToModelMapper roleEntityToModelMapper;
+    SupportTicketEntityToModelMapper supportTicketEntityToModelMapper;
 
     @Autowired
-    public UserEntityToModelMapper(CustomerEntityToModelMapper customerEntityToModelMapper, RoleEntityToModelMapper roleEntityToModelMapper) {
+    public UserEntityToModelMapper(CustomerEntityToModelMapper customerEntityToModelMapper, RoleEntityToModelMapper roleEntityToModelMapper, SupportTicketEntityToModelMapper supportTicketEntityToModelMapper) {
         this.customerEntityToModelMapper = customerEntityToModelMapper;
         this.roleEntityToModelMapper = roleEntityToModelMapper;
+        this.supportTicketEntityToModelMapper = supportTicketEntityToModelMapper;
     }
 
+
     @Override
-    public UserModel transform(User entity) {
-        if(entity == null) {
-            throw new ParkHubException("User entity to be converted to UserModel is null.");
+    public UserModel transform(User from) {
+        if(from == null) {
+            return null;
         }
         UserModel userModel = new UserModel();
-        userModel.setEmail(entity.getEmail());
-        userModel.setFirstName(entity.getFirstName());
-        userModel.setLastName(entity.getLastName());
-        userModel.setId(entity.getId());
-        userModel.setPassword(entity.getPassword());
-        userModel.setCustomer(customerEntityToModelMapper.transform(entity.getCustomer()));
-        userModel.setNumberOfFailedPassEntering(entity.getNumberOfFailedPassEntering());
-        // set TICKETS
-        userModel.setRole(roleEntityToModelMapper.transform(entity.getRole()));
+        userModel.setEmail(from.getEmail());
+        userModel.setFirstName(from.getFirstName());
+        userModel.setLastName(from.getLastName());
+        userModel.setId(from.getId());
+        userModel.setPassword(from.getPassword());
+        userModel.setCustomer(customerEntityToModelMapper.transform(from.getCustomer()));
+        userModel.setNumberOfFailedPassEntering(from.getNumberOfFailedPassEntering());
+        if(from.getTickets() != null){
+            userModel.setTickets(from.getTickets().stream().map(supportTicketEntityToModelMapper::transform).collect(Collectors.toList()));
+        }
+        userModel.setRole(roleEntityToModelMapper.transform(from.getRole()));
         return userModel;
     }
 }

@@ -1,8 +1,9 @@
-package ua.com.parkhub.mappers;
+package ua.com.parkhub.mappers.DtoToModel;
 
 import org.springframework.stereotype.Component;
 import ua.com.parkhub.dto.AuthUserDTO;
 import ua.com.parkhub.dto.PhoneEmailDTO;
+import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.AuthUserModel;
 import ua.com.parkhub.model.PhoneEmailModel;
 

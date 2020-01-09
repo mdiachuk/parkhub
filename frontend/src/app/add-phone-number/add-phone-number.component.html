@@ -7,6 +7,7 @@
 
     <mat-form-field class="example-full-width">
       <input matInput placeholder="PhoneNumber" formControlName="phoneNumber" >
+      <span matPrefix>+&nbsp;</span>
       <mat-error *ngIf="!formGroup.controls['phoneNumber'].valid && formGroup.controls['phoneNumber'].touched">
         {{ getErrorPhoneNumber() }}
       </mat-error>
@@ -16,8 +17,6 @@
 
     <div class="form-element">
       <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!formGroup.valid">Add parking</button>
-      <a mat-button color="primary" type="submit"
-         class="button-row"  [disabled]="!formGroup.valid" [routerLink]='["/manager/cabinet"]'>Submit phone</a>
     </div>
   </form>
 </div>

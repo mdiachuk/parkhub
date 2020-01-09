@@ -10,14 +10,14 @@ import ua.com.parkhub.persistence.entities.Customer;
 public class CustomerModelToEntityMapper implements Mapper<CustomerModel, Customer> {
 
     @Override
-    public Customer transform(CustomerModel model) {
-        if(model == null) {
-            throw new ParkHubException("CustomerModel entity to be converted to Customer is null.");
+    public Customer transform(CustomerModel from) {
+        if(from == null) {
+            return null;
         }
         Customer customer = new Customer();
-        customer.setId(model.getId());
-        customer.setPhoneNumber(model.getPhoneNumber());
-        customer.setActive(model.isActive());
+        customer.setId(from.getId());
+        customer.setPhoneNumber(from.getPhoneNumber());
+        customer.setActive(from.isActive());
 //        customer.setBookings(null); // set when BookingMappers will be done
 //        customer.setSupportTickets(null); // set TICKETS
         return customer;

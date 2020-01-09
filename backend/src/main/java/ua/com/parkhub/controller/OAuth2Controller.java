@@ -2,14 +2,18 @@ package ua.com.parkhub.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.AuthUserDTO;
 import ua.com.parkhub.dto.PhoneEmailDTO;
-import ua.com.parkhub.mappers.AuthUserDTOtoAuthUserModelMapper;
-import ua.com.parkhub.mappers.PhoneEmailDTOtoPhoneEmailMapper;
+import ua.com.parkhub.dto.UserDTO;
+
+import ua.com.parkhub.mappers.DtoToModel.AuthUserDTOtoAuthUserModelMapper;
+import ua.com.parkhub.mappers.DtoToModel.PhoneEmailDTOtoPhoneEmailMapper;
 import ua.com.parkhub.model.AuthUserModel;
 import ua.com.parkhub.model.PhoneEmailModel;
+import ua.com.parkhub.security.JwtUtil;
 import ua.com.parkhub.service.impl.SignUpService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -24,15 +28,18 @@ public class OAuth2Controller {
     private String frontUrl;
 
     private final SignUpService  signUpService;
+    private JwtUtil jwtUtil;
     private AuthUserDTOtoAuthUserModelMapper authUserDTOtoAuthUserModelMapper;
     private PhoneEmailDTOtoPhoneEmailMapper phoneEmailDTOtoPhoneEmailMapper;
 
 
     @Autowired
-    public OAuth2Controller(SignUpService signUpService, AuthUserDTOtoAuthUserModelMapper Mapper, PhoneEmailDTOtoPhoneEmailMapper phoneEmailDTOtoPhoneEmailMapper) {
+    public OAuth2Controller(SignUpService signUpService, AuthUserDTOtoAuthUserModelMapper Mapper, PhoneEmailDTOtoPhoneEmailMapper phoneEmailDTOtoPhoneEmailMapper,  JwtUtil jwtUtil) {
         this.signUpService = signUpService;
         this.authUserDTOtoAuthUserModelMapper = Mapper;
         this.phoneEmailDTOtoPhoneEmailMapper = phoneEmailDTOtoPhoneEmailMapper;
+        this.jwtUtil = jwtUtil;
+
     }
 
     @RequestMapping("/home1")
@@ -65,6 +72,7 @@ public class OAuth2Controller {
     public void updatePhone(@RequestBody PhoneEmailDTO phoneEmailDTO) {
         PhoneEmailModel phoneEmailModel=phoneEmailDTOtoPhoneEmailMapper.transform(phoneEmailDTO);
         signUpService.setPhoneNumberForAuthUser(phoneEmailModel);
+
     }
 
 

@@ -8,20 +8,15 @@ import ua.com.parkhub.persistence.entities.Customer;
 @Component
 public class CustomerEntityToModelMapper implements Mapper<Customer, CustomerModel> {
 
-//    SupportTicketEntityToModelMapper supportTicketEntityToModelMapper;
-//
-//    @Autowired
-//    public CustomerEntityToModelMapper(SupportTicketEntityToModelMapper supportTicketEntityToModelMapper) {
-//        this.supportTicketEntityToModelMapper = supportTicketEntityToModelMapper;
-//    }
-
     @Override
     public CustomerModel transform(Customer from) {
+        if(from == null) {
+            return null;
+        }
         CustomerModel customerModel = new CustomerModel();
         customerModel.setId(from.getId());
         customerModel.setActive(from.isActive());
         customerModel.setPhoneNumber(from.getPhoneNumber());
-        //customerModel.setSupportTickets(from.getSupportTickets().stream().map(supportTicketEntityToModelMapper::transform).collect(Collectors.toList()));
         return customerModel;
     }
 }

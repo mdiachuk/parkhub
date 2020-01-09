@@ -10,6 +10,9 @@ public class SlotEntityToModelMapper implements Mapper<Slot, SlotModel> {
 
     @Override
     public SlotModel transform(Slot from) {
+        if(from == null) {
+            return null;
+        }
         SlotModel slotModel = new SlotModel();
         slotModel.setId(from.getId());
         slotModel.setSlotNumber(from.getSlotNumber());

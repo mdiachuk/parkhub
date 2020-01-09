@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PhoneNumber } from '../phoneNumber';
 import { Oauth2googleService } from '../service/oauth2google.service';
 
@@ -15,7 +15,7 @@ export class AddPhoneNumberComponent implements OnInit {
   phoneregex: RegExp = /^380\d{9}$/
 
 
-  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder,private oauth2Service:Oauth2googleService) { 
+  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder,private oauth2Service:Oauth2googleService,private router: Router,) { 
     this.phoneNumber=new PhoneNumber();
   }
 
@@ -39,14 +39,14 @@ export class AddPhoneNumberComponent implements OnInit {
 
   getErrorPhoneNumber() {
     return this.formGroup.get('phoneNumber').hasError('required') ? 'Field is required' :
-    this.formGroup.get('phoneNumber').hasError('pattern') ? 'Not a valid parking name': '';
+    this.formGroup.get('phoneNumber').hasError('pattern') ? 'Phone number should start with 380 and contain 12 numbers': '';
   }
 
   onSubmit(formGroup) {
     console.log(formGroup);
      this.oauth2Service.save(formGroup)
      .subscribe( data => {
-       //this.openSnackBar(("Parking created successfully."));
+      this.router.navigate(['/home']);
        console.log(data);
     },
     err => {
