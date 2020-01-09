@@ -5,8 +5,10 @@ import { Parking } from '../models/parking.model';
 import { Router } from "@angular/router";
 import { Manager } from '../model/manager';
 import { Admin } from '../Classes/admin';
+import {UserInfo} from '../interfaces/userInfo';
 // import {User} from '../interfaces/user';
 import { Login } from '../interfaces/login';
+import * as jwt_decode from "jwt-decode";
 
 export class User {
   constructor(
@@ -25,6 +27,16 @@ export class User {
 export class UserRole {
   constructor(
     public id: string
+  ) {
+  }
+}
+
+export class UserPassword {
+  constructor(
+    public id: string,
+    public password: string,
+    public newPassword: string,
+
   ) {
   }
 }
@@ -144,4 +156,36 @@ export class AdminService {
   updateRole(admin: Admin) {
     this.http.post("/api/admin/{id}", admin).subscribe(res => console.log("ok"));
   }
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UserService {
+
+  private decoded: UserInfo;
+
+  constructor(private http: HttpClient) {
+
+  }
+
+  getUserID(): string{
+    const token = localStorage.getItem('TOKEN');
+    if (token) {
+     this.decoded = jwt_decode(token);
+     return this.decoded.id.toString();
+    } else {
+      return '';
+    }
+  }
+  getData(){
+    return this.http.get('/api/user/' + this.getUserID());
+  }
+  PostData(userInfo : UserInfo){
+    return this.http.post('api/user/' + this.getUserID(), userInfo);
+  }
+  PostDataPassword(userPass : UserPassword){
+    return this.http.post('/api/user/password/'+ this.getUserID(), userPass);
+  }
+
 }

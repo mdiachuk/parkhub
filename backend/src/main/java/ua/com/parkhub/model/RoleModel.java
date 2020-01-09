@@ -25,4 +25,3 @@ public enum RoleModel {
         this.id = id;
     }
 }
-

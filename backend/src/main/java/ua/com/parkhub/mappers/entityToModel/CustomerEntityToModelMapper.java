@@ -14,7 +14,6 @@ public class CustomerEntityToModelMapper implements Mapper<Customer, CustomerMod
             return null;
         }
         CustomerModel customerModel = new CustomerModel();
-        System.out.println(from.getPhoneNumber() + "   " + from.getId());
         customerModel.setId(from.getId());
         customerModel.setActive(from.isActive());
         customerModel.setPhoneNumber(from.getPhoneNumber());

@@ -2,17 +2,16 @@ package ua.com.parkhub.model;
 
 import ua.com.parkhub.persistence.entities.SupportTicketType;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class SupportTicket implements Serializable, Cloneable {
+public class SupportTicket {
 
     private Long id;
     private String description;
     private boolean isSolved;
     private SupportTicketType supportTicketType;
-    private List<User> solvers;
+    private List<UserModel> solvers;
 
     public Long getId() {
         return id;
@@ -46,11 +45,11 @@ public class SupportTicket implements Serializable, Cloneable {
         this.supportTicketType = supportTicketType;
     }
 
-    public List<User> getSolvers() {
+    public List<UserModel> getSolvers() {
         return solvers;
     }
 
-    public void setSolvers(List<User> solvers) {
+    public void setSolvers(List<UserModel> solvers) {
         this.solvers = solvers;
     }
 

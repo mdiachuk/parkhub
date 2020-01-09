@@ -18,4 +18,3 @@ public class CustomerDAO extends ElementDAO<Customer, CustomerModel> {
         return findOneByFieldEqual("phoneNumber", phoneNumber);
     }
 }
-

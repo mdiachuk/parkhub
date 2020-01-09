@@ -36,8 +36,8 @@ public class ParkingDAO extends ElementDAO<Parking, ParkingModel> {
         cr.select(cb.count(root));
         cr.where
                 ((cb.equal(root.get("city"),addressModel.getCity())),
-                (cb.equal(root.get("street"), addressModel.getStreet())),
-                (cb.equal(root.get("building"), addressModel.getBuilding())));
+                        (cb.equal(root.get("street"), addressModel.getStreet())),
+                        (cb.equal(root.get("building"), addressModel.getBuilding())));
         TypedQuery<Long> count = emp.createQuery(cr);
         return count.getSingleResult();
     }

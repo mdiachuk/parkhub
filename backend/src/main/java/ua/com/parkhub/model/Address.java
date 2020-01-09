@@ -1,9 +1,8 @@
 package ua.com.parkhub.model;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class Address implements Serializable, Cloneable {
+public class Address {
 
     private Long id;
     private String city;

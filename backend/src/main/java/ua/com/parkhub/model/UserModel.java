@@ -86,6 +86,7 @@ public class UserModel {
         this.numberOfFailedPassEntering = numberOfFailedPassEntering;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,5 +1,5 @@
-//package ua.com.parkhub.service.impl;
-//
+package ua.com.parkhub.service.impl;
+
 //import org.junit.jupiter.api.Assertions;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
@@ -23,7 +23,7 @@
 //
 //class AuthorizationServiceImplTest {
 //
-//    private static final int TIMEOUT = 2000;
+//    private static final int TIMEOUT = 3000;
 //
 //    @Mock
 //    private UserDAO userDAO;
@@ -50,8 +50,8 @@
 //        user.setRole(role);
 //        user.setFirstName("A");
 //        user.setLastName("B");
-//        user.setEmail("a@a.com");
-//        user.setPassword("password");
+//        user.setEmail("email");
+//        user.setPassword(passwordEncoder.encode("password"));
 //        loginWithWrongCredentials = new LoginDTO();
 //        loginWithWrongCredentials.setEmail("wrongEmail");
 //        loginWithWrongCredentials.setPassword("wrongPassword");

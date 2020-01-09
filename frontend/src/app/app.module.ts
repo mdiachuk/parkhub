@@ -17,17 +17,17 @@ import { ParkingService1 } from './services/parking.service';
 import { ParkingListComponent } from './parking-list/parking-list.component';
 import { ParkingListComponentManager } from './parking-list-manager/parking-list.component';
 
-import { ParkingService } from "./service/http-client.service";
-import { AddParkingComponent } from "./add-parking/add-parking.component";
-import { ParkingsComponent } from "./parkings/parkings.component";
-import { ParkingDetailComponent } from "./parking-detail/parking-detail.component";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatButtonModule } from "@angular/material/button";
-import { MatListModule } from "@angular/material/list";
-import { MatDividerModule } from "@angular/material/divider";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { ManagerSignupComponent } from "./manager-signup/manager-signup.component";
-import { AdminComponent } from "./admin/admin.component";
+import {ParkingService, UserService} from './service/http-client.service';
+import {AddParkingComponent} from "./add-parking/add-parking.component";
+import {ParkingsComponent} from "./parkings/parkings.component";
+import {ParkingDetailComponent} from "./parking-detail/parking-detail.component";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatButtonModule} from "@angular/material/button";
+import {MatListModule} from "@angular/material/list";
+import {MatDividerModule} from "@angular/material/divider";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {ManagerSignupComponent} from "./manager-signup/manager-signup.component";
+import {AdminComponent} from "./admin/admin.component";
 
 import {
   MatPaginatorModule,
@@ -39,18 +39,18 @@ import {
   MatCheckboxModule,
   MatSnackBarModule
 } from "@angular/material";
-// import {UserComponent} from "./user/user.component";
-import { LoginComponent } from "./login/login.component";
-import { AlertDialogComponent } from "./alert-dialog/alert-dialog.component";
-import { ParkoffComponent } from "./parkoff/parkoff.component";
-import { MatDialogModule } from "@angular/material/dialog";
-import { SlotsComponent } from "./slots/slots.component";
-import { BookingDetailComponent } from "./bookings/booking-detail/booking-detail.component";
-import { BookingsComponent } from "./bookings/bookings.component";
-import { MatChipsModule } from "@angular/material/chips";
-import { ParkingsComponentSlots } from "./parkings-ad/parkings.component";
-import { ParkingDetailSlotsComponent } from "./parkings-ad/parking-detail/parking-detail.component";
-import { SlotService } from "./serviceSlot/slot.service";
+import {UserComponent} from "./user/userPage.component";
+import {LoginComponent} from "./login/login.component";
+import {AlertDialogComponent} from "./alert-dialog/alert-dialog.component";
+import {ParkoffComponent} from "./parkoff/parkoff.component";
+import {MatDialogModule} from "@angular/material/dialog";
+import {SlotsComponent} from "./slots/slots.component";
+import {BookingDetailComponent} from "./bookings/booking-detail/booking-detail.component";
+import {BookingsComponent} from "./bookings/bookings.component";
+import {MatChipsModule} from "@angular/material/chips";
+import {ParkingsComponentSlots} from "./parkings-ad/parkings.component";
+import {ParkingDetailSlotsComponent} from "./parkings-ad/parking-detail/parking-detail.component";
+import {SlotService} from "./serviceSlot/slot.service";
 import { from } from 'rxjs';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
@@ -58,6 +58,9 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 
+import {DataService} from './DataService/data.service';
+import { ParkhubInterceptorComponent } from './parkhub-interceptor/parkhub-interceptor.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -109,12 +112,19 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     ParkingsComponentSlots,
     BookingDetailComponent,
     BookingsComponent,
+    UserComponent
+    BookingsComponent,
     ResetPasswordComponent,
     ForgotPasswordComponent,
     VerifyEmailComponent
     // UserComponent
   ],
-  providers: [ParkingService, SlotService, ParkingService1],
+  providers: [ParkingService, SlotService, ParkingService1, DataService, UserService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ParkhubInterceptorComponent,
+      multi: true
+    }],
   bootstrap: [AppComponent],
   entryComponents: [AlertDialogComponent]
 })

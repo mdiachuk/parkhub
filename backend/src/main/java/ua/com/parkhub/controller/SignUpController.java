@@ -3,13 +3,15 @@ package ua.com.parkhub.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.ManagerRegistrationDataDTO;
 import ua.com.parkhub.exceptions.EmailException;
+import ua.com.parkhub.dto.RoleDTO;
+import ua.com.parkhub.dto.UserDTO;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberException;
 import ua.com.parkhub.mappers.dtoToModel.ManagerRegistrationRequestDtoToModel;
@@ -24,16 +26,20 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/signup")
 public class SignUpController {
+
     private static final Logger logger = LoggerFactory.getLogger(SignUpController.class);
 
     private final SignUpService signUpService;
     private final ManagerRegistrationRequestDtoToModel managerRegistrationRequestDtoToModel;
+    private final UserDtoToUserModelMapper userDtoToUserModelMapper;
 
     @Autowired
     public SignUpController(SignUpService signUpService,
-                            ManagerRegistrationRequestDtoToModel managerRegistrationRequestDtoToModel) {
+                            ManagerRegistrationRequestDtoToModel managerRegistrationRequestDtoToModel,
+                            UserDtoToUserModelMapper userDtoToUserModelMapper) {
         this.signUpService = signUpService;
         this.managerRegistrationRequestDtoToModel = managerRegistrationRequestDtoToModel;
+        this.userDtoToUserModelMapper = userDtoToUserModelMapper;
     }
 
     @PostMapping(value = "/manager")
@@ -72,20 +78,26 @@ public class SignUpController {
         return ResponseEntity.status(500).body(message);
     }
 
-//    /**
-//     *
-//     * @param user
-//     * @return 200 Status if new User be create
-//     *         500 Status if new User not be create
-//     */
-//    @PostMapping ("/user")
-//    public ResponseEntity create(@RequestBody User user) {
-//        if (signUpService.createUser(user)) {
-//            userService.sendToken(user.getEmail(), UuidTokenType.EMAIL);
-//            return ResponseEntity.ok().build();
-//        } else {
-//            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//
-//    }
+
+
+    /**
+     *
+//     * @param userDTO
+     * @return 200 Status if new User be create
+     *         500 Status if new User not be create
+     */
+    @PostMapping ("/user")
+    public ResponseEntity create(@RequestBody UserDTO userDTO) {
+        userDTO.setRole(RoleDTO.USER);
+        System.out.println(userDTO.toString());
+
+        if (signUpService.createUser(userDtoToUserModelMapper.transform(userDTO))){
+            return ResponseEntity.ok().build();
+        } else {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+
 }

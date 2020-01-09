@@ -1,9 +1,8 @@
 package ua.com.parkhub.model;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class SupportTicketType implements Serializable, Cloneable {
+public class SupportTicketType {
 
     private Long id;
     private String type;

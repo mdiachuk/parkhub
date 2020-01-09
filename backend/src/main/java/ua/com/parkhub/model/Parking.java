@@ -1,10 +1,9 @@
 package ua.com.parkhub.model;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class Parking implements Serializable, Cloneable {
+public class Parking {
 
     private Long id;
     private String name;
@@ -12,8 +11,8 @@ public class Parking implements Serializable, Cloneable {
     private int tariff;
     private boolean isActive;
     private Address address;
-    private User owner;
-    private List<Slot> slots;
+    private UserModel owner;
+    private List<SlotModel> slots;
 
     public Long getId() {
         return id;
@@ -63,19 +62,19 @@ public class Parking implements Serializable, Cloneable {
         this.address = address;
     }
 
-    public User getOwner() {
+    public UserModel getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(UserModel owner) {
         this.owner = owner;
     }
 
-    public List<Slot> getSlots() {
+    public List<SlotModel> getSlots() {
         return slots;
     }
 
-    public void setSlots(List<Slot> slots) {
+    public void setSlots(List<SlotModel> slots) {
         this.slots = slots;
     }
 

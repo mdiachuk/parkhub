@@ -5,13 +5,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ua.com.parkhub.dto.ManagerRegistrationDataDTO;
+import ua.com.parkhub.dto.RoleDTO;
 import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberException;
-import ua.com.parkhub.model.*;
+import ua.com.parkhub.persistence.entities.*;
 import ua.com.parkhub.persistence.impl.*;
-
+import ua.com.parkhub.model.*;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -108,7 +111,7 @@ public class SignUpService {
         return supportTicketTypeDAO.findSupportTicketTypeByType(type).orElseThrow(() ->
                 new NotFoundInDataBaseException("Support ticket type was not found by type=" + type));
     }
-
+    }
     private List<UserModel> findSolvers(String role) {
         List<UserModel> solvers = userDAO.findUsersByRoleId(findUserRole(role).getId());
         if (solvers.isEmpty()) {
@@ -116,64 +119,4 @@ public class SignUpService {
         }
         return solvers;
     }
-
-    /**
-     * To create new user
-     * @param user
-     * @return false - if user not create;
-     *         true - if user create
-     */
-//    public boolean createUser(User user) {
-//
-//        if (emptyField(user)){
-////            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
-//            String haveEmail = userDAO.haveEmail(user.getEmail());
-////            System.out.println(haveEmail);
-//            String havePhoneNumber = userDAO.havePhoneNumber(user.getCustomer().getPhoneNumber());
-////            System.out.println(havePhoneNumber);
-//            String customerId = userDAO.findUserByCustomerId(havePhoneNumber);
-////            System.out.println(customerId);
-//            if (haveEmail.length() != 0) {
-//                return false;
-//            } else {
-//                if (havePhoneNumber.length() != 0) {
-//                    if (customerId.length() != 0) {
-//                        return false;
-//                    } else {
-//                        return addUser(user);
-//                    }
-//                } else  {
-//                    return addUser(user);
-//                }
-//            }
-//        } else {
-//            return false;
-//        }
-//
-//    }
-//
-//    /**
-//     * If some fild is empty, new User can`t create account
-//     * @param user
-//     * @return false - if have empty field;
-//     *         true - if all field not empty
-//     */
-//    private boolean emptyField (User user) {
-//        return (user.getCustomer().getPhoneNumber().length()==0||
-//                user.getEmail().length()==0||
-//                user.getFirstName().length()==0||
-//                user.getPassword().length()==0||
-//                user.getLastName().length()==0||
-//                user.getRole().getId()!=1)?false:true;
-//    }
-//
-//    private boolean addUser(User user) {
-//        user.getCustomer().setActive(true);
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        user.setRole(findUserRole(String.valueOf(RoleDTO.PENDING)));
-//        userDAO.addElement(user);
-//        return true;
-//
-//    }
-
 }

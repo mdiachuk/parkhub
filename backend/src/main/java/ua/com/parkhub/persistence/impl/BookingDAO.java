@@ -1,6 +1,6 @@
 package ua.com.parkhub.persistence.impl;
+
 import org.springframework.stereotype.Repository;
-import ua.com.parkhub.exceptions.NullCustomerException;
 import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.BookingModel;
 import ua.com.parkhub.persistence.entities.Booking;
@@ -16,7 +16,8 @@ import java.util.Optional;
 @Repository
 public class BookingDAO extends ElementDAO<Booking, BookingModel> {
 
-    public BookingDAO(Mapper<Booking, BookingModel> entityToModel, Mapper<BookingModel, Booking> modelToEntity) {
+    public BookingDAO(Mapper<Booking, BookingModel> entityToModel,
+                      Mapper<BookingModel, Booking> modelToEntity) {
         super(Booking.class, modelToEntity, entityToModel);
     }
 
@@ -31,12 +32,8 @@ public class BookingDAO extends ElementDAO<Booking, BookingModel> {
         Predicate predicateForActiveBookingByCustomer =
                 criteriaBuilder.and(predicateForCustomer, predicateForActiveStatus);
         criteriaQuery.where(predicateForActiveBookingByCustomer);
-        try{
-            Booking booking = this.emp.createQuery(criteriaQuery).getSingleResult();
-            return Optional.ofNullable(entityToModel.transform(booking));
-        }catch (NoResultException e){
-            throw new NullCustomerException();
-        }
+        Booking booking = this.emp.createQuery(criteriaQuery).getSingleResult();
+        return Optional.ofNullable(booking);
     }
 }
 
