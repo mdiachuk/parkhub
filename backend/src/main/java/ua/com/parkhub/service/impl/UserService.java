@@ -13,20 +13,23 @@ import ua.com.parkhub.dto.RoleDTO;
 import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.InvalidTokenException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
+import ua.com.parkhub.exceptions.PasswordException;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.model.UuidTokenModel;
 import ua.com.parkhub.model.UuidTokenType;
 import ua.com.parkhub.persistence.impl.UuidTokenDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
+import ua.com.parkhub.service.IUserService;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class UserService {
+public class UserService implements IUserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
@@ -48,6 +51,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Override
     @Transactional
     public void sendToken(String email, UuidTokenType type) {
         UuidTokenModel token = createToken(email);
@@ -73,6 +77,7 @@ public class UserService {
         }
     }
 
+    @Override
     @Transactional
     public void resendToken(String token, UuidTokenType type) {
         String email = uuidTokenDAO.findUuidTokenByToken(token)
@@ -83,6 +88,7 @@ public class UserService {
         logger.info("Email was resend");
     }
 
+    @Override
     @Transactional
     public void verifyEmail(String token) {
         UserModel user = uuidTokenDAO.findUuidTokenByToken(token)
@@ -136,6 +142,7 @@ public class UserService {
         }
     }
 
+    @Override
     public boolean isLinkActive(String token) {
         UuidTokenModel uuidToken = uuidTokenDAO.findUuidTokenByToken(token)
                 .orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
@@ -150,61 +157,35 @@ public class UserService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy");
         return date.format(formatter);
     }
-}
 
-//package ua.com.parkhub.service.impl;
-//
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.stereotype.Service;
-//import ua.com.parkhub.exceptions.PasswordException;
-//import ua.com.parkhub.model.UserModel;
-//import ua.com.parkhub.persistence.impl.UserDAO;
-//import ua.com.parkhub.service.IUserService;
-//
-//
-//import java.util.Optional;
-//
-//
-//@Service
-//public class UserService implements IUserService {
-//    private static final Logger logger = LoggerFactory.getLogger(SignUpService.class);
-//    private UserDAO userDAO;
-//    private final PasswordEncoder passwordEncoder;
-//
-//    @Autowired
-//    public UserService(UserDAO userDAO, PasswordEncoder passwordEncoder){
-//        this.userDAO = userDAO;
-//        this.passwordEncoder = passwordEncoder;
-//    }
-//
-//    public Optional<UserModel> findUserById(long id){
-//        return userDAO.findElementById(id);
-//    }
-//
+
+
+
+    public Optional<UserModel> findUserById(long id){
+        return userDAO.findElementById(id);
+    }
+
 //    @Override
-//    public void updateUser(long id, UserModel userUp) {
-//        UserModel userModel = findUserById(id).get();
-//        userModel.setFirstName(userUp.getFirstName());
-//        userModel.setLastName(userUp.getLastName());
-//        userModel.setEmail(userUp.getEmail());
-//        userModel.getCustomer().setPhoneNumber(userUp.getCustomer().getPhoneNumber());
-//        userDAO.updateElement(userModel);
-//        logger.info("User information was updated");
-//    }
-//
+    public void updateUser(long id, UserModel userUp) {
+        UserModel userModel = findUserById(id).get();
+        userModel.setFirstName(userUp.getFirstName());
+        userModel.setLastName(userUp.getLastName());
+        userModel.setEmail(userUp.getEmail());
+        userModel.getCustomer().setPhoneNumber(userUp.getCustomer().getPhoneNumber());
+        userDAO.updateElement(userModel);
+        logger.info("User information was updated");
+    }
+
 //    @Override
-//    public void changePassword(long id, String newPassword, UserModel userModel){
-//        UserModel user = findUserById(id).get();
-//        if (passwordEncoder.matches(userModel.getPassword(), user.getPassword())){
-//            user.setPassword(passwordEncoder.encode(newPassword));
-//            userDAO.updateElement(user);
-//            logger.info("Password was updated");
-//        } else {
-//            logger.info("Password was not updated");
-//            new PasswordException();
-//        }
-//    }
-//}
+    public void changePassword(long id, String newPassword, UserModel userModel){
+        UserModel user = findUserById(id).get();
+        if (passwordEncoder.matches(userModel.getPassword(), user.getPassword())){
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userDAO.updateElement(user);
+            logger.info("Password was updated");
+        } else {
+            logger.info("Password was not updated");
+            new PasswordException();
+        }
+    }
+}

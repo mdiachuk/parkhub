@@ -111,7 +111,7 @@ public class SignUpService {
         return supportTicketTypeDAO.findSupportTicketTypeByType(type).orElseThrow(() ->
                 new NotFoundInDataBaseException("Support ticket type was not found by type=" + type));
     }
-    }
+
     private List<UserModel> findSolvers(String role) {
         List<UserModel> solvers = userDAO.findUsersByRoleId(findUserRole(role).getId());
         if (solvers.isEmpty()) {

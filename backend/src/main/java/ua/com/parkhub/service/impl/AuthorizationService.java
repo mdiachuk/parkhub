@@ -10,6 +10,8 @@ import ua.com.parkhub.persistence.impl.BlockedUserDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
 import ua.com.parkhub.service.IAuthorizationService;
 
+import javax.transaction.Transactional;
+
 @Service
 public class AuthorizationService implements IAuthorizationService {
 
@@ -57,7 +59,7 @@ public class AuthorizationService implements IAuthorizationService {
         }
     }
 
-
+    @Transactional
     private UserModel checkCredentials(UserModel loginUser, UserModel userModel) {
         if (passwordEncoder.matches(loginUser.getPassword(), userModel.getPassword())) {
             if (!(blockedUserDAO.isBlocked(userModel))) {

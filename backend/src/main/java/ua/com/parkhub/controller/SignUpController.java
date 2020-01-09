@@ -3,6 +3,7 @@ package ua.com.parkhub.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import ua.com.parkhub.dto.UserDTO;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberException;
 import ua.com.parkhub.mappers.dtoToModel.ManagerRegistrationRequestDtoToModel;
+import ua.com.parkhub.mappers.dtoToModel.UserDtoToUserModelMapper;
 import ua.com.parkhub.service.impl.SignUpService;
 import ua.com.parkhub.validation.groups.CustomerChecks;
 import ua.com.parkhub.validation.groups.ManagerChecks;
@@ -86,18 +88,18 @@ public class SignUpController {
      * @return 200 Status if new User be create
      *         500 Status if new User not be create
      */
-    @PostMapping ("/user")
-    public ResponseEntity create(@RequestBody UserDTO userDTO) {
-        userDTO.setRole(RoleDTO.USER);
-        System.out.println(userDTO.toString());
-
-        if (signUpService.createUser(userDtoToUserModelMapper.transform(userDTO))){
-            return ResponseEntity.ok().build();
-        } else {
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-    }
+//    @PostMapping ("/user")
+//    public ResponseEntity create(@RequestBody UserDTO userDTO) {
+//        userDTO.setRole(RoleDTO.USER);
+//        System.out.println(userDTO.toString());
+//
+//        if (signUpService.createUser(userDtoToUserModelMapper.transform(userDTO))){
+//            return ResponseEntity.ok().build();
+//        } else {
+//            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//
+//    }
 
 
 }

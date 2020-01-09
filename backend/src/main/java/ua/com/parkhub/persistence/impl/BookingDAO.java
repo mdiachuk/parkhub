@@ -21,19 +21,19 @@ public class BookingDAO extends ElementDAO<Booking, BookingModel> {
         super(Booking.class, modelToEntity, entityToModel);
     }
 
-    public Optional<BookingModel> findActiveBookingByCustomer(Customer customer) {
-        CriteriaBuilder criteriaBuilder = this.emp.getCriteriaBuilder();
-        CriteriaQuery<Booking> criteriaQuery = criteriaBuilder.createQuery(Booking.class);
-        Root<Booking> itemRoot = criteriaQuery.from(Booking.class);
-        Predicate predicateForCustomer
-                = criteriaBuilder.equal(itemRoot.get("customer"), customer);
-        Predicate predicateForActiveStatus
-                = criteriaBuilder.equal(itemRoot.get("isActive"), true);
-        Predicate predicateForActiveBookingByCustomer =
-                criteriaBuilder.and(predicateForCustomer, predicateForActiveStatus);
-        criteriaQuery.where(predicateForActiveBookingByCustomer);
-        Booking booking = this.emp.createQuery(criteriaQuery).getSingleResult();
-        return Optional.ofNullable(booking);
-    }
+//    public Optional<BookingModel> findActiveBookingByCustomer(Customer customer) {
+//        CriteriaBuilder criteriaBuilder = this.emp.getCriteriaBuilder();
+//        CriteriaQuery<Booking> criteriaQuery = criteriaBuilder.createQuery(Booking.class);
+//        Root<Booking> itemRoot = criteriaQuery.from(Booking.class);
+//        Predicate predicateForCustomer
+//                = criteriaBuilder.equal(itemRoot.get("customer"), customer);
+//        Predicate predicateForActiveStatus
+//                = criteriaBuilder.equal(itemRoot.get("isActive"), true);
+//        Predicate predicateForActiveBookingByCustomer =
+//                criteriaBuilder.and(predicateForCustomer, predicateForActiveStatus);
+//        criteriaQuery.where(predicateForActiveBookingByCustomer);
+//        Booking booking = this.emp.createQuery(criteriaQuery).getSingleResult();
+//        return Optional.ofNullable(booking);
+//    }
 }
 

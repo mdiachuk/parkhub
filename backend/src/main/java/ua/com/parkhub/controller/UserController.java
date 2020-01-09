@@ -1,5 +1,4 @@
 package ua.com.parkhub.controller;
-<<<<<<< HEAD
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,9 +7,7 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.com.parkhub.dto.EmailDTO;
-import ua.com.parkhub.dto.PasswordDTO;
-import ua.com.parkhub.dto.TokenDTO;
+import ua.com.parkhub.dto.*;
 import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.InvalidTokenException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
@@ -20,13 +17,8 @@ import ua.com.parkhub.service.impl.UserService;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
-=======
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.PasswordDTO;
-import ua.com.parkhub.dto.UserInfoDTO;
 
 import ua.com.parkhub.exceptions.PasswordException;
 
@@ -34,22 +26,28 @@ import ua.com.parkhub.mappers.dtoToModel.PasswordDTOtoUserModelMapper;
 import ua.com.parkhub.mappers.dtoToModel.UserDtoToUserModelMapper;
 import ua.com.parkhub.mappers.dtoToModel.UserInfoDTOtoUserModelMapper;
 import ua.com.parkhub.mappers.modelToDto.UserModelToUserInfoDTOMapper;
-import ua.com.parkhub.service.impl.UserService;
-
-
->>>>>>> feature/blocking-with-mappers
 
 @RestController
 public class UserController {
 
-<<<<<<< HEAD
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     private final UserService userService;
+    UserModelToUserInfoDTOMapper userModelToUserInfoDTOMapper;
+    UserDtoToUserModelMapper userDTOtoModelMapper;
+    PasswordDTOtoUserModelMapper passwordDTOtoUserModelMapper;
+    UserInfoDTOtoUserModelMapper userInfoDTOtoUserModelMapper;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserModelToUserInfoDTOMapper userModelToUserInfoDTOMapper,
+                          UserDtoToUserModelMapper userDTOtoModelMapper,
+                          PasswordDTOtoUserModelMapper passwordDTOtoUserModelMapper,
+                          UserInfoDTOtoUserModelMapper userInfoDTOtoUserModelMapper){
         this.userService = userService;
+        this.userModelToUserInfoDTOMapper = userModelToUserInfoDTOMapper;
+        this.userDTOtoModelMapper = userDTOtoModelMapper;
+        this.passwordDTOtoUserModelMapper = passwordDTOtoUserModelMapper;
+        this.userInfoDTOtoUserModelMapper = userInfoDTOtoUserModelMapper;
     }
 
     @PostMapping("/api/send-token-to-email")
@@ -100,7 +98,7 @@ public class UserController {
     }
 
     @PostMapping("/api/reset-password")
-    public ResponseEntity resetPassword(@RequestBody @Valid PasswordDTO passwordDTO, BindingResult result) {
+    public ResponseEntity resetPassword(@RequestBody @Valid ResetPasswordDTO passwordDTO, BindingResult result) {
         if (result.hasFieldErrors()) {
             List<String> errors = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
@@ -139,25 +137,11 @@ public class UserController {
         String message = "Something went wrong on our server. Please, try again later.";
         return ResponseEntity.status(500).body(message);
     }
-}
-=======
-    UserService userService;
-    UserModelToUserInfoDTOMapper userModelToUserInfoDTOMapper;
-    UserDtoToUserModelMapper userDTOtoModelMapper;
-    PasswordDTOtoUserModelMapper passwordDTOtoUserModelMapper;
-    UserInfoDTOtoUserModelMapper userInfoDTOtoUserModelMapper;
 
-    @Autowired
-    public UserController(UserService userService, UserModelToUserInfoDTOMapper userModelToUserInfoDTOMapper,
-                          UserDtoToUserModelMapper userDTOtoModelMapper,
-                          PasswordDTOtoUserModelMapper passwordDTOtoUserModelMapper,
-                          UserInfoDTOtoUserModelMapper userInfoDTOtoUserModelMapper){
-        this.userService = userService;
-        this.userModelToUserInfoDTOMapper = userModelToUserInfoDTOMapper;
-        this.userDTOtoModelMapper = userDTOtoModelMapper;
-        this.passwordDTOtoUserModelMapper = passwordDTOtoUserModelMapper;
-        this.userInfoDTOtoUserModelMapper = userInfoDTOtoUserModelMapper;
-    }
+
+
+
+
 
 
     @GetMapping("/api/user/{id}")
@@ -183,4 +167,3 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 }
->>>>>>> feature/blocking-with-mappers
