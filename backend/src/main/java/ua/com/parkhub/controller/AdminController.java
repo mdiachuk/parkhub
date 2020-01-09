@@ -20,7 +20,7 @@ public class AdminController {
         this.adminService = adminService;
     }
 
-    @GetMapping("/admin/{id}")
+    @GetMapping("/api/admin/{id}")
     public AdminDTO getUserByID(@PathVariable("id")long id ){
         AdminDTO targetUserDTO = new AdminDTO();
         targetUserDTO.setUserRole(adminService.getRole(id));
@@ -29,23 +29,23 @@ public class AdminController {
         return targetUserDTO;
     }
 
-    @PostMapping("/admin/{id}")
+    @PostMapping("/api/admin/{id}")
     public ResponseEntity setRole(@RequestBody AdminDTO adminDTO){
         adminService.setRole(adminDTO.getId());
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/admin/ticketlist")
+    @GetMapping("/api/admin/ticketlist")
     public List<AdminSupportTicketDTO> getTicketList(){
         return adminService.getTicketsList();
     }
 
-    @GetMapping("/admin/ticket/{id}")
+    @GetMapping("/api/admin/ticket/{id}")
     public AdminSupportTicketDTO getTicketById(@PathVariable("id")long id){
         return adminService.getSingleTicketById(id);
     }
 
-    @GetMapping("/admin/ticketlistcounter")
+    @GetMapping("/api/admin/ticketlistcounter")
     public AdminTicketCounterDTO getTicketCounter(){
         return adminService.getTicketCounter();
     }
