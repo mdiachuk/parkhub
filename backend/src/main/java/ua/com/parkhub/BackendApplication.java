@@ -15,8 +15,8 @@ import java.util.Optional;
 
 @SpringBootApplication
 public class BackendApplication {
-    String checkIn = "2019-12-23 14:58";
-    String checkOut = "2020-01-07 20:30";
+    long checkIn = 1582050600000L;
+    long checkOut = 1582140600000L;
 
     @Bean
     CommandLineRunner init(ParkingService parkingService) {

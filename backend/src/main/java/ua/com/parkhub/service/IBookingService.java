@@ -8,6 +8,6 @@ public interface IBookingService {
 
     BookingModel addBooking(String phoneNumber, String carNumber, long slotId);
 
-    Optional<BookingModel> findBookingByIdAndDateTimeRange(long id, String checkIn, String checkOut);
+    Optional<BookingModel> findBookingByIdAndDateTimeRange(long id, long checkIn, long checkOut);
 
 }

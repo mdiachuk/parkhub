@@ -17,6 +17,7 @@ import ua.com.parkhub.service.ICustomerService;
 import ua.com.parkhub.util.formatter.DateFormatter;
 
 import java.lang.reflect.Field;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -66,9 +67,11 @@ public class BookingService implements IBookingService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<BookingModel> findBookingByIdAndDateTimeRange(long id, String checkIn, String checkOut) {
-        LocalDateTime localDateTimeCheckIn = DateFormatter.convertStringToLocalDateTime(checkIn);
-        LocalDateTime localDateTimeCheckOut = DateFormatter.convertStringToLocalDateTime(checkOut);
+    public Optional<BookingModel> findBookingByIdAndDateTimeRange(long id, long checkIn, long checkOut) {
+        LocalDateTime localDateTimeCheckIn = new Timestamp(checkIn).toLocalDateTime();
+        System.out.println(localDateTimeCheckIn);
+        LocalDateTime localDateTimeCheckOut = new Timestamp(checkOut).toLocalDateTime();
+        System.out.println(localDateTimeCheckOut);
         String fieldNameId = "slot";
         String fieldNameCheckIn = "checkIn";
         String fieldNameCheckOut = "checkOut";

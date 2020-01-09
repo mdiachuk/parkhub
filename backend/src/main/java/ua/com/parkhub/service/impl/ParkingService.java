@@ -69,7 +69,7 @@ public class ParkingService implements IParkingService {
     }
 
     @Override
-    public ParkingModel findParkingByIdWithSlotListAndDateRange(long id, String checkIn, String checkOut) {
+    public ParkingModel findParkingByIdWithSlotListAndDateRange(long id, long checkIn, long checkOut) {
         ParkingModel parkingModel = findParkingByIdWithSlotList(id);
         List<SlotModel> slotList = parkingModel.getSlots();
         for (SlotModel slotModel : slotList) {

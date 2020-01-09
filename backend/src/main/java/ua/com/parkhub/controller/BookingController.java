@@ -40,6 +40,19 @@ public class BookingController {
         this.bookingModelToDTOMapper = bookingModelToDTOMapper;
     }
 
+    /*@GetMapping("/parkings/{id}")
+    //TODO implementation w.o. pagination just for small amount of slots! Will do in a next impl steps
+    public ResponseEntity<ParkingWithSlotsDTO> displayParking(@RequestBody @PathVariable(name = "id") @Positive Long id, Long checkIn, Long checkOut) {
+        try {
+            *//*ParkingModel parking = parkingService.findParkingByIdWithSlotList(id);*//*
+            ParkingModel parking = parkingService.findParkingByIdWithSlotListAndDateRange(id, checkIn, checkOut);
+            return ResponseEntity.ok(parkingWithSlotsModelToDTOMapper.transform(parking));
+        } catch (ParkHubException e) {
+            LOGGER.error(e.getMessage());
+        }
+        throw ParkingNotFoundException.createWith(id);
+    }*/
+
     @GetMapping("/parkings/{id}")
     //TODO implementation w.o. pagination just for small amount of slots! Will do in a next impl steps
     public ResponseEntity<ParkingWithSlotsDTO> displayParking(@PathVariable(name = "id") @Positive Long id) {
