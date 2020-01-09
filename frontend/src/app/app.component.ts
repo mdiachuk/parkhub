@@ -29,6 +29,7 @@ export class AppComponent {
   logout(): void {
     this.changeIsAdmin(false);
     this.changeIsManager(false);
+    this.changeIsUser(false);
     this.changeIsLogged(false);
     localStorage.removeItem('TOKEN');
     this.router.navigate(['/home']);
@@ -44,6 +45,10 @@ export class AppComponent {
 
   public changeIsManager(isManager: boolean) {
     this.data.changeIsManager(isManager);
+  }
+
+  public changeIsUser(isUser: boolean) {
+    this.data.changeIsUser(isUser);
   }
 }
 

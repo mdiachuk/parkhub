@@ -8,10 +8,10 @@
           <a mat-button [routerLink]='["home"]'>Home</a>
           <a mat-button [routerLink]='["parkoff"]'>Park Off</a>
 <!--          <a mat-button [routerLink]='["parkings"]'>Parking</a>-->
-          <a *ngIf="(data.currentIsManager && data.currentIsLogged) | async" mat-button [routerLink]='["cabinet/addParking"]'>Add Parking</a>
-          <a *ngIf="(data.currentIsManager && data.currentIsLogged) | async" mat-button [routerLink]='["manager/cabinet"]'>Manager Cabinet</a>
-          <a *ngIf="(data.currentIsAdmin && data.currentIsLogged) | async" mat-button [routerLink]='["admin"]'>Admin Cabinet</a>
-          <a *ngIf="(data.currentIsUser && data.currentIsLogged)| async" mat-button [routerLink]='["userPage"]'>User Cabinet</a>
+          <a *ngIf="data.currentIsManager  | async" mat-button [routerLink]='["cabinet/addParking"]'>Add Parking</a>
+          <a *ngIf="data.currentIsManager | async" mat-button [routerLink]='["manager/cabinet"]'>Manager Cabinet</a>
+          <a *ngIf="data.currentIsAdmin  | async" mat-button [routerLink]='["admin"]'>Admin Cabinet</a>
+          <a *ngIf="data.currentIsUser | async" mat-button [routerLink]='["userPage"]'>User Cabinet</a>
           <a *ngIf="!(data.currentIsLogged | async)" mat-button [routerLink]='["signup/user"]'>Sing Up</a>
           <a *ngIf="!(data.currentIsManager | async)" mat-button [routerLink]='["signup/manager"]'>Sing Up Manager</a>
           <a *ngIf="!(data.currentIsLogged | async)" mat-button [routerLink]='["login"]'>Login</a>
