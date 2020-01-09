@@ -18,6 +18,9 @@ public class ManagerRegistrationRequestDtoToModel implements Mapper<ManagerRegis
 
     @Override
     public ManagerRegistrationDataModel transform(ManagerRegistrationDataDTO from) {
+        if (from == null) {
+            return null;
+        }
         ManagerRegistrationDataModel managerRegistrationDataModel = new ManagerRegistrationDataModel();
         managerRegistrationDataModel.setUser(userDtoToUserModelMapper.transform(from.getUser()));
         managerRegistrationDataModel.setCompanyName(from.getCompanyName());

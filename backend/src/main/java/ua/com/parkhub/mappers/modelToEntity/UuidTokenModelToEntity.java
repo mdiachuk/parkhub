@@ -20,7 +20,7 @@ public class UuidTokenModelToEntity implements Mapper<UuidTokenModel, UuidToken>
     @Override
     public UuidToken transform(UuidTokenModel from) {
         if(from == null) {
-            throw new ParkHubException("UuidToken to be mapped to UuidTokenModel entity is null.");
+            return null;
         }
         UuidToken entity = new UuidToken();
         entity.setId(from.getId());

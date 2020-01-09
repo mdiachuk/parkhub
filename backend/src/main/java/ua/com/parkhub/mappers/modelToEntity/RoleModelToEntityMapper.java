@@ -9,10 +9,13 @@ import ua.com.parkhub.persistence.entities.UserRole;
 public class RoleModelToEntityMapper implements Mapper<RoleModel, UserRole> {
 
     @Override
-    public ua.com.parkhub.persistence.entities.UserRole transform(RoleModel model) {
+    public ua.com.parkhub.persistence.entities.UserRole transform(RoleModel from) {
+        if (from == null) {
+            return null;
+        }
         UserRole userRole = new UserRole();
-        userRole.setId(model.getId());
-        userRole.setRoleName(model.getRoleName());
+        userRole.setId(from.getId());
+        userRole.setRoleName(from.getRoleName());
         return userRole;
     }
 }

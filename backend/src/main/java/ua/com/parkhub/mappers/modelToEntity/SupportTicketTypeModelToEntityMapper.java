@@ -10,6 +10,9 @@ public class SupportTicketTypeModelToEntityMapper implements Mapper<TicketTypeMo
 
     @Override
     public SupportTicketType transform(TicketTypeModel from) {
+        if (from == null) {
+            return null;
+        }
         SupportTicketType supportTicketType = new SupportTicketType();
         supportTicketType.setId(from.getId());
         supportTicketType.setType(from.getType());

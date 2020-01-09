@@ -12,6 +12,9 @@ import java.util.Arrays;
 public class SupportTicketTypeEntityToModelMapper implements Mapper<SupportTicketType, TicketTypeModel> {
     @Override
     public TicketTypeModel transform(SupportTicketType from) {
+        if (from == null) {
+            return null;
+        }
         String type = from.getType();
         TicketTypeModel ticketTypeModel;
         switch (type) {

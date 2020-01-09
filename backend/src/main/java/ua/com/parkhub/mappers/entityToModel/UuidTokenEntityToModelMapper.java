@@ -21,11 +21,11 @@ public class UuidTokenEntityToModelMapper implements Mapper<UuidToken, UuidToken
         if (from == null) {
             return null;
         }
-        UuidTokenModel model = new UuidTokenModel();
-        model.setId(from.getId());
-        model.setToken(from.getToken());
-        model.setUser(userEntityToModelMapper.transform(from.getUser()));
-        model.setExpirationDate(from.getExpirationDate());
-        return model;
+        UuidTokenModel uuidTokenModel = new UuidTokenModel();
+        uuidTokenModel.setId(from.getId());
+        uuidTokenModel.setToken(from.getToken());
+        uuidTokenModel.setUser(userEntityToModelMapper.transform(from.getUser()));
+        uuidTokenModel.setExpirationDate(from.getExpirationDate());
+        return uuidTokenModel;
     }
 }

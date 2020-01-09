@@ -12,25 +12,28 @@ import java.util.Arrays;
 public class RoleEntityToModelMapper implements Mapper<UserRole, RoleModel> {
 
     @Override
-    public RoleModel transform(UserRole entity) {
-        String roleName = entity.getRoleName();
+    public RoleModel transform(UserRole from) {
+        if (from == null) {
+            return null;
+        }
+        String roleName = from.getRoleName();
         RoleModel roleModel;
         switch (roleName) {
             case "ADMIN":
                 roleModel = RoleModel.ADMIN;
-                roleModel.setId(entity.getId());
+                roleModel.setId(from.getId());
                 break;
             case "USER":
                 roleModel = RoleModel.USER;
-                roleModel.setId(entity.getId());
+                roleModel.setId(from.getId());
                 break;
             case "MANAGER":
                 roleModel = RoleModel.MANAGER;
-                roleModel.setId(entity.getId());
+                roleModel.setId(from.getId());
                 break;
             case "PENDING":
                 roleModel = RoleModel.PENDING;
-                roleModel.setId(entity.getId());
+                roleModel.setId(from.getId());
                 break;
             default:
                 throw new ParkHubException(String.format("Not known role name: %s. Role name may be one of the following: %s).", roleName, Arrays.asList(RoleModel.values())));

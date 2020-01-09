@@ -6,6 +6,8 @@ import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.persistence.entities.User;
 
+import java.util.stream.Collectors;
+
 @Component
 public class UserEntityToModelMapper implements Mapper<User, UserModel> {
 

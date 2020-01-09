@@ -27,6 +27,9 @@ public class SupportTicketModelToEntityMapper implements Mapper<SupportTicketMod
 
     @Override
     public SupportTicket transform(SupportTicketModel from) {
+        if (from == null) {
+            return null;
+        }
         SupportTicket supportTicket = new SupportTicket();
         supportTicket.setId(from.getId());
         supportTicket.setDescription(from.getDescription());

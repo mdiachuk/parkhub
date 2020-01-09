@@ -3,6 +3,7 @@ package ua.com.parkhub.mappers.dtoToModel;
 import org.springframework.stereotype.Component;
 import ua.com.parkhub.dto.UserDTO;
 import ua.com.parkhub.mappers.Mapper;
+import ua.com.parkhub.model.SupportTicketModel;
 import ua.com.parkhub.model.UserModel;
 
 @Component
@@ -38,7 +39,6 @@ public class UserDtoToUserModelMapper implements Mapper<UserDTO, UserModel> {
 //                list.add(supportTicketDtoToSupportTicketModelMapper.transform(from.getTickets().get(i)));
 //            }
 //        }
-//
 //        userModel.setTickets(list);
         userModel.setToken(from.getToken());
         return userModel;
