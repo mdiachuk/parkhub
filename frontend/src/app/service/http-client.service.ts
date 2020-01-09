@@ -168,23 +168,23 @@ export class UserService {
 
   }
 
-  getUserID(): number{
+  getUserID(): string{
     const token = localStorage.getItem('TOKEN');
     if (token) {
      this.decoded = jwt_decode(token);
-     return this.decoded.id;
+     return this.decoded.id.toString();
     } else {
-      return -1;
+      return '';
     }
   }
   getData(){
     return this.http.get('/api/user/' + this.getUserID());
   }
   PostData(userInfo : UserInfo){
-    return this.http.post('api/user', userInfo);
+    return this.http.post('api/user/' + this.getUserID(), userInfo);
+  }
+  PostDataPassword(userPass : UserPassword){
+    return this.http.post('/api/user/password/'+ this.getUserID(), userPass);
   }
 
-  PostDataPassword(userPass: { password: any; newPassword: any; id: number }){
-    return this.http.post('/api/user/password', userPass);
-  }
 }
