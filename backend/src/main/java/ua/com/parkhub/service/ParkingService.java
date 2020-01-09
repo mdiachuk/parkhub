@@ -43,6 +43,7 @@ public class ParkingService {
         return parkingDAO.findElementById(id).orElseThrow(() -> new ParkingDoesntExistException(StatusCode.PARKING_DOESNT_EXIST));
     }
 
+
     public void updateParking(Long id, ParkingModel parkingModelParam) {
         ParkingModel parkingModel = findParkingById(id);
         Field[] paramFields = parkingModelParam.getClass().getDeclaredFields();
@@ -70,19 +71,6 @@ public class ParkingService {
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 e.printStackTrace();
             }
-
-        /*fieldsNameList.stream().peek(name -> {
-            try {
-                Field fieldParam = parkingModelParam.getClass().getDeclaredField(name);
-                Field field = parkingModel.getClass().getDeclaredField(name);
-                field.setAccessible(true);
-                fieldParam.setAccessible(true);
-                field.set(parkingModel, fieldParam.get(parkingModelParam));
-            } catch (NoSuchFieldException | IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        });*/
-
 
             if (fieldsNameList.contains("addressModel")) {
                 AddressModel a = addressDAO.addWithResponse(parkingModelParam.getAddressModel()); //from non id model gets model with id
