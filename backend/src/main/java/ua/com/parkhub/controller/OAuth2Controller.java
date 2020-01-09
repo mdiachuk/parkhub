@@ -52,7 +52,7 @@ public class OAuth2Controller {
         authUser.setLastName(lastName);
         authUser.setEmail(email);
         AuthUserModel model = authUserDTOtoAuthUserModelMapper.transform(authUser);
-        if (!signUpService.isUserPresentByEmail(model.getEmail())){//does not work when email is not
+        if (!signUpService.isUserPresentByEmail(model.getEmail())){
             signUpService.createUserAfterSocialAuth(model);
             response.sendRedirect(frontUrl+"/phone-number?email="+email);
         }
@@ -63,6 +63,7 @@ public class OAuth2Controller {
             response.sendRedirect(frontUrl+"/home");
         }
             //TODO create cron for deleted unused cosial accounts
+        //TODO : add jwt
     }
 
 

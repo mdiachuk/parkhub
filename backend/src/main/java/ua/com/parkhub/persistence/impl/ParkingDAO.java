@@ -41,11 +41,6 @@ public class ParkingDAO extends ElementDAO<Parking, ParkingModel> {
         return count.getSingleResult();
     }
 
-    public Parking hrhr(Address address,ParkingModel parkingModel){
-        Parking parking = modelToEntity.transform(parkingModel);
-        parking.setAddress(address);
-        return  parking;
-    }
 }
 
 

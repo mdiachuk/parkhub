@@ -87,7 +87,7 @@ public class UserDAO extends ElementDAO<User, UserModel> {
 
     }
     public Optional<UserModel> findUserByEmail(String email) { return findOneByFieldEqual("email", email);}
-    public CustomerModel hrhr(PhoneEmailModel phoneEmailModel){
+    public CustomerModel setOauthUserPhone(PhoneEmailModel phoneEmailModel){
         UserModel user = findOneByFieldEqual("email", phoneEmailModel.getEmail()).get();
         CustomerModel customer = user.getCustomer();
         customer.setPhoneNumber(phoneEmailModel.getPhoneNumber());

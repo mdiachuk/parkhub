@@ -135,8 +135,6 @@ public class SignUpService {
 //    }
 
     public boolean isUserPresentByEmail(String email) {
-//        return userDAO.findOneByFieldEqual("email",email).orElseThrow(() ->
-//                new NotFoundInDataBaseException("Role was not found by name=" + email));
         if(userDAO.findOneByFieldEqual("email", email).isPresent()){
             return true;
         }
@@ -144,10 +142,9 @@ public class SignUpService {
 
     }
 
-    //TODO to move this to dao
     public void setPhoneNumberForAuthUser(PhoneEmailModel phoneEmailModel) {
         if(userDAO.findOneByFieldEqual("email", phoneEmailModel.getEmail()).isPresent()){
-         CustomerModel customerModel = userDAO.hrhr(phoneEmailModel);
+         CustomerModel customerModel = userDAO.setOauthUserPhone(phoneEmailModel);
          customerDAO.updateElement(customerModel);
         }
     }
@@ -231,14 +228,11 @@ public class SignUpService {
             user.setPassword(passwordEncoder.encode("oauth2user"));
             user.setLastName(userModel.getLastName());
             user.setFirstName(userModel.getFirstName());
-            //TODO after we discuss ,change to  USER
             RoleModel userRole = userRoleDAO.findOneByFieldEqual("roleName", "USER").get();
             user.setRole(userRole);
             customerDAO.addElement(customer);
             userDAO.addElement(user);
-            //return true
         }
-        //return false;
     }
 
 //    private boolean addUser(UserModel userModel) {
@@ -253,7 +247,7 @@ public class SignUpService {
         UserModel user = userDAO.findOneByFieldEqual("email", email).get();
         CustomerModel customer = user.getCustomer();
         if(customerDAO.findOneByFieldEqual("phoneNumber","0665441958").isPresent()){
-         CustomerModel customer1 =    customerDAO.findOneByFieldEqual("phoneNumber","0665441958").get();
+         CustomerModel customer1 = customerDAO.findOneByFieldEqual("phoneNumber","0665441958").get();
         return true;
         }
         return false;
