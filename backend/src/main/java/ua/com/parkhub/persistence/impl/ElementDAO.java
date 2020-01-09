@@ -1,6 +1,5 @@
 package ua.com.parkhub.persistence.impl;
 
-import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.persistence.IElementDAO;
 
@@ -11,11 +10,12 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class ElementDAO<E, M>  implements IElementDAO<M> {
+public class ElementDAO<E, M> implements IElementDAO<M> {
 
     @PersistenceContext(unitName = "default")
     EntityManager emp;
@@ -30,29 +30,17 @@ public class ElementDAO<E, M>  implements IElementDAO<M> {
         this.entityToModel = entityToModel;
     }
 
-
-    @Transactional
     @Override
-    public void addElement(M element) {
-        emp.merge(modelToEntity.transform(element));
+    public Optional<M> addElement(M element) {
+        E entity = modelToEntity.transform(element);
+        emp.merge(entity);
+        emp.flush();
+        return Optional.of(entityToModel.transform(entity));
     }
 
-
-    @Transactional
+    @Override
     public void updateElement(M element) {
         emp.merge(modelToEntity.transform(element));
-    }
-
-
-    @Override
-    public Optional<M> findElementById(long id) {
-        E element;
-        try {
-            element = emp.find(elementClass, id);
-        } catch (PersistenceException e) {
-            element = null;
-        }
-        return Optional.ofNullable(entityToModel.transform(element));
     }
 
     @Override
@@ -65,12 +53,23 @@ public class ElementDAO<E, M>  implements IElementDAO<M> {
         return allQuery.getResultList().stream().map(entityToModel::transform).collect(Collectors.toList());
     }
 
-    @Transactional
+    @Override
+    public Optional<M> findElementById(long id) {
+        E element;
+        try {
+            element = emp.find(elementClass, id);
+        } catch (PersistenceException e) {
+            element = null;
+        }
+        return Optional.ofNullable(element).map(entityToModel::transform);
+    }
+
+    @Override
     public void deleteElement(M element) {
         emp.remove(emp.merge(modelToEntity.transform(element)));
     }
 
-    @Transactional
+    @Override
     public <F> Optional<M> findOneByFieldEqual(String fieldName, F fieldValue) {
         CriteriaBuilder criteriaBuilder = emp.getCriteriaBuilder();
         CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(elementClass);
@@ -83,9 +82,22 @@ public class ElementDAO<E, M>  implements IElementDAO<M> {
         } catch (PersistenceException e) {
             element = null;
         }
-        return Optional.ofNullable(entityToModel.transform(element));
+        return Optional.ofNullable(element).map(entityToModel::transform);
     }
 
+    @Override
+    public <F> List<M> findManyByFieldEqual(String fieldName, F fieldValue) {
+        CriteriaBuilder criteriaBuilder = emp.getCriteriaBuilder();
+        CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(elementClass);
+        Root<E> elementRoot = criteriaQuery.from(elementClass);
+        criteriaQuery.select(elementRoot).where(criteriaBuilder.equal(elementRoot.get(fieldName), fieldValue));
+
+        List<M> elements;
+        try {
+            elements = emp.createQuery(criteriaQuery).getResultList().stream().map(entityToModel::transform).collect(Collectors.toList());
+        } catch (PersistenceException e) {
+            elements = new ArrayList<>();
+        }
+        return elements;
+    }
 }
-
-

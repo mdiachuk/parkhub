@@ -18,4 +18,8 @@ export class AdminTicketService {
   getAdminTicketCounter(): Observable<AdminTicketCounter>{
     return this.http.get<AdminTicketCounter>('/api/admin/ticketlistcounter')
   }
+
+  getSingleTicket(id: number): Observable<AdminTicketDetail>{
+    return this.http.get<AdminTicketDetail>(`/api/admin/ticket/${id}`);
+  }
 }

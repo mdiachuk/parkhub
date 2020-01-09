@@ -54,6 +54,7 @@ import {ParkingDetailSlotsComponent} from "./parkings-ad/parking-detail/parking-
 import {SlotService} from "./serviceSlot/slot.service";
 import { from } from 'rxjs';
 import {DataService} from './DataService/data.service';
+import { AdminTicketDetailViewerComponent } from './admin-ticket-detail-viewer/admin-ticket-detail-viewer.component';
 
 
 @NgModule({
@@ -103,7 +104,8 @@ import {DataService} from './DataService/data.service';
     ParkingsComponentSlots,
     BookingDetailComponent,
     BookingsComponent,
-    AdminTicketListComponent
+    AdminTicketListComponent,
+    AdminTicketDetailViewerComponent
 
     // UserComponent
   ],

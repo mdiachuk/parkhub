@@ -40,6 +40,11 @@ public class AdminController {
         return adminService.getTicketsList();
     }
 
+    @GetMapping("/admin/ticket/{id}")
+    public AdminSupportTicketDTO getTicketById(@PathVariable("id")long id){
+        return adminService.getSingleTicketById(id);
+    }
+
     @GetMapping("/admin/ticketlistcounter")
     public AdminTicketCounterDTO getTicketCounter(){
         return adminService.getTicketCounter();

@@ -4,6 +4,7 @@ import { AdminTicketCounter } from '../Classes/admin-ticket-counter';
 import { AdminTicketService } from '../admin-ticket.service';
 import {DataSource} from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -18,7 +19,9 @@ export class AdminTicketListComponent implements OnInit {
   displayedColumns = ['id','ticketHighlight','supportTicketType','isSolved']
   ticketCounter: AdminTicketCounter;
 
-  constructor(private adminTicketService: AdminTicketService) { 
+  constructor(private adminTicketService: AdminTicketService,
+    private route: ActivatedRoute,
+    private router: Router) { 
   
   }
 
@@ -31,6 +34,9 @@ export class AdminTicketListComponent implements OnInit {
   }
   reloadData(){
     this.adminTicketService.getTicketsList().subscribe(response => this.tickets = response);
+  }
+  ticketDetails(id: number){
+      this.router.navigate(['admin', id])
   }
 
 }

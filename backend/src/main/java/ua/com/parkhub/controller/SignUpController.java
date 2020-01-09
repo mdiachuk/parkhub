@@ -11,7 +11,7 @@ import ua.com.parkhub.dto.UserDTO;
 import ua.com.parkhub.exceptions.EmailIsUsedException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberIsUsedException;
-import ua.com.parkhub.mappers.DtoToModel.UserDtoToUserModelMapper;
+import ua.com.parkhub.mappers.dtoToModel.UserDtoToUserModelMapper;
 import ua.com.parkhub.service.impl.SignUpService;
 
 @RestController

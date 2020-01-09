@@ -14,6 +14,7 @@ import {ParkingDetailSlotsComponent} from "./parkings-ad/parking-detail/parking-
 import {SlotsComponent} from "./slots/slots.component";
 import {BookingDetailComponent} from "./bookings/booking-detail/booking-detail.component";
 import { PageComponent } from './homePage/homePage.component';
+import { AdminTicketDetailViewerComponent } from './admin-ticket-detail-viewer/admin-ticket-detail-viewer.component'
 
 
 const routes: Routes = [
@@ -26,6 +27,7 @@ const routes: Routes = [
   {path: 'manager/cabinet', component: ParkingListComponentManager,},
   {path: 'manager/cabinet/:id', component: ParkingDetailComponent,},
   {path: 'admin', component: AdminComponent},
+  {path: 'admin/:id', component: AdminTicketDetailViewerComponent},
 
   // { path: 'parkings', component: ParkingsComponentSlots },
   { path: 'parkings/:id', component: ParkingDetailSlotsComponent },
