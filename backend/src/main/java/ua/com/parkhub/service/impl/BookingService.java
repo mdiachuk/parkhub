@@ -13,7 +13,10 @@ import ua.com.parkhub.persistence.impl.SlotDAO;
 import ua.com.parkhub.service.IBookingService;
 import ua.com.parkhub.service.ICustomerService;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,12 +68,14 @@ public class BookingService implements IBookingService {
     }*/
 
     public Optional<BookingModel> findPrepaidBooking(CustomerModel customerModel){
-        LocalDateTime now = LocalDateTime.now();
+        Instant now = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
+        System.out.println(now);
         BookingModel bookingModel;
         List<BookingModel> bookingModels = bookingDAO.findBookingsByCustomer(customerModel);
         bookingModel = bookingModels.stream()
-                .filter((x -> x.getCheckIn().compareTo(now) > 0 && x.isActive())).findFirst()
-                .orElseThrow(()-> new BookingException(StatusCode.BOOKING_NOT_FOUND));
+                .filter((x -> x.getCheckIn().toInstant(ZoneOffset.UTC).compareTo(now) > 0)).filter(BookingModel::isActive)
+                .findFirst().orElseThrow(()-> new BookingException(StatusCode.BOOKING_NOT_FOUND));
+        System.out.println(bookingModel.getCheckIn().toInstant(ZoneOffset.UTC));
         return Optional.ofNullable(bookingModel);
     }
 
@@ -92,7 +97,7 @@ public class BookingService implements IBookingService {
     }
 
     @Override
-    public Booking addBooking(String phoneNumber, String carNumber, long slotId) {
+    public BookingModel addBooking(String phoneNumber, String carNumber, long slotId) {
         return null;
     }
 }

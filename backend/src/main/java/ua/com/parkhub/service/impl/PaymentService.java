@@ -3,7 +3,9 @@ package ua.com.parkhub.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.com.parkhub.exceptions.BookingException;
 import ua.com.parkhub.exceptions.PaymentException;
+import ua.com.parkhub.exceptions.StatusCode;
 import ua.com.parkhub.model.BookingModel;
 import ua.com.parkhub.model.PaymentModel;
 import ua.com.parkhub.persistence.entities.Booking;
@@ -33,11 +35,6 @@ public class PaymentService {
     }
 
     public PaymentModel findPaymentByBooking(BookingModel bookingModel){
-        Optional<PaymentModel> paymentModel = paymentDAO.findPaymentByBooking(bookingModel);
-        if (paymentModel.isPresent()){
-            return paymentModel.get();
-        }else {
-            throw new PaymentException("Failed to find payment by booking");
-        }
+       return paymentDAO.findPaymentByBooking(bookingModel).orElseThrow(() -> new BookingException(StatusCode.BOOKING_NOT_FOUND));
     }
 }

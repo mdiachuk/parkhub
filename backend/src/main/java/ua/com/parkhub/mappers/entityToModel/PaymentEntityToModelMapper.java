@@ -2,6 +2,8 @@ package ua.com.parkhub.mappers.entityToModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ua.com.parkhub.exceptions.BookingException;
+import ua.com.parkhub.exceptions.StatusCode;
 import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.PaymentModel;
 import ua.com.parkhub.persistence.entities.Payment;
@@ -18,6 +20,9 @@ public class PaymentEntityToModelMapper implements Mapper<Payment, PaymentModel>
 
     @Override
     public PaymentModel transform(Payment from) {
+        if (from == null){
+            throw new BookingException(StatusCode.BOOKING_NOT_FOUND);
+        }
         PaymentModel paymentModel = new PaymentModel();
         paymentModel.setId(from.getId());
         paymentModel.setPaid(from.isPaid());

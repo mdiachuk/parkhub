@@ -11,6 +11,8 @@ import ua.com.parkhub.service.IBookingService;
 //TODO Validation: parkId, slotId, car number, phone number
 
 @RestController
+@RequestMapping(value = "")
+@CrossOrigin
 public class BookingController {
 /*    private static final Logger LOGGER = LoggerFactory.getLogger(BookingController.class);
 
@@ -64,27 +66,21 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-    @RequestMapping(value = "/cancel", method = {RequestMethod.POST})
+    @PostMapping(value = "/cancel")
     public ResponseEntity<PaymentResponseDTO> getPhoneNumber(@RequestBody PhoneNumberDTO phoneNumber) {
         PaymentResponseDTO paymentResponseDTO = new PaymentResponseDTO();
-        try {
             int price = bookingService.findPrice(phoneNumber.getPhoneNumber());
             paymentResponseDTO.setPrice(price);
-            paymentResponseDTO.setStatus(true);
-        } catch (BookingException e) {
-            paymentResponseDTO.setStatus(false);
-            paymentResponseDTO.setPrice(0);
-        }
         return ResponseEntity.ok(paymentResponseDTO);
     }
 
     @ExceptionHandler(BookingException.class)
-    public ResponseEntity handlePermissionException(BookingException e) {
+    public ResponseEntity handleBookingException(BookingException e) {
         return ResponseEntity.badRequest().body(e.getStatusCode());
     }
 
     @ExceptionHandler(CustomerException.class)
-    public ResponseEntity handlePermissionException(CustomerException e) {
+    public ResponseEntity handleCustomerException(CustomerException e) {
         return ResponseEntity.badRequest().body(e.getStatusCode());
     }
 }

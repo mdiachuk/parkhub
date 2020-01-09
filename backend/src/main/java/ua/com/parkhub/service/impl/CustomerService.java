@@ -45,7 +45,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Customer findCustomerByPhoneNumberOrAdd(String phoneNumber) {
+    public CustomerModel findCustomerByPhoneNumberOrAdd(String phoneNumber) {
         return null;
     }
 

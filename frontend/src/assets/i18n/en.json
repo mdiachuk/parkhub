@@ -8,6 +8,11 @@
   "Cancel Prepayment": "Cancel prepayment",
   "Success": "Success",
   "Error": "Error",
+
+
+  "Customer with this phone number was not found": "Customer with this phone number was not found, please, check the correct input",
+  "No pre-order": "No pre-order for this phone number found",
+  "Your reservation is already in progress": "Your reservation is already in progress",
   "UAH": " UAH",
   "The price of your booking is": "Refund amount is ",
   "WrongPhoneNumberPleaseTryAgain": "Wrong phone number, please try again",

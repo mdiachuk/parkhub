@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.com.parkhub.dto.ParkingRequestDTO;
-import ua.com.parkhub.mapper.ParkingRequestMapper;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.service.impl.ParkingService;
 
@@ -24,12 +23,12 @@ import java.util.stream.Collectors;
 public class ParkingController {
 
     private final ParkingService parkingService;
-    private final ParkingRequestMapper parkingRequestMapper;
+    //private final ParkingRequestMapper parkingRequestMapper;
 
     @Autowired
     public ParkingController(ParkingService parkingService) {
         this.parkingService = parkingService;
-        parkingRequestMapper = Mappers.getMapper( ParkingRequestMapper.class);
+      //  parkingRequestMapper = Mappers.getMapper( ParkingRequestMapper.class);
     }
 
     @PostMapping
@@ -41,7 +40,7 @@ public class ParkingController {
                     .collect(Collectors.toList());
             return new ResponseEntity(errors, HttpStatus.BAD_REQUEST);
         }
-        ParkingModel parkingModel = parkingRequestMapper.parkingRequestDTOToParkingModel(parkingRequestDTO);
+        /*ParkingModel parkingModel = parkingRequestMapper.parkingRequestDTOToParkingModel(parkingRequestDTO);
         if (!parkingService.isParkingNameUnique(parkingModel)){
             return new ResponseEntity("This parking name already exists", HttpStatus.BAD_REQUEST);
         }
@@ -49,7 +48,7 @@ public class ParkingController {
         if (!parkingService.checkIfAddressIsUnique(parkingModel)){
             return new ResponseEntity("Parking with that address already exists!", HttpStatus.BAD_REQUEST);
         }
-        parkingService.createParkingByOwnerID(parkingModel,id);
+        parkingService.createParkingByOwnerID(parkingModel,id);*/
         return ResponseEntity.ok().build();
     }
 

@@ -32,9 +32,9 @@ public class ParkingWithSlotsDTO implements Serializable {
         return address;
     }
 
-    public void setAddress(Address address) {
+   /* public void setAddress(Address address) {
         this.address = address.toString();
-    }
+    }*/
 
     public String getTariff() {
         return tariff;

@@ -26,9 +26,9 @@ public class BookingDTO implements Serializable {
         return slot;
     }
 
-    public void setSlot(Slot slot) {
+  /*  public void setSlot(Slot slot) {
         this.slot = slot.getSlotNumber();
-    }
+    }*/
 
     @Override
     public String toString() {

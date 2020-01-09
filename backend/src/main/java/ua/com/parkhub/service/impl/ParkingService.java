@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.exceptions.ParkHubException;
-import ua.com.parkhub.mapper.ParkingRequestMapper;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.persistence.entities.Address;
 import ua.com.parkhub.persistence.entities.Parking;
@@ -27,7 +26,7 @@ public class ParkingService implements IParkingService {
     private ParkingDAO parkingDAO;
     private final AddressDAO addressDAO;
     private final UserDAO userDAO;
-    private final ParkingRequestMapper parkingRequestMapper;
+   // private final ParkingRequestMapper parkingRequestMapper;
 
 
     private final ModelMapper mapper;
@@ -41,11 +40,11 @@ public class ParkingService implements IParkingService {
         this.addressDAO = addressDAO;
         this.userDAO = userDAO;
         this.mapper = mapper;
-        parkingRequestMapper = Mappers.getMapper( ParkingRequestMapper.class);
+       // parkingRequestMapper = Mappers.getMapper( ParkingRequestMapper.class);
     }
 
     @Transactional(readOnly = true)
-    public ua.com.parkhub.model.Parking findParkingByIdWithSlotList(long id) {
+    public ParkingModel findParkingByIdWithSlotList(long id) {
        /* Parking parking = parkingDAO.findElementById(id)
                 .orElseThrow(() -> new ParkHubException("No Parking found with id " + id));
         Hibernate.initialize(parking.getSlots());
@@ -58,7 +57,7 @@ public class ParkingService implements IParkingService {
     }
 
     @Transactional(readOnly = true)
-    public List<ua.com.parkhub.model.Parking> findAllParking() {
+    public List<ParkingModel> findAllParking() {
       /*  List<Parking> parkingList = parkingDAO.findAll();
         if (parkingList.isEmpty()) {
             throw new ParkHubException("Unfortunately all parkings are temporary unavailable");

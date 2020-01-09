@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import ua.com.parkhub.dto.ParkingDTO;
-import ua.com.parkhub.mappers.toDTO.ParkingModelToDTOMapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
