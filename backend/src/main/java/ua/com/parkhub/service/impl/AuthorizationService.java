@@ -8,10 +8,10 @@ import ua.com.parkhub.exceptions.StatusCode;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.persistence.impl.BlockedUserDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
-import ua.com.parkhub.service.AuthorizationService;
+import ua.com.parkhub.service.IAuthorizationService;
 
 @Service
-public class AuthorizationServiceImpl implements AuthorizationService {
+public class AuthorizationService implements IAuthorizationService {
 
     private UserDAO userDAO;
     private BlockedUserDAO blockedUserDAO;
@@ -20,11 +20,11 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     private final int THREE_TRIES_TO_ENTER = 3;
     private final int ONE_FAILED_TRIE_TO_ENTER = 1;
 
-    public AuthorizationServiceImpl() {
+    public AuthorizationService() {
     }
 
     @Autowired
-    public AuthorizationServiceImpl(UserDAO userDAO, BlockedUserDAO blockedUserDAO, PasswordEncoder passwordEncoder) {
+    public AuthorizationService(UserDAO userDAO, BlockedUserDAO blockedUserDAO, PasswordEncoder passwordEncoder) {
         this.userDAO = userDAO;
         this.blockedUserDAO = blockedUserDAO;
         this.passwordEncoder = passwordEncoder;
@@ -32,7 +32,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Override
     public UserModel loginUser(UserModel loginUser) {
-            UserModel user = userDAO.findUserByEmail(loginUser.getEmail());
+            UserModel user = userDAO.findUserByEmail(loginUser.getEmail())
+                    .orElseThrow(() -> new PermissionException(StatusCode.NO_ACCOUNT_FOUND));
                 activateIfPossible(user);
                 if (user.getNumberOfFailedPassEntering() >= THREE_TRIES_TO_ENTER) {
                     blockUser(user);
@@ -47,6 +48,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         }
     }
 
+
     private void activateIfPossible(UserModel user) {
         if ((blockedUserDAO.isBlocked(user)) && (blockedUserDAO.canActivate(user))) {
             blockedUserDAO.activateUser(user);
@@ -54,6 +56,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             userDAO.updateElement(user);
         }
     }
+
 
     private UserModel checkCredentials(UserModel loginUser, UserModel userModel) {
         if (passwordEncoder.matches(loginUser.getPassword(), userModel.getPassword())) {
