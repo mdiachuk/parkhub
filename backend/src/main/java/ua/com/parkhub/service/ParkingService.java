@@ -5,13 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.exceptions.ParkingDoesntExistException;
 import ua.com.parkhub.exceptions.StatusCode;
-import ua.com.parkhub.mappers.fromEntityToModel.ParkingEntityToModelMapper;
-import ua.com.parkhub.mappers.fromModelToEntity.AddressModelToEntityMapper;
-import ua.com.parkhub.mappers.fromModelToEntity.ParkingModelToEntityMapper;
 import ua.com.parkhub.model.AddressModel;
 import ua.com.parkhub.model.ParkingModel;
-import ua.com.parkhub.persistence.entities.Address;
-import ua.com.parkhub.persistence.entities.Parking;
 import ua.com.parkhub.persistence.impl.AddressDAO;
 import ua.com.parkhub.persistence.impl.ParkingDAO;
 

@@ -6,9 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.ParkingDTO;
 import ua.com.parkhub.dto.ParkingUpdateRequestDTO;
 import ua.com.parkhub.exceptions.ParkingDoesntExistException;
-import ua.com.parkhub.exceptions.StatusCode;
-import ua.com.parkhub.mappers.fromDtoToModel.ParkingRequestDtoToModelMapper;
-import ua.com.parkhub.mappers.fromModelToDTO.ParkingModelToDTOMapper;
+import ua.com.parkhub.mappers.dtoToModel.ParkingRequestDtoToModelMapper;
+import ua.com.parkhub.mappers.modelToDTO.ParkingModelToDTOMapper;
 import ua.com.parkhub.service.ParkingService;
 
 import java.util.List;
