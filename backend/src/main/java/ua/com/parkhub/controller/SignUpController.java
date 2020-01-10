@@ -18,6 +18,7 @@ import ua.com.parkhub.exceptions.PhoneNumberException;
 import ua.com.parkhub.mappers.dtoToModel.ManagerRegistrationRequestDtoToModel;
 import ua.com.parkhub.mappers.dtoToModel.UserDtoToUserModelMapper;
 import ua.com.parkhub.service.impl.SignUpService;
+import ua.com.parkhub.service.impl.UserService;
 import ua.com.parkhub.validation.groups.CustomerChecks;
 import ua.com.parkhub.validation.groups.ManagerChecks;
 import ua.com.parkhub.validation.groups.UserChecks;
@@ -34,14 +35,16 @@ public class SignUpController {
     private final SignUpService signUpService;
     private final ManagerRegistrationRequestDtoToModel managerRegistrationRequestDtoToModel;
     private final UserDtoToUserModelMapper userDtoToUserModelMapper;
+    private final UserService userService;
 
     @Autowired
     public SignUpController(SignUpService signUpService,
                             ManagerRegistrationRequestDtoToModel managerRegistrationRequestDtoToModel,
-                            UserDtoToUserModelMapper userDtoToUserModelMapper) {
+                            UserDtoToUserModelMapper userDtoToUserModelMapper, UserService userService) {
         this.signUpService = signUpService;
         this.managerRegistrationRequestDtoToModel = managerRegistrationRequestDtoToModel;
         this.userDtoToUserModelMapper = userDtoToUserModelMapper;
+        this.userService = userService;
     }
 
     @PostMapping(value = "/manager")

@@ -33,8 +33,8 @@ const routes: Routes = [
   { path: 'cabinet/addParking', component: AddParkingComponent },
   { path: 'manager/cabinet', component: ParkingListComponentManager, canActivate: [ManagerGuard] },
   { path: 'manager/cabinet/:id', component: ParkingDetailComponent, canActivate: [ManagerGuard] },
-  { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] },
-  {path: 'admin/:id', component: AdminTicketDetailViewerComponent},
+  { path: 'admin', component: AdminComponent },
+  { path: 'admin/:id', component: AdminTicketDetailViewerComponent },
 
   // { path: 'parkings', component: ParkingsComponentSlots },
   { path: 'parkings/:id', component: ParkingDetailSlotsComponent },

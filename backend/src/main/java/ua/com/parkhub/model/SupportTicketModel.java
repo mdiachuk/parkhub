@@ -8,6 +8,7 @@ public class SupportTicketModel {
     private String description;
     private boolean isSolved;
     private TicketTypeModel type;
+    private SupportTicketTypeModel supportTicketTypeModel;
     private CustomerModel customer;
     private List<UserModel> solvers;
 
@@ -41,6 +42,14 @@ public class SupportTicketModel {
 
     public void setType(TicketTypeModel type) {
         this.type = type;
+    }
+
+    public SupportTicketTypeModel getSupportTicketType() {
+        return supportTicketTypeModel;
+    }
+
+    public void setSupportTicketType(SupportTicketTypeModel supportTicketTypeModel) {
+        this.supportTicketTypeModel = supportTicketTypeModel;
     }
 
     public CustomerModel getCustomer() {
