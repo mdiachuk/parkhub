@@ -64,6 +64,7 @@ public class BookingController {
     //TODO not idempotent operation! Will do some smart restrictions on booking amount per one phone number in a next impl steps
     //TODO switch onto cyrillic after i18n impl
     public ResponseEntity<PaymentDTO> addBooking(@Valid @RequestBody BookingFormDTO bookingFormDTO/*, BindingResult result*/) {
+        LOGGER.debug(bookingFormDTO.toString());
         //TODO to check after Angular material impl
         /*if (result.hasErrors()) {
             List<ObjectError> errors = result.getAllErrors().stream()
@@ -77,10 +78,9 @@ public class BookingController {
         Long slotId = bookingFormDTO.getSlotId();
         Long checkIn = bookingFormDTO.getRangeFrom();
         Long checkOut = bookingFormDTO.getRangeTo();
-        Integer price = bookingFormDTO.getPrice();
-        PaymentModel payment = bookingService.addBooking(carNumber, phoneNumber, slotId, checkIn, checkOut, price);
+        Integer tariff = bookingFormDTO.getTariff();
+        PaymentModel payment = bookingService.addBooking(carNumber, phoneNumber, slotId, checkIn, checkOut, tariff);
         LOGGER.info("Request addBooking() successfully completed");
-        LOGGER.debug(paymentModelToDTOMapper.transform(payment).toString() + "DEBUG");
         return ResponseEntity.ok(paymentModelToDTOMapper.transform(payment));
     }
 }

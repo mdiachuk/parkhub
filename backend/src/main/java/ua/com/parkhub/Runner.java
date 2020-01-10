@@ -4,17 +4,12 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 
 public class Runner {
     public static void main(String[] args) {
-        long longValue = 1578597201000L;
-        LocalDateTime date =
-                LocalDateTime.ofInstant(Instant.ofEpochMilli(longValue), ZoneId.systemDefault());
-        System.out.println(date);
-
-        long now = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
-        long plusHour = LocalDateTime.now().plusHours(1).toEpochSecond(ZoneOffset.UTC);
-        System.out.println(now);
-        System.out.println(plusHour);
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime plusHour = LocalDateTime.now().plusHours(1);
+        System.out.println(ChronoUnit.HOURS.between(now, plusHour));
     }
 }
