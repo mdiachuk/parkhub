@@ -1,4 +1,5 @@
 package ua.com.parkhub.model;
+
 public enum RoleModel {
     ADMIN("ADMIN"),
     USER("USER"),
@@ -31,5 +32,6 @@ public enum RoleModel {
                 ", id=" + id +
                 '}';
     }
+
 }
 

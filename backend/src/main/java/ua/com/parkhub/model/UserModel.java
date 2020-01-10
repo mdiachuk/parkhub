@@ -13,9 +13,9 @@ public class UserModel extends AbstractModel {
     private RoleModel role;
     private CustomerModel customer;
     private String token;
-    private int numberOfFaildPassEntering;
-    private List<SupportTicketModel> tickets;
 
+    private int numberOfFailedPassEntering;
+    private List<SupportTicketModel> tickets;
 
     public Long getId() {
         return id;
@@ -81,12 +81,12 @@ public class UserModel extends AbstractModel {
         this.token = token;
     }
 
-    public int getNumberOfFaildPassEntering() {
-        return numberOfFaildPassEntering;
+    public int getNumberOfFailedPassEntering() {
+        return numberOfFailedPassEntering;
     }
 
-    public void setNumberOfFaildPassEntering(int numberOfFaildPassEntering) {
-        this.numberOfFaildPassEntering = numberOfFaildPassEntering;
+    public void setNumberOfFailedPassEntering(int numberOfFailedPassEntering) {
+        this.numberOfFailedPassEntering = numberOfFailedPassEntering;
     }
 
     public List<SupportTicketModel> getTickets() {
@@ -97,12 +97,13 @@ public class UserModel extends AbstractModel {
         this.tickets = tickets;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserModel userModel = (UserModel) o;
-        return numberOfFaildPassEntering == userModel.numberOfFaildPassEntering &&
+        return numberOfFailedPassEntering == userModel.numberOfFailedPassEntering &&
                 Objects.equals(id, userModel.id) &&
                 Objects.equals(firstName, userModel.firstName) &&
                 Objects.equals(lastName, userModel.lastName) &&
@@ -116,7 +117,7 @@ public class UserModel extends AbstractModel {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email, password, role, customer, token, numberOfFaildPassEntering, tickets);
+        return Objects.hash(id, firstName, lastName, email, password, role, customer, token, numberOfFailedPassEntering, tickets);
     }
 
     @Override
@@ -130,7 +131,7 @@ public class UserModel extends AbstractModel {
                 ", role=" + role +
                 ", customer=" + customer +
                 ", token='" + token + '\'' +
-                ", numberOfFaildPassEntering=" + numberOfFaildPassEntering +
+                ", numberOfFaildPassEntering=" + numberOfFailedPassEntering +
                 ", tickets=" + tickets +
                 '}';
     }

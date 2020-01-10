@@ -1,7 +1,7 @@
 package ua.com.parkhub.persistence.impl;
 
 import org.springframework.stereotype.Repository;
-import ua.com.parkhub.mapper.Mapper;
+import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.BookingModel;
 import ua.com.parkhub.persistence.entities.Booking;
 import ua.com.parkhub.persistence.entities.Customer;
@@ -20,7 +20,8 @@ public class BookingDAO extends ElementDAO<Booking, BookingModel> {
         super(Booking.class, modelToEntity, entityToModel);
     }
 
-    public Optional<BookingModel> findActiveBookingByCustomer(Customer customer) {
+
+    public Optional<Booking> findActiveBookingByCustomer(Customer customer) {
         CriteriaBuilder criteriaBuilder = this.emp.getCriteriaBuilder();
         CriteriaQuery<Booking> criteriaQuery = criteriaBuilder.createQuery(Booking.class);
         Root<Booking> itemRoot = criteriaQuery.from(Booking.class);
@@ -32,7 +33,9 @@ public class BookingDAO extends ElementDAO<Booking, BookingModel> {
                 criteriaBuilder.and(predicateForCustomer, predicateForActiveStatus);
         criteriaQuery.where(predicateForActiveBookingByCustomer);
         Booking booking = this.emp.createQuery(criteriaQuery).getSingleResult();
-        return Optional.ofNullable(entityToModel.transform(booking));
+        return Optional.ofNullable(booking);
     }
 }
+
+
 

@@ -107,6 +107,7 @@
 //        User user = new User();
 //        UserRole userRole = new UserRole();
 //        SupportTicketTypeModel supportTicketType = new SupportTicketTypeModel();
+
 //
 //        when(customerDAO.findCustomerByPhoneNumber(manager.getPhoneNumber()))
 //                .thenReturn(Optional.of(customer));
@@ -139,6 +140,7 @@
 //        User user = new User();
 //        UserRole userRole = new UserRole();
 //        SupportTicketTypeModel supportTicketType = new SupportTicketTypeModel();
+//        SupportTicketType supportTicketType = new SupportTicketType();
 //
 //        when(userRoleDAO.findUserRoleByRoleName(anyString()))
 //                .thenReturn(Optional.of(userRole));
@@ -149,4 +151,5 @@
 //
 //        assertTimeout(Duration.ofMillis(TIMEOUT), () -> signUpService.registerManager(manager));
 //    }
+
 //}

@@ -14,7 +14,7 @@ import { ParkingServiceService } from '../parking-service.service';
   styleUrls: ['./add-parking.component.scss']
 })
 export class AddParkingComponent {
-
+  
   formGroup: FormGroup;
   CityArray: any = ['Kyiv', 'Lviv', 'Chernivtsi', 'Dnipro', 'Kharkiv'];
   nameregex: RegExp = /^[a-zA-Z 0-9-]+$/
@@ -85,6 +85,7 @@ export class AddParkingComponent {
   }
 
   openSnackBar1(message: string) {
+    console.log(message);
     this.snackBar.open(message, 'Close', {
       horizontalPosition: 'center',
       verticalPosition: 'top',

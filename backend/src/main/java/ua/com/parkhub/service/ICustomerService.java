@@ -1,7 +1,8 @@
-//package ua.com.parkhub.service;
-//
-//import ua.com.parkhub.model.Customer;
-//
-//public interface ICustomerService {
-//    Customer findCustomerByPhoneNumberOrAdd(String phoneNumber);
-//}
+
+package ua.com.parkhub.service;
+
+import ua.com.parkhub.model.CustomerModel;
+
+public interface ICustomerService {
+    CustomerModel findCustomerByPhoneNumberOrAdd(String phoneNumber);
+}

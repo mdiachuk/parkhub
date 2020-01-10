@@ -1,6 +1,8 @@
 package ua.com.parkhub.model;
 
-public class AddressModel {
+import java.util.Objects;
+
+public class AddressModel extends AbstractModel {
 
     private Long id;
     private String city;
@@ -41,11 +43,6 @@ public class AddressModel {
         this.building = building;
     }
 
-    @Override
-    public String toString() {
-        return street + " " + building + ", " + city;
-    }
-
     public String getLat() {
         return lat;
     }
@@ -62,5 +59,33 @@ public class AddressModel {
         this.lon = lon;
     }
 
-    //SOME BUSINESS LOGIC
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AddressModel that = (AddressModel) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(city, that.city) &&
+                Objects.equals(street, that.street) &&
+                Objects.equals(building, that.building) &&
+                Objects.equals(lat, that.lat) &&
+                Objects.equals(lon, that.lon);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, city, street, building, lat, lon);
+    }
+
+    @Override
+    public String toString() {
+        return "AddressModel{" +
+                "id=" + id +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", building='" + building + '\'' +
+                ", lat='" + lat + '\'' +
+                ", lon='" + lon + '\'' +
+                '}';
+    }
 }

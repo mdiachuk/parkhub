@@ -22,9 +22,9 @@ public class SupportTicket implements Serializable {
     @NotNull
     private boolean isSolved = false;
 
-    @ManyToOne
-    @JoinColumn(name = "ticket_type_id")
-    private SupportTicketTypeModel supportTicketType;
+//    @ManyToOne
+//    @JoinColumn(name = "ticket_type_id")
+//    private SupportTicketType supportTicketType;
 
     @ManyToOne
     @JoinColumn(name = "author_id")
@@ -69,13 +69,13 @@ public class SupportTicket implements Serializable {
         isSolved = solved;
     }
 
-    public SupportTicketTypeModel getSupportTicketType() {
-        return supportTicketType;
-    }
-
-    public void setSupportTicketType(SupportTicketTypeModel supportTicketType) {
-        this.supportTicketType = supportTicketType;
-    }
+//    public SupportTicketType getSupportTicketType() {
+//        return supportTicketType;
+//    }
+//
+//    public void setSupportTicketType(SupportTicketType supportTicketType) {
+//        this.supportTicketType = supportTicketType;
+//    }
 
     public List<User> getSolvers() {
         return solvers;

@@ -1,18 +1,20 @@
 package ua.com.parkhub.model;
 
 
-public class SlotModel {
+import java.util.Objects;
 
-    private long id;
+public class SlotModel extends AbstractModel {
+
+    private Long id;
     private String slotNumber;
     private boolean isReserved = false;
     private boolean isActive = true;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -38,5 +40,31 @@ public class SlotModel {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SlotModel slotModel = (SlotModel) o;
+        return isReserved == slotModel.isReserved &&
+                isActive == slotModel.isActive &&
+                Objects.equals(id, slotModel.id) &&
+                Objects.equals(slotNumber, slotModel.slotNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, slotNumber, isReserved, isActive);
+    }
+
+    @Override
+    public String toString() {
+        return "SlotModel{" +
+                "id=" + id +
+                ", slotNumber='" + slotNumber + '\'' +
+                ", isReserved=" + isReserved +
+                ", isActive=" + isActive +
+                '}';
     }
 }

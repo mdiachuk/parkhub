@@ -1,7 +1,9 @@
 package ua.com.parkhub.persistence.impl;
 
 import org.springframework.stereotype.Repository;
-import ua.com.parkhub.mapper.Mapper;
+import ua.com.parkhub.mappers.Mapper;
+import ua.com.parkhub.model.CustomerModel;
+import ua.com.parkhub.model.PhoneEmailModel;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.persistence.entities.User;
 
@@ -15,6 +17,7 @@ public class UserDAO extends ElementDAO<User, UserModel> {
     public UserDAO(Mapper<User, UserModel> entityToModel, Mapper<UserModel, User> modelToEntity) {
         super(User.class, modelToEntity, entityToModel);
     }
+
 
     /**
      * Check have this email in DB, and from DB return id of User
@@ -53,6 +56,8 @@ public class UserDAO extends ElementDAO<User, UserModel> {
         } else {
             return query.getResultList().get(0).toString();
         }
+
+
     }
 
     /**
@@ -82,10 +87,15 @@ public class UserDAO extends ElementDAO<User, UserModel> {
 
     }
 
-
-
-
     public Optional<UserModel> findUserByEmail(String email) { return findOneByFieldEqual("email", email);}
+    public CustomerModel setOauthUserPhone(PhoneEmailModel phoneEmailModel){
+        UserModel user = findOneByFieldEqual("email", phoneEmailModel.getEmail()).get();
+        CustomerModel customer = user.getCustomer();
+        customer.setPhoneNumber(phoneEmailModel.getPhoneNumber());
+        return  customer;
+    }
+
+
 
 }
 

@@ -8,7 +8,7 @@ import {MaterialModule} from './material.module';
 import {AppComponent} from './app.component';
 import {SingupComponent} from "./singup/singup.component";
 import {AppRoutingModule} from "./app-routing.module";
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
 import {MatInputModule} from "@angular/material/input";
 import {MatCardModule} from "@angular/material/card";
 
@@ -17,7 +17,7 @@ import { ParkingService1 } from './services/parking.service';
 import {ParkingListComponent} from './parking-list/parking-list.component';
 import {ParkingListComponentManager} from './parking-list-manager/parking-list.component';
 
-import {ParkingService} from "./service/http-client.service";
+import {ParkingService, UserService} from './service/http-client.service';
 import {AddParkingComponent} from "./add-parking/add-parking.component";
 import {ParkingsComponent} from "./parkings/parkings.component";
 import {ParkingDetailComponent} from "./parking-detail/parking-detail.component";
@@ -38,8 +38,8 @@ import {
   MatIconModule,
   MatCheckboxModule,
   MatSnackBarModule
-} from "@angular/material";
-// import {UserComponent} from "./user/user.component";
+} from '@angular/material';
+import {UserComponent} from "./user/userPage.component";
 import {LoginComponent} from "./login/login.component";
 import {AlertDialogComponent} from "./alert-dialog/alert-dialog.component";
 import {ParkoffComponent} from "./parkoff/parkoff.component";
@@ -52,6 +52,8 @@ import {ParkingsComponentSlots} from "./parkings-ad/parkings.component";
 import {ParkingDetailSlotsComponent} from "./parkings-ad/parking-detail/parking-detail.component";
 import {SlotService} from "./serviceSlot/slot.service";
 import { from } from 'rxjs';
+import { CustomInterceptor } from './service/customInterceptor';
+import { AddPhoneNumberComponent } from './add-phone-number/add-phone-number.component';
 import {DataService} from './DataService/data.service';
 import { MatSidenavModule} from '@angular/material/sidenav';
 
@@ -107,11 +109,19 @@ import { MatSidenavModule} from '@angular/material/sidenav';
     ParkingDetailSlotsComponent,
     ParkingsComponentSlots,
     BookingDetailComponent,
-    BookingsComponent
+    BookingsComponent,
+    UserComponent,
+    BookingsComponent,
+    AddPhoneNumberComponent
 
     // UserComponent
   ],
-  providers: [ParkingService, SlotService, ParkingService1, DataService],
+  providers: [ParkingService, SlotService, ParkingService1,DataService, UserService,
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: CustomInterceptor ,
+    multi: true
+  }],
   bootstrap: [AppComponent],
   entryComponents: [AlertDialogComponent]
 })

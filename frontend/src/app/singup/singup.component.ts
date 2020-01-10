@@ -9,6 +9,8 @@ import {ConfirmPass, Customer, HttpClientService, User, RoleDTO} from "../servic
   templateUrl: './singup.component.html',
   styleUrls: ['./singup.component.scss']
 })
+
+
 export class SingupComponent implements OnInit {
 
   customer:Customer = new Customer("", true);
@@ -29,6 +31,7 @@ export class SingupComponent implements OnInit {
   }
 
   singUpUser(): void {
+
     if (this.users.password==this.confirmPass.confirmPass){
       this.httpClientService.createUser(this.users)
         .subscribe( data => {

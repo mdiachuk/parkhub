@@ -5,6 +5,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "user", schema = "park_hub")
@@ -34,7 +35,7 @@ public class User implements Serializable {
 
     @Column(name = "number_of_faild_pass_entering")
     @NotNull
-    private int numberOfFaildPassEntering;
+    private int numberOfFailedPassEntering;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
@@ -44,15 +45,15 @@ public class User implements Serializable {
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-//    @ManyToMany(mappedBy = "solvers")
-//    private List<SupportTicket> tickets;
+    @ManyToMany(mappedBy = "solvers")
+    private List<SupportTicket> tickets;
 
-    public int getNumberOfFaildPassEntering() {
-        return numberOfFaildPassEntering;
+    public int getNumberOfFailedPassEntering() {
+        return numberOfFailedPassEntering;
     }
 
-    public void setNumberOfFaildPassEntering(int numberOfFaildPassEntering) {
-        this.numberOfFaildPassEntering = numberOfFaildPassEntering;
+    public void setNumberOfFailedPassEntering(int numberOfFailedPassEntering) {
+        this.numberOfFailedPassEntering = numberOfFailedPassEntering;
     }
 
     public Long getId() {
@@ -111,13 +112,13 @@ public class User implements Serializable {
         this.customer = customer;
     }
 
-//    public List<SupportTicket> getTickets() {
-//        return tickets;
-//    }
-//
-//    public void setTickets(List<SupportTicket> tickets) {
-//        this.tickets = tickets;
-//    }
+    public List<SupportTicket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<SupportTicket> tickets) {
+        this.tickets = tickets;
+    }
 
 
 

@@ -1,70 +1,72 @@
 package ua.com.parkhub.service.impl;
 
-import org.mapstruct.factory.Mappers;
+import org.hibernate.Hibernate;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.com.parkhub.mappers.ParkingRequestMapper;
+import org.springframework.transaction.annotation.Transactional;
+import ua.com.parkhub.exceptions.ParkHubException;
+import ua.com.parkhub.model.AddressModel;
 import ua.com.parkhub.model.ParkingModel;
-import ua.com.parkhub.persistence.entities.Address;
-import ua.com.parkhub.persistence.entities.Parking;
 import ua.com.parkhub.persistence.impl.AddressDAO;
 import ua.com.parkhub.persistence.impl.ParkingDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
+import ua.com.parkhub.service.IParkingService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-
-//import ua.com.parkhub.service.IParkingService;
+import java.util.stream.Collectors;
 
 @Service
-public class ParkingService
-//        implements IParkingService
-{
+public class ParkingService implements IParkingService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ParkingService.class);
 
 
     private ParkingDAO parkingDAO;
     private final AddressDAO addressDAO;
     private final UserDAO userDAO;
-    private final ParkingRequestMapper parkingRequestMapper;
-
+    private final AddressGeoService addressGeoService;
 
     private final ModelMapper mapper;
 
     @Autowired
     public ParkingService(ParkingDAO parkingDAO, AddressDAO addressDAO,
                           UserDAO userDAO,
-                          ModelMapper mapper
-    ){
+                          AddressGeoService addressGeoService, ModelMapper mapper
+    ) {
         this.parkingDAO = parkingDAO;
         this.addressDAO = addressDAO;
         this.userDAO = userDAO;
+        this.addressGeoService = addressGeoService;
         this.mapper = mapper;
-        parkingRequestMapper = Mappers.getMapper( ParkingRequestMapper.class);
     }
 
-//    @Transactional(readOnly = true)
-//    public ParkingModel findParkingByIdWithSlotList(long id) {
-//        ParkingModel parking = parkingDAO.findElementById(id)
-//                .orElseThrow(() -> new ParkHubException("No Parking found with id " + id));
-//        Hibernate.initialize(parking.getSlots());
-//        if (parking.isActive()) {
-//
-//            return mapper.map(parking, ParkingModel.class);
-//        }
-//        throw new ParkHubException("Unfortunately this parking is temporary unavailable");
-//    }
+    @Transactional(readOnly = true)
+    public ParkingModel findParkingByIdWithSlotList(long id) {
+        ParkingModel parking = parkingDAO.findElementById(id)
+                .orElseThrow(() -> new ParkHubException("No Parking found with id " + id));
+        Hibernate.initialize(parking.getSlots());
+        if (parking.isActive()) {
 
-//    @Transactional(readOnly = true)
-//    public List<ParkingModel> findAllParking() {
-//        List<ParkingModel> parkingList = parkingDAO.findAll();
-//        if (parkingList.isEmpty()) {
-//            throw new ParkHubException("Unfortunately all parkings are temporary unavailable");
-//        }
-//       return parkingList.stream()
-//                .map(parkingEntity -> mapper.map(parkingEntity, ParkingModel.class))
-//               .collect(Collectors.toList());
-//    }
+            return mapper.map(parking, ParkingModel.class);
+        }
+        throw new ParkHubException("Unfortunately this parking is temporary unavailable");
+
+    }
+
+    @Transactional(readOnly = true)
+    public List<ParkingModel> findAllParking() {
+        List<ParkingModel> parkingList = parkingDAO.findAll();
+        if (parkingList.isEmpty()) {
+            throw new ParkHubException("Unfortunately all parkings are temporary unavailable");
+        }
+        return parkingList.stream()
+                .map(parkingEntity -> mapper.map(parkingEntity, ParkingModel.class))
+                .collect(Collectors.toList());
+    }
 
 
     /**
@@ -83,25 +85,55 @@ public class ParkingService
         return count == 0;
     }
 
-    @javax.transaction.Transactional
+    @Transactional
     public void createParkingByOwnerID(ParkingModel parkingModel, long id) {
-        Address address = parkingRequestMapper.parkingModelToAddress(parkingModel);
-        Parking parking = parkingRequestMapper.parkingModelToParking(parkingModel);
-//        if (userDAO.findElementById(id).isPresent()) {
-//            parking.setOwner(userDAO.findElementById(id).get());}
-//        parking.setAddress(address);
-//        addressDAO.addElement(address);
-//        parkingDAO.addElement(parking);
+
+
+        AddressModel address = parkingModel.getAddressModel();
+        address = setLatLan(address);
+
+        if (userDAO.findElementById(id).isPresent()) {
+            parkingModel.setOwner(userDAO.findElementById(id).get());
+        }
+        addressDAO.addElement(address);
+        AddressModel addressModel = addressDAO.addWithResponse(address);
+        parkingModel.setAddressModel(addressModel);
+        parkingModel.setId(null);
+        parkingDAO.addElement(parkingModel);
     }
 
-    public List<ParkingModel> findAllParkingModel(){
+    private AddressModel setLatLan(AddressModel addressModel) {
 
+        String address = addressModel.getCity() + "," +
+                addressModel.getStreet() + " " +
+                addressModel.getBuilding();
+
+        Map<String, String> latLon = addressGeoService.getLatLon(address);
+
+        addressModel.setLat(latLon.get("lat"));
+        addressModel.setLon(latLon.get("lon"));
+
+        return addressModel;
+    }
+
+    public List<ParkingModel> findParkingInArea(String address) {
+
+        Map<String, String> map = addressGeoService.getLatLon(address);
+
+        return findAllParkingModel().stream()
+                .filter(x -> (addressGeoService
+                        .enteringTheRadius(map.get("lat"), map.get("lon"),
+                                x.getAddressModel().getLat(), x.getAddressModel().getLon())) == true)
+                .collect(Collectors.toList());
+    }
+
+    public List<ParkingModel> findAllParkingModel() {
         return parkingDAO.findAll();
     }
 
-    public Optional<ParkingModel> findParkingById(long id){
+    public Optional<ParkingModel> findParkingById(long id) {
 
-        return  parkingDAO.findElementById(id);
+        return parkingDAO.findElementById(id);
     }
 
 }

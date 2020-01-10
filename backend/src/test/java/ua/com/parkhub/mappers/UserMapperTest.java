@@ -1,18 +1,7 @@
-//package ua.com.parkhub.mappers;
-//
-//import org.junit.Assert;
-//import org.junit.jupiter.api.Assertions;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import ua.com.parkhub.dto.RoleDTO;
-//import ua.com.parkhub.dto.UserDTO;
-//import ua.com.parkhub.exceptions.ParkHubException;
-//import ua.com.parkhub.persistence.entities.User;
-//import ua.com.parkhub.persistence.entities.UserRole;
-//
-//import static org.junit.Assert.assertEquals;
-//
-//class UserMapperTest {
+
+package ua.com.parkhub.mappers;
+
+class UserMapperTest {
 //
 //    private static User userEntity, userEntity1;
 //    private static UserDTO userDTO, userDTO1;
@@ -52,26 +41,27 @@
 //    }
 //
 //
-//    @Test
-//    void persist() {
-//        User newUserEntity = UserMapper.persist(userDTO);
-//        assertEquals("Artem", newUserEntity.getFirstName());
-//        assertEquals("Pupkin", newUserEntity.getLastName());
-//        assertEquals("Email", newUserEntity.getEmail());
-//        assertEquals("ADMIN", newUserEntity.getRole().getRoleName());
-//        Assert.assertNull(newUserEntity.getPassword());
-//    }
+
+////    @Test
+////    void persist() {
+////        User newUserEntity = UserMapper.persist(userDTO);
+////        assertEquals("Artem", newUserEntity.getFirstName());
+////        assertEquals("Pupkin", newUserEntity.getLastName());
+////        assertEquals("Email", newUserEntity.getEmail());
+////        assertEquals("ADMIN", newUserEntity.getRole().getRoleName());
+////        Assert.assertNull(newUserEntity.getPassword());
+////    }
 //
-//    @Test
-//    void detach() {
-//        UserDTO newUserDTO = UserMapper.detach(userEntity);
-//        assertEquals(1, newUserDTO.getIdInt());
-//        assertEquals("Email", newUserDTO.getEmail());
-//        assertEquals("Artem", newUserDTO.getFirstName());
-//        assertEquals("Pupkin", newUserDTO.getLastName());
-//        assertEquals(RoleDTO.ADMIN, newUserDTO.getRole());
-//
-//    }
+////    @Test
+////    void detach() {
+////        UserDTO newUserDTO = UserMapper.detach(userEntity);
+////        assertEquals(1, newUserDTO.getIdInt());
+////        assertEquals("Email", newUserDTO.getEmail());
+////        assertEquals("Artem", newUserDTO.getFirstName());
+////        assertEquals("Pupkin", newUserDTO.getLastName());
+////        assertEquals(RoleDTO.ADMIN, newUserDTO.getRole());
+////
+////    }
 //
 //    @Test
 //    public void detachWhenEntityNull() {
@@ -84,6 +74,7 @@
 //        UserDTO userDTO = null;
 //        Assertions.assertThrows(ParkHubException.class, () -> UserMapper.persist(userDTO));
 //    }
-//
-//
-//}
+
+
+
+}

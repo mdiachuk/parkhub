@@ -10,6 +10,7 @@ public enum RoleDTO {
     MANAGER("MANAGER");
 
     private String role;
+    private Long id;
 
     RoleDTO(String role) {
         this.role = role;
@@ -20,4 +21,11 @@ public enum RoleDTO {
     }
 
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

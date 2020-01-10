@@ -1,7 +1,5 @@
 package ua.com.parkhub.model;
 
-import ua.com.parkhub.persistence.entities.SupportTicketTypeModel;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -10,7 +8,8 @@ public class SupportTicket extends AbstractModel {
     private Long id;
     private String description;
     private boolean isSolved;
-    private SupportTicketTypeModel supportTicketType;
+
+    private SupportTicketType supportTicketType;
     private List<UserModel> solvers;
 
     public Long getId() {
@@ -37,11 +36,11 @@ public class SupportTicket extends AbstractModel {
         isSolved = solved;
     }
 
-    public SupportTicketTypeModel getSupportTicketType() {
+    public SupportTicketType getSupportTicketType() {
         return supportTicketType;
     }
 
-    public void setSupportTicketType(SupportTicketTypeModel supportTicketType) {
+    public void setSupportTicketType(SupportTicketType supportTicketType) {
         this.supportTicketType = supportTicketType;
     }
 

@@ -17,7 +17,9 @@ export class ParkingService1 {
 
   getparking(): Observable<Parking[]> {
 
-   return this.http.get<Parking[]>(this.serviceUrl);
+      // return this.http.get<Parking[]>( 'http://localhost:8080/api/home?address=київ леся курбаса 5а');
+
+    return this.http.get<Parking[]>(this.serviceUrl);
 
 
   }

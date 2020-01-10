@@ -7,13 +7,15 @@ import {ParkingListComponentManager} from "./parking-list-manager/parking-list.c
 import {ParkingDetailComponent} from "./parking-detail/parking-detail.component";
 import {ManagerSignupComponent} from "./manager-signup/manager-signup.component";
 import {AdminComponent} from "./admin/admin.component";
-// import {UserComponent} from "./user/user.component";
+// import {UserPageComponent} from "./user/user.component";
 import {LoginComponent} from "./login/login.component";
 import {ParkoffComponent} from "./parkoff/parkoff.component";
 import {ParkingDetailSlotsComponent} from "./parkings-ad/parking-detail/parking-detail.component";
 import {SlotsComponent} from "./slots/slots.component";
 import {BookingDetailComponent} from "./bookings/booking-detail/booking-detail.component";
 import { PageComponent } from './homePage/homePage.component';
+import { AddPhoneNumberComponent } from './add-phone-number/add-phone-number.component';
+import {UserComponent} from "./user/userPage.component";
 
 
 const routes: Routes = [
@@ -22,7 +24,7 @@ const routes: Routes = [
   {path: 'home', component:PageComponent},
   {path: 'signup/manager', component:ManagerSignupComponent},
   {path: 'cabinet', component: AppComponent },
-  {path: 'cabinet/addParking', component: AddParkingComponent},
+  {path: 'manager/parking', component: AddParkingComponent},
   {path: 'manager/cabinet', component: ParkingListComponentManager,},
   {path: 'manager/cabinet/:id', component: ParkingDetailComponent,},
   {path: 'admin', component: AdminComponent},
@@ -32,9 +34,11 @@ const routes: Routes = [
   // { path: 'slots', component: SlotsComponent },
   { path: 'booking', component: BookingDetailComponent},
 
-  // { path: 'user', component: UserComponent },
-  { path: 'login', component: LoginComponent }
+  // { path: 'user', component: UserPageComponent },
+  { path: 'userPage', component: UserComponent },
+  { path: 'login', component: LoginComponent },
   // {path: '', redirectTo: 'home', pathMatch: 'full'},
+  { path: 'phone-number', component: AddPhoneNumberComponent }
 
 ];
 
@@ -45,6 +49,8 @@ const routes: Routes = [
   declarations: []
 })
 export class AppRoutingModule { }
+
+
 
 
 

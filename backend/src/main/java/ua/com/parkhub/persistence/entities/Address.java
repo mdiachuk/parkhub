@@ -25,11 +25,11 @@ public class Address implements Serializable {
     @NotNull
     private String building;
 
-    @Column
+    @Column (name = "lat")
     @NotNull
     private String lat;
 
-    @Column
+    @Column (name = "lon")
     @NotNull
     private String lon;
 
