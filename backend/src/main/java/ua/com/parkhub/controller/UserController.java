@@ -18,7 +18,6 @@ import ua.com.parkhub.mappers.dtoToModel.PasswordDTOtoUserModelMapper;
 import ua.com.parkhub.mappers.dtoToModel.UserDtoToUserModelMapper;
 import ua.com.parkhub.mappers.dtoToModel.UserInfoDTOtoUserModelMapper;
 import ua.com.parkhub.mappers.modelToDTO.UserModelToUserInfoDTOMapper;
-import ua.com.parkhub.model.UuidTokenType;
 import ua.com.parkhub.service.impl.UserService;
 
 import javax.validation.Valid;
@@ -58,9 +57,7 @@ public class UserController {
             logger.info("Validation errors: {}", errors);
             return ResponseEntity.badRequest().body(errors);
         }
-        String email = emailDTO.getEmail();
-        UuidTokenType type = UuidTokenType.valueOf(emailDTO.getTokenType());
-        userService.sendToken(email, type);
+        userService.sendToken(emailDTO.getEmail(), emailDTO.getTokenType());
         return ResponseEntity.ok().build();
     }
 
@@ -74,9 +71,7 @@ public class UserController {
             logger.info("Validation errors: {}", errors);
             return ResponseEntity.badRequest().body(errors);
         }
-        String token = tokenDTO.getToken();
-        UuidTokenType type = UuidTokenType.valueOf(tokenDTO.getTokenType());
-        userService.resendToken(token, type);
+        userService.resendToken(tokenDTO.getToken(), tokenDTO.getTokenType());
         return ResponseEntity.ok().build();
     }
 

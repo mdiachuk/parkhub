@@ -53,11 +53,11 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional
-    public void sendToken(String email, UuidTokenType type) {
+    public void sendToken(String email, String type) {
         UuidTokenModel token = createToken(email);
         String subject;
         String body;
-        switch (type) {
+        switch (convertToUuidTokenType(type)) {
             case EMAIL:
                 subject = "Verify email";
                 body = "<a href=\"http://localhost:4200/verify-email?token=" + token.getToken()
@@ -79,7 +79,7 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional
-    public void resendToken(String token, UuidTokenType type) {
+    public void resendToken(String token, String type) {
         String email = uuidTokenDAO.findUuidTokenByToken(token)
                 .map(uuidToken -> uuidToken.getUser().getEmail())
                 .orElseThrow(() -> new InvalidTokenException("Invalid link"));
@@ -156,6 +156,10 @@ public class UserService implements IUserService {
     private String formatExpirationDate(LocalDateTime date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy");
         return date.format(formatter);
+    }
+
+    private UuidTokenType convertToUuidTokenType(String type) {
+        return UuidTokenType.valueOf(type);
     }
 
 
