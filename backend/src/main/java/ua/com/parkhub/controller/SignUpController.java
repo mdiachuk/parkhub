@@ -17,6 +17,7 @@ import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberException;
 import ua.com.parkhub.mappers.dtoToModel.ManagerRegistrationRequestDtoToModel;
 import ua.com.parkhub.mappers.dtoToModel.UserDtoToUserModelMapper;
+import ua.com.parkhub.model.UuidTokenType;
 import ua.com.parkhub.service.impl.SignUpService;
 import ua.com.parkhub.service.impl.UserService;
 import ua.com.parkhub.validation.groups.CustomerChecks;
@@ -58,6 +59,7 @@ public class SignUpController {
             return ResponseEntity.badRequest().body(errors);
         }
         signUpService.registerManager(managerRegistrationRequestDtoToModel.transform(manager));
+        userService.sendToken(manager.getUser().getEmail(), UuidTokenType.EMAIL);
         logger.info("Manager registration request created");
         return ResponseEntity.ok().build();
     }

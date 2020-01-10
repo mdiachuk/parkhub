@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmPasswordValidator } from "../validation/confirm-password.validator";
 import { Manager } from '../model/manager';
-import { ManagerService } from "../service/http-client.service";
+import { ManagerService } from "../service/manager.service";
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 

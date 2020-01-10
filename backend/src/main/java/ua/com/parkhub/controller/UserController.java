@@ -17,7 +17,7 @@ import ua.com.parkhub.exceptions.PasswordException;
 import ua.com.parkhub.mappers.dtoToModel.PasswordDTOtoUserModelMapper;
 import ua.com.parkhub.mappers.dtoToModel.UserDtoToUserModelMapper;
 import ua.com.parkhub.mappers.dtoToModel.UserInfoDTOtoUserModelMapper;
-import ua.com.parkhub.mappers.modelToDto.UserModelToUserInfoDTOMapper;
+import ua.com.parkhub.mappers.modelToDTO.UserModelToUserInfoDTOMapper;
 import ua.com.parkhub.model.UuidTokenType;
 import ua.com.parkhub.service.impl.UserService;
 
