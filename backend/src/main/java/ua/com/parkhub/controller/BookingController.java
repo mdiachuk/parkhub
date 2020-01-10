@@ -19,6 +19,7 @@ import ua.com.parkhub.service.IParkingService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
 //TODO Validation: parkId, slotId, car number, phone number
@@ -43,11 +44,11 @@ public class BookingController {
 
     @GetMapping("/parkings/{id}")
     //TODO implementation w.o. pagination just for small amount of slots! Will do in a next impl steps
-    public ResponseEntity<ParkingWithSlotsDTO> displayParking(@PathVariable(name = "id") @Positive Long id, @RequestParam @Min(value = 0) String rangeFrom,
-                                                              @RequestParam @Min(value = 0) String rangeTo) {
+    public ResponseEntity<ParkingWithSlotsDTO> displayParking(@PathVariable(name = "id") @Positive Long id, @RequestParam @NotBlank String rangeFrom,
+                                                              @RequestParam @NotBlank String rangeTo) {
         try {
-            Long checkIn = Long.valueOf(rangeFrom);
-            Long checkOut = Long.valueOf(rangeTo);
+            long checkIn = Long.parseLong(rangeFrom);
+            long checkOut = Long.parseLong(rangeTo);
             ParkingModel parking = parkingService.findParkingByIdWithSlotListAndDateRange(id, checkIn, checkOut);
             return ResponseEntity.ok(parkingWithSlotsModelToDTOMapper.transform(parking));
         } catch (ParkHubException e) {
