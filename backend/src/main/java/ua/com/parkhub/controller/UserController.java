@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.*;
@@ -146,14 +147,14 @@ public class UserController {
 
 
 
-
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER') or hasRole('USER')")
     @GetMapping("/api/user/{id}")
     @ResponseBody
     public ResponseEntity<UserInfoDTO> findUserById(@PathVariable Long id){
         return ResponseEntity.ok(userModelToUserInfoDTOMapper.transform(userService.findUserById(id).get()));
     }
 
-
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER') or hasRole('USER')")
     @PostMapping("/api/user/{id}")
     public ResponseEntity updateUser(@PathVariable Long id, @RequestBody UserInfoDTO userInfoDTO){
         userService.updateUser(id, userInfoDTOtoUserModelMapper.transform(userInfoDTO));
@@ -161,6 +162,7 @@ public class UserController {
     }
 
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER') or hasRole('USER')")
     @PostMapping("/api/user/password/{id}")
     public ResponseEntity<Void> updateUserPassword(@PathVariable Long id, @RequestBody PasswordDTO passwordDTO){
         try {
