@@ -47,14 +47,15 @@ public class AdminService  {
         if (ticketCounter>5) {
             for (long i = ticketCounter - 1; i > ticketCounter - 6; i--) {
                 AdminSupportTicketDTO adminSupportTicketDTO = new TicketSupportModelToAdminSupportTicketDTO().transform(targetSupportList.get((int) i));
-                adminSupportTicketDTO.setSupportTicketType(targetSupportList.get((int) i).getSupportTicketType().getType());
+                adminSupportTicketDTO.setSupportTicketType(targetSupportList.get((int) i).getType().getType());
                 adminSupportTicketDTO.setTicketHighlight(ticketHighlightBuilder(targetSupportList.get((int) i).getDescription()));
                 adminSupportTicketDTOList.add(adminSupportTicketDTO);
             }
         }else {
             for(SupportTicketModel supportTicketList: targetSupportList){
                 AdminSupportTicketDTO adminSupportTicketDTO = new TicketSupportModelToAdminSupportTicketDTO().transform(supportTicketList);
-                adminSupportTicketDTO.setSupportTicketType(supportTicketList.getSupportTicketType().getType());
+                adminSupportTicketDTO.setSupportTicketType(supportTicketList.getType().getType());
+                adminSupportTicketDTO.setTicketHighlight(ticketHighlightBuilder(supportTicketList.getDescription()));
                 adminSupportTicketDTOList.add(adminSupportTicketDTO);
             }
         }
@@ -71,7 +72,7 @@ public class AdminService  {
         AdminSupportTicketDTO adminSupportTicketDTO = new AdminSupportTicketDTO();
         adminSupportTicketDTO.setId(targetSupportTicket.get().getId());
         adminSupportTicketDTO.setDescription(targetSupportTicket.get().getDescription());
-        adminSupportTicketDTO.setSupportTicketType(targetSupportTicket.get().getSupportTicketType().getType());
+        adminSupportTicketDTO.setSupportTicketType(targetSupportTicket.get().getType().getType());
         adminSupportTicketDTO.setSolved(targetSupportTicket.get().isSolved());
         return adminSupportTicketDTO;
     }
