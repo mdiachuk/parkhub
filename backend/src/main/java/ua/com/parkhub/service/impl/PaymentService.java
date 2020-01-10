@@ -25,8 +25,9 @@ public class PaymentService implements IPaymentService {
         this.paymentDAO = paymentDAO;
     }
 
-    public PaymentDAO getPaymentDAO() {
-        return paymentDAO;
+    public void updateIsCancelled(PaymentModel paymentModel, boolean isCancelled){
+        paymentModel.setCancelled(isCancelled);
+        paymentDAO.updateElement(paymentModel);
     }
 
     public PaymentModel findPaymentByBooking(BookingModel bookingModel){

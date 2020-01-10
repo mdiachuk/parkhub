@@ -37,7 +37,7 @@ export class ParkoffComponent implements OnInit {
 
     this.api.checkPayout(this.pn).subscribe(result => {
       const title =  this.translate.instant('Success');
-      const message = this.translate.instant('The price of your booking is').concat(result.price.toString()).concat('UAH');
+      const message = this.translate.instant('The price of your booking is ').concat(result.price.toString()).concat(this.translate.instant(' UAH'));
       this.openDialog(title, message).afterClosed().subscribe(() => {
         window.location.href = '/home';
       });

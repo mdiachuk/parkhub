@@ -90,8 +90,7 @@ public class BookingService implements IBookingService {
             bm.setActive(false);
             PaymentModel paymentModel = paymentService.findPaymentByBooking(bm);
             price = paymentModel.getPrice();
-            paymentModel.setCancelled(true);
-            paymentService.getPaymentDAO().updateElement(paymentModel);
+            paymentService.updateIsCancelled(paymentModel, true);
             bookingDAO.updateElement(bm);
             return price;
         }).orElseThrow(() -> new BookingException(StatusCode.BOOKING_NOT_FOUND));
