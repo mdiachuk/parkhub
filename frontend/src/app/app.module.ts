@@ -50,6 +50,7 @@ import { LoginComponent } from './login/login.component';
 import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
 import { ParkoffComponent } from './parkoff/parkoff.component';
 import { MatDialogModule } from '@angular/material/dialog';
+
 import { SlotsComponent } from './slots/slots.component';
 import { BookingDetailComponent } from './bookings/booking-detail/booking-detail.component';
 import { BookingsComponent } from './bookings/bookings.component';
@@ -68,6 +69,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { DataService } from './DataService/data.service';
 import { ParkhubInterceptorComponent } from './parkhub-interceptor/parkhub-interceptor.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+
 
 @NgModule({
   imports: [
@@ -75,6 +78,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     BrowserAnimationsModule,
     FormsModule,
     MaterialModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     AppRoutingModule,
     HttpClientModule,
     TranslateModule.forRoot({
@@ -102,7 +107,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     MatSnackBarModule,
     MatDialogModule,
     MatChipsModule,
-
     MatSidenavModule,
     FormsModule,
     MatIconModule
