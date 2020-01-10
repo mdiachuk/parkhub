@@ -24,7 +24,10 @@ import ua.com.parkhub.persistence.impl.BookingDAO;
 import ua.com.parkhub.persistence.impl.SlotDAO;
 import ua.com.parkhub.service.IBookingService;
 import ua.com.parkhub.service.ICustomerService;
+import ua.com.parkhub.service.IPaymentService;
+import ua.com.parkhub.util.formatter.DateFormatter;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -41,25 +44,8 @@ public class BookingService implements IBookingService {
     private final BookingDAO bookingDAO;
     private final SlotDAO slotDAO;
     private final ICustomerService customerService;
-    private final PaymentService paymentService;
-    private int price;
-
-    @Autowired
-    public BookingService(PaymentService paymentService, BookingDAO bookingDAO, SlotDAO slotDAO, ICustomerService customerService) {
-import ua.com.parkhub.service.IParkingService;
-import ua.com.parkhub.service.IPaymentService;
-import ua.com.parkhub.util.formatter.DateFormatter;
-
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Optional;
-
-@Service
-public class BookingService implements IBookingService {
-    private final BookingDAO bookingDAO;
-    private final SlotDAO slotDAO;
-    private final ICustomerService customerService;
     private final IPaymentService paymentService;
+    private int price;
 
     @Autowired
     public BookingService(BookingDAO bookingDAO, SlotDAO slotDAO, ICustomerService customerService, IPaymentService paymentService) {
@@ -98,34 +84,7 @@ public class BookingService implements IBookingService {
         String fieldNameCheckIn = "checkIn";
         String fieldNameCheckOut = "checkOut";
         return bookingDAO.findElementByFieldsEqual(id, localDateTimeCheckIn, localDateTimeCheckOut, fieldNameId, fieldNameCheckIn, fieldNameCheckOut);
-    /*private ua.com.parkhub.model.Slot findSlotByIdAndUpdate(long slotId) {
-        Optional<Slot> optionalSlot = slotDAO.findElementById(slotId);
-        if (optionalSlot.isPresent()) {
-            Slot slot = optionalSlot.get();
-            if (slot.isActive() && !slot.isReserved()) {
-                slot.setReserved(true);
-                slotDAO.updateElement(slot);
-                return mapper.map(slot, ua.com.parkhub.model.Slot.class);
-            }
-            throw new ParkHubException("Unfortunately this slot is temporary unavailable");
-        }
-        throw new ParkHubException("No available slot found by id :" + slotId);
     }
-
-    @Transactional
-    public ua.com.parkhub.model.Booking addBooking(String carNumber, String phoneNumber, long slotId) {
-        ua.com.parkhub.model.Booking booking = new ua.com.parkhub.model.Booking();
-        ua.com.parkhub.model.Customer customer = customerService.findCustomerByPhoneNumberOrAdd(phoneNumber);
-        booking.setCustomer(customer);
-        booking.setCarNumber(carNumber);
-        ua.com.parkhub.model.Slot slot = findSlotByIdAndUpdate(slotId);
-        booking.setSlot(slot);
-        booking.setCheckIn(LocalDateTime.now());
-        booking.setActive(true);
-        Booking bookingEntity = mapper.map(booking, Booking.class);
-        bookingDAO.addElement(bookingEntity);
-        return booking;
-    }*/
 
     public Optional<BookingModel> findPrepaidBooking(CustomerModel customerModel){
         Instant now = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
@@ -140,7 +99,7 @@ public class BookingService implements IBookingService {
     }
 
     public int findPrice(String phoneNumber){
-        Optional<BookingModel> bookingModel = findPrepaidBooking(customerService.findByPhoneNumber(phoneNumber));
+        Optional<BookingModel> bookingModel = findPrepaidBooking(customerService.findCustomerByPhoneNumber(phoneNumber));
         return bookingModel.map(bm -> {
             bm.setCheckOut(LocalDateTime.now());
             bm.setActive(false);

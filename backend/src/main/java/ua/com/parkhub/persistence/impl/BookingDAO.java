@@ -34,9 +34,6 @@ public class BookingDAO extends ElementDAO<Booking, BookingModel> {
         Booking entity = modelToEntity.transform(bookingModel);
         emp.persist(entity);
         return entityToModel.transform(entity);
-    public BookingDAO(Mapper<Booking, BookingModel> entityToModel,
-                      Mapper<BookingModel, Booking> modelToEntity) {
-        super(Booking.class, modelToEntity, entityToModel);
     }
 
     public List<BookingModel> findBookingsByCustomer(CustomerModel customer) {

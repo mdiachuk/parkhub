@@ -17,11 +17,6 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 @Service
-public class PaymentService implements IPaymentService {
-
-    private final PaymentDAO paymentDAO;
-
-@Service
 @Transactional
 public class PaymentService implements IPaymentService {
 
@@ -39,8 +34,10 @@ public class PaymentService implements IPaymentService {
         paymentDAO.updateElement(paymentModel);
     }
 
-    public PaymentModel findPaymentByBooking(BookingModel bookingModel){
-       return paymentDAO.findPaymentByBooking(bookingModel).orElseThrow(() -> new BookingException(StatusCode.BOOKING_NOT_FOUND));
+    public PaymentModel findPaymentByBooking(BookingModel bookingModel) {
+        return paymentDAO.findPaymentByBooking(bookingModel).orElseThrow(() -> new BookingException(StatusCode.BOOKING_NOT_FOUND));
+    }
+
     public int calculatePrice(BookingModel bookingModel, int tariff) {
         LocalDateTime checkIn = bookingModel.getCheckIn();
         LocalDateTime checkOut = bookingModel.getCheckOut();

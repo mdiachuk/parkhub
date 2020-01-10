@@ -6,6 +6,7 @@ import java.util.List;
 
 public class BookingException extends ParkHubException {
     List<ObjectError> errors;
+    private StatusCode statusCode;
 
     public static BookingException createWith(List<ObjectError> errors) {
         return new BookingException(errors);
@@ -17,9 +18,7 @@ public class BookingException extends ParkHubException {
 
     public List<ObjectError> getErrors() {
         return errors;
-public class BookingException extends ParkHubException {
-
-    private StatusCode statusCode;
+    }
 
     public BookingException(){ super();}
 

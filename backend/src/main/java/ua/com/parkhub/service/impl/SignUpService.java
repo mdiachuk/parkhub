@@ -89,8 +89,7 @@ public class SignUpService {
     public SupportTicketModel createTicket(String description, CustomerModel customer) {
         SupportTicketModel ticket = new SupportTicketModel();
         ticket.setDescription(description);
-        ticket.setCustomer(customer);
-        ticket.setType(findSupportTicketType(TicketTypeModel.MANAGER_REGISTRATION_REQUEST.getType()));
+        ticket.setSupportTicketType(findSupportTicketType(TicketTypeModel.MANAGER_REGISTRATION_REQUEST.getType()));
         ticket.setSolvers(findSolvers(RoleModel.ADMIN.getRoleName()));
         logger.info("New support ticket was created");
         return ticket;

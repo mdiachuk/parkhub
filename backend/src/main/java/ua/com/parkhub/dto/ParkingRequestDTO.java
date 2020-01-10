@@ -1,22 +1,5 @@
 package ua.com.parkhub.dto;
 
-public class ParkingRequestDTO {
-
-    private String parkingName;
-    private String address;
-    private String city;
-    private String street;
-    private String building;
-    private int slotsNumber;
-    private int tariff;
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
