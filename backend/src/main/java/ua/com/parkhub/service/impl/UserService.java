@@ -185,7 +185,7 @@ public class UserService implements IUserService {
             logger.info("Password was updated");
         } else {
             logger.info("Password was not updated");
-            new PasswordException();
+            throw new PasswordException();
         }
     }
 }
