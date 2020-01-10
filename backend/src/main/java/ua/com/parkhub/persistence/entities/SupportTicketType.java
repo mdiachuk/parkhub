@@ -10,8 +10,7 @@ import java.io.Serializable;
 public class SupportTicketType implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "support_ticket_type_generator")
-    @SequenceGenerator(name = "support_ticket_type_generator", sequenceName = "park_hub.support_ticket_type_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column

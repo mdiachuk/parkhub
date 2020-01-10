@@ -1,0 +1,9 @@
+<h2>Parking list</h2>
+
+<ul class="parkings">
+  <li *ngFor="let parking of parkings">
+    <a routerLink="/parkings/{{parking.id}}">
+      <span class="badge">{{parking.id}}</span> {{parking.name}}
+    </a>
+  </li>
+</ul>

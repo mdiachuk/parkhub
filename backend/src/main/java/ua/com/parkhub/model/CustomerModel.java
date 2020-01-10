@@ -1,6 +1,5 @@
 package ua.com.parkhub.model;
 
-
 public class CustomerModel {
 
     private Long id;
@@ -30,5 +29,4 @@ public class CustomerModel {
     public void setActive(boolean active) {
         isActive = active;
     }
-
 }

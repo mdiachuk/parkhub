@@ -1,0 +1,37 @@
+    <h2>Admins page</h2>
+    <table>
+        <col width="130">
+        <col width="700">
+        <thead>
+            <th>Get User by Id</th>
+            <th>Ticket List</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <mat-card>
+                    <mat-card-content>
+                    <div>
+                        <mat-form-field>
+                            <input matInput type="number" min="2" [formControl]="idGetter" placeholder="Type User ID">
+                        </mat-form-field>
+                        <p>
+                        <button mat-raised-button color="primary" (click)="idGetterMethod()">Get User by Id</button>
+                        </p>
+                        <mat-card-content>
+                        <div>Id: {{admin.id}}</div>
+                        <div>Name: {{admin.firstName}}</div>
+                        <div>Role: {{admin.userRole}}</div>
+                        <p>
+                            <button mat-raised-button color="primary" (click)="updateRoleName()">Set As Manager</button>
+                        </p>
+                        </mat-card-content>
+                    </div>
+                    </mat-card-content>
+                    </mat-card></td>
+                    <td><div>
+                        <app-admin-ticket-list></app-admin-ticket-list>
+                        </div></td>
+            </tr>
+        </tbody>
+    </table>

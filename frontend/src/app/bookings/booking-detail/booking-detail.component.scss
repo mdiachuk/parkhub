@@ -1,0 +1,12 @@
+.booking-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .booking-container > * {
+    width: 100%;
+  }
+
+  .booking-container {
+    text-align: center;
+  }

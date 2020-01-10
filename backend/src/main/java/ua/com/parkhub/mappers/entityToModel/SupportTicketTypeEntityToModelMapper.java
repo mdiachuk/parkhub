@@ -27,5 +27,4 @@ public class SupportTicketTypeEntityToModelMapper implements Mapper<SupportTicke
         }
         return ticketTypeModel;
     }
-
 }

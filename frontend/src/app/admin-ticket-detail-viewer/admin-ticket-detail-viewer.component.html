@@ -1,0 +1,9 @@
+<p>Ticket {{ticket.id}} Details</p>
+<mat-card>
+    <mat-card-content>
+        <div><label><b>Ticket ID: </b></label>{{ticket.id}}</div>
+        <div><label><b>Ticket Type: </b></label>{{ticket.supportTicketType}}</div>
+        <div><label><b>Ticket Description: </b></label>{{ticket.description}}</div>
+        <button mat-raised-button color="primary" (click)="backToAdminPage()">Back to Admin Page</button><br>
+    </mat-card-content>
+</mat-card>

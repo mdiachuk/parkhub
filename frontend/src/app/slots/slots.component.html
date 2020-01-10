@@ -1,0 +1,11 @@
+<h2>Please, choose available slot</h2>
+<ul class = "slots">
+    <li *ngFor = "let slot of slots" >
+    <a routerLink="/slot/{{slot.id}}">
+        <span class = "badge">{{slot.id}}</span> {{slot.name}}
+    </a>
+    </li>
+</ul>
+
+
+

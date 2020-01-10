@@ -11,12 +11,12 @@ import { tap, catchError } from 'rxjs/operators';
 export class ParkingService {
 
 
-  private parkingsUrl: string; 
+  private parkingsUrl: string;
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
-  
+
   constructor(private http: HttpClient) {
     this.parkingsUrl = '/api/manager/cabinet';
   }
@@ -35,7 +35,7 @@ export class ParkingService {
     return this.http.put(`${this.parkingsUrl}/${id}`, parking);
   }
 
-  private handleError(error: HttpErrorResponse) {      
+  private handleError(error: HttpErrorResponse) {
         return throwError(
           error.error);
     }

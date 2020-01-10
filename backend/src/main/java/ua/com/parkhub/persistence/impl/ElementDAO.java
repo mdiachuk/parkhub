@@ -1,5 +1,8 @@
 package ua.com.parkhub.persistence.impl;
 
+import ua.com.parkhub.mappers.Mapper;
+import ua.com.parkhub.persistence.IElementDAO;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
@@ -7,10 +10,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-
-import ua.com.parkhub.mappers.Mapper;
-import ua.com.parkhub.persistence.IElementDAO;
-
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 public class ElementDAO<E, M> implements IElementDAO<M> {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "default")
     EntityManager emp;
 
     Class<E> elementClass;
@@ -31,20 +31,21 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
         this.entityToModel = entityToModel;
     }
 
+    @Transactional
     @Override
     public Optional<M> addElement(M element) {
-        E entity = modelToEntity.transform(element);
-        emp.merge(entity);
+        E e = emp.merge(modelToEntity.transform(element));
         emp.flush();
-        return Optional.of(entityToModel.transform(entity));
+        return Optional.of(entityToModel.transform(e));
     }
 
-
+    @Transactional
     @Override
     public void updateElement(M element) {
         emp.merge(modelToEntity.transform(element));
     }
 
+    @Transactional
     @Override
     public List<M> findAll() {
         CriteriaBuilder cb = emp.getCriteriaBuilder();
@@ -55,6 +56,7 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
         return allQuery.getResultList().stream().map(entityToModel::transform).collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public Optional<M> findElementById(long id) {
         E element;
@@ -63,14 +65,16 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
         } catch (PersistenceException e) {
             element = null;
         }
-            return Optional.ofNullable(element).map(entityToModel::transform);
-        }
+        return Optional.ofNullable(element).map(entityToModel::transform);
+    }
 
+    @Transactional
     @Override
     public void deleteElement(M element) {
         emp.remove(emp.merge(modelToEntity.transform(element)));
     }
 
+    @Transactional
     @Override
     public <F> Optional<M> findOneByFieldEqual(String fieldName, F fieldValue) {
         CriteriaBuilder criteriaBuilder = emp.getCriteriaBuilder();
@@ -87,6 +91,7 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
         return Optional.ofNullable(element).map(entityToModel::transform);
     }
 
+    @Transactional
     @Override
     public <F> List<M> findManyByFieldEqual(String fieldName, F fieldValue) {
         CriteriaBuilder criteriaBuilder = emp.getCriteriaBuilder();
@@ -102,5 +107,4 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
         }
         return elements;
     }
-
 }

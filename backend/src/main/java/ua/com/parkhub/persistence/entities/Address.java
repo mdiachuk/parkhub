@@ -1,7 +1,7 @@
 package ua.com.parkhub.persistence.entities;
 
-import javax.persistence.*;
 import javax.persistence.Entity;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -10,8 +10,7 @@ import java.io.Serializable;
 public class Address implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_generator")
-    @SequenceGenerator(name="address_generator", sequenceName = "park_hub.address_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
@@ -25,6 +24,14 @@ public class Address implements Serializable {
     @Column
     @NotNull
     private String building;
+
+//    @Column
+//    @NotNull
+//    private String lat;
+//
+//    @Column
+//    @NotNull
+//    private String lon;
 
     public Long getId() {
         return id;
@@ -57,4 +64,20 @@ public class Address implements Serializable {
     public void setBuilding(String building) {
         this.building = building;
     }
+
+//    public String getLat() {
+//        return lat;
+//    }
+//
+//    public void setLat(String lat) {
+//        this.lat = lat;
+//    }
+//
+//    public String getLon() {
+//        return lon;
+//    }
+//
+//    public void setLon(String lon) {
+//        this.lon = lon;
+//    }
 }

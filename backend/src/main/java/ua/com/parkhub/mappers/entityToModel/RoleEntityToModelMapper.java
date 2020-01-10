@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 @Component
 public class RoleEntityToModelMapper implements Mapper<UserRole, RoleModel> {
+
     @Override
     public RoleModel transform(UserRole from) {
         if (from == null) {
@@ -39,5 +40,5 @@ public class RoleEntityToModelMapper implements Mapper<UserRole, RoleModel> {
         }
         return roleModel;
     }
-
 }
+

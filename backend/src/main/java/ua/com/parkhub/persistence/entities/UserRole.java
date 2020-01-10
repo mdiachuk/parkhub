@@ -11,11 +11,10 @@ import java.io.Serializable;
 public class UserRole implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_role_generator")
-    @SequenceGenerator(name = "user_role_generator", sequenceName = "park_hub.user_role_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "roleName")
+    @Column(name = "role_name")
     @NotNull
     @Size(min = 3, max = 50)
     private String roleName;
@@ -23,6 +22,14 @@ public class UserRole implements Serializable {
     @Column
     @NotNull
     private boolean isActive = true;
+
+    public UserRole() {
+    }
+
+    public UserRole(Long id, String roleName) {
+        this.id = id;
+        this.roleName = roleName;
+    }
 
     public Long getId() {
         return id;
@@ -47,4 +54,5 @@ public class UserRole implements Serializable {
     public void setActive(boolean active) {
         isActive = active;
     }
+
 }

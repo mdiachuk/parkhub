@@ -7,11 +7,16 @@ import ua.com.parkhub.persistence.entities.UserRole;
 
 @Component
 public class RoleModelToEntityMapper implements Mapper<RoleModel, UserRole> {
+
     @Override
-    public ua.com.parkhub.persistence.entities.UserRole transform(RoleModel model) {
-        UserRole role = new UserRole();
-        role.setId(model.getId());
-        role.setRoleName(model.getRoleName());
-        return role;
+    public UserRole transform(RoleModel from) {
+        if (from == null) {
+            return null;
+        }
+        UserRole userRole = new UserRole();
+        userRole.setId(from.getId());
+        userRole.setRoleName(from.getRoleName());
+        return userRole;
     }
 }
+

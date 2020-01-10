@@ -5,15 +5,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Set;
 
 @Entity
 @Table(name = "user", schema = "park_hub")
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")
-    @SequenceGenerator(name = "user_generator", sequenceName = "park_hub.user_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "first_name")
@@ -30,19 +28,29 @@ public class User implements Serializable {
 
     @Column(name = "password")
     @NotNull
-    @Size(min = 6, max = 50)
+    @Size(min = 6, max = 60)
     private String password;
 
-    @ManyToOne
+    @Column(name = "number_of_failed_pass_entering")
+    @NotNull
+    private int numberOfFailedPassEntering;
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
     private UserRole role;
 
-    @OneToOne
-    @JoinColumn(name = "customer_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-    @ManyToMany(mappedBy = "solvers")
-    private Set<SupportTicket> tickets;
+
+    public int getNumberOfFailedPassEntering() {
+        return numberOfFailedPassEntering;
+    }
+
+    public void setNumberOfFailedPassEntering(int numberOfFailedPassEntering) {
+        this.numberOfFailedPassEntering = numberOfFailedPassEntering;
+    }
 
     public Long getId() {
         return id;
@@ -100,11 +108,4 @@ public class User implements Serializable {
         this.customer = customer;
     }
 
-    public Set<SupportTicket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(Set<SupportTicket> tickets) {
-        this.tickets = tickets;
-    }
 }

@@ -12,8 +12,7 @@ import java.time.LocalDateTime;
 public class Booking implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "booking_generator")
-    @SequenceGenerator(name="booking_generator", sequenceName = "park_hub.booking_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
@@ -67,7 +66,7 @@ public class Booking implements Serializable {
         return checkOut;
     }
 
-    public void setCheck_out(LocalDateTime checkOut) {
+    public void setCheckOut(LocalDateTime checkOut) {
         this.checkOut = checkOut;
     }
 
@@ -94,4 +93,5 @@ public class Booking implements Serializable {
     public void setSlot(Slot slot) {
         this.slot = slot;
     }
+
 }

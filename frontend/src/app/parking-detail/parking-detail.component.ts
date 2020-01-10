@@ -23,7 +23,7 @@ export class ParkingDetailComponent implements OnInit {
   input = new FormControl('', [Validators.required]);
   code: number = 0;
   inputValidationStatus: boolean = false;
-  
+
   constructor(private parkingService: ParkingService, private route: ActivatedRoute, private _snackBar: MatSnackBar, public dialog: MatDialog){
   }
 
@@ -50,13 +50,13 @@ export class ParkingDetailComponent implements OnInit {
         duration: 4000,
       });
     }
-    
+
     checkStatusCode(code: number): string {
       if (code === 128) {
         return 'Such parking doesn\'t exist!';
       }
     }
-  
+
     openErrorSnackBar(message: string) {
     this._snackBar.open(message, 'Close', {
       duration: 4000,
@@ -98,4 +98,3 @@ export class ParkingDetailComponent implements OnInit {
 }
 
 
- 

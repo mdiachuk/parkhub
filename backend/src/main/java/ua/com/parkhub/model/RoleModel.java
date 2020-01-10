@@ -1,7 +1,6 @@
 package ua.com.parkhub.model;
 
 public enum RoleModel {
-
     ADMIN("ADMIN"),
     USER("USER"),
     PENDING("PENDING"),
@@ -25,6 +24,4 @@ public enum RoleModel {
     public void setId(Long id) {
         this.id = id;
     }
-
 }
-

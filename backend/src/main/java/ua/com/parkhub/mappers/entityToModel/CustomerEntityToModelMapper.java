@@ -10,6 +10,9 @@ public class CustomerEntityToModelMapper implements Mapper<Customer, CustomerMod
 
     @Override
     public CustomerModel transform(Customer from) {
+        if (from == null) {
+            return null;
+        }
         CustomerModel customerModel = new CustomerModel();
         customerModel.setId(from.getId());
         customerModel.setActive(from.isActive());

@@ -1,0 +1,43 @@
+[ 
+    {
+        "id" : 1,
+        "parking_name": "Parking Name 1",
+        "address_id": "Address 1",
+        "tarrif": 10,
+        "fullness": "20/100"
+        
+    },{
+        "id" : 2,
+        "parking_name": "Parking Name 2",
+        "address_id": "Address 2",
+        "tarrif": 15,
+        "fullness": "12/14"
+    },{
+        "id" : 3,
+        "parking_name": "Parking Name 3",
+        "address_id": "Address 3",
+        "tarrif": 11,
+        "fullness": "2/7"
+    },{
+        "id" : 4,
+        "parking_name": "Parking Name 4",
+        "address_id": "Address 4",
+        "tarrif": 13,
+        "fullness": "4/13"
+    }
+    ,{
+        "id" : 5,
+        "parking_name": "Parking Name 4",
+        "address_id": "Address 4",
+        "tarrif": 13,
+        "fullness": "4/13"
+    }
+    ,{
+        "id" : 6,
+        "parking_name": "Parking Name 4",
+        "address_id": "Address 4",
+        "tarrif": 13,
+        "fullness": "4/13"
+    }
+    
+]

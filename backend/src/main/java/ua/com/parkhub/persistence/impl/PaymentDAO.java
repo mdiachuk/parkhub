@@ -2,9 +2,7 @@ package ua.com.parkhub.persistence.impl;
 
 import org.springframework.stereotype.Repository;
 import ua.com.parkhub.mappers.Mapper;
-import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.model.PaymentModel;
-import ua.com.parkhub.persistence.entities.Parking;
 import ua.com.parkhub.persistence.entities.Payment;
 
 @Repository
