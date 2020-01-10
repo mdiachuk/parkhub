@@ -16,22 +16,10 @@ unit_test:
   script:
     - mvn clean test -B
 
-.build: &build_template
+.build:
   stage: build
   script:
     - mvn package -B
-
-develop_build:
-  <<: *build_template
-  only:
-    - branches
-  except:
-    - master
-    - dev
-  artifacts:
-    expire_in: 1 day
-    paths:
-      - target/*.jar
 
 production:
   stage: deploy
