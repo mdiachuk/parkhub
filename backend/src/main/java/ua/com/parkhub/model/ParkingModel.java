@@ -23,11 +23,4 @@ public class ParkingModel {
         this.slots = slots;
     }
 
-    @Override
-    public String toString() {
-        return "ParkingModel{" +
-                "info=" + info +
-                ", slots=" + slots +
-                '}';
-    }
 }

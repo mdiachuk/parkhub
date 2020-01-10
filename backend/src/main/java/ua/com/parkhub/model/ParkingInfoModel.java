@@ -65,17 +65,4 @@ public class ParkingInfoModel {
     public void setAddressModel(AddressModel addressModel) {
         this.addressModel = addressModel;
     }
-
-    @Override
-    public String toString() {
-        return "ParkingInfoModel{" +
-                "id=" + id +
-                ", parkingName='" + parkingName + '\'' +
-                ", slotsNumber=" + slotsNumber +
-                ", tariff=" + tariff +
-                ", addressModel=" + addressModel +
-                ", isActive=" + isActive +
-                ", owner=" + owner +
-                '}';
-    }
 }

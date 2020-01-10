@@ -20,19 +20,15 @@ public class CustomerService implements ICustomerService {
         this.customerDAO = customerDAO;
     }
 
-    private CustomerModel addCustomerAndGet(String phoneNumber) {
+    private CustomerModel addCustomer(String phoneNumber) {
         CustomerModel customerModel = new CustomerModel();
         customerModel.setPhoneNumber(phoneNumber);
         customerDAO.addElement(customerModel);
-        Optional<CustomerModel> optionalUser = customerDAO.findCustomerByPhoneNumber(phoneNumber);
-        if (optionalUser.isPresent()) {
-            return optionalUser.get();
-        }
-        throw new ParkHubException("No Customer found with phone number " + phoneNumber);
+        return customerDAO.findCustomerByPhoneNumber(phoneNumber).orElseThrow(() -> new ParkHubException("No Customer found with phone number " + phoneNumber));
     }
 
     @Transactional
-    public CustomerModel findCustomerByPhoneNumberOrAdd(String phoneNumber) {
-        return customerDAO.findCustomerByPhoneNumber(phoneNumber).orElseGet(() -> addCustomerAndGet(phoneNumber));
+    public CustomerModel findCustomerByPhoneNumber(String phoneNumber) {
+        return customerDAO.findCustomerByPhoneNumber(phoneNumber).orElseGet(() -> addCustomer(phoneNumber));
     }
 }

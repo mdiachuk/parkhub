@@ -9,14 +9,12 @@ import ua.com.parkhub.mappers.entityToModel.ParkingEntityToModelMapper;
 import ua.com.parkhub.model.BookingModel;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.model.SlotModel;
+import ua.com.parkhub.model.comparator.SlotComparator;
 import ua.com.parkhub.persistence.impl.ParkingDAO;
 import ua.com.parkhub.service.IParkingService;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -24,13 +22,16 @@ import java.util.stream.Collectors;
 @Transactional
 public class ParkingService implements IParkingService {
 
-    private ParkingDAO parkingDAO;
-    private BookingService bookingService;
+    private final ParkingDAO parkingDAO;
+    private final BookingService bookingService;
+    private final SlotComparator slotComparator;
+
 
     @Autowired
-    public ParkingService(ParkingDAO parkingDAO, BookingService bookingService) {
+    public ParkingService(ParkingDAO parkingDAO, BookingService bookingService, SlotComparator slotComparator) {
         this.parkingDAO = parkingDAO;
         this.bookingService = bookingService;
+        this.slotComparator = slotComparator;
     }
 
     public List<ParkingModel> findAllParking() {
@@ -41,20 +42,6 @@ public class ParkingService implements IParkingService {
     public Optional<ParkingModel> findParkingById(long id) {
 
         return parkingDAO.findElementById(id);
-    }
-
-    public void updateParking(Long id, ParkingModel parkingModelParam) throws NoSuchFieldException, IllegalAccessException {
-        ParkingModel parkingModel = findParkingById(id).get();
-        Field[] paramFields = parkingModelParam.getClass().getDeclaredFields();
-        List<String> fieldsNameList = Arrays.stream(paramFields).filter(Objects::nonNull).map(Field::getName).collect(Collectors.toList());
-        for (String name : fieldsNameList) {
-            Field fieldParam = parkingModelParam.getClass().getDeclaredField(name);
-            Field field = parkingModelParam.getClass().getDeclaredField(name);
-            field.setAccessible(true);
-            fieldParam.setAccessible(true);
-            field.set(parkingModel, fieldParam.get(parkingModelParam));
-        }
-        parkingDAO.updateElement(parkingModel);
     }
 
     @Transactional(readOnly = true)
@@ -74,10 +61,12 @@ public class ParkingService implements IParkingService {
         List<SlotModel> slotList = parkingModel.getSlots();
         for (SlotModel slotModel : slotList) {
             Optional<BookingModel> bookingModel = bookingService.findBookingByIdAndDateTimeRange(slotModel.getId(), checkIn, checkOut);
+            //TODO refactoring isPresent change to exception
             if (bookingModel.isPresent()) {
                 slotModel.setReserved(true);
             }
         }
+        slotList.sort(slotComparator);
         return parkingModel;
     }
 }

@@ -5,5 +5,5 @@ import ua.com.parkhub.model.PaymentModel;
 import ua.com.parkhub.persistence.entities.Payment;
 
 public interface IPaymentService {
-    void addPayment(BookingModel bookingModel);
+    PaymentModel addPayment(BookingModel bookingModel, int price);
 }

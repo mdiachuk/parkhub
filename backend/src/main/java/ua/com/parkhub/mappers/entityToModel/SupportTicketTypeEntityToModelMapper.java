@@ -9,6 +9,9 @@ import ua.com.parkhub.persistence.entities.SupportTicketType;
 public class SupportTicketTypeEntityToModelMapper implements Mapper<SupportTicketType, SupportTicketTypeModel> {
     @Override
     public SupportTicketTypeModel transform(SupportTicketType from) {
+        if(from == null) {
+            return null;
+        }
         SupportTicketTypeModel supportTicketTypeModel = new SupportTicketTypeModel();
         supportTicketTypeModel.setId(from.getId());
         supportTicketTypeModel.setActive(from.isActive());

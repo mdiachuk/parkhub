@@ -40,13 +40,4 @@ public class CustomerModel {
     public void setSupportTickets(List<SupportTicketModel> supportTickets) {
         this.supportTickets = supportTickets;
     }
-
-    @Override
-    public String toString() {
-        return "CustomerModel{" +
-                "id=" + id +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", isActive=" + isActive +
-                '}';
-    }
 }

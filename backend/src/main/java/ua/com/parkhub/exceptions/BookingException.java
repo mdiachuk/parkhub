@@ -4,14 +4,14 @@ import org.springframework.validation.ObjectError;
 
 import java.util.List;
 
-public class AddBookingException extends ParkHubException {
+public class BookingException extends ParkHubException {
     List<ObjectError> errors;
 
-    public static AddBookingException createWith(List<ObjectError> errors) {
-        return new AddBookingException(errors);
+    public static BookingException createWith(List<ObjectError> errors) {
+        return new BookingException(errors);
     }
 
-    private AddBookingException(List<ObjectError> errors) {
+    private BookingException(List<ObjectError> errors) {
         this.errors = errors;
     }
 

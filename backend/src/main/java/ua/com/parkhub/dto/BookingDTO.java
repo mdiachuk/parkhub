@@ -9,8 +9,13 @@ public class BookingDTO {
 
     @NotNull
     private String checkIn;
+
+    @NotNull
+    private String checkOut;
+
     @NotNull
     private String slot;
+
 
     public String getCheckIn() {
         return checkIn;
@@ -18,6 +23,14 @@ public class BookingDTO {
 
     public void setCheckIn(LocalDateTime checkIn) {
         this.checkIn = DateFormatter.convertDateTimeToString(checkIn);
+    }
+
+    public String getCheckOut() {
+        return checkOut;
+    }
+
+    public void setCheckOut(LocalDateTime checkOut) {
+        this.checkOut = DateFormatter.convertDateTimeToString(checkOut);
     }
 
     public String getSlot() {
@@ -30,9 +43,10 @@ public class BookingDTO {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("BookingDTO" + ", checkIn: ").append(checkIn);
-        sb.append(", slotNumber: ").append(slot);
-        return sb.toString();
+        return "BookingDTO{" +
+                "checkIn='" + checkIn + '\'' +
+                ", checkOut='" + checkOut + '\'' +
+                ", slot='" + slot + '\'' +
+                '}';
     }
 }

@@ -6,6 +6,8 @@ import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.CustomerModel;
 import ua.com.parkhub.persistence.entities.Customer;
 
+import java.util.stream.Collectors;
+
 @Component
 public class CustomerModelToEntityMapper implements Mapper<CustomerModel, Customer> {
 
@@ -18,14 +20,18 @@ public class CustomerModelToEntityMapper implements Mapper<CustomerModel, Custom
 
     @Override
     public Customer transform(CustomerModel from) {
+        if (from == null) {
+            return null;
+        }
         Customer customer = new Customer();
         customer.setId(from.getId());
         customer.setActive(from.isActive());
         customer.setPhoneNumber(from.getPhoneNumber());
-        //TODO
-        /*customer.setSupportTickets(from.getSupportTickets().stream()
-                .map(supportTicketModelToEntityMapper::transform)
-        .collect(Collectors.toList()));*/
+        if (from.getSupportTickets() != null) {
+            customer.setSupportTickets(from.getSupportTickets().stream()
+                    .map(supportTicketModelToEntityMapper::transform)
+                    .collect(Collectors.toList()));
+        }
         return customer;
     }
 }

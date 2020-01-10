@@ -11,6 +11,9 @@ public class SlotModelToDTOMapper implements Mapper<SlotModel, SlotDTO> {
 
     @Override
     public SlotDTO transform(SlotModel from) {
+        if (from == null) {
+            return null;
+        }
         SlotDTO slotDTO = new SlotDTO();
         slotDTO.setId(from.getId());
         slotDTO.setSlotNumber(from.getSlotNumber());

@@ -14,7 +14,7 @@ public class Customer implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_generator")
-    @SequenceGenerator(name="customer_generator", sequenceName = "park_hub.customer_id_seq", allocationSize=1)
+    @SequenceGenerator(name = "customer_generator", sequenceName = "park_hub.customer_id_seq", allocationSize = 1)
     private Long id;
 
     @Column
@@ -74,12 +74,4 @@ public class Customer implements Serializable {
         this.supportTickets = supportTickets;
     }
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", isActive=" + isActive +
-                '}';
-    }
 }

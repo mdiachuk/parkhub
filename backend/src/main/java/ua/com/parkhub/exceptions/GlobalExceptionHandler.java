@@ -21,9 +21,9 @@ public class GlobalExceptionHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler({
-            ParkingNotFoundException.class,
-            SlotNotFoundException.class,
-            AddBookingException.class
+            ParkingException.class,
+            SlotException.class,
+            BookingException.class
     })
 
     @Nullable
@@ -31,18 +31,17 @@ public class GlobalExceptionHandler {
         HttpHeaders headers = new HttpHeaders();
 
         LOGGER.error("Handling " + ex.getClass().getSimpleName() + " due to " + ex.getMessage());
-
-        if (ex instanceof ParkingNotFoundException) {
+        if (ex instanceof ParkingException) {
             HttpStatus status = HttpStatus.NOT_FOUND;
-            ParkingNotFoundException parkingNotFoundException = (ParkingNotFoundException) ex;
+            ParkingException parkingNotFoundException = (ParkingException) ex;
             return handleParkingNotFoundException(parkingNotFoundException, headers, status, request);
-        } else if (ex instanceof SlotNotFoundException) {
+        } else if (ex instanceof SlotException) {
             HttpStatus status = HttpStatus.NOT_FOUND;
-            SlotNotFoundException slotNotFoundException = (SlotNotFoundException) ex;
+            SlotException slotNotFoundException = (SlotException) ex;
             return handleSlotNotFoundException(slotNotFoundException, headers, status, request);
-        } else if (ex instanceof AddBookingException) {
+        } else if (ex instanceof BookingException) {
             HttpStatus status = HttpStatus.BAD_REQUEST;
-            AddBookingException addBookingException = (AddBookingException) ex;
+            BookingException addBookingException = (BookingException) ex;
             return handleAddBookingException(addBookingException, headers, status, request);
         } else {
             if (LOGGER.isWarnEnabled()) {
@@ -53,21 +52,21 @@ public class GlobalExceptionHandler {
         }
     }
 
-    protected ResponseEntity<ApiError> handleParkingNotFoundException(ParkingNotFoundException ex,
+    protected ResponseEntity<ApiError> handleParkingNotFoundException(ParkingException ex,
                                                                       HttpHeaders headers, HttpStatus status,
                                                                       WebRequest request) {
         List<String> errors = Collections.singletonList(ex.getMessage());
         return handleExceptionInternal(ex, new ApiError(errors), headers, status, request);
     }
 
-    protected ResponseEntity<ApiError> handleSlotNotFoundException(SlotNotFoundException ex,
+    protected ResponseEntity<ApiError> handleSlotNotFoundException(SlotException ex,
                                                                    HttpHeaders headers, HttpStatus status,
                                                                    WebRequest request) {
         List<String> errors = Collections.singletonList(ex.getMessage());
         return handleExceptionInternal(ex, new ApiError(errors), headers, status, request);
     }
 
-    protected ResponseEntity<ApiError> handleAddBookingException(AddBookingException ex,
+    protected ResponseEntity<ApiError> handleAddBookingException(BookingException ex,
                                                                  HttpHeaders headers,
                                                                  HttpStatus status,
                                                                  WebRequest request) {

@@ -23,6 +23,9 @@ public class ParkingModelToEntityMapper implements Mapper<ParkingModel, Parking>
 
     @Override
     public Parking transform(ParkingModel from) {
+        if (from == null) {
+            return null;
+        }
         Parking parking = new Parking();
         Address address = new Address();
         address.setCity(from.getInfo().getAddressModel().getCity());
@@ -32,9 +35,11 @@ public class ParkingModelToEntityMapper implements Mapper<ParkingModel, Parking>
         parking.setAddress(address);
         parking.setTariff(from.getInfo().getTariff());
         parking.setSlotsNumber(from.getInfo().getSlotsNumber());
-        List<Slot> slots = from.getSlots().stream().map(slotsMapper::transform).collect(Collectors.toList());
-        slots.forEach(slot -> slot.setParking(parking));
-        parking.setSlots(slots);
+        if (from.getSlots() != null) {
+            List<Slot> slots = from.getSlots().stream().map(slotsMapper::transform).collect(Collectors.toList());
+            slots.forEach(slot -> slot.setParking(parking));
+            parking.setSlots(slots);
+        }
         return parking;
     }
 }

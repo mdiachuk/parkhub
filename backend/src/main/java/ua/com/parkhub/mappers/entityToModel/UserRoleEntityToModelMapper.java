@@ -9,6 +9,9 @@ import ua.com.parkhub.persistence.entities.UserRole;
 public class UserRoleEntityToModelMapper implements Mapper<UserRole, UserRoleModel> {
     @Override
     public UserRoleModel transform(UserRole from) {
+        if(from == null) {
+            return null;
+        }
         UserRoleModel userRoleModel = new UserRoleModel();
         userRoleModel.setId(from.getId());
         userRoleModel.setActive(from.isActive());

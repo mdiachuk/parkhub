@@ -1,13 +1,13 @@
 package ua.com.parkhub.exceptions;
 
-public class ParkingNotFoundException extends ParkHubException {
+public class ParkingException extends ParkHubException {
     private Long parkingId;
 
-    public static ParkingNotFoundException createWith(Long parkingId) {
-        return new ParkingNotFoundException(parkingId);
+    public static ParkingException createWith(Long parkingId) {
+        return new ParkingException(parkingId);
     }
 
-    private ParkingNotFoundException(Long parkingId) {
+    private ParkingException(Long parkingId) {
         this.parkingId = parkingId;
     }
 

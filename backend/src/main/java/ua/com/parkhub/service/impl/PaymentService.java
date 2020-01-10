@@ -15,13 +15,13 @@ public class PaymentService implements IPaymentService {
         this.paymentDAO = paymentDAO;
     }
 
-
     @Override
-    public void addPayment(BookingModel bookingModel) {
+    public PaymentModel addPayment(BookingModel bookingModel, int price) {
         PaymentModel paymentModel = new PaymentModel();
         paymentModel.setBooking(bookingModel);
-        paymentModel.setPrice(21);
+        paymentModel.setPrice(price);
         paymentModel.setPaid(true);
         paymentDAO.addElement(paymentModel);
+        return paymentModel;
     }
 }

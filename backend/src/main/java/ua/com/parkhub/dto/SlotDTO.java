@@ -39,11 +39,4 @@ public class SlotDTO {
         this.slotNumber = slotNumber;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("SlotDTO" + ", id: ").append(id);
-        sb.append(", slotNumber: ").append(slotNumber);
-        return sb.toString();
-    }
 }

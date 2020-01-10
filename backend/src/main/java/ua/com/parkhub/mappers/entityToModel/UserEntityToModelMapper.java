@@ -24,6 +24,9 @@ public class UserEntityToModelMapper implements Mapper<User, UserModel> {
 
     @Override
     public UserModel transform(User from) {
+        if (from == null) {
+            return null;
+        }
         UserModel userModel = new UserModel();
         userModel.setCustomer(customerEntityToModelMapper.transform(from.getCustomer()));
         userModel.setEmail(from.getEmail());
@@ -31,7 +34,9 @@ public class UserEntityToModelMapper implements Mapper<User, UserModel> {
         userModel.setLastName(from.getLastName());
         userModel.setPassword(from.getPassword());
         userModel.setRole(userRoleEntityToModelMapper.transform(from.getRole()));
-        userModel.setTickets(from.getTickets().stream().map(supportTicketEntityToModelMapper::transform).collect(Collectors.toSet()));
+        if (from.getTickets() != null) {
+            userModel.setTickets(from.getTickets().stream().map(supportTicketEntityToModelMapper::transform).collect(Collectors.toList()));
+        }
         return userModel;
     }
 }

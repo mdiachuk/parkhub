@@ -5,22 +5,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.com.parkhub.dto.BookingDTO;
 import ua.com.parkhub.dto.BookingFormDTO;
 import ua.com.parkhub.dto.ParkingWithSlotsDTO;
+import ua.com.parkhub.dto.PaymentDTO;
 import ua.com.parkhub.exceptions.ParkHubException;
-import ua.com.parkhub.exceptions.ParkingNotFoundException;
-import ua.com.parkhub.mappers.modelToDto.BookingModelToDTOMapper;
+import ua.com.parkhub.exceptions.ParkingException;
 import ua.com.parkhub.mappers.modelToDto.ParkingWithSlotsModelToDTOMapper;
-import ua.com.parkhub.model.BookingModel;
+import ua.com.parkhub.mappers.modelToDto.PaymentModelToDTOMapper;
 import ua.com.parkhub.model.ParkingModel;
+import ua.com.parkhub.model.PaymentModel;
 import ua.com.parkhub.service.IBookingService;
 import ua.com.parkhub.service.IParkingService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 //TODO Validation: parkId, slotId, car number, phone number
 
@@ -31,48 +32,38 @@ public class BookingController {
     private final IParkingService parkingService;
     private final IBookingService bookingService;
     private final ParkingWithSlotsModelToDTOMapper parkingWithSlotsModelToDTOMapper;
-    private final BookingModelToDTOMapper bookingModelToDTOMapper;
+    private final PaymentModelToDTOMapper paymentModelToDTOMapper;
+    //TODO @Min annotation add for rangeFrom and rangeTo validation
+    public static final long NOW = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
+    public static final long NOW_PLUS_HOUR = LocalDateTime.now().plusHours(1).toEpochSecond(ZoneOffset.UTC);
 
     @Autowired
     public BookingController(IParkingService parkingService, IBookingService bookingService, ParkingWithSlotsModelToDTOMapper parkingWithSlotsModelToDTOMapper,
-                             BookingModelToDTOMapper bookingModelToDTOMapper) {
+                             PaymentModelToDTOMapper paymentModelToDTOMapper) {
         this.parkingService = parkingService;
         this.bookingService = bookingService;
         this.parkingWithSlotsModelToDTOMapper = parkingWithSlotsModelToDTOMapper;
-        this.bookingModelToDTOMapper = bookingModelToDTOMapper;
+        this.paymentModelToDTOMapper = paymentModelToDTOMapper;
     }
 
     @GetMapping("/parkings/{id}")
     //TODO implementation w.o. pagination just for small amount of slots! Will do in a next impl steps
-    public ResponseEntity<ParkingWithSlotsDTO> displayParking(@PathVariable(name = "id") @Positive Long id, @RequestParam @NotBlank String rangeFrom,
-                                                              @RequestParam @NotBlank String rangeTo) {
+    public ResponseEntity<ParkingWithSlotsDTO> displayParking(@PathVariable(name = "id") @Positive @Min(1) Long id, @RequestParam @Positive Long rangeFrom,
+                                                              @RequestParam @Positive Long rangeTo) {
         try {
-            long checkIn = Long.parseLong(rangeFrom);
-            long checkOut = Long.parseLong(rangeTo);
-            ParkingModel parking = parkingService.findParkingByIdWithSlotListAndDateRange(id, checkIn, checkOut);
+            ParkingModel parking = parkingService.findParkingByIdWithSlotListAndDateRange(id, rangeFrom, rangeTo);
+            LOGGER.info("Request displayParking() successfully completed");
             return ResponseEntity.ok(parkingWithSlotsModelToDTOMapper.transform(parking));
         } catch (ParkHubException e) {
             LOGGER.error(e.getMessage());
         }
-        throw ParkingNotFoundException.createWith(id);
+        throw ParkingException.createWith(id);
     }
-
-    /*@GetMapping("/parkings/{id}")
-    //TODO implementation w.o. pagination just for small amount of slots! Will do in a next impl steps
-    public ResponseEntity<ParkingWithSlotsDTO> displayParking(@PathVariable(name = "id") @Positive Long id) {
-        try {
-            ParkingModel parking = parkingService.findParkingByIdWithSlotList(id);
-            return ResponseEntity.ok(parkingWithSlotsModelToDTOMapper.transform(parking));
-        } catch (ParkHubException e) {
-            LOGGER.error(e.getMessage());
-        }
-        throw ParkingNotFoundException.createWith(id);
-    }*/
 
     @PostMapping("/booking")
     //TODO not idempotent operation! Will do some smart restrictions on booking amount per one phone number in a next impl steps
     //TODO switch onto cyrillic after i18n impl
-    public ResponseEntity<BookingDTO> addBooking(@Valid @RequestBody BookingFormDTO bookingFormDTO/*, BindingResult result*/) {
+    public ResponseEntity<PaymentDTO> addBooking(@Valid @RequestBody BookingFormDTO bookingFormDTO/*, BindingResult result*/) {
         //TODO to check after Angular material impl
         /*if (result.hasErrors()) {
             List<ObjectError> errors = result.getAllErrors().stream()
@@ -85,10 +76,11 @@ public class BookingController {
         String phoneNumber = bookingFormDTO.getPhoneNumber();
         Long slotId = bookingFormDTO.getSlotId();
         Long checkIn = bookingFormDTO.getRangeFrom();
-        System.out.println(checkIn);
         Long checkOut = bookingFormDTO.getRangeTo();
-        System.out.println(checkOut);
-        BookingModel booking = bookingService.addBooking(carNumber, phoneNumber, slotId, checkIn, checkOut);
-        return ResponseEntity.ok(bookingModelToDTOMapper.transform(booking));
+        Integer price = bookingFormDTO.getPrice();
+        PaymentModel payment = bookingService.addBooking(carNumber, phoneNumber, slotId, checkIn, checkOut, price);
+        LOGGER.info("Request addBooking() successfully completed");
+        LOGGER.debug(paymentModelToDTOMapper.transform(payment).toString() + "DEBUG");
+        return ResponseEntity.ok(paymentModelToDTOMapper.transform(payment));
     }
 }

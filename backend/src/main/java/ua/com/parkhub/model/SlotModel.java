@@ -1,6 +1,8 @@
 package ua.com.parkhub.model;
 
 
+import java.util.Objects;
+
 public class SlotModel {
 
     private Long id;
@@ -41,12 +43,18 @@ public class SlotModel {
     }
 
     @Override
-    public String toString() {
-        return "SlotModel{" +
-                "id=" + id +
-                ", slotNumber='" + slotNumber + '\'' +
-                ", isReserved=" + isReserved +
-                ", isActive=" + isActive +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SlotModel slotModel = (SlotModel) o;
+        return isReserved == slotModel.isReserved &&
+                isActive == slotModel.isActive &&
+                Objects.equals(id, slotModel.id) &&
+                Objects.equals(slotNumber, slotModel.slotNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, slotNumber, isReserved, isActive);
     }
 }

@@ -4,13 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.exceptions.ParkHubException;
+import ua.com.parkhub.exceptions.SlotException;
 import ua.com.parkhub.model.BookingModel;
 import ua.com.parkhub.model.CustomerModel;
+import ua.com.parkhub.model.PaymentModel;
 import ua.com.parkhub.model.SlotModel;
+import ua.com.parkhub.persistence.entities.Payment;
 import ua.com.parkhub.persistence.impl.BookingDAO;
 import ua.com.parkhub.persistence.impl.SlotDAO;
 import ua.com.parkhub.service.IBookingService;
 import ua.com.parkhub.service.ICustomerService;
+import ua.com.parkhub.service.IParkingService;
 import ua.com.parkhub.service.IPaymentService;
 import ua.com.parkhub.util.formatter.DateFormatter;
 
@@ -34,44 +38,30 @@ public class BookingService implements IBookingService {
     }
 
     private SlotModel findSlotById(long slotId) {
-        Optional<SlotModel> optionalSlot = slotDAO.findElementById(slotId);
-        if (optionalSlot.isPresent()) {
-            SlotModel slot = optionalSlot.get();
-            if (slot.isActive() && !slot.isReserved()) {
-                return slot;
-            }
-            throw new ParkHubException("Unfortunately this slot is temporary unavailable");
-        }
-        throw new ParkHubException("No available slot found by id :" + slotId);
+        return slotDAO.findElementById(slotId).orElseThrow(() -> (new ParkHubException("No available slot found by id :" + slotId)));
     }
 
     @Transactional
-    public BookingModel addBooking(String carNumber, String phoneNumber, long slotId, long checkIn, long checkOut) {
+    public PaymentModel addBooking(String carNumber, String phoneNumber, long slotId, long checkIn, long checkOut, int price) {
         BookingModel booking = new BookingModel();
-        CustomerModel customer = customerService.findCustomerByPhoneNumberOrAdd(phoneNumber);
+        CustomerModel customer = customerService.findCustomerByPhoneNumber(phoneNumber);
         booking.setCustomer(customer);
         booking.setCarNumber(carNumber);
         SlotModel slot = findSlotById(slotId);
         booking.setSlot(slot);
         LocalDateTime from = DateFormatter.covertMillisToLocalDateTime(checkIn);
-        System.out.println("FROM : " + from);
         booking.setCheckIn(from);
         LocalDateTime to = DateFormatter.covertMillisToLocalDateTime(checkOut);
-        System.out.println("TO : " + to);
         booking.setCheckOut(to);
         booking.setActive(true);
-        /*bookingDAO.addElement(booking);*/
         BookingModel bookingModel = bookingDAO.addWithResponse(booking);
-        paymentService.addPayment(bookingModel);
-        return bookingModel;
+        return paymentService.addPayment(bookingModel, price);
     }
 
     @Transactional(readOnly = true)
     public Optional<BookingModel> findBookingByIdAndDateTimeRange(long id, long checkIn, long checkOut) {
         LocalDateTime localDateTimeCheckIn = new Timestamp(checkIn).toLocalDateTime();
-        System.out.println(localDateTimeCheckIn);
         LocalDateTime localDateTimeCheckOut = new Timestamp(checkOut).toLocalDateTime();
-        System.out.println(localDateTimeCheckOut);
         String fieldNameId = "slot";
         String fieldNameCheckIn = "checkIn";
         String fieldNameCheckOut = "checkOut";

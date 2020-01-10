@@ -1,13 +1,14 @@
 package ua.com.parkhub.dto;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
-public class BookingFormDTO implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class BookingFormDTO {
 
     @NotEmpty(message="car number is mandatory")
     @Pattern(regexp ="[A-Z]{2}\\d{4}[A-Z]{2}", message="car number has incorrect format")
@@ -16,12 +17,14 @@ public class BookingFormDTO implements Serializable {
     @Pattern(regexp ="^\\+380\\d{9}$", message = "phone number has incorrect format")
     private String phoneNumber;
     @Positive
+    @Min(1)
     private Long slotId;
     @Positive
     private Long rangeFrom;
     @Positive
     private Long rangeTo;
-
+    @Positive
+    private Integer price;
 
     public String getCarNumber() {
         return carNumber;
@@ -63,14 +66,11 @@ public class BookingFormDTO implements Serializable {
         this.rangeTo = rangeTo;
     }
 
-    @Override
-    public String toString() {
-        return "BookingFormDTO{" +
-                "carNumber='" + carNumber + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", slotId=" + slotId +
-                ", rangeFrom=" + rangeFrom +
-                ", rangeTo=" + rangeTo +
-                '}';
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 }

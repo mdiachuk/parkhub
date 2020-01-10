@@ -18,8 +18,12 @@ public class BookingModelToDTOMapper implements Mapper<BookingModel, BookingDTO>
 
     @Override
     public BookingDTO transform(BookingModel from) {
+        if(from == null) {
+            return null;
+        }
         BookingDTO booking = new BookingDTO();
         booking.setCheckIn(from.getCheckIn());
+        booking.setCheckOut(from.getCheckOut());
         booking.setSlot(slotModelToDTOMapper.transform(from.getSlot()));
         return booking;
     }

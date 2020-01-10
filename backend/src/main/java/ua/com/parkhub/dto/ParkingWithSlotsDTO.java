@@ -49,15 +49,4 @@ public class ParkingWithSlotsDTO {
     public void setSlots(List<SlotDTO> slots) {
         this.slots = slots;
     }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("ParkingWithSlotsDTO" + ", id: ").append(id);
-        sb.append(", name: ").append(name);
-        sb.append(", address: ").append(address);
-        sb.append(", tariff: ").append(tariff);
-        sb.append(", slots: ").append(slots);
-        return sb.toString();
-    }
 }

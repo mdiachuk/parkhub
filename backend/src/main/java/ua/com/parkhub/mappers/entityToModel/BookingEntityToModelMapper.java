@@ -20,6 +20,9 @@ public class BookingEntityToModelMapper implements Mapper<Booking, BookingModel>
 
     @Override
     public BookingModel transform(Booking from) {
+        if(from == null) {
+            return null;
+        }
         BookingModel bookingModel = new BookingModel();
         bookingModel.setId(from.getId());
         bookingModel.setActive(from.isActive());
