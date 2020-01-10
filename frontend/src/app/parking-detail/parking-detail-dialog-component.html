@@ -1,0 +1,17 @@
+<div mat-dialog-content>
+        <p>Input new attributes</p>
+        <mat-form-field>
+          <input matInput placeholder="New city" [(ngModel)]="parkingDialogDTO.city">
+        </mat-form-field>
+
+        <mat-form-field>
+                <input matInput placeholder="New street" [(ngModel)]="parkingDialogDTO.street">
+              </mat-form-field>
+        
+              <mat-form-field>
+                    <input matInput placeholder="New building" [(ngModel)]="parkingDialogDTO.building">
+                  </mat-form-field>
+      </div>
+      <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">No Thanks</button>
+        <button mat-button [mat-dialog-close]="parkingDialogDTO" cdkFocusInitial>Ok</button>

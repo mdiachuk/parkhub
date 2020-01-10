@@ -1,19 +1,20 @@
 package ua.com.parkhub.model;
 
+
 import java.util.Objects;
 
 public class SlotModel {
 
     private Long id;
     private String slotNumber;
-    private boolean isReserved;
-    private boolean isActive;
+    private boolean isReserved = false;
+    private boolean isActive = true;
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -42,31 +43,18 @@ public class SlotModel {
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SlotModel slot = (SlotModel) o;
-        return Objects.equals(id, slot.id) &&
-                Objects.equals(slotNumber, slot.slotNumber);
+        SlotModel slotModel = (SlotModel) o;
+        return isReserved == slotModel.isReserved &&
+                isActive == slotModel.isActive &&
+                Objects.equals(id, slotModel.id) &&
+                Objects.equals(slotNumber, slotModel.slotNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, slotNumber);
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Slot" + ", id: ").append(id);
-        sb.append(", slotNumber: ").append(slotNumber);
-        sb.append(", isReserved: ").append(isReserved);
-        sb.append(", isActive: ").append(isActive);
-        return sb.toString();
+        return Objects.hash(id, slotNumber, isReserved, isActive);
     }
 }

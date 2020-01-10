@@ -9,9 +9,15 @@ import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -54,6 +60,28 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
         CriteriaQuery<E> all = cq.select(rootEntry);
         TypedQuery<E> allQuery = emp.createQuery(all);
         return allQuery.getResultList().stream().map(entityToModel::transform).collect(Collectors.toList());
+        //TODO NPE!!!
+        return allQuery.getResultList().stream().map(entityToModel::transform).collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<M> findElementByFieldsEqual(long slotId, LocalDateTime checkIn, LocalDateTime checkOut, String fieldNameSlotId, String fieldNameCheckIn, String fieldNameCheckOut) {
+        CriteriaBuilder criteriaBuilder = emp.getCriteriaBuilder();
+        CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(elementClass);
+        Root<E> elementRoot = criteriaQuery.from(elementClass);
+        Predicate[] predicates = new Predicate[3];
+        predicates[0] = criteriaBuilder.equal(elementRoot.get(fieldNameSlotId), slotId);
+        predicates[1] = criteriaBuilder.greaterThanOrEqualTo(elementRoot.get(fieldNameCheckIn), checkIn);
+        predicates[2] = criteriaBuilder.lessThanOrEqualTo(elementRoot.get(fieldNameCheckOut), checkOut);
+        criteriaQuery.select(elementRoot).where(predicates);
+        TypedQuery<E> query = emp.createQuery(criteriaQuery).setMaxResults(1);
+        E element;
+        try {
+            element = query.getSingleResult();
+        } catch (PersistenceException e) {
+            element = null;
+        }
+        return (element != null ? Optional.ofNullable(entityToModel.transform(element)) : Optional.empty());
     }
 
     @Transactional

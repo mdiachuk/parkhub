@@ -1,41 +1,52 @@
 package ua.com.parkhub.dto;
 
-import ua.com.parkhub.model.SlotModel;
 import ua.com.parkhub.util.formatter.DateFormatter;
 
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class BookingDTO implements Serializable {
+public class BookingDTO {
 
-    private static final long serialVersionUID = 1L;
     @NotNull
     private String checkIn;
+
+    @NotNull
+    private String checkOut;
+
     @NotNull
     private String slot;
+
 
     public String getCheckIn() {
         return checkIn;
     }
 
     public void setCheckIn(LocalDateTime checkIn) {
-        this.checkIn = DateFormatter.format(checkIn);
+        this.checkIn = DateFormatter.convertDateTimeToString(checkIn);
+    }
+
+    public String getCheckOut() {
+        return checkOut;
+    }
+
+    public void setCheckOut(LocalDateTime checkOut) {
+        this.checkOut = DateFormatter.convertDateTimeToString(checkOut);
     }
 
     public String getSlot() {
         return slot;
     }
 
-  /*  public void setSlot(SlotModel slot) {
+    public void setSlot(SlotDTO slot) {
         this.slot = slot.getSlotNumber();
-    }*/
+    }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("BookingDTO" + ", checkIn: ").append(checkIn);
-        sb.append(", slotNumber: ").append(slot);
-        return sb.toString();
+        return "BookingDTO{" +
+                "checkIn='" + checkIn + '\'' +
+                ", checkOut='" + checkOut + '\'' +
+                ", slot='" + slot + '\'' +
+                '}';
     }
 }

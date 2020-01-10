@@ -63,7 +63,12 @@ import {TranslateArrayService} from './service/translatearray.service';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';import { FormsModule } from '@angular/forms';
+import { MatIconModule} from '@angular/material/icon';
+import { MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatExpansionModule} from '@angular/material/expansion';
+import { MatDialogModule} from '@angular/material/dialog';
+import { AddressDialog } from './parking-detail/parking-detail-dialog-component';
 
 
 import { DataService } from './DataService/data.service';
@@ -73,6 +78,13 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 
 @NgModule({
+  declarations: [
+    AppComponent,
+    ParkingListComponent,
+    ParkingsComponent,
+    ParkingDetailComponent,
+    AddressDialog
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -110,6 +122,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     MatSidenavModule,
     FormsModule,
     MatIconModule
+    MatExpansionModule,
   ],
   declarations: [
     AppComponent,

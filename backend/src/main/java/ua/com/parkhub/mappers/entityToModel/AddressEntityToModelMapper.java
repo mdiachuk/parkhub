@@ -9,6 +9,9 @@ import ua.com.parkhub.persistence.entities.Address;
 public class AddressEntityToModelMapper implements Mapper<Address, AddressModel> {
     @Override
     public AddressModel transform(Address from) {
+        if(from == null) {
+            return null;
+        }
         AddressModel addressModel = new AddressModel();
         addressModel.setId(from.getId());
         addressModel.setCity(from.getCity());

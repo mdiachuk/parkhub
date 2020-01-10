@@ -3,6 +3,5 @@ package ua.com.parkhub.service;
 import ua.com.parkhub.model.CustomerModel;
 
 public interface ICustomerService {
-    CustomerModel findCustomerByPhoneNumberOrAdd(String phoneNumber);
-    CustomerModel findByPhoneNumber(String phoneNumber);
+    CustomerModel findCustomerByPhoneNumber(String phoneNumber);
 }

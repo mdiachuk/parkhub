@@ -20,6 +20,9 @@ public class PaymentEntityToModelMapper implements Mapper<Payment, PaymentModel>
 
     @Override
     public PaymentModel transform(Payment from) {
+        if(from == null) {
+            return null;
+        }
         PaymentModel paymentModel = new PaymentModel();
         paymentModel.setId(from.getId());
         paymentModel.setPaid(from.isPaid());

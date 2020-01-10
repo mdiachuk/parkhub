@@ -22,7 +22,7 @@ public class Booking implements Serializable {
 
     @Column(name = "check_in")
     @NotNull
-    private LocalDateTime checkIn = LocalDateTime.now();
+    private LocalDateTime checkIn/* = LocalDateTime.now()*/;
 
     @Column(name = "check_out")
     private LocalDateTime checkOut;

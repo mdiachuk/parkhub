@@ -43,6 +43,4 @@ public class AddressModel {
     public String toString() {
         return street + " " + building + ", " + city;
     }
-
-    //SOME BUSINESS LOGIC
 }

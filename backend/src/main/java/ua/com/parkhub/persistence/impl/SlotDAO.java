@@ -12,3 +12,4 @@ public class SlotDAO extends ElementDAO<Slot, SlotModel> {
         super(Slot.class, modelToEntity, entityToModel);
     }
 }
+

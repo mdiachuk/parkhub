@@ -1,24 +1,23 @@
 package ua.com.parkhub.model;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 public class BookingModel {
 
     private Long id;
-    private CustomerModel customer;
     private String carNumber;
-    private SlotModel slot;
     private LocalDateTime checkIn;
     private LocalDateTime checkOut;
     private boolean isActive;
-
-    public CustomerModel getCustomer() {
-        return customer;
-    }
+    private CustomerModel customer;
+    private SlotModel slot;
 
     public void setCustomer(CustomerModel customer) {
         this.customer = customer;
+    }
+
+    public CustomerModel getCustomer() {
+        return customer;
     }
 
     public SlotModel getSlot() {

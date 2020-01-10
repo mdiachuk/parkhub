@@ -11,7 +11,7 @@ export class ParkingService {
 
   private parkingsUrl: string;
   private parkingUrl: string;
- 
+
   constructor(private http: HttpClient) {
     this.parkingsUrl = '/api/manager/cabinet';
   }

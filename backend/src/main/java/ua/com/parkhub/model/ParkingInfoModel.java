@@ -1,19 +1,14 @@
 package ua.com.parkhub.model;
 
+public class ParkingInfoModel {
 
-import java.util.List;
-
-public class ParkingModel {
-
-    private long id;
+    private Long id;
     private String parkingName;
-    private int slotsNumber;
-    private int tariff;
+    private Integer slotsNumber;
+    private Integer tariff;
     private AddressModel addressModel;
-    private boolean isActive;
+    private Boolean isActive;
     private UserModel owner;
-    private ParkingInfoModel info;
-    private List<SlotModel> slots;
 
     public UserModel getOwner() {
         return owner;
@@ -55,22 +50,19 @@ public class ParkingModel {
         this.slotsNumber = slotsNumber;
     }
 
-    public ParkingInfoModel getInfo() {
-        return info;
+    public int getTariff() {
+        return tariff;
     }
 
-    public void setInfo(ParkingInfoModel info) {
-        this.info = info;
+    public void setTariff(int tariff) {
+        this.tariff = tariff;
     }
 
-    public List<SlotModel> getSlots() {
-        return slots;
+    public AddressModel getAddressModel() {
+        return addressModel;
     }
 
-    public void setSlots(List<SlotModel> slots) {
-        this.slots = slots;
+    public void setAddressModel(AddressModel addressModel) {
+        this.addressModel = addressModel;
     }
-
-
-    //SOME BUSINESS LOGIC
 }
