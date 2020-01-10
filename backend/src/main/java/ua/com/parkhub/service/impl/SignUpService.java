@@ -48,8 +48,8 @@ public class SignUpService {
         userDAO.addElement(user);
         String description = generateDescription(manager.getCompanyName(), manager.getUsreouCode(),
                 manager.getComment());
-        SupportTicketModel ticket = createTicket(description, customer);
-        supportTicketDAO.addElement(ticket);
+//        SupportTicketModel ticket = createTicket(description, customer);
+//        supportTicketDAO.addElement(ticket);
     }
 
     @Transactional

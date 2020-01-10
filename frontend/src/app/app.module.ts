@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatPaginatorModule,
   MatProgressSpinnerModule,
@@ -10,76 +11,66 @@ import {
   MatSelectModule,
   MatIconModule,
   MatCheckboxModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatChipsModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatButtonModule,
+  MatToolbarModule,
+  MatDividerModule,
+  MatListModule,
+  MatSidenavModule
 } from "@angular/material";
-import { AppComponent } from './app.component';
-import { ParkingListComponent } from './parking-list/parking-list.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTableModule} from '@angular/material/table';
-import { ParkingsComponent } from './parkings/parkings.component';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatFormFieldModule} from '@angular/material/form-field';
-import { MatButtonModule} from '@angular/material/button';
-import { MatToolbarModule} from '@angular/material/toolbar';
-import {MatInputModule} from '@angular/material';
-import { HttpClientModule }    from '@angular/common/http';
-import { ParkingDetailComponent } from './parking-detail/parking-detail.component';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatListModule} from '@angular/material/list';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { ParkingListComponent } from './parking-list/parking-list.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTableModule} from '@angular/material/table';
-import { ParkingsComponent } from './parkings/parkings.component';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatFormFieldModule} from '@angular/material/form-field';
-import { MatButtonModule} from '@angular/material/button';
-import { MatToolbarModule} from '@angular/material/toolbar';
-import { MatInputModule} from '@angular/material';
-import { HttpClientModule }    from '@angular/common/http';
-import { ParkingDetailComponent } from './parking-detail/parking-detail.component';
-import { MatDividerModule} from '@angular/material/divider';
-import { MatListModule} from '@angular/material/list';
-import { MatSidenavModule} from '@angular/material/sidenav';
+
 import { FormsModule } from '@angular/forms';
-import { MatIconModule} from '@angular/material/icon';
-import { MatSnackBarModule} from '@angular/material/snack-bar';
+
 import { MatExpansionModule} from '@angular/material/expansion';
 import { MatDialogModule} from '@angular/material/dialog';
 import { AddressDialog } from './parking-detail/parking-detail-dialog-component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import {  ReactiveFormsModule } from '@angular/forms';
 import 'hammerjs'
 
 import { MaterialModule } from './material.module';
-import { AppComponent } from './app.component';
+
 import { SingupComponent } from "./singup/singup.component";
-import { AppRoutingModule } from "./app-routing.module";
-import { HttpClientModule } from "@angular/common/http";
-import { MatInputModule } from "@angular/material/input";
+
+
+
 import { MatCardModule } from "@angular/material/card";
 
 import { PageComponent } from './homePage/homePage.component';
 import { ParkingService1 } from './services/parking.service';
-import { ParkingListComponent } from './parking-list/parking-list.component';
-import { ParkingListComponentManager } from './parking-list-manager/parking-list.component';
+
 
 import { ParkingService, UserService } from './service/http-client.service';
 import { AddParkingComponent } from "./add-parking/add-parking.component";
-import { ParkingsComponent } from "./parkings/parkings.component";
-import { ParkingDetailComponent } from "./parking-detail/parking-detail.component";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatButtonModule } from "@angular/material/button";
-import { MatListModule } from "@angular/material/list";
-import { MatDividerModule } from "@angular/material/divider";
-import { MatToolbarModule } from "@angular/material/toolbar";
 import { ManagerSignupComponent } from "./manager-signup/manager-signup.component";
 import { AdminComponent } from "./admin/admin.component";
 import { AdminTicketListComponent } from './admin-ticket-list/admin-ticket-list.component';
+import { SlotService } from './serviceSlot/slot.service';
+import { DataService } from './DataService/data.service';
+import { ParkhubInterceptorComponent } from './parkhub-interceptor/parkhub-interceptor.component';
+import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
+import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import { AdminTicketDetailViewerComponent } from './admin-ticket-detail-viewer/admin-ticket-detail-viewer.component';
+import { LoginComponent } from './login/login.component';
+import { ParkoffComponent } from './parkoff/parkoff.component';
+import { SlotsComponent } from './slots/slots.component';
+import { ParkingDetailSlotsComponent } from './parkings-ad/parking-detail/parking-detail.component';
+import { ParkingsComponentSlots } from './parkings-ad/parkings.component';
+import { BookingDetailComponent } from './bookings/booking-detail/booking-detail.component';
+import { BookingsComponent } from './bookings/bookings.component';
+import { UserComponent } from './user/userPage.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { AppComponent } from './app.component';
+import { ParkingListComponent } from './parking-list/parking-list.component';
+import { ParkingsComponent } from './parkings/parkings.component';
+import { ParkingDetailComponent } from './parking-detail/parking-detail.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ManagerParkingListComponent } from './manager-parking-list/manager-parking-list.component';
+import { from } from 'rxjs';
 
 
 @NgModule({
@@ -98,7 +89,6 @@ import { AdminTicketListComponent } from './admin-ticket-list/admin-ticket-list.
     PageComponent,
     ParkingListComponent,
     AddParkingComponent,
-    ParkingListComponentManager,
     ParkingsComponent,
     ParkingDetailComponent,
     ManagerSignupComponent,
@@ -117,12 +107,12 @@ import { AdminTicketListComponent } from './admin-ticket-list/admin-ticket-list.
     BookingsComponent,
     ResetPasswordComponent,
     ForgotPasswordComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    ManagerParkingListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
@@ -136,7 +126,6 @@ import { AdminTicketListComponent } from './admin-ticket-list/admin-ticket-list.
     MatSidenavModule,
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
@@ -154,7 +143,6 @@ import { AdminTicketListComponent } from './admin-ticket-list/admin-ticket-list.
     MatExpansionModule,
     MatDialogModule,
     BrowserModule,
-    BrowserAnimationsModule,
     FormsModule,
     MaterialModule,
     AppRoutingModule,
@@ -179,7 +167,8 @@ import { AdminTicketListComponent } from './admin-ticket-list/admin-ticket-list.
     MatChipsModule,
     MatSidenavModule,
     FormsModule,
-    MatIconModule
+    MatIconModule,
+    BrowserAnimationsModule
   ],
   providers: [ParkingService, SlotService, ParkingService1, DataService, UserService,
     {

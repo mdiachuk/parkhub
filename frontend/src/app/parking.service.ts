@@ -22,11 +22,13 @@ export class ParkingService {
   }
 
   getAllParkings(): Observable<ParkingItem[]> {
+    console.log("service",this.parkingsUrl)
     return this.http.get<ParkingItem[]>(this.parkingsUrl);
   }
 
   getParking(id: string) : Observable<ParkingDetail>{
     // let parameters = new HttpParams().set("parkingId", id.toString());
+    console.log("service",this.parkingsUrl)
     return this.http.get<ParkingDetail>(`${this.parkingsUrl}/${id}`)
     .pipe(catchError(this.handleError));
   }

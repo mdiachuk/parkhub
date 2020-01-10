@@ -6,6 +6,7 @@ import { MatSnackBar} from '@angular/material/snack-bar';
 import { MatDialog} from '@angular/material/dialog';
 import { AddressDialog } from './parking-detail-dialog-component';
 import { FormControl, Validators} from '@angular/forms';
+import { flatMap } from 'rxjs/operators';
 
 
 
@@ -83,12 +84,13 @@ export class ParkingDetailComponent implements OnInit {
     updateParking(): void {
       console.log(this.parkingDetail);
 
-      this.parkingService.updateParking(this.parkingDetail, this.parkingID).subscribe(r=>{});
+      this.parkingService.updateParking(this.parkingDetail, this.parkingID).pipe(
+        flatMap(() => this.parkingService.getParking(this.parkingID))
+      ).subscribe(parking => this.parkingDTO = parking, err => {
+        this.openErrorSnackBar(this.checkStatusCode(err));
+      }
+      );
     }
-
-    refresh(): void {
-      window.location.reload();
-  }
 
   getErrorMessage(inputId: number) {
    if (this.input.hasError('required'))
