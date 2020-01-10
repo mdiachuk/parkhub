@@ -47,15 +47,10 @@
   "PasswordsMustMatch": "Passwords must match!",
   "Max200Characters": "Max 200 characters",
   "IAgreeWithTermsConditionsAndPrivacyPolicy": "I agree with terms, conditions and privacy policy",
-
-
-
   "Your account was blocked for 24 hours because of 3 unsuccessful tries to login. Please, try again later.": "Your account was blocked for 24 hours because of 3 unsuccessful tries to login. Please, try again later.",
   "Cannot activate account: less than 24 hours have passed.": "Cannot activate account: less than 24 hours have passed.",
   "No account with such email was found.": "No account with such email was found.",
   "Please enter valid credentials!": "Please enter valid credentials!",
-
-
   "Reset": "Reset",
   "Submit": "Submit",
   "wasSentToTheAdministrator": "was sent to the administrator!",

@@ -76,13 +76,12 @@ public class BookingService implements IBookingService {
                 .filter((x -> x.getCheckIn().toInstant(ZoneOffset.UTC).compareTo(now) > 0)).filter(BookingModel::isActive)
                 .findFirst().orElseThrow(()-> new BookingException(StatusCode.BOOKING_NOT_FOUND));
         System.out.println(bookingModel.getCheckIn().toInstant(ZoneOffset.UTC));
-        return Optional.ofNullable(bookingModel);
+        return Optional.of(bookingModel);
     }
 
     public int findPrice(String phoneNumber){
         Optional<BookingModel> bookingModel = findPrepaidBooking(customerService.findByPhoneNumber(phoneNumber));
-        if (bookingModel.isPresent()){
-            BookingModel bm = bookingModel.get();
+        return bookingModel.map(bm -> {
             bm.setCheckOut(LocalDateTime.now());
             bm.setActive(false);
             PaymentModel paymentModel = paymentService.findPaymentByBooking(bm);
@@ -91,9 +90,7 @@ public class BookingService implements IBookingService {
             paymentService.getPaymentDAO().updateElement(paymentModel);
             bookingDAO.updateElement(bm);
             return price;
-        }else {
-            throw new BookingException(StatusCode.BOOKING_NOT_FOUND);
-        }
+        }).orElseThrow(() -> new BookingException(StatusCode.BOOKING_NOT_FOUND));
     }
 
     @Override
