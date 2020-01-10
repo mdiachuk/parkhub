@@ -165,7 +165,7 @@ public class UserService implements IUserService {
         return userDAO.findElementById(id);
     }
 
-//    @Override
+    @Override
     public void updateUser(long id, UserModel userUp) {
         UserModel userModel = findUserById(id).get();
         userModel.setFirstName(userUp.getFirstName());
@@ -176,7 +176,7 @@ public class UserService implements IUserService {
         logger.info("User information was updated");
     }
 
-//    @Override
+    @Override
     public void changePassword(long id, String newPassword, UserModel userModel){
         UserModel user = findUserById(id).get();
         if (passwordEncoder.matches(userModel.getPassword(), user.getPassword())){

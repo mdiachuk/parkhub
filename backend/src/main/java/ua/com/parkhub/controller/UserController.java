@@ -155,7 +155,6 @@ public class UserController {
 
 
     @PostMapping("/api/user/{id}")
-    ///TODO this method with update
     public ResponseEntity updateUser(@PathVariable Long id, @RequestBody UserInfoDTO userInfoDTO){
         userService.updateUser(id, userInfoDTOtoUserModelMapper.transform(userInfoDTO));
         return ResponseEntity.ok().build();
