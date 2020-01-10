@@ -15,14 +15,17 @@ import { SlotsComponent } from "./slots/slots.component";
 import { BookingDetailComponent } from "./bookings/booking-detail/booking-detail.component";
 import { PageComponent } from './homePage/homePage.component';
 import { UserComponent } from "./user/userPage.component";
-import { AdminGuard } from './guards/admin.guard';
-import { ManagerGuard } from './guards/manager.guard';
-import { UserGuard } from './guards/user.guard';
-import { AdminTicketDetailViewerComponent } from './admin-ticket-detail-viewer/admin-ticket-detail-viewer.component'
 
+
+
+import { AdminTicketDetailViewerComponent } from './admin-ticket-detail-viewer/admin-ticket-detail-viewer.component'
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import { AdminGuard } from './guards/admin.guard';
+import { ManagerGuard } from './guards/manager.guard';
+import { UserGuard } from './guards/user.guard';
+
 
 const routes: Routes = [
   { path: 'parkoff', component: ParkoffComponent },
@@ -45,7 +48,6 @@ const routes: Routes = [
   { path: 'userPage', component: UserComponent, canActivate: [UserGuard] },
   { path: 'login', component: LoginComponent },
   // {path: '', redirectTo: 'home', pathMatch: 'full'},
-
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'verify-email', component: VerifyEmailComponent }

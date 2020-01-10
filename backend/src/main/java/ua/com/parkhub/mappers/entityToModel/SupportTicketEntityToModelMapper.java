@@ -38,10 +38,11 @@ public class SupportTicketEntityToModelMapper implements Mapper<SupportTicket, S
         supportTicketModel.setSolved(from.isSolved());
         supportTicketModel.setType(supportTicketTypeEntityToModelMapper.transform(from.getSupportTicketType()));
         supportTicketModel.setSolvers(from.getSolvers().stream().map(userEntityToModelMapper::transform).collect(Collectors.toList()));
-        SupportTicketTypeModel type = new SupportTicketTypeModel();
+
+        /*SupportTicketTypeModel type = new SupportTicketTypeModel();
         type.setId((long) 1);
         type.setType("Manager registration request");
-        supportTicketModel.setSupportTicketType(type);
+        supportTicketModel.setSupportTicketType(type);*/
         return supportTicketModel;
     }
 }
