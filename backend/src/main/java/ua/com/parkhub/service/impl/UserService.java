@@ -92,7 +92,11 @@ public class UserService implements IUserService {
     @Transactional
     public void verifyEmail(String token) {
         UserModel user = uuidTokenDAO.findUuidTokenByToken(token)
-                .map(UuidTokenModel::getUser).orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
+                .map(uuidToken -> {
+                    uuidToken.setExpirationDate(LocalDateTime.now());
+                    uuidTokenDAO.updateElement(uuidToken);
+                    return uuidToken.getUser();
+                }).orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
         user.setRole(signUpService.findUserRole(String.valueOf(RoleDTO.USER)));
         userDAO.updateElement(user);
         logger.info("Email was verified for user with email={}", user.getEmail());
@@ -106,6 +110,8 @@ public class UserService implements IUserService {
                     if (isExpired(uuidToken)) {
                         throw new InvalidTokenException("Token expired!");
                     }
+                    uuidToken.setExpirationDate(LocalDateTime.now());
+                    uuidTokenDAO.updateElement(uuidToken);
                     return userDAO.findUserByEmail(uuidToken.getUser().getEmail()).orElseThrow(() ->
                             new InvalidTokenException("Token is not assigned to any user"));
                 })
@@ -121,7 +127,7 @@ public class UserService implements IUserService {
         UuidTokenModel token = new UuidTokenModel();
         token.setUser(user);
         token.setToken(UUID.randomUUID().toString());
-        token.setExpirationDate(LocalDateTime.now().plusMinutes(1000));
+        token.setExpirationDate(LocalDateTime.now().plusMinutes(10));
         uuidTokenDAO.addElement(token);
         logger.info("Token={} with expiration date at {} was created for user with email={}",
                 token.getToken(), token.getExpirationDate(), user.getEmail());
