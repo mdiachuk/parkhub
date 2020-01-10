@@ -49,7 +49,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/api/user-util/send-token-to-email")
+    @PostMapping("/api/user/token")
     public ResponseEntity sendToken(@RequestBody @Valid EmailDTO emailDTO, BindingResult result) {
         if (result.hasFieldErrors()) {
             List<String> errors = result.getAllErrors().stream()
@@ -65,7 +65,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/api/user-util/resend-token-to-email")
+    @PostMapping("/api/user/token/refresh")
     public ResponseEntity resendToken(@RequestBody @Valid TokenDTO tokenDTO, BindingResult result) {
         if (result.hasFieldErrors()) {
             List<String> errors = result.getAllErrors().stream()
@@ -81,7 +81,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/api/user-util/check-token/{token}")
+    @GetMapping("/api/user/token/{token}")
     public ResponseEntity checkToken(@PathVariable("token") String token) {
         if (userService.isLinkActive(token)) {
             logger.info("Link is active");
@@ -93,14 +93,14 @@ public class UserController {
     }
 
 
-    @PostMapping("/api/user-util/verify-email")
+    @PostMapping("/api/user/verify")
     public ResponseEntity verifyEmail(@RequestBody String token) {
         userService.verifyEmail(token);
         return ResponseEntity.ok().build();
     }
 
 
-    @PostMapping("/api/user-util/reset-password")
+    @PostMapping("/api/user/password/reset")
     public ResponseEntity resetPassword(@RequestBody @Valid ResetPasswordDTO passwordDTO, BindingResult result) {
         if (result.hasFieldErrors()) {
             List<String> errors = result.getAllErrors().stream()
