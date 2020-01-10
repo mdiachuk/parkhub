@@ -18,6 +18,7 @@ import { UserComponent } from "./user/userPage.component";
 import { AdminGuard } from './guards/admin.guard';
 import { ManagerGuard } from './guards/manager.guard';
 import { UserGuard } from './guards/user.guard';
+import { AdminTicketDetailViewerComponent } from './admin-ticket-detail-viewer/admin-ticket-detail-viewer.component'
 
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: 'manager/cabinet', component: ParkingListComponentManager, canActivate: [ManagerGuard] },
   { path: 'manager/cabinet/:id', component: ParkingDetailComponent, canActivate: [ManagerGuard] },
   { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] },
+  {path: 'admin/:id', component: AdminTicketDetailViewerComponent},
 
   // { path: 'parkings', component: ParkingsComponentSlots },
   { path: 'parkings/:id', component: ParkingDetailSlotsComponent },

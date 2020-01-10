@@ -28,6 +28,7 @@ import { MatDividerModule } from "@angular/material/divider";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { ManagerSignupComponent } from "./manager-signup/manager-signup.component";
 import { AdminComponent } from "./admin/admin.component";
+import { AdminTicketListComponent } from './admin-ticket-list/admin-ticket-list.component';
 
 import {
   MatPaginatorModule,
@@ -56,11 +57,11 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
-
-
 import { DataService } from './DataService/data.service';
 import { ParkhubInterceptorComponent } from './parkhub-interceptor/parkhub-interceptor.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AdminTicketDetailViewerComponent } from './admin-ticket-detail-viewer/admin-ticket-detail-viewer.component';
+
 
 @NgModule({
   imports: [
@@ -88,7 +89,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     MatSnackBarModule,
     MatDialogModule,
     MatChipsModule,
-
     MatSidenavModule,
     FormsModule,
     MatIconModule
@@ -112,6 +112,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     ParkingsComponentSlots,
     BookingDetailComponent,
     BookingsComponent,
+    AdminTicketListComponent,
+    AdminTicketDetailViewerComponent,
     UserComponent,
     BookingsComponent,
     ResetPasswordComponent,
