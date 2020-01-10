@@ -1,27 +1,22 @@
 package ua.com.parkhub.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.exceptions.BookingException;
-import ua.com.parkhub.exceptions.PaymentException;
 import ua.com.parkhub.exceptions.StatusCode;
 import ua.com.parkhub.model.BookingModel;
 import ua.com.parkhub.model.PaymentModel;
-import ua.com.parkhub.persistence.entities.Booking;
-import ua.com.parkhub.persistence.entities.Customer;
-import ua.com.parkhub.persistence.entities.Payment;
-import ua.com.parkhub.persistence.impl.BookingDAO;
-import ua.com.parkhub.persistence.impl.CustomerDAO;
 import ua.com.parkhub.persistence.impl.PaymentDAO;
-
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.Optional;
+import ua.com.parkhub.service.IPaymentService;
 
 @Service
 @Transactional
-public class PaymentService {
+public class PaymentService implements IPaymentService {
+
+    private static final Logger logger = LoggerFactory.getLogger(PaymentService.class);
 
     private PaymentDAO paymentDAO;
 

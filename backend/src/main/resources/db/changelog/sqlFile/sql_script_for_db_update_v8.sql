@@ -1,2 +1,1 @@
-ALTER TABLE park_hub.payment
-    ADD IF NOT EXISTS is_cancelled BOOLEAN DEFAULT FALSE;
+ALTER TABLE park_hub.payment ADD COLUMN is_cancelled BOOLEAN NOT NULL DEFAULT FALSE;
