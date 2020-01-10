@@ -16,7 +16,7 @@ public class ParkingModelToDTOMapper implements Mapper<ParkingModel, ParkingDTO>
         parkingDTO.setParkingName(from.getParkingName());
         parkingDTO.setSlotsNumber(from.getSlotsNumber());
         parkingDTO.setTariff(from.getTariff());
-        parkingDTO.setAddress(new ua.com.parkhub.mappers.modelToDto.AddressModelToDTOMapper().transform(from.getAddressModel()).getAddress());//get string address from AddressDTO
+        parkingDTO.setAddress(new AddressModelToDTOMapper().transform(from.getAddressModel()).getAddress());//get string address from AddressDTO
         parkingDTO.setFullness(from.getSlots().stream().filter(SlotModel::isReserved).count()+ "/" + from.getSlotsNumber());
         return parkingDTO;
         }
