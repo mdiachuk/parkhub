@@ -8,6 +8,7 @@
   "Cancel Prepayment": "Журбинка, що ти нас покидаєш",
   "Success": "Тримай гроші за броню",
   "Error": "От халепа",
+  "User Cabinet": "Кабінет коритсувача",
   "UAH": " грн",
   "The price of your booking is": "",
   "Customer with this phone number was not found": "Вибач, але в нас немає користувача з таким номером телефону, спробуй ще разок",
@@ -76,6 +77,9 @@
   "Cannot activate account: less than 24 hours have passed.": "Не вдається активувати обліковий запис: минуло менше 24 годин.",
   "No account with such email was found.": "Не знайдено жодного облікового запису з такою електронною адресою",
   "Please enter valid credentials!": "Введіть дійсні облікові дані!",
+
+  "Forgot your password?": "Забули свій пароль?",
+  "Type your email in the field below and we will send you link to reset your password.": "Введіть електронну пошту в поле нижче, і ми надішлемо вам посилання, щоб скинути пароль.",
   "TypeUserIDPlaceholder": {
     "value": "Введіть ID користувача"
   },

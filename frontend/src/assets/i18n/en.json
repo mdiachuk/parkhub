@@ -8,8 +8,7 @@
   "Cancel Prepayment": "Cancel prepayment",
   "Success": "Success",
   "Error": "Error",
-
-
+  "User Cabinet": "User Cabinet",
   "Customer with this phone number was not found": "Customer with this phone number was not found, please, check the correct input",
   "No pre-order": "No pre-order for this phone number found",
   "Your reservation is already in progress": "Your reservation is already in progress",
@@ -77,6 +76,10 @@
   "Create": "Create",
   "Required": "Required",
   "$": "UAH/hour",
+
+  "Forgot your password?": "Forgot your password?",
+  "Type your email in the field below and we will\nsend you link to reset your password.": "Type your email in the field below and we will\nsend you link to reset your password.",
+
   "FieldIsRequired": "Field is required",
 
   "TypeUserIDPlaceholder": {
