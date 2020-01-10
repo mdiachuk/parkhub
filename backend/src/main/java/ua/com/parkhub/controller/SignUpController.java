@@ -59,7 +59,6 @@ public class SignUpController {
             return ResponseEntity.badRequest().body(errors);
         }
         signUpService.registerManager(managerRegistrationRequestDtoToModel.transform(manager));
-        userService.sendToken(manager.getUser().getEmail(), UuidTokenType.EMAIL);
         logger.info("Manager registration request created");
         return ResponseEntity.ok().build();
     }
