@@ -33,18 +33,26 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     this.loginSvc.login({email: this.loginForm.get('username').value,
-      password: this.loginForm.get('password').value}).subscribe(user => {
+                              password: this.loginForm.get('password').value}).subscribe(user => {
         if (user) {
           if (user.role === 'USER') {
             this.changeIsLogged(true);
+            this.changeIsUser(true);
+            this.changeIsManager(false);
+            this.changeIsAdmin(false);
             console.log(user);
-          }
+          } else
           if (user.role === 'ADMIN') {
             this.changeIsAdmin(true);
             this.changeIsManager(false);
-          } else if (user.role === 'MANAGER') {
+            this.changeIsUser(false);
+            this.changeIsLogged(true);
+          } else
+          if (user.role === 'MANAGER') {
             this.changeIsManager(true);
             this.changeIsAdmin(false);
+            this.changeIsUser(false);
+            this.changeIsLogged(true);
           }
           localStorage.setItem('TOKEN', user.token);
           this.router.navigate(['/home']);
@@ -97,6 +105,8 @@ export class LoginComponent implements OnInit {
     // this.modalService.show(CongratulationComponent);
   }
 
-
+  public changeIsUser(isUser: boolean) {
+    this.data.changeIsUser(isUser);
+  }
 }
 

@@ -52,14 +52,11 @@ export class ParkoffComponent implements OnInit {
   }
 
   checkStatusCode(code: number): string {
-    if (code === 16) {
+    if (code === 32) {
       return this.translate.instant('Customer with this phone number was not found');
     }
-    if (code === 32) {
-      return this.translate.instant('No pre-order');
-    }
     if (code === 64) {
-      return this.translate.instant('Your reservation is already in progress');
+      return this.translate.instant('No pre-order');
     }
   }
 }

@@ -1,5 +1,6 @@
 package ua.com.parkhub.dto;
 
+import ua.com.parkhub.model.SlotModel;
 import ua.com.parkhub.util.formatter.DateFormatter;
 
 import javax.validation.constraints.NotNull;
@@ -26,7 +27,7 @@ public class BookingDTO implements Serializable {
         return slot;
     }
 
-  /*  public void setSlot(Slot slot) {
+  /*  public void setSlot(SlotModel slot) {
         this.slot = slot.getSlotNumber();
     }*/
 

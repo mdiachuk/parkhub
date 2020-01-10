@@ -8,7 +8,6 @@ import ua.com.parkhub.persistence.entities.Payment;
 
 @Component
 public class PaymentModelToEntityMapper implements Mapper<PaymentModel, Payment> {
-
     BookingModelToEntityMapper bookingModelToEntityMapper;
 
     @Autowired
@@ -26,4 +25,5 @@ public class PaymentModelToEntityMapper implements Mapper<PaymentModel, Payment>
         payment.setBooking(bookingModelToEntityMapper.transform(from.getBooking()));
         return payment;
     }
+
 }

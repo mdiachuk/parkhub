@@ -8,6 +8,7 @@ import ua.com.parkhub.persistence.entities.Slot;
 
 @Component
 public class SlotModelToEntityMapper implements Mapper<SlotModel, Slot> {
+
     ParkingModelToEntityMapper parkingModelToEntityMapper;
 
     @Autowired
@@ -24,4 +25,5 @@ public class SlotModelToEntityMapper implements Mapper<SlotModel, Slot> {
         slot.setReserved(from.isReserved());
         return slot;
     }
+
 }

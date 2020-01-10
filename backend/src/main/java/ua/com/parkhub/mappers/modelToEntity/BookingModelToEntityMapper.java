@@ -30,4 +30,5 @@ public class BookingModelToEntityMapper implements Mapper<BookingModel, Booking>
         booking.setCustomer(customerModelToEntityMapper.transform(from.getCustomer()));
         return booking;
     }
+
 }

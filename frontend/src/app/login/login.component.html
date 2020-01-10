@@ -1,5 +1,5 @@
-
-  <div class="container">
+<script src="login.component.ts"></script>
+<div class="container">
     <ul>
         <li>
           <div class="header">{{'Login' | translate}}</div>
@@ -16,6 +16,10 @@
               <input type="password" matInput formControlName="password" [placeholder]="'PasswordPlaceholder.value' | translate" required>
               <mat-error>{{'Required'| translate}}</mat-error>
             </mat-form-field>
+          </li>
+          <li>
+            <div class="forgot-password-link"><small><a href="forgot-password" class="forgot-password-link">Forgot your
+              password?</a></small></div>
           </li>
         </form>
         <li>

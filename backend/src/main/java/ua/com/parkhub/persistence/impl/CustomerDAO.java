@@ -1,7 +1,6 @@
 package ua.com.parkhub.persistence.impl;
 
 import org.springframework.stereotype.Repository;
-import ua.com.parkhub.exceptions.NullCustomerException;
 import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.CustomerModel;
 import ua.com.parkhub.persistence.entities.Customer;
@@ -19,4 +18,3 @@ public class CustomerDAO extends ElementDAO<Customer, CustomerModel> {
         return findOneByFieldEqual("phoneNumber", phoneNumber);
     }
 }
-

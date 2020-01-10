@@ -2,12 +2,11 @@ package ua.com.parkhub.persistence.impl;
 
 import org.springframework.stereotype.Repository;
 import ua.com.parkhub.mappers.Mapper;
-import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.model.UserModel;
-import ua.com.parkhub.persistence.entities.Parking;
 import ua.com.parkhub.persistence.entities.User;
 
 import javax.persistence.Query;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -18,13 +17,6 @@ public class UserDAO extends ElementDAO<User, UserModel> {
         super(User.class, modelToEntity, entityToModel);
     }
 
-    /**
-     * Check have this email in DB, and from DB return id of User
-     * if this email have in DB
-     *
-     * @param email - User email
-     * @return return id User
-     */
     public String haveEmail(String email) {
         Query query =
                 emp.createQuery("SELECT id FROM User WHERE email=:email")
@@ -37,13 +29,6 @@ public class UserDAO extends ElementDAO<User, UserModel> {
         }
     }
 
-    /**
-     * Check have this phone Number in DB, and from DB return id of Customer
-     * if this email have in DB
-     *
-     * @param phoneNumber - phoneNumber email
-     * @return id Customer
-     */
 
     public String havePhoneNumber(String phoneNumber) {
         Query query =
@@ -57,14 +42,6 @@ public class UserDAO extends ElementDAO<User, UserModel> {
         }
     }
 
-    /**
-     * Find User by Customer is
-     *
-     * @param customerId Customer id you can find use phone Number
-     *                   and use
-     * @return id User
-     * @method havePhoneNumber
-     */
     public String findUserByCustomerId(String customerId) {
 
         if (customerId.length()==0){
@@ -84,7 +61,17 @@ public class UserDAO extends ElementDAO<User, UserModel> {
 
 
     }
-    //public Optional<User> findUserByEmail(String email) { return findOneByFieldEqual("email", email);}
 
+    public Optional<UserModel> findUserByEmail(String email) {
+        return findOneByFieldEqual("email", email);
+    }
+
+    public Optional<UserModel> findUserByCustomerId(Long id) {
+        return findOneByFieldEqual("customer", id);
+    }
+
+    public List<UserModel> findUsersByRoleId(Long id) {
+        return findManyByFieldEqual("role", id);
+    }
 }
 

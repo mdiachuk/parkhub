@@ -21,4 +21,5 @@ public class ParkingModelToEntityMapper implements Mapper<ParkingModel, Parking>
         parking.setSlotsNumber(from.getSlotsNumber());
         return parking;
     }
+
 }

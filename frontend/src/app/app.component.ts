@@ -5,10 +5,9 @@ import {DataService} from './DataService/data.service';
 import {Router} from '@angular/router';
 import {TranslateArrayService} from './service/translatearray.service';
 import {tap} from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
 
-export class AppModule {
-}
-
+export class AppModule { }
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,15 +16,16 @@ export class AppModule {
 export class AppComponent {
   title = 'frontend';
 
-  constructor(public translate: TranslateService, private router: Router,
+  constructor(public translate: TranslateService,
+              private router: Router,
               private data: DataService,
-              private translateArrayService: TranslateArrayService) {
+              private translateArrayService: TranslateArrayService,
+              public http: HttpClient) {
     translate.setDefaultLang('en');
     translate.addLangs(['en', 'ua']);
     const browserLang = translate.getBrowserLang();
     translate.use(browserLang.match(/en|ua/) ? browserLang : 'en');
     this.translateArrayService.changeArray();
-    // translate.use('ua');
   }
 
   useLanguage(language: string) {
@@ -50,6 +50,18 @@ export class AppComponent {
 
   public changeIsManager(isManager: boolean) {
     this.data.changeIsManager(isManager);
+  }
+
+  ping(): void {
+    this.http.get('/api/*')
+      .subscribe(
+        data => console.log(data),
+        err => console.log(err)
+      );
+  }
+
+  public changeIsUser(isUser: boolean) {
+    this.data.changeIsUser(isUser);
   }
 }
 

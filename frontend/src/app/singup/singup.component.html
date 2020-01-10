@@ -1,5 +1,4 @@
-
-<mat-card>
+<mat-card *ngIf="!isSent">
   <mat-card-header>
     <mat-card-title>{{'SingUpUserForm' | translate}}</mat-card-title>
   </mat-card-header>
@@ -41,3 +40,9 @@
   <button class="btn btn-success" (click)="singUpUser()">{{'Create' | translate}}</button>
 
 </mat-card>
+
+<div class="success" *ngIf="isSent">
+  <div><img src="assets/tick.png" class="success-image"></div>
+  <div class="success-message">Link for veifying email adress was sent<br>to your email-box!</div>
+  <div class="homepage-link"><a href="home" class="homepage-link">Go to the homepage</a></div>
+</div>

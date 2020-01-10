@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { ConfirmPasswordValidator} from "../validation/confirm-password.validator";
-import { Manager} from "../models/manager";
-import { ManagerService} from "../service/http-client.service";
+import { ConfirmPasswordValidator } from "../validation/confirm-password.validator";
+import { Manager } from '../model/manager';
+import { ManagerService } from "../service/http-client.service";
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -19,7 +19,7 @@ export class ManagerSignupComponent implements OnInit {
   isCreated: boolean;
 
   constructor(private managerService: ManagerService, private fb: FormBuilder,
-              private http: HttpClient, private snackBar: MatSnackBar) { }
+    private http: HttpClient, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.signupForm = this.fb.group({

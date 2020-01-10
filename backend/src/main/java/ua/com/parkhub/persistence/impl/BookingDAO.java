@@ -19,7 +19,8 @@ import java.util.stream.Collectors;
 @Repository
 public class BookingDAO extends ElementDAO<Booking, BookingModel> {
 
-    public BookingDAO(Mapper<Booking, BookingModel> entityToModel, Mapper<BookingModel, Booking> modelToEntity) {
+    public BookingDAO(Mapper<Booking, BookingModel> entityToModel,
+                      Mapper<BookingModel, Booking> modelToEntity) {
         super(Booking.class, modelToEntity, entityToModel);
     }
 

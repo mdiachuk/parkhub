@@ -5,7 +5,6 @@ import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.BookingModel;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.model.PaymentModel;
-import ua.com.parkhub.persistence.entities.Parking;
 import ua.com.parkhub.persistence.entities.Payment;
 
 import java.util.Optional;
