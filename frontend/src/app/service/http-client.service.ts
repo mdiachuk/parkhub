@@ -70,20 +70,20 @@ export class LoginService {
   }
 
 
-  
+
 
   oauthlogin(): Observable<User> {
     // const options = {
     //   headers: new HttpHeaders().append('Access-Control-Allow-Origin', '*')
     // }
     // const httpOptions = {
-    //   headers: new HttpHeaders({ 
+    //   headers: new HttpHeaders({
     //     'Access-Control-Allow-Origin':'*'
     //   })
     // };
     console.log("in service");
     return this.http.get<User>('http://localhost:8080/api/login/google', { withCredentials: true });
-    
+
 
   }
 }
@@ -100,7 +100,7 @@ export class HttpClientService {
 
   public createUser(user) {
     console.log("SingUp User");
-    return this.httpClient.post<User>("http://localhost:8080/api/signup/user", user);
+    return this.httpClient.post<User>("api/signup/user", user);
   }
 
 }
@@ -153,7 +153,7 @@ export class ManagerService {
 
   registerManager(manager: Manager) {
 
-    return this.http.post('http://localhost:8080/api/signup/manager', manager);
+    return this.http.post('/api/signup/manager', manager);
   }
 }
 
