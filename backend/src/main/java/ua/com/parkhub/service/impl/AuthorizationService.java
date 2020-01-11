@@ -44,6 +44,7 @@ public class AuthorizationService implements IAuthorizationService {
                 return checkCredentials(loginUser, user);
     }
 
+
     private void blockUser(UserModel user) {
         if (!(blockedUserDAO.isBlocked(user))) {
             blockedUserDAO.blockUser(user);

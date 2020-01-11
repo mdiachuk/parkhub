@@ -36,6 +36,7 @@ export class AppComponent {
     this.changeIsAdmin(false);
     this.changeIsManager(false);
     this.changeIsLogged(false);
+    this.changeIsUser(false);
     localStorage.removeItem('TOKEN');
     this.router.navigate(['/home']);
   }
