@@ -24,6 +24,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { ManagerParkingListComponent } from './manager-parking-list/manager-parking-list.component';
+import { AddPhoneNumberComponent } from './add-phone-number/add-phone-number.component';
 
 const routes: Routes = [
   { path: 'parkoff', component: ParkoffComponent },
@@ -31,7 +32,7 @@ const routes: Routes = [
   { path: 'home', component: PageComponent },
   { path: 'signup/manager', component: ManagerSignupComponent },
   { path: 'cabinet', component: AppComponent },
-  { path: 'cabinet/addParking', component: AddParkingComponent },
+  { path: 'manager/parking', component: AddParkingComponent },
   { path: 'manager/cabinet', component: ManagerParkingListComponent, canActivate: [ManagerGuard] },
   { path: 'manager/cabinet/:id', component: ParkingDetailComponent, canActivate: [ManagerGuard] },
   { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] },
@@ -49,7 +50,8 @@ const routes: Routes = [
 
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
-  { path: 'verify-email', component: VerifyEmailComponent }
+  { path: 'verify-email', component: VerifyEmailComponent },
+  { path: 'phone-number', component: AddPhoneNumberComponent }
 ];
 
 

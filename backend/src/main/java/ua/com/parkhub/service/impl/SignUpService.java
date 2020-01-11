@@ -52,7 +52,7 @@ public class SignUpService {
         supportTicketDAO.addElement(ticket);
     }
 
-    @Transactional
+@Transactional
     public CustomerModel createCustomer(CustomerModel customer) {
         return customerDAO.findCustomerByPhoneNumber(customer.getPhoneNumber()).map(existingCustomer -> {
             logger.info("Customer with phone number={} was found", customer.getPhoneNumber());
@@ -87,7 +87,7 @@ public class SignUpService {
         SupportTicketModel ticket = new SupportTicketModel();
         ticket.setDescription(description);
         ticket.setCustomer(customer);
-        ticket.setType(findSupportTicketType(TicketTypeModel.MANAGER_REGISTRATION_REQUEST.getType()));
+        ticket.setType(findSupportTicketType(TicketTypeModel.MANAGER_REGISTRATION_REQUEST.getValue()));
         ticket.setSolvers(findSolvers(RoleModel.ADMIN.getRoleName()));
         logger.info("New support ticket was created");
         return ticket;
@@ -116,4 +116,44 @@ public class SignUpService {
         }
         return solvers;
     }
+
+    public boolean isUserPresentByEmail(String email) {
+        if(userDAO.findOneByFieldEqual("email", email).isPresent()){
+            return true;
+        }
+        return false;
+
+    }
+
+    public void setPhoneNumberForAuthUser(PhoneEmailModel phoneEmailModel) {
+        if(userDAO.findOneByFieldEqual("email", phoneEmailModel.getEmail()).isPresent()){
+            CustomerModel customerModel = userDAO.setOauthUserPhone(phoneEmailModel);
+            customerDAO.updateElement(customerModel);
+        }
+    }
+
+    public void createUserAfterSocialAuth(AuthUserModel userModel){
+        if(!userDAO.findUserByEmail(userModel.getEmail()).isPresent()){
+            UserModel user = new UserModel();
+            CustomerModel customer = new CustomerModel();
+            customer.setPhoneNumber("Empty");
+            user.setEmail(userModel.getEmail());
+            user.setCustomer(customer);
+            user.setPassword(passwordEncoder.encode("oauth2user"));
+            user.setLastName(userModel.getLastName());
+            user.setFirstName(userModel.getFirstName());
+            RoleModel userRole = userRoleDAO.findOneByFieldEqual("roleName", "USER").get();
+            user.setRole(userRole);
+            userDAO.addElement(user);
+        }
+    }
+
+
+    public boolean isCustomerNumberEmpty(String email) {
+        UserModel user = userDAO.findOneByFieldEqual("email", email).get();
+        CustomerModel customer = user.getCustomer();
+        return customer.getPhoneNumber().equals("Empty");
+    }
+
+
 }

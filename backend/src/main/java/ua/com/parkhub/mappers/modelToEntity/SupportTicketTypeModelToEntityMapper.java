@@ -15,7 +15,7 @@ public class SupportTicketTypeModelToEntityMapper implements Mapper<TicketTypeMo
         }
         SupportTicketType supportTicketType = new SupportTicketType();
         supportTicketType.setId(from.getId());
-        supportTicketType.setType(from.getType());
+        supportTicketType.setType(from.getValue());
         return supportTicketType;
     }
 }

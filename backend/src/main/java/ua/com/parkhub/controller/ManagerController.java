@@ -9,7 +9,8 @@ import ua.com.parkhub.dto.ParkingUpdateRequestDTO;
 import ua.com.parkhub.exceptions.ParkingDoesntExistException;
 import ua.com.parkhub.mappers.dtoToModel.ParkingRequestDtoToModelMapper;
 import ua.com.parkhub.mappers.modelToDTO.ParkingModelToDTOMapper;
-import ua.com.parkhub.service.ParkingService;
+import ua.com.parkhub.service.impl.ParkingService;
+
 
 import java.util.List;
 import java.util.stream.Collectors;

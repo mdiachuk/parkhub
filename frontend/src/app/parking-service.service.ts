@@ -12,7 +12,7 @@ export class ParkingServiceService {
   private parkingUrl: string;
 
   constructor(private http: HttpClient ) {
-    this.parkingUrl = 'api/cabinet/addParking';
+    this.parkingUrl = 'api/manager/parking';
    }
 
    public save(parking: Parking) : Observable<Parking>  {

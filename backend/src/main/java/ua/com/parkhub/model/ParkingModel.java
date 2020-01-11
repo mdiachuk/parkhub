@@ -11,7 +11,7 @@ public class ParkingModel {
     private Integer tariff;
     private AddressModel addressModel;
     private List<SlotModel> slots;
-    private Boolean isActive;
+    private boolean isActive;
     private UserModel owner;
 
     public void setId(Long id) {
@@ -34,11 +34,11 @@ public class ParkingModel {
         this.slots = slots;
     }
 
-    public Boolean getActive() {
+    public boolean getActive() {
         return isActive;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(boolean active) {
         isActive = active;
     }
 
@@ -54,17 +54,11 @@ public class ParkingModel {
         return isActive;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
-    }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getParkingName() {
         return parkingName;

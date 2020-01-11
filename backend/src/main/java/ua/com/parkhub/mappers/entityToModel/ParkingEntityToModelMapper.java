@@ -2,6 +2,7 @@ package ua.com.parkhub.mappers.entityToModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.persistence.entities.Parking;
@@ -24,6 +25,9 @@ public class ParkingEntityToModelMapper implements Mapper<Parking, ParkingModel>
 
     @Override
     public ParkingModel transform(Parking from) {
+        if(from == null) {
+            return null;
+        }
         ParkingModel parkingModel = new ParkingModel();
         parkingModel.setId(from.getId());
         parkingModel.setParkingName(from.getParkingName());
@@ -31,7 +35,9 @@ public class ParkingEntityToModelMapper implements Mapper<Parking, ParkingModel>
         parkingModel.setSlotsNumber(from.getSlotsNumber());
         parkingModel.setTariff(from.getTariff());
         parkingModel.setActive(from.isActive());
-        parkingModel.setSlots(from.getSlots().stream().map(slotEntityToModelMapper::transform).collect(Collectors.toList()));
+        if(from.getSlots() != null){
+            parkingModel.setSlots(from.getSlots().stream().map(slotEntityToModelMapper::transform).collect(Collectors.toList()));
+        }
         parkingModel.setOwner(userEntityToModelMapper.transform(from.getOwner()));
         return parkingModel;
     }

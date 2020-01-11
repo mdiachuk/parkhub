@@ -4,15 +4,15 @@ public enum TicketTypeModel {
 
     MANAGER_REGISTRATION_REQUEST("Manager registration request");
 
-    private String type;
+    private String value;
     private Long id;
 
-    TicketTypeModel(String type){
-        this.type = type;
+    TicketTypeModel(String value){
+        this.value = value;
     }
 
-    public String getType(){
-        return this.type;
+    public String getValue(){
+        return this.value;
     }
 
     public Long getId() {

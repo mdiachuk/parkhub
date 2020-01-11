@@ -102,6 +102,15 @@ export class LoginComponent implements OnInit {
     this.data.changeIsUser(isUser);
   }
 
+  onClickMe():void{
+    console.log("click");
+    this.loginSvc.oauthlogin().subscribe(
+      user => {console.log(user);
+      this.router.navigate(['/home'])}
+    );
+  }
+
+
 
 }
 

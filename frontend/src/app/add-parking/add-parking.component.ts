@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 
-import { Parking } from '../parking-list/parking';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ParkingServiceService } from '../parking-service.service';
+import { Oauth2googleService } from '../service/oauth2google.service';
+import { UserService } from '../service/http-client.service';
+import { NewParking } from './NewParking';
 
 
 @Component({
@@ -14,7 +16,7 @@ import { ParkingServiceService } from '../parking-service.service';
   styleUrls: ['./add-parking.component.scss']
 })
 export class AddParkingComponent {
-
+  parking: NewParking = new NewParking()
   formGroup: FormGroup;
   CityArray: any = ['Kyiv', 'Lviv', 'Chernivtsi', 'Dnipro', 'Kharkiv'];
   nameregex: RegExp = /^[a-zA-Z 0-9-]+$/
@@ -26,7 +28,7 @@ export class AddParkingComponent {
 
   constructor(private formBuilder: FormBuilder,private route: ActivatedRoute,
     private router: Router,private snackBar: MatSnackBar,
-       private parkingService: ParkingServiceService) {
+       private parkingService: ParkingServiceService,private service:Oauth2googleService,private addservice:UserService) {
        }
 
   ngOnInit() {
@@ -85,14 +87,19 @@ export class AddParkingComponent {
   }
 
   openSnackBar1(message: string) {
+    console.log(message);
     this.snackBar.open(message, 'Close', {
       horizontalPosition: 'center',
       verticalPosition: 'top',
     });
   }
+
   onSubmit(formGroup) {
     console.log(formGroup);
-     this.parkingService.save(formGroup)
+    for(let property in formGroup){this.parking[property] = formGroup[property];} 
+    this.parking["id"] = Number(this.addservice.getUserID());
+    console.log(this.parking)
+     this.parkingService.save(this.parking)
      .subscribe( data => {
        this.openSnackBar(("Parking created successfully."));
     },
