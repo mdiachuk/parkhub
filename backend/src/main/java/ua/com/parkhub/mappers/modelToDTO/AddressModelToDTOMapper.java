@@ -10,9 +10,6 @@ public class AddressModelToDTOMapper implements Mapper<AddressModel, AddressDTO>
 
     @Override
     public AddressDTO transform(AddressModel from) {
-        if(from == null) {
-            return null;
-        }
         AddressDTO addressDTO = new AddressDTO();
         addressDTO.setAddress(from.toString());
         return addressDTO;

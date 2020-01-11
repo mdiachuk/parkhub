@@ -7,7 +7,6 @@ import java.util.Optional;
 
 public interface IParkingService {
 
-    Optional<ParkingModel> findParkingById(long id);
     List<ParkingModel> findAllParking();
     ParkingModel findParkingByIdWithSlotList(long id);
     ParkingModel findParkingByIdWithSlotListAndDateRange(long id, long checkIn, long checkOut);

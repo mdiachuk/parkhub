@@ -6,4 +6,4 @@ export class ParkingDetail {
     building: string;
     slotsNumber: number;
     tariff: number;
-  } 
+  }

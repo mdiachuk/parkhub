@@ -14,7 +14,8 @@ import javax.validation.constraints.Pattern;
         "tariff",
         "city",
         "street",
-        "building"
+        "building",
+        "id"
 
 })
 public class ParkingRequestDTO {
@@ -42,11 +43,14 @@ public class ParkingRequestDTO {
     @JsonProperty("street")
     private String street;
 
-    @NotNull@NotNull(message = "Name of building must not be null")
+    @NotNull(message = "Name of building must not be null")
     @Pattern(regexp="^([a-zA-Z 0-9-]+)$", message="Invalid number of building")
     @JsonProperty("building")
     private String building;
 
+    @NotNull
+    @JsonProperty("id")
+    private Long id;
     public String getParkingName() {
         return parkingName;
     }
@@ -93,5 +97,13 @@ public class ParkingRequestDTO {
 
     public void setBuilding(String building) {
         this.building = building;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

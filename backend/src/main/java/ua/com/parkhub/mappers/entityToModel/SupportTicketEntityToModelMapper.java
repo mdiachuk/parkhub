@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.SupportTicketModel;
+import ua.com.parkhub.model.SupportTicketTypeModel;
 import ua.com.parkhub.persistence.entities.SupportTicket;
 
 import java.util.stream.Collectors;
@@ -33,6 +34,11 @@ public class SupportTicketEntityToModelMapper implements Mapper<SupportTicket, S
         supportTicketModel.setSolved(from.isSolved());
         supportTicketModel.setType(supportTicketTypeEntityToModelMapper.transform(from.getSupportTicketType()));
         supportTicketModel.setSolvers(from.getSolvers().stream().map(userEntityToModelMapper::transform).collect(Collectors.toList()));
+
+        /*SupportTicketTypeModel type = new SupportTicketTypeModel();
+        type.setId((long) 1);
+        type.setType("Manager registration request");
+        supportTicketModel.setSupportTicketType(type);*/
         return supportTicketModel;
     }
 

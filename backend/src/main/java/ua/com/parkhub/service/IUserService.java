@@ -6,8 +6,8 @@ import ua.com.parkhub.model.UuidTokenType;
 import java.util.Optional;
 
 public interface IUserService {
-    void sendToken(String email, UuidTokenType type);
-    void resendToken(String email, UuidTokenType type);
+    void sendToken(String email, String type);
+    void resendToken(String email, String type);
     void verifyEmail(String token);
     void resetPassword(String token, String password);
     boolean isLinkActive(String token);

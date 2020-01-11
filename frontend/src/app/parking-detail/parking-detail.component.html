@@ -1,23 +1,79 @@
 
-<mat-toolbar color="primary">
-        <mat-toolbar-row>
-        <span>{{'CustomToolbar' | translate}}</span>
-        </mat-toolbar-row>
+<mat-toolbar class = "toolbar" color="primary">
+  <mat-toolbar-row>
+  <span>Parking Info</span>
+  <button routerLink="/manager/cabinet" id="id1" mat-raised-button color="accent">Back</button>
+</mat-toolbar-row>
 </mat-toolbar>
 
-<div>
-<mat-list *ngIf="parkingDetail">
-        <mat-list-item>{{parkingDetail.parkingName}}</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>{{parkingDetail.parkingAddress}}</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>{{parkingDetail.slotsNumber}}</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>{{parkingDetail.tariff}}</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>1</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>1</mat-list-item>
+    <mat-list *ngIf="parkingDTO">
+
+      <mat-list-item> <span class="title">Name:</span> <span class="parkingValue">{{parkingDTO.parkingName}}</span>
+          <mat-form-field class="example-form-field" *ngIf="!buttonStatusList[0]">
+              <input matInput type="text" placeholder="New name" #parkingName [(ngModel)]="parkingDetail.parkingName" required>
+              <mat-error *ngIf="input.invalid">{{getErrorMessage()}}</mat-error>
+              <button mat-button *ngIf="parkingDetail.parkingName" matSuffix mat-icon-button aria-label="Clear" (click)="parkingDetail.parkingName=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          <button class="saveButton" mat-raised-button color="accent" [disabled] = "buttonStatusList[0]"  (click) = "revert(0); openSnackBar(parkingDetail.parkingName)">Save</button>
+      <button class="changeButton" mat-raised-button color="accent" [disabled] = "!buttonStatusList[0]" (click) = "revert(0); buttonStatusList[4] = false">Change</button>
+      <button mat-mini-fab aria-label="Example icon-button with a heart icon" color="" (click) = "buttonStatusList[0] = true">
+          <mat-icon>close</mat-icon>
+        </button>
+    </mat-list-item>
+
+      <mat-divider></mat-divider>
+
+      <mat-list-item><span class="title">Address:</span><span class="parkingValue">{{parkingDTO.address}}</span>
+          <button class="saveButton" mat-raised-button color="accent" [disabled] = "buttonStatusList[1]" (click) = "revert(1); openSnackBar(parkingDetail.street + ' ' + parkingDetail.building + ', ' + parkingDetail.city)">Save</button>
+        <button class="changeButton" mat-raised-button color="accent" [disabled] = "!buttonStatusList[1]" (click) = "revert(1); openDialog(); buttonStatusList[4] = false">Change</button>
+        <button mat-mini-fab aria-label="Example icon-button with a heart icon" color="" (click) = "revert(1)">
+            <mat-icon>close</mat-icon>
+          </button>
+
+      </mat-list-item>
+
+      <mat-divider></mat-divider>
+
+      <mat-list-item><span class="title">Places:</span><span class="parkingValue">{{parkingDTO.slotsNumber}}</span>
+          <mat-form-field  class="example-form-field" *ngIf="!buttonStatusList[2]">
+              <input matInput type="number" placeholder="New places quantity" [(ngModel)]="parkingDetail.slotsNumber">
+              <button mat-button *ngIf="parkingDetail.slotsNumber" matSuffix mat-icon-button aria-label="Clear" (click)="parkingDetail.slotsNumber=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          <button class="saveButton" mat-raised-button color="accent" [disabled] = "buttonStatusList[2]" (click)="revert(2); openSnackBar(parkingDetail.slotsNumber)">Save</button>
+          <button class="changeButton" mat-raised-button color="accent" [disabled] = "!buttonStatusList[2]" (click)="revert(2); buttonStatusList[4] = false">Change</button>
+          <button mat-mini-fab aria-label="Example icon-button with a heart icon" color="" (click) = "buttonStatusList[2] = true">
+              <mat-icon>close</mat-icon>
+            </button>
+         </mat-list-item>
+
+      <mat-divider></mat-divider>
+
+      <mat-list-item><span class="title">Tariff:</span><span class="parkingValue">{{parkingDTO.tariff}}</span>
+          <mat-form-field class="example-form-field" *ngIf="!buttonStatusList[3]">
+              <input matInput type="number" placeholder="New tariff" [(ngModel)]="parkingDetail.tariff">
+              <button mat-button *ngIf="parkingDetail.tariff" matSuffix mat-icon-button aria-label="Clear" (click)="parkingDetail.tariff=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          <button class="saveButton" mat-raised-button color="accent" [disabled] = "buttonStatusList[3]" (click)="revert(3); openSnackBar(parkingDetail.tariff)">Save</button>
+          <button class="changeButton" mat-raised-button color="accent" [disabled] = "!buttonStatusList[3]" (click)="revert(3); buttonStatusList[4] = false">Change</button>
+          <button mat-mini-fab aria-label="Example icon-button with a heart icon" color="" (click) = "buttonStatusList[3] = true">
+              <mat-icon>close</mat-icon>
+            </button>
+        </mat-list-item>
+
+      <mat-divider></mat-divider>
+
 </mat-list>
+
+<div class="submitButtonCenter">
+  <button class="submitButton" mat-raised-button color="primary" [disabled] = "buttonStatusList[4]" (click)="revert(4); updateParking()">Submit</button>
 </div>
+
+
+
 

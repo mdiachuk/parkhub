@@ -20,6 +20,7 @@ public class BookingModel {
         return customer;
     }
 
+
     public SlotModel getSlot() {
         return slot;
     }

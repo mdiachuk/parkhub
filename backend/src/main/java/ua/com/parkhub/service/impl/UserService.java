@@ -53,11 +53,11 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional
-    public void sendToken(String email, UuidTokenType type) {
+    public void sendToken(String email, String type) {
         UuidTokenModel token = createToken(email);
         String subject;
         String body;
-        switch (type) {
+        switch (convertToUuidTokenType(type)) {
             case EMAIL:
                 subject = "Verify email";
                 body = "<a href=\"http://localhost:4200/verify-email?token=" + token.getToken()
@@ -79,7 +79,7 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional
-    public void resendToken(String token, UuidTokenType type) {
+    public void resendToken(String token, String type) {
         String email = uuidTokenDAO.findUuidTokenByToken(token)
                 .map(uuidToken -> uuidToken.getUser().getEmail())
                 .orElseThrow(() -> new InvalidTokenException("Invalid link"));
@@ -92,7 +92,11 @@ public class UserService implements IUserService {
     @Transactional
     public void verifyEmail(String token) {
         UserModel user = uuidTokenDAO.findUuidTokenByToken(token)
-                .map(UuidTokenModel::getUser).orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
+                .map(uuidToken -> {
+                    uuidToken.setExpirationDate(LocalDateTime.now());
+                    uuidTokenDAO.updateElement(uuidToken);
+                    return uuidToken.getUser();
+                }).orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
         user.setRole(signUpService.findUserRole(String.valueOf(RoleDTO.USER)));
         userDAO.updateElement(user);
         logger.info("Email was verified for user with email={}", user.getEmail());
@@ -106,6 +110,8 @@ public class UserService implements IUserService {
                     if (isExpired(uuidToken)) {
                         throw new InvalidTokenException("Token expired!");
                     }
+                    uuidToken.setExpirationDate(LocalDateTime.now());
+                    uuidTokenDAO.updateElement(uuidToken);
                     return userDAO.findUserByEmail(uuidToken.getUser().getEmail()).orElseThrow(() ->
                             new InvalidTokenException("Token is not assigned to any user"));
                 })
@@ -121,7 +127,7 @@ public class UserService implements IUserService {
         UuidTokenModel token = new UuidTokenModel();
         token.setUser(user);
         token.setToken(UUID.randomUUID().toString());
-        token.setExpirationDate(LocalDateTime.now().plusMinutes(1000));
+        token.setExpirationDate(LocalDateTime.now().plusMinutes(10));
         uuidTokenDAO.addElement(token);
         logger.info("Token={} with expiration date at {} was created for user with email={}",
                 token.getToken(), token.getExpirationDate(), user.getEmail());
@@ -158,6 +164,10 @@ public class UserService implements IUserService {
         return date.format(formatter);
     }
 
+    private UuidTokenType convertToUuidTokenType(String type) {
+        return UuidTokenType.valueOf(type);
+    }
+
 
 
 
@@ -165,7 +175,7 @@ public class UserService implements IUserService {
         return userDAO.findElementById(id);
     }
 
-//    @Override
+    @Override
     public void updateUser(long id, UserModel userUp) {
         UserModel userModel = findUserById(id).get();
         userModel.setFirstName(userUp.getFirstName());
@@ -176,7 +186,7 @@ public class UserService implements IUserService {
         logger.info("User information was updated");
     }
 
-//    @Override
+    @Override
     public void changePassword(long id, String newPassword, UserModel userModel){
         UserModel user = findUserById(id).get();
         if (passwordEncoder.matches(userModel.getPassword(), user.getPassword())){
@@ -185,7 +195,7 @@ public class UserService implements IUserService {
             logger.info("Password was updated");
         } else {
             logger.info("Password was not updated");
-            new PasswordException();
+            throw new PasswordException();
         }
     }
 }

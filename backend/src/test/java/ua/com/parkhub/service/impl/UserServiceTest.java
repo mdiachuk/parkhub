@@ -55,8 +55,8 @@ class UserServiceTest {
         when(userDAO.findUserByEmail(anyString())).thenReturn(Optional.empty());
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
-            assertThrows(EmailException.class, () -> userService.sendToken("email@test.com", UuidTokenType.EMAIL));
-            assertThrows(EmailException.class, () -> userService.sendToken("email@test.com", UuidTokenType.PASSWORD));
+            assertThrows(EmailException.class, () -> userService.sendToken("email@test.com", UuidTokenType.EMAIL.getType()));
+            assertThrows(EmailException.class, () -> userService.sendToken("email@test.com", UuidTokenType.PASSWORD.getType()));
         });
     }
 
@@ -69,16 +69,16 @@ class UserServiceTest {
         when(mailSender.createMimeMessage()).thenReturn(mimeMessage);
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
-            userService.sendToken("email@test.com", UuidTokenType.EMAIL);
-            userService.sendToken("email@test.com", UuidTokenType.PASSWORD);
+            userService.sendToken("email@test.com", UuidTokenType.EMAIL.getType());
+            userService.sendToken("email@test.com", UuidTokenType.PASSWORD.getType());
         });
     }
 
     @Test
     public void test_resendToken_tokenNotFound_notFoundInDataBaseExceptionThrown() {
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
-            assertThrows(InvalidTokenException.class, () -> userService.resendToken("12345", UuidTokenType.EMAIL));
-            assertThrows(InvalidTokenException.class, () -> userService.resendToken("12345", UuidTokenType.PASSWORD));
+            assertThrows(InvalidTokenException.class, () -> userService.resendToken("12345", UuidTokenType.EMAIL.getType()));
+            assertThrows(InvalidTokenException.class, () -> userService.resendToken("12345", UuidTokenType.PASSWORD.getType()));
         });
     }
 

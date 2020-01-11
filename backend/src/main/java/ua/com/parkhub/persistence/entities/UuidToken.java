@@ -24,7 +24,7 @@ public class UuidToken implements Serializable {
 
     @Column(name = "expiration_date")
     @NotNull
-    private LocalDateTime expirationDate = LocalDateTime.now().plusMinutes(10);
+    private LocalDateTime expirationDate;
 
     public Long getId() {
         return id;

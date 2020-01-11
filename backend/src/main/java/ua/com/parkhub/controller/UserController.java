@@ -4,28 +4,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.*;
 import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.InvalidTokenException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
-import ua.com.parkhub.model.UuidTokenType;
+import ua.com.parkhub.exceptions.PasswordException;
+import ua.com.parkhub.mappers.dtoToModel.PasswordDTOtoUserModelMapper;
+import ua.com.parkhub.mappers.dtoToModel.UserDtoToUserModelMapper;
+import ua.com.parkhub.mappers.dtoToModel.UserInfoDTOtoUserModelMapper;
+import ua.com.parkhub.mappers.modelToDTO.UserModelToUserInfoDTOMapper;
 import ua.com.parkhub.service.impl.UserService;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.http.HttpStatus;
-import ua.com.parkhub.dto.PasswordDTO;
-
-import ua.com.parkhub.exceptions.PasswordException;
-
-import ua.com.parkhub.mappers.dtoToModel.PasswordDTOtoUserModelMapper;
-import ua.com.parkhub.mappers.dtoToModel.UserDtoToUserModelMapper;
-import ua.com.parkhub.mappers.dtoToModel.UserInfoDTOtoUserModelMapper;
-import ua.com.parkhub.mappers.modelToDto.UserModelToUserInfoDTOMapper;
 
 @RestController
 public class UserController {
@@ -50,7 +47,8 @@ public class UserController {
         this.userInfoDTOtoUserModelMapper = userInfoDTOtoUserModelMapper;
     }
 
-    @PostMapping("/api/send-token-to-email")
+
+    @PostMapping("/api/user/token")
     public ResponseEntity sendToken(@RequestBody @Valid EmailDTO emailDTO, BindingResult result) {
         if (result.hasFieldErrors()) {
             List<String> errors = result.getAllErrors().stream()
@@ -59,13 +57,12 @@ public class UserController {
             logger.info("Validation errors: {}", errors);
             return ResponseEntity.badRequest().body(errors);
         }
-        String email = emailDTO.getEmail();
-        UuidTokenType type = UuidTokenType.valueOf(emailDTO.getTokenType());
-        userService.sendToken(email, type);
+        userService.sendToken(emailDTO.getEmail(), emailDTO.getTokenType());
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/api/resend-token-to-email")
+
+    @PostMapping("/api/user/token/refresh")
     public ResponseEntity resendToken(@RequestBody @Valid TokenDTO tokenDTO, BindingResult result) {
         if (result.hasFieldErrors()) {
             List<String> errors = result.getAllErrors().stream()
@@ -74,13 +71,12 @@ public class UserController {
             logger.info("Validation errors: {}", errors);
             return ResponseEntity.badRequest().body(errors);
         }
-        String token = tokenDTO.getToken();
-        UuidTokenType type = UuidTokenType.valueOf(tokenDTO.getTokenType());
-        userService.resendToken(token, type);
+        userService.resendToken(tokenDTO.getToken(), tokenDTO.getTokenType());
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/api/check-token/{token}")
+
+    @GetMapping("/api/user/token/{token}")
     public ResponseEntity checkToken(@PathVariable("token") String token) {
         if (userService.isLinkActive(token)) {
             logger.info("Link is active");
@@ -91,13 +87,15 @@ public class UserController {
         }
     }
 
-    @PostMapping("/api/verify-email")
+
+    @PostMapping("/api/user/verify")
     public ResponseEntity verifyEmail(@RequestBody String token) {
         userService.verifyEmail(token);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/api/reset-password")
+
+    @PostMapping("/api/user/password/reset")
     public ResponseEntity resetPassword(@RequestBody @Valid ResetPasswordDTO passwordDTO, BindingResult result) {
         if (result.hasFieldErrors()) {
             List<String> errors = result.getAllErrors().stream()
@@ -144,18 +142,22 @@ public class UserController {
 
 
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER') or hasRole('USER')")
     @GetMapping("/api/user/{id}")
     @ResponseBody
     public ResponseEntity<UserInfoDTO> findUserById(@PathVariable Long id){
         return ResponseEntity.ok(userModelToUserInfoDTOMapper.transform(userService.findUserById(id).get()));
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER') or hasRole('USER')")
     @PostMapping("/api/user/{id}")
-    ///TODO this method with update
     public ResponseEntity updateUser(@PathVariable Long id, @RequestBody UserInfoDTO userInfoDTO){
         userService.updateUser(id, userInfoDTOtoUserModelMapper.transform(userInfoDTO));
         return ResponseEntity.ok().build();
     }
+
+
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER') or hasRole('USER')")
     @PostMapping("/api/user/password/{id}")
     public ResponseEntity<Void> updateUserPassword(@PathVariable Long id, @RequestBody PasswordDTO passwordDTO){
         try {

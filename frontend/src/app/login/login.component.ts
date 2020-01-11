@@ -100,13 +100,19 @@ export class LoginComponent implements OnInit {
     this.data.changeIsManager(isManager);
   }
 
-  public  openModal(text: string) {
-    this.data.changeMessage(text);
-    // this.modalService.show(CongratulationComponent);
-  }
-
   public changeIsUser(isUser: boolean) {
     this.data.changeIsUser(isUser);
   }
+
+  onClickMe():void{
+    console.log("click");
+    this.loginSvc.oauthlogin().subscribe(
+      user => {console.log(user);
+      this.router.navigate(['/home'])}
+    );
+  }
+
+
+
 }
 

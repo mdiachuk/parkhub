@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.com.parkhub.exceptions.PermissionException;
 import ua.com.parkhub.exceptions.StatusCode;
+import ua.com.parkhub.model.RoleModel;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.persistence.impl.BlockedUserDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
@@ -61,11 +62,15 @@ public class AuthorizationService implements IAuthorizationService {
 
     @Transactional
     private UserModel checkCredentials(UserModel loginUser, UserModel userModel) {
-        if (passwordEncoder.matches(loginUser.getPassword(), userModel.getPassword())) {
-            if (!(blockedUserDAO.isBlocked(userModel))) {
-                return userModel;
+        if (passwordEncoder.matches(loginUser.getPassword(), userModel.getPassword()) ) {
+            if (!checkForRolePending(userModel)) {
+                if (!(blockedUserDAO.isBlocked(userModel))) {
+                    return userModel;
+                } else {
+                    throw new PermissionException(StatusCode.CANNOT_ACTIVATE);
+                }
             } else {
-                throw new PermissionException(StatusCode.CANNOT_ACTIVATE);
+                throw new PermissionException(StatusCode.ROLE_PENDING);
             }
         } else {
             userModel.setNumberOfFailedPassEntering(userModel.getNumberOfFailedPassEntering() + ONE_FAILED_TRIE_TO_ENTER);
@@ -74,6 +79,14 @@ public class AuthorizationService implements IAuthorizationService {
                 throw new PermissionException(StatusCode.ACCOUNT_BLOCKED);
             }
             throw new PermissionException(StatusCode.INVALID_CREDENTIALS);
+        }
+    }
+
+    private Boolean checkForRolePending(UserModel user){
+        if (user.getRole().equals(RoleModel.PENDING)){
+            return true;
+        } else {
+            return false;
         }
     }
 

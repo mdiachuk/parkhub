@@ -12,22 +12,22 @@ export class ResetPasswordService {
     constructor(private http: HttpClient) { }
 
     sendTokenToEmail(email: Email) {
-        return this.http.post('/api/send-token-to-email', email);
+        return this.http.post('/api/user/token', email);
     }
 
     checkIsExpired(token: string) {
-        return this.http.get('/api/check-token/' + token);;
+        return this.http.get('/api/user/token/' + token);;
     }
 
     resetPassword(password: Password) {
-        return this.http.post('/api/reset-password', password);
+        return this.http.post('/api/user/password/reset', password);
     }
 
     resendTokenToEmail(token: Token) {
-        return this.http.post('/api/resend-token-to-email', token);
+        return this.http.post('/api/user/token/refresh', token);
     }
 
     verifyEmail(token: string) {
-        return this.http.post('/api/verify-email', token);
+        return this.http.post('/api/user/verify', token);
     }
 }

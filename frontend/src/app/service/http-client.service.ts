@@ -117,7 +117,7 @@ export class ParkingServiceService {
   private parkingUrl: string;
 
   constructor(private http: HttpClient, private router: Router) {
-    this.parkingUrl = 'cabinet/addParking';
+    this.parkingUrl = 'manager/parking';
   }
 
   public save(parking: Parking): Observable<Parking> {

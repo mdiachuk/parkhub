@@ -63,6 +63,7 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
 
     }
 
+    @Transactional
     @Override
     public Optional<M> findElementByFieldsEqual(long slotId, LocalDateTime checkIn, LocalDateTime checkOut, String fieldNameSlotId, String fieldNameCheckIn, String fieldNameCheckOut) {
         CriteriaBuilder criteriaBuilder = emp.getCriteriaBuilder();
@@ -80,7 +81,7 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
         } catch (PersistenceException e) {
             element = null;
         }
-        return (element != null ? Optional.ofNullable(entityToModel.transform(element)) : Optional.empty());
+        return Optional.ofNullable(element).map(entityToModel::transform);
     }
 
     @Transactional

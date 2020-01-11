@@ -10,7 +10,7 @@ import ua.com.parkhub.dto.UserDTO;
 import ua.com.parkhub.exceptions.PermissionException;
 import ua.com.parkhub.exceptions.StatusCode;
 import ua.com.parkhub.mappers.dtoToModel.LoginDtoToUserModelMapper;
-import ua.com.parkhub.mappers.modelToDto.UserModelToUserDtoMapper;
+import ua.com.parkhub.mappers.modelToDTO.UserModelToUserDtoMapper;
 import ua.com.parkhub.security.JwtUtil;
 import ua.com.parkhub.service.IAuthorizationService;
 
@@ -19,7 +19,6 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "")
-@CrossOrigin
 public class JwtAuthenticationController {
 
     private IAuthorizationService authenticationService;

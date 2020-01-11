@@ -5,6 +5,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "support_ticket", schema = "park_hub")
@@ -30,18 +31,10 @@ public class SupportTicket implements Serializable {
     @JoinColumn(name = "author_id")
     private Customer customer;
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
     @ManyToMany
     @JoinTable(name = "ticket_solver",
-               joinColumns = { @JoinColumn(name = "ticket_id") },
-               inverseJoinColumns = { @JoinColumn(name = "solver_id") }
+            joinColumns = { @JoinColumn(name = "ticket_id") },
+            inverseJoinColumns = { @JoinColumn(name = "solver_id") }
     )
     private List<User> solvers;
 
@@ -75,6 +68,14 @@ public class SupportTicket implements Serializable {
 
     public void setSupportTicketType(SupportTicketType supportTicketType) {
         this.supportTicketType = supportTicketType;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public List<User> getSolvers() {

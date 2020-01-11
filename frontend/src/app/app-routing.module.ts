@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SingupComponent } from './singup/singup.component';
 import { AppComponent } from './app.component';
-import { AddParkingComponent } from './add-parking/add-parking.component';
-import { ParkingListComponentManager } from './parking-list-manager/parking-list.component';
-import { ParkingDetailComponent } from './parking-detail/parking-detail.component';
-import { ManagerSignupComponent } from './manager-signup/manager-signup.component';
-import { AdminComponent } from './admin/admin.component';
+import { AddParkingComponent } from "./add-parking/add-parking.component";
+import { ParkingListComponent } from "./parking-list/parking-list.component";
+import { ParkingDetailComponent } from "./parking-detail/parking-detail.component";
+import { ManagerSignupComponent } from "./manager-signup/manager-signup.component";
+import { AdminComponent } from "./admin/admin.component";
 // import {UserPageComponent} from "./user/user.component";
 import { LoginComponent } from './login/login.component';
 import { ParkoffComponent } from './parkoff/parkoff.component';
@@ -18,10 +18,13 @@ import { UserComponent } from './user/userPage.component';
 import { AdminGuard } from './guards/admin.guard';
 import { ManagerGuard } from './guards/manager.guard';
 import { UserGuard } from './guards/user.guard';
+import { AdminTicketDetailViewerComponent } from './admin-ticket-detail-viewer/admin-ticket-detail-viewer.component'
 
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import { ManagerParkingListComponent } from './manager-parking-list/manager-parking-list.component';
+import { AddPhoneNumberComponent } from './add-phone-number/add-phone-number.component';
 
 const routes: Routes = [
   { path: 'cancel', component: ParkoffComponent },
@@ -29,10 +32,11 @@ const routes: Routes = [
   { path: 'home', component: PageComponent },
   { path: 'signup/manager', component: ManagerSignupComponent },
   { path: 'cabinet', component: AppComponent },
-  { path: 'cabinet/addParking', component: AddParkingComponent },
-  { path: 'manager/cabinet', component: ParkingListComponentManager, canActivate: [ManagerGuard] },
+  { path: 'manager/parking', component: AddParkingComponent },
+  { path: 'manager/cabinet', component: ManagerParkingListComponent, canActivate: [ManagerGuard] },
   { path: 'manager/cabinet/:id', component: ParkingDetailComponent, canActivate: [ManagerGuard] },
   { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] },
+  { path: 'admin/:id', component: AdminTicketDetailViewerComponent, canActivate: [AdminGuard] },
 
   // { path: 'parkings', component: ParkingsComponentSlots },
   { path: 'parkings/:id', component: ParkingDetailSlotsComponent },
@@ -46,7 +50,8 @@ const routes: Routes = [
 
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
-  { path: 'verify-email', component: VerifyEmailComponent }
+  { path: 'verify-email', component: VerifyEmailComponent },
+  { path: 'phone-number', component: AddPhoneNumberComponent }
 ];
 
 

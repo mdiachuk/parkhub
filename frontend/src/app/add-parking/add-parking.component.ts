@@ -5,6 +5,10 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {ParkingServiceService} from '../parking-service.service';
 import {TranslateArrayService} from '../service/translatearray.service';
 import {TranslateService} from '@ngx-translate/core';
+import { Observable } from 'rxjs/Observable';
+import { Oauth2googleService } from '../service/oauth2google.service';
+import { UserService } from '../service/http-client.service';
+import { NewParking } from './NewParking';
 
 
 @Component({
@@ -13,7 +17,7 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: ['./add-parking.component.scss']
 })
 export class AddParkingComponent implements OnInit {
-
+  parking: NewParking = new NewParking()
   formGroup: FormGroup;
   CityArray: string[] = [];
   nameregex: RegExp = /^[a-zA-Z 0-9-]+$/;
@@ -27,8 +31,9 @@ export class AddParkingComponent implements OnInit {
               private router: Router, private snackBar: MatSnackBar,
               private parkingService: ParkingServiceService,
               private translateArrayService: TranslateArrayService,
-              private translateService: TranslateService) {
-       }
+              private translateService: TranslateService,
+              private service:Oauth2googleService,private addservice:UserService) {
+    }
 
   ngOnInit() {
     this.createForm();
@@ -89,19 +94,24 @@ export class AddParkingComponent implements OnInit {
   }
 
   openSnackBar1(message: string) {
+    console.log(message);
     this.snackBar.open(message, 'Close', {
       horizontalPosition: 'center',
       verticalPosition: 'top',
     });
   }
+
   onSubmit(formGroup) {
     console.log(formGroup);
-    this.parkingService.save(formGroup)
+    for(let property in formGroup){this.parking[property] = formGroup[property];}
+    this.parking["id"] = Number(this.addservice.getUserID());
+    console.log(this.parking)
+     this.parkingService.save(this.parking)
      .subscribe( data => {
        this.openSnackBar(('Parking created successfully.'));
     },
     err => {
       this.openSnackBar1((err.error));
     });
-}
+  }
 }
