@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.dto.AdminSupportTicketDTO;
 import ua.com.parkhub.dto.AdminTicketCounterDTO;
 import ua.com.parkhub.dto.RoleDTO;
-import ua.com.parkhub.mappers.modelToDTO.TicketSupportModelToAdminSupportTicketDTO;
+import ua.com.parkhub.mappers.modelToDto.TicketSupportModelToAdminSupportTicketDTO;
 import ua.com.parkhub.model.RoleModel;
 import ua.com.parkhub.model.SupportTicketModel;
 import ua.com.parkhub.model.UserModel;

@@ -79,6 +79,8 @@ export class LoginComponent implements OnInit {
     }
     if (code === 8) {
       return this.translate.instant('Please enter valid credentials!');
+    }if (code === 256) {
+      return 'Your account is not verified.';
     }
   }
 
