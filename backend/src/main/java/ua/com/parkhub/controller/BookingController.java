@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.*;
 import ua.com.parkhub.exceptions.BookingException;
 import ua.com.parkhub.exceptions.CustomerException;
-import ua.com.parkhub.mappers.modelToDTO.ParkingWithSlotsModelToDTOMapper;
-import ua.com.parkhub.mappers.modelToDTO.PaymentModelToDTOMapper;
+import ua.com.parkhub.mappers.modelToDto.ParkingWithSlotsModelToDTOMapper;
+import ua.com.parkhub.mappers.modelToDto.PaymentModelToDTOMapper;
 import ua.com.parkhub.service.IBookingService;
 
 //TODO Validation: parkId, slotId, car number, phone number

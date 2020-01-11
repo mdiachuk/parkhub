@@ -8,7 +8,7 @@ import ua.com.parkhub.dto.ParkingDTO;
 import ua.com.parkhub.dto.ParkingUpdateRequestDTO;
 import ua.com.parkhub.exceptions.ParkingDoesntExistException;
 import ua.com.parkhub.mappers.dtoToModel.ParkingRequestDtoToModelMapper;
-import ua.com.parkhub.mappers.modelToDTO.ParkingModelToDTOMapper;
+import ua.com.parkhub.mappers.modelToDto.ParkingModelToDTOMapper;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.service.impl.ParkingService;
 
