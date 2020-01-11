@@ -28,7 +28,6 @@ public class AddressGeoService {
         ResponseEntity<AddressGeoDTO[]> adressGeoDTO = null;
 
         try {
-
             adressGeoDTO = restTemplate.getForEntity(url, AddressGeoDTO[].class);
 
             hashMap.put("lat", adressGeoDTO.getBody()[0].getLat());

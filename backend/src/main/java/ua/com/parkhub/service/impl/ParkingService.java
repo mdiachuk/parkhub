@@ -88,7 +88,6 @@ public class ParkingService implements IParkingService {
     @Transactional
     public void createParkingByOwnerID(ParkingModel parkingModel, long id) {
 
-
         AddressModel address = parkingModel.getAddressModel();
         address = setLatLan(address);
 
