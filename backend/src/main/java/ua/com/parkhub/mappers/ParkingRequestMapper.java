@@ -11,7 +11,7 @@ import ua.com.parkhub.persistence.entities.Parking;
 
 @Mapper
 public interface ParkingRequestMapper {
-    @Mappings({
+   /* @Mappings({
             @Mapping(target = "addressModel.city", source = "city"),
             @Mapping(target = "addressModel.street", source = "street"),
             @Mapping(target = "addressModel.building", source = "building"),
@@ -27,5 +27,5 @@ public interface ParkingRequestMapper {
             @Mapping(target = "street", source = "addressModel.street"),
             @Mapping(target = "building", source = "addressModel.building"),
     })
-    Address parkingModelToAddress(ParkingModel parkingModel);
+    Address parkingModelToAddress(ParkingModel parkingModel);*/
 }

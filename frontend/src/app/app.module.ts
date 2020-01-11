@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import 'hammerjs';
 
 import { MaterialModule } from './material.module';
@@ -41,15 +41,12 @@ import {
   MatSortModule,
   MatTableModule,
   MatSelectModule,
-  MatIconModule,
   MatCheckboxModule,
-  MatSnackBarModule
 } from '@angular/material';
 import { UserComponent } from './user/userPage.component';
 import { LoginComponent } from './login/login.component';
 import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
 import { ParkoffComponent } from './parkoff/parkoff.component';
-import { MatDialogModule } from '@angular/material/dialog';
 
 import { SlotsComponent } from './slots/slots.component';
 import { BookingDetailComponent } from './bookings/booking-detail/booking-detail.component';
@@ -78,13 +75,6 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ParkingListComponent,
-    ParkingsComponent,
-    ParkingDetailComponent,
-    AddressDialog
-  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -121,10 +111,15 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     MatChipsModule,
     MatSidenavModule,
     FormsModule,
-    MatIconModule
+    MatIconModule,
     MatExpansionModule,
   ],
   declarations: [
+    AppComponent,
+    ParkingListComponent,
+    ParkingsComponent,
+    ParkingDetailComponent,
+    AddressDialog,
     AppComponent,
     SingupComponent,
     PageComponent,

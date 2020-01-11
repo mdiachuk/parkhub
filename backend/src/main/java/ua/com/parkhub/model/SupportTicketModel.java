@@ -1,13 +1,17 @@
 package ua.com.parkhub.model;
 
-import java.util.Set;
+import java.util.List;
 
 public class SupportTicketModel {
+
 
     private Long id;
     private String description;
     private boolean isSolved;
-    private SupportTicketTypeModel supportTicketType;
+    private TicketTypeModel type;
+    private SupportTicketTypeModel supportTicketTypeModel;
+    private CustomerModel customer;
+    private List<UserModel> solvers;
 
     public Long getId() {
         return id;
@@ -33,11 +37,36 @@ public class SupportTicketModel {
         isSolved = solved;
     }
 
-    public SupportTicketTypeModel getSupportTicketType() {
-        return supportTicketType;
+    public TicketTypeModel getType() {
+        return type;
     }
 
-    public void setSupportTicketType(SupportTicketTypeModel supportTicketType) {
-        this.supportTicketType = supportTicketType;
+    public void setType(TicketTypeModel type) {
+        this.type = type;
     }
+
+    public SupportTicketTypeModel getSupportTicketType() {
+        return supportTicketTypeModel;
+    }
+
+    public void setSupportTicketType(SupportTicketTypeModel supportTicketTypeModel) {
+        this.supportTicketTypeModel = supportTicketTypeModel;
+    }
+
+    public CustomerModel getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(CustomerModel customer) {
+        this.customer = customer;
+    }
+
+    public List<UserModel> getSolvers() {
+        return solvers;
+    }
+
+    public void setSolvers(List<UserModel> solvers) {
+        this.solvers = solvers;
+    }
+
 }

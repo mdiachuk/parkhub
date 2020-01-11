@@ -15,7 +15,6 @@ public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_generator")
     @SequenceGenerator(name = "customer_generator", sequenceName = "park_hub.customer_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column

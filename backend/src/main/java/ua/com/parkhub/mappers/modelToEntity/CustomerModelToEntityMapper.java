@@ -11,13 +11,6 @@ import java.util.stream.Collectors;
 @Component
 public class CustomerModelToEntityMapper implements Mapper<CustomerModel, Customer> {
 
-    SupportTicketModelToEntityMapper supportTicketModelToEntityMapper;
-
-    @Autowired
-    public CustomerModelToEntityMapper(SupportTicketModelToEntityMapper supportTicketModelToEntityMapper) {
-        this.supportTicketModelToEntityMapper = supportTicketModelToEntityMapper;
-    }
-
     @Override
     public Customer transform(CustomerModel from) {
         if (from == null) {

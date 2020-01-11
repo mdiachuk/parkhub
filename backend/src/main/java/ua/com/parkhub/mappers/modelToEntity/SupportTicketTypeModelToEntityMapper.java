@@ -19,3 +19,5 @@ public class SupportTicketTypeModelToEntityMapper implements Mapper<TicketTypeMo
         return supportTicketType;
     }
 }
+
+
