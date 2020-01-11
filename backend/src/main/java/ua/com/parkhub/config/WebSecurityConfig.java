@@ -93,7 +93,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/login", "/api/logout**", "/api/signup/manager", "/api/admin/",
+                .antMatchers("/api/login", "/api/logout**", "/api/signup/manager",
                         "/api/user/password/reset", "/api/user/verify", "/api/user/token/",
                         "/api/user/token/refresh", "/api/user/token", "/api/oauthJwtToken","/api/login/google").permitAll()
                 .anyRequest().authenticated()
