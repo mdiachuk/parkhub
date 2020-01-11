@@ -71,6 +71,7 @@ import { ParkingDetailComponent } from './parking-detail/parking-detail.componen
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ManagerParkingListComponent } from './manager-parking-list/manager-parking-list.component';
 import { from } from 'rxjs';
+import { AddPhoneNumberComponent } from './add-phone-number/add-phone-number.component';
 
 
 @NgModule({
@@ -108,7 +109,8 @@ import { from } from 'rxjs';
     ResetPasswordComponent,
     ForgotPasswordComponent,
     VerifyEmailComponent,
-    ManagerParkingListComponent
+    ManagerParkingListComponent,
+    AddPhoneNumberComponent
   ],
   imports: [
     BrowserModule,
