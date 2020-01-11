@@ -33,7 +33,7 @@ public class User implements Serializable {
     @Size(min = 6, max = 60)
     private String password;
 
-    @Column(name = "number_of_faild_pass_entering")
+    @Column(name = "number_of_failed_pass_entering")
     @NotNull
     private int numberOfFailedPassEntering;
 

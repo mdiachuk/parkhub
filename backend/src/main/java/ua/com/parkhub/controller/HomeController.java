@@ -32,12 +32,17 @@ public class HomeController {
 
     @GetMapping("/api/home")
     public ResponseEntity<List<ParkingDTO>> getAllParking(@RequestParam (defaultValue = "all") String address) {
-
         if (!address.equals("all")){
-            return ResponseEntity.ok(parkingService.findParkingInArea(address).stream().map(parkingMapper::transform).collect(Collectors.toList()));
+            List<ParkingDTO> list = parkingService.findParkingInArea(address).stream().map(parkingMapper::transform).collect(Collectors.toList());
+            if (list.isEmpty()){
+                ParkingDTO parkingDTO = new ParkingDTO();
+                parkingDTO.setAddress("There is no parking at the designated location: "+address);
+                list.add(parkingDTO);
+                return ResponseEntity.ok(list);
+            }
+            return ResponseEntity.ok(list);
         }
         return ResponseEntity.ok(parkingService.findAllParkingModel().stream().map(parkingMapper::transform).collect(Collectors.toList()));
-
     }
 }
 
