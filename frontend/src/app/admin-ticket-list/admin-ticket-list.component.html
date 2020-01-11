@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-content>
-    <h3>New tickets: {{ticketCounter.adminTicketCounter}}</h3>
+    <h3>New tickets: {{(ticketCounter$ | async)?.adminTicketCounter}}</h3>
 <mat-table [dataSource]="tickets">
     <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef> Ticket ID </mat-header-cell>

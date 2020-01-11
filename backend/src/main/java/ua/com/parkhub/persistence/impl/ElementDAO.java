@@ -59,6 +59,7 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
         Root<E> rootEntry = cq.from(elementClass);
         CriteriaQuery<E> all = cq.select(rootEntry);
         TypedQuery<E> allQuery = emp.createQuery(all);
+        List<M> list = allQuery.getResultList().stream().map(entityToModel::transform).collect(Collectors.toList());
         return allQuery.getResultList().stream().map(entityToModel::transform).collect(Collectors.toList());
 
     }

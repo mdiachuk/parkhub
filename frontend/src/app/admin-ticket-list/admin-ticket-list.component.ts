@@ -3,7 +3,7 @@ import { AdminTicketDetail } from '../Classes/admin-ticket-detail';
 import { AdminTicketCounter } from '../Classes/admin-ticket-counter';
 import { AdminTicketService } from '../admin-ticket.service';
 import {DataSource} from '@angular/cdk/collections';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 
 
@@ -17,7 +17,7 @@ export class AdminTicketListComponent implements OnInit {
   tickets: AdminTicketDetail[];
   dataSource = new AdminTicketListDataSource(this.adminTicketService);
   displayedColumns = ['id','ticketHighlight','supportTicketType','isSolved']
-  ticketCounter: AdminTicketCounter;
+  ticketCounter$: Observable<AdminTicketCounter> = of({adminTicketCounter: 0});
 
   constructor(private adminTicketService: AdminTicketService,
     private route: ActivatedRoute,
@@ -27,10 +27,10 @@ export class AdminTicketListComponent implements OnInit {
 
   ngOnInit() {
     this.reloadData();
-    this.getTicketCounter();
+    this.ticketCounter$ = this.getTicketCounter();
   }
-  getTicketCounter(){
-    this.adminTicketService.getAdminTicketCounter().subscribe(response =>this.ticketCounter = response)
+  getTicketCounter(): Observable<AdminTicketCounter>{
+    return this.adminTicketService.getAdminTicketCounter();
   }
   reloadData(){
     this.adminTicketService.getTicketsList().subscribe(response => this.tickets = response);

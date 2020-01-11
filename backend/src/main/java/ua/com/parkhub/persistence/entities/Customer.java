@@ -5,16 +5,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "customer", schema = "park_hub")
 public class Customer implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_generator")
-    @SequenceGenerator(name = "customer_generator", sequenceName = "park_hub.customer_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
@@ -25,14 +22,6 @@ public class Customer implements Serializable {
     @Column
     @NotNull
     private boolean isActive = true;
-
-    @OneToMany
-    @JoinColumn(name = "customer_id")
-    private List<Booking> bookings;
-
-    @OneToMany
-    @JoinColumn(name = "author_id")
-    private List<SupportTicket> supportTickets;
 
     public Long getId() {
         return id;
@@ -57,21 +46,4 @@ public class Customer implements Serializable {
     public void setActive(boolean active) {
         isActive = active;
     }
-
-    public List<Booking> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(List<Booking> bookings) {
-        this.bookings = bookings;
-    }
-
-    public List<SupportTicket> getSupportTickets() {
-        return supportTickets;
-    }
-
-    public void setSupportTickets(List<SupportTicket> supportTickets) {
-        this.supportTickets = supportTickets;
-    }
-
 }

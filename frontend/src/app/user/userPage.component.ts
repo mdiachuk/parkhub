@@ -45,14 +45,16 @@ export class UserComponent implements OnInit {
 
   }
   EditUserInfo() {
-    if (i == 0 ) {
+    if (i == 0) {
       document.getElementById("displayUserInfo").style.display = "none";
       document.getElementById("editUserInfo").style.display = "";
+      document.getElementById("editButton").innerText = "Close";
       i++;
     }
     else {
       document.getElementById("displayUserInfo").style.display = "";
       document.getElementById("editUserInfo").style.display = "none";
+      document.getElementById("editButton").innerText = "Edit";
       i--;
     }
   }
@@ -66,23 +68,17 @@ export class UserComponent implements OnInit {
 
     if (j == 0) {
       document.getElementById("ChangePassword").style.display = "";
+      document.getElementById("buttonChangePassword").innerText = "Close";
       document.getElementById("buttonSavePassword").style.display = "";
       j++;
     } else {
       document.getElementById("ChangePassword").style.display = "none";
       document.getElementById("buttonSavePassword").style.display = "none";
+      document.getElementById("buttonChangePassword").innerText = "Change Password";
       j--;
     }
 
   }
-
-  // PostPassword(){
-  //   this.UserService.PostDataPassword({id: this.UserService.getUserID(),
-  //     password: this.updateForm.get('userPassword').value,
-  //     newPassword: this.updateForm.get('newPassword').value}).subscribe(res => {
-  //     console.log(res);
-  //   });
-  // }
 
   PostPassword() {
     this.UserService.PostDataPassword({
