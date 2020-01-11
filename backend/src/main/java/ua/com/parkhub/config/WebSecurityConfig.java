@@ -38,7 +38,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${frontUrl}")
     private String frontUrl;
 
-
     @Autowired
     OAuth2ClientContext oauth2ClientContext;
 

@@ -9,7 +9,7 @@
     <span id="displayUserInfo">
       <mat-list>
         <mat-list-item>
-          <h4>First name: </h4>  {{user?.firstName}}
+          <h4>First name: </h4> {{user?.firstName}}
         </mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item>
@@ -30,25 +30,25 @@
       <form [formGroup]="updateForm">
         <mat-form-field class="example-full-width">
           <input type="text" formControlName="firstName" matInput placeholder="First Name" name="First Name" required
-                 minlength="1" maxlength="50">
+            minlength="1" maxlength="50">
         </mat-form-field>
         <mat-form-field class="example-full-width">
           <input type="text" formControlName="lastName" matInput placeholder="Last Name" name="Last Name" required
-                 minlength="1" maxlength="50">
+            minlength="1" maxlength="50">
         </mat-form-field>
         <mat-form-field class="example-full-width">
           <input type="email" formControlName="email" matInput placeholder="Email" name="Email"
-                 pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required>
+            pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required>
           <mat-error>Invalid email format</mat-error>
         </mat-form-field>
         <mat-form-field class="example-full-width">
           <input type="tel" formControlName="phoneNumber" matInput placeholder="Telephone" name="Phone Number" required
-                 pattern="^3?8?(0\d{9})$">
+            pattern="^3?8?(0\d{9})$">
           <mat-error>Invalid phone number format</mat-error>
         </mat-form-field>
       </form>
     </span>
-    <button mat-raised-button (click)="EditUserInfo()">Edit</button>
+    <button id="editButton" mat-raised-button (click)="EditUserInfo()">Edit</button>
     <button mat-raised-button (click)="PostData()">Save</button>
   </div>
   <div class="right-page">
@@ -59,7 +59,7 @@
         </mat-form-field>
         <mat-form-field class="example-full-width">
           <input matInput formControlName="newPassword" type="password" placeholder="New Password" required
-                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}">
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}">
           <mat-error><small>Must contain at least one number, one uppercase and one lowercase letter, and at
               least 6 characters</small></mat-error>
         </mat-form-field>
@@ -71,8 +71,8 @@
         </mat-form-field>
       </form>
     </span>
-    <button mat-raised-button (click)="changePassword()">Change Password</button>
-    <button id="buttonSavePassword" style="display: none;" mat-raised-button (click)="PostPassword()">Save Password</button>
+    <button id="buttonChangePassword" mat-raised-button (click)="changePassword()">Change Password</button>
+    <button id="buttonSavePassword" style="display: none;" mat-raised-button (click)="PostPassword()">Save
+      Password</button>
   </div>
 </div>
-
