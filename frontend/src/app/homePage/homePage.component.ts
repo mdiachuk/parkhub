@@ -7,6 +7,7 @@ import {Component, OnInit} from '@angular/core';
 })
 export class PageComponent implements OnInit {
 
+  childSearch: string;
   search: string;
 
   constructor() {
@@ -16,12 +17,7 @@ export class PageComponent implements OnInit {
   }
 
   addSearch() {
-    console.log(this.search)
-    //TODO: get value from the form field and set it as search. it should work, maybe :)
-  }
-
-  firstSearch(){
-    this.search = "";
+    this.childSearch = this.search;
   }
 
 }
