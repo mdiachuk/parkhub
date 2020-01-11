@@ -88,6 +88,7 @@ public class SignUpController {
         userDTO.setRole(RoleDTO.USER);
 
         if ( signUpService.signupUser(userDtoToUserModelMapper.transform(userDTO))){
+            logger.info("New User create");
             return ResponseEntity.ok().build();
         } else {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -1,10 +1,13 @@
-<div align="center"><h3>Sing Up User Form</h3></div>
 
+<!--<div align="center">Sing Up User Form</div>-->
 
 <div align="center">
   <mat-card>
 
+
     <mat-card-content>
+
+          <mat-card-title >Sign Up User Form</mat-card-title>
 
       <div align="center">
 
@@ -12,31 +15,33 @@
           <mat-label>Name</mat-label>
           <input type="text" matInput placeholder="First Name" [(ngModel)]="users.firstName" name="First Name" required>
         </mat-form-field>
-
+        &#160;
         <mat-form-field>
           <mat-label>Second Name</mat-label>
           <input type="text" matInput placeholder="Last Name" [(ngModel)]="users.lastName" name="Last Name" required>
         </mat-form-field>
+      </div>
 
+
+      <div align="center">
         <mat-form-field>
           <mat-label>Telephone</mat-label>
           <input type="tel" matInput placeholder="Telephone"
                  [(ngModel)]="customer.phoneNumber" name="Phone Number" required pattern="[0-9]{10}">
         </mat-form-field>
-
-      </div>
-
-      <div align="center">
+        &#160;
         <mat-form-field>
           <mat-label>Email</mat-label>
           <input type="email" matInput placeholder="Email" [(ngModel)]="users.email" name="Email" required>
         </mat-form-field>
+      </div>
 
+      <div align="center">
         <mat-form-field>
           <mat-label>Password</mat-label>
           <input type="password" matInput placeholder="Password" [(ngModel)]="users.password" name="Password" required>
         </mat-form-field>
-
+        &#160;
         <mat-form-field>
           <mat-label>Confirm Password</mat-label>
           <input type="password" matInput placeholder="Confirm Password"
@@ -44,10 +49,10 @@
         </mat-form-field>
       </div>
 
-
     </mat-card-content>
     <button class="btn btn-success" mat-raised-button (click)="singUpUser()">Create</button>
-
   </mat-card>
+
+
 </div>
 
