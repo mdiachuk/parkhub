@@ -9,7 +9,7 @@
           <a mat-button [routerLink]='["cancel"]'>{{ 'CancelPrepayment' | translate }}</a>
 <!--          <a mat-button [routerLink]='["parkings"]'>Parking</a>-->
 
-          <a *ngIf="data.currentIsManager  | async" mat-button [routerLink]='["cabinet/addParking"]'>{{ 'Add parking' | translate }}</a>
+          <a *ngIf="data.currentIsManager  | async" mat-button [routerLink]='["manager/parking"]'>{{ 'Add parking' | translate }}</a>
           <a *ngIf="data.currentIsManager | async" mat-button [routerLink]='["manager/cabinet"]'>{{ 'Manager cabinet' | translate }}</a>
           <a *ngIf="data.currentIsAdmin  | async" mat-button [routerLink]='["admin"]'>{{ 'Admin cabinet' | translate }}</a>
           <a *ngIf="data.currentIsUser | async" mat-button [routerLink]='["userPage"]'>{{'User Cabinet' | translate}}</a>
