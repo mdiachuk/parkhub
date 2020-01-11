@@ -8,6 +8,7 @@ import ua.com.parkhub.dto.ParkingDTO;
 import ua.com.parkhub.dto.ParkingUpdateRequestDTO;
 import ua.com.parkhub.exceptions.ParkingDoesntExistException;
 import ua.com.parkhub.mappers.dtoToModel.ParkingRequestDtoToModelMapper;
+import ua.com.parkhub.mappers.modelToDto.ParkingModelToDTOMapper;
 import ua.com.parkhub.service.impl.ParkingService;
 
 
@@ -17,9 +18,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/manager/cabinet")
 public class ManagerController {
-/*
     private ParkingService parkingService;
-   // private ParkingModelToDTOMapper parkingMapper;
+    private ParkingModelToDTOMapper parkingMapper;
     private ParkingRequestDtoToModelMapper parkingRequestDtoToModelMapper;
 
     @Autowired
@@ -53,6 +53,6 @@ public class ManagerController {
     @ExceptionHandler(ParkingDoesntExistException.class)
     public ResponseEntity<Integer> handleEmailException(ParkingDoesntExistException e) {
         return ResponseEntity.badRequest().body(e.getStatusCode().getCode());
-    }*/
+    }
 }
 
