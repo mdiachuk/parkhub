@@ -23,7 +23,6 @@ export class ParkingListComponent implements OnInit, OnChanges {
 
   @Input()
   set search(val: string) {
-    console.log(val)
     this._search = val;
   }
 
@@ -44,7 +43,7 @@ export class ParkingListComponent implements OnInit, OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges) {
-    const currentItem: SimpleChange = changes.item;
+    const currentItem: SimpleChange = changes.search.currentValue;
     if (typeof currentItem === 'string')
       this.dataSource = new ParkingDataSource(this.parkingService, currentItem);
   }
@@ -57,9 +56,7 @@ export class ParkingDataSource extends DataSource<any> {
   }
 
   connect(): Observable<Parking[]> {
-    console.log(this.search)
     return this.parkingService.getparking(this.search);
-
   }
 
 
