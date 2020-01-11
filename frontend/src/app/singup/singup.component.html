@@ -7,20 +7,21 @@
     <mat-card-content>
 
       <div align="center">
+
         <mat-form-field>
           <mat-label>Name</mat-label>
-          <input type="text"  matInput  placeholder="First Name" [(ngModel)]="users.firstName"  name="First Name"  required>
+          <input type="text" matInput placeholder="First Name" [(ngModel)]="users.firstName" name="First Name" required>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Second Name</mat-label>
-          <input type="text" matInput  placeholder="Last Name" [(ngModel)]="users.lastName"  name="Last Name"  required>
+          <input type="text" matInput placeholder="Last Name" [(ngModel)]="users.lastName" name="Last Name" required>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Telephone</mat-label>
-          <input type="tel" matInput  placeholder="Telephone"
-                 [(ngModel)]="customer.phoneNumber"  name="Phone Number"  required pattern="[0-9]{10}">
+          <input type="tel" matInput placeholder="Telephone"
+                 [(ngModel)]="customer.phoneNumber" name="Phone Number" required pattern="[0-9]{10}">
         </mat-form-field>
 
       </div>
@@ -28,26 +29,20 @@
       <div align="center">
         <mat-form-field>
           <mat-label>Email</mat-label>
-          <input type="email" matInput  placeholder="Email" [(ngModel)]="users.email"  name="Email"  required>
+          <input type="email" matInput placeholder="Email" [(ngModel)]="users.email" name="Email" required>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Password</mat-label>
-          <input type="password" matInput  placeholder="Password" [(ngModel)]="users.password"  name="Password"  required>
+          <input type="password" matInput placeholder="Password" [(ngModel)]="users.password" name="Password" required>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Confirm Password</mat-label>
-          <input type="password" matInput  placeholder="Confirm Password"
-                 [(ngModel)]="confirmPass.confirmPass" name="Confirm Password"  required>
+          <input type="password" matInput placeholder="Confirm Password"
+                 [(ngModel)]="confirmPass.confirmPass" name="Confirm Password" required>
         </mat-form-field>
       </div>
-
-
-
-
-
-
 
 
     </mat-card-content>

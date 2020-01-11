@@ -1,3 +1,31 @@
+// import { Injectable, ErrorHandler }   from '@angular/core';
+// import { HttpClient }   from '@angular/common/http';
+// import { Observable, of }   from 'rxjs';
+// //import { catchError, map, tap } from 'rxjs/operators';
+//
+//
+// import 'rxjs/add/operator/map';
+// import { Parking } from '../models/parking.model';
+// @Injectable()
+// export class ParkingService1 {
+//
+//   private serviceUrl =  'api/home';
+//     //'http://localhost:4200/assets/parkings.json';
+//
+//
+//   constructor(private http: HttpClient) { }
+//
+//   getparking(): Observable<Parking[]> {
+//
+//       // return this.http.get<Parking[]>( 'http://localhost:8080/api/home?address=київ леся курбаса 5а');
+//
+//     return this.http.get<Parking[]>(this.serviceUrl);
+//
+//
+//   }
+//
+// }
+
 import { Injectable, ErrorHandler }   from '@angular/core';
 import { HttpClient }   from '@angular/common/http';
 import { Observable, of }   from 'rxjs';
@@ -10,18 +38,23 @@ import { Parking } from '../models/parking.model';
 export class ParkingService1 {
 
   private serviceUrl =  'api/home';
-    //'http://localhost:4200/assets/parkings.json';
+  //'http://localhost:4200/assets/parkings.json';
 
 
   constructor(private http: HttpClient) { }
 
-  getparking(): Observable<Parking[]> {
+  getparking(search?: string): Observable<Parking[]> {
 
-      // return this.http.get<Parking[]>( 'http://localhost:8080/api/home?address=київ леся курбаса 5а');
-
-    return this.http.get<Parking[]>(this.serviceUrl);
+    let options = {};
+    if (search && (search !== "")) {
+      options = { params: {
+          address: search
+        } };
+    }
+    return this.http.get<Parking[]>(this.serviceUrl, options);
 
 
   }
 
 }
+

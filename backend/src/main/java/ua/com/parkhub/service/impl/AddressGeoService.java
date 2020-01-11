@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import ua.com.parkhub.dto.AddressGeoDTO;
 
@@ -18,30 +19,32 @@ public class AddressGeoService {
     private static final double EARTH_RADIUS = 6372795;
 
 
-
     public Map<String, String> getLatLon(String query) {
 
         HashMap hashMap = new HashMap();
         restTemplate = new RestTemplate();
-        String URL = "https://nominatim.openstreetmap.org/search.php?q=" +
+        String url = "https://nominatim.openstreetmap.org/search.php?q=" +
                 getUrl(query) + "&format=json";
-        ResponseEntity<AddressGeoDTO[]> adressGeoDTO =null;
+        ResponseEntity<AddressGeoDTO[]> adressGeoDTO = null;
 
         try {
-            adressGeoDTO = restTemplate.getForEntity(URL, AddressGeoDTO[].class);
+
+            adressGeoDTO = restTemplate.getForEntity(url, AddressGeoDTO[].class);
+
             hashMap.put("lat", adressGeoDTO.getBody()[0].getLat());
             hashMap.put("lon", adressGeoDTO.getBody()[0].getLon());
             return hashMap;
-        }  catch (ArrayIndexOutOfBoundsException e) {
-            LOGGER.error("Not found address ->"+query+"!" + e);
-
+        } catch (ArrayIndexOutOfBoundsException e) {
+            LOGGER.error("Not found address ->" + query + "!" + e);
+        }
+        catch (RestClientException e1 ){
+            LOGGER.error("Connection timed out ->"+e1);
         }
 
-        hashMap.put("lat", "0");
-        hashMap.put("lon", "0");
-        return  hashMap;
+        hashMap.put("lat", "-500");
+        hashMap.put("lon", "-500");
+        return hashMap;
     }
-
 
 
     private String getUrl(String query) {
@@ -76,6 +79,7 @@ public class AddressGeoService {
 
         double arcTan = Math.atan2(x1, y1);
         double dist = arcTan * EARTH_RADIUS;
+
 
         return !(dist > 1100);
     }

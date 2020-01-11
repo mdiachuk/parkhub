@@ -10,7 +10,6 @@ import ua.com.parkhub.model.*;
 import ua.com.parkhub.persistence.impl.*;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,41 +36,41 @@ public class SignUpService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Transactional
-    public void registerManager(ManagerRegistrationDataModel manager) {
-        CustomerModel customer = createCustomer(manager.getUser().getCustomer());
-        customer = customerDAO.addElement(customer).orElseThrow(() ->
-                new NotFoundInDataBaseException("Customer not found"));
-        UserModel user = createUser(manager.getUser(), customer);
-        userDAO.addElement(user);
-        String description = generateDescription(manager.getCompanyName(), manager.getUsreouCode(),
-                manager.getComment());
-       SupportTicketModel ticket = createTicket(description, customer);
-       supportTicketDAO.addElement(ticket);
-    }
+//    @Transactional
+//    public void registerManager(ManagerRegistrationDataModel manager) {
+//        CustomerModel customer = createCustomer(manager.getUser().getCustomer());
+//        customer = customerDAO.addElement(customer).orElseThrow(() ->
+//                new NotFoundInDataBaseException("Customer not found"));
+//        UserModel user = createUser(manager.getUser(), customer);
+//        userDAO.addElement(user);
+//        String description = generateDescription(manager.getCompanyName(), manager.getUsreouCode(),
+//                manager.getComment());
+//       SupportTicketModel ticket = createTicket(description, customer);
+//       supportTicketDAO.addElement(ticket);
+//    }
 
-    @Transactional
-    public CustomerModel createCustomer(CustomerModel customer) {
-        return customerDAO.findCustomerByPhoneNumber(customer.getPhoneNumber()).map(existingCustomer -> {
-            logger.info("Customer with phone number={} was found", customer.getPhoneNumber());
-            Optional<UserModel> optionalUser = userDAO.findUserByCustomerId(existingCustomer.getId());
-            if (optionalUser.isPresent()) {
-                throw new PhoneNumberException("Account with this phone number already exists!");
-            }
-            logger.info("Existing customer was assigned");
-            return existingCustomer;
-        }).orElseGet(() -> {
-            customer.setActive(true);
-            logger.info("New customer was created");
-            return customer;
-        });
-    }
+//    @Transactional
+//    public CustomerModel createCustomer(CustomerModel customer) {
+//        return customerDAO.findCustomerByPhoneNumber(customer.getPhoneNumber()).map(existingCustomer -> {
+//            logger.info("Customer with phone number={} was found", customer.getPhoneNumber());
+//            Optional<UserModel> optionalUser = userDAO.findUserByCustomerId(existingCustomer.getId());
+//            if (optionalUser.isPresent()) {
+//                throw new PhoneNumberException("Account with this phone number already exists!");
+//            }
+//            logger.info("Existing customer was assigned");
+//            return existingCustomer;
+//        }).orElseGet(() -> {
+//            customer.setActive(true);
+//            logger.info("New customer was created");
+//            return customer;
+//        });
+//    }
 
     @Transactional
     public UserModel createUser(UserModel user, CustomerModel customer) {
         Optional<UserModel> optionalUser = userDAO.findUserByEmail(user.getEmail());
         if (optionalUser.isPresent()) {
-            throw new EmailException("Account with this email already exists!");
+//            throw new EmailException("Account with this email already exists!");
         }
         user.setCustomer(customer);
         user.setRole(findUserRole(RoleModel.PENDING.getRoleName()));
@@ -81,16 +80,16 @@ public class SignUpService {
         return user;
     }
 
-    @Transactional
-    public SupportTicketModel createTicket(String description, CustomerModel customer) {
-        SupportTicketModel ticket = new SupportTicketModel();
-        ticket.setDescription(description);
-        ticket.setCustomer(customer);
-        ticket.setType(findSupportTicketType(TicketTypeModel.MANAGER_REGISTRATION_REQUEST.getType()));
-        ticket.setSolvers(findSolvers(RoleModel.ADMIN.getRoleName()));
-        logger.info("New support ticket was created");
-        return ticket;
-    }
+//    @Transactional
+//    public SupportTicketModel createTicket(String description, CustomerModel customer) {
+//        SupportTicketModel ticket = new SupportTicketModel();
+//        ticket.setDescription(description);
+//        ticket.setCustomer(customer);
+//        ticket.setType(findSupportTicketType(TicketTypeModel.MANAGER_REGISTRATION_REQUEST.getType()));
+//        ticket.setSolvers(findSolvers(RoleModel.ADMIN.getRoleName()));
+//        logger.info("New support ticket was created");
+//        return ticket;
+//    }
 
     private String generateDescription(String companyName, String usreouCode, String comment) {
         return "Company: <" + companyName + "> " +
@@ -111,18 +110,18 @@ public class SignUpService {
 
     }
 
-    private TicketTypeModel findSupportTicketType(String type) {
-        return supportTicketTypeDAO.findSupportTicketTypeByType(type).orElseThrow(() ->
-                new NotFoundInDataBaseException("Support ticket type was not found by type=" + type));
-    }
+//    private TicketTypeModel findSupportTicketType(String type) {
+//        return supportTicketTypeDAO.findSupportTicketTypeByType(type).orElseThrow(() ->
+//                new NotFoundInDataBaseException("Support ticket type was not found by type=" + type));
+//    }
 
-    private List<UserModel> findSolvers(String role) {
-        List<UserModel> solvers = userDAO.findUsersByRoleId(findUserRole(role).getId());
-        if (solvers.isEmpty()) {
-            throw new NotFoundInDataBaseException("Solvers were not found by role=" + role);
-        }
-        return solvers;
-    }
+//    private List<UserModel> findSolvers(String role) {
+//        List<UserModel> solvers = userDAO.findUsersByRoleId(findUserRole(role).getId());
+//        if (solvers.isEmpty()) {
+//            throw new NotFoundInDataBaseException("Solvers were not found by role=" + role);
+//        }
+//        return solvers;
+//    }
 
 
     public void setPhoneNumberForAuthUser(PhoneEmailModel phoneEmailModel) {

@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 //import ua.com.parkhub.service.impl.ParkingService;
 
 @RestController
+
 public class HomeController {
 
     private ParkingService parkingService;
@@ -29,7 +30,7 @@ public class HomeController {
 
 
 
-    @GetMapping("/home")
+    @GetMapping("/api/home")
     public ResponseEntity<List<ParkingDTO>> getAllParking(@RequestParam (defaultValue = "all") String address) {
 
         if (!address.equals("all")){

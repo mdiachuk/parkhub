@@ -119,7 +119,6 @@ public class ParkingService implements IParkingService {
     public List<ParkingModel> findParkingInArea(String address) {
 
         Map<String, String> map = addressGeoService.getLatLon(address);
-
         return findAllParkingModel().stream()
                 .filter(x -> (addressGeoService
                         .enteringTheRadius(map.get("lat"), map.get("lon"),
