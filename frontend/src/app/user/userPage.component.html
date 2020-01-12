@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <span>User Page</span>
+  <span>{{'User' | translate}}</span>
 </mat-toolbar>
 
 
@@ -9,19 +9,19 @@
     <span id="displayUserInfo">
       <mat-list>
         <mat-list-item>
-          <h4>First name: </h4> {{user?.firstName}}
+          <h4>{{'First name' | translate}}: </h4> {{user?.firstName}}
         </mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item>
-          <h4>Last Name: </h4> {{user?.lastName}}
+          <h4>{{'Last Name' | translate}}: </h4> {{user?.lastName}}
         </mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item>
-          <h4>Email: </h4> {{user?.email}}
+          <h4>{{'Email' | translate}}: </h4> {{user?.email}}
         </mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item>
-          <h4>Telephone: </h4> {{user?.phoneNumber}}
+          <h4>Phone number: </h4> {{user?.phoneNumber}}
         </mat-list-item>
         <mat-divider></mat-divider>
       </mat-list>

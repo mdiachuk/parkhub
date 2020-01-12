@@ -9,12 +9,17 @@
   "Home": "Home",
   "From:": "From:",
   "To:": "To:",
+  "Login via Google!": "Login via Google!",
   "Price per hour:": "Price per hour:",
   "CancelPrepayment": "Cancel prepayment",
   "Cancel Prepayment": "Cancel prepayment",
   "Success": "Success",
+  "Search": "Search",
+  "Nearest parking" : "Nearest parking",
   "Error": "Error",
   "User": "User",
+  "Enter your car number": "Enter your car number",
+  "User Info": "User Info",
   "Customer with this phone number was not found": "Customer with this phone number was not found, please, check the correct input",
   "No pre-order": "No pre-order for this phone number found",
   "Your reservation is already in progress": "Your reservation is already in progress",
@@ -25,7 +30,7 @@
   "WrongPhoneNumberSpecified": "Wrong phone number specified",
   "CustomToolbar": "Custom toolbar",
   "Add parking": "Add parking",
-  "Manager cabinet": "Manager cabinet",
+  "Manager": "Manager",
   "Admin": "Admin",
   "Sign up": "Sign up",
   "Get User by Id": "Get User by ID",
@@ -73,6 +78,7 @@
   "Submit": "Submit",
   "wasSentToTheAdministrator": "was sent to the administrator!",
   "GoToTheHomepage": "Go to the homepage",
+  "Type your email in the field below and we will<br>send you link to reset your password.": "Type your email in the field below and we will<br>send you link to reset your password.",
   "ParkingName": "Parking Name",
   "Address": "Address",
   "Tariff": "Tariff",
@@ -97,7 +103,6 @@
   "$": "UAH/hour",
 
   "Forgot your password?": "Forgot your password?",
-  "Type your email in the field below and we will\nsend you link to reset your password.": "Type your email in the field below and we will\nsend you link to reset your password.",
 
   "FieldIsRequired": "Field is required",
 
@@ -108,7 +113,7 @@
     "value": "Type user role"
   },
     "FindYourParkingLove♥Placeholder": {
-    "value" : "Find your parking, love ♥"
+    "value" : "Find parking"
   },
   "PhoneNumberPlaceholder": {
     "value" : "Enter phone number"

@@ -4,18 +4,20 @@
   },
 
   "ParkHub": "ParkHub",
-  "RECOMMENDED BY THE MOST CAPRICIOUS DRIVERS!": "РЕКОМЕНДОВАНО НАЙБІЛЬШ ПРИМХЛИВИМИ ВОДІЯМИ",
+  "RECOMMENDED BY THE MOST CAPRICIOUS DRIVERS!": "РЕКОМЕНДОВАНО НАЙБІЛЬШ ПРИМХЛИВИМИ ВОДІЯМИ!",
   "Parking created successfully.": "Парковка створена успішно.",
   "Dear user,please input your phone number to be able to have full access cabinet!": "Шановний користувач, будь ласка, введіть свій номер телефону, щоб мати можливість мати повний доступ до кабінету!",
   "Home": "Головна",
   "From:": "З:",
   "To:": "По:",
+  "Login via Google!": "Увійти за допомогою Google!",
   "Price per hour:": "Ціна за годину:",
   "CancelPrepayment": "Відмінити замовлення",
   "Cancel Prepayment": "Журбинка, що ти нас покидаєш",
   "Success": "Тримай гроші за броню",
   "Error": "От халепа",
   "User": "Користувач",
+  "User Info": "Інформація користувача",
   " UAH": " грн",
   "The price of your booking is ": "",
   "Customer with this phone number was not found": "Вибач, але в нас немає користувача з таким номером телефону, спробуй ще разок",
@@ -25,7 +27,9 @@
   "WrongPhoneNumberSpecified": "Невірно набраний номер",
   "CustomToolbar": "Налаштування",
   "Add parking": "Додати парковку",
-  "Manager cabinet": "Кабінет менеджера",
+  "Search": "Пошук",
+  "Nearest parking": "Найближчий паркінг",
+  "Manager": "Менеджер",
   "Admin": "Адмін",
   "Sign up": "Реєстрація",
   "Sign up Manager": "Реєстарція менеджера",
@@ -34,6 +38,7 @@
   "AdminCabinet": "Кабінет Адміна",
   "GetUserById": "Отримати користувача по ID",
   "ID": "ID",
+  "Enter your car number": "Введіть номер свого автомобіля",
   "Actions": "Дії",
   "Ticket Details": "Інформація про заявки",
   "Set As Manager": "Встановити як менеджера",
@@ -45,7 +50,6 @@
   "Get User by Id": "Отримати користувача по ID",
   "Ticket List": "Список заявок",
   "Type User ID": "Введіть ID користувача",
-  "ID": "ID",
   "Role": "Роль",
   "PricePerHour": "Ціна за годину",
   "PleaseChooseAvailableSlot": "Будь ласка, виберіть вільне місце",
@@ -58,7 +62,6 @@
   "Tariff": "Тариф",
   "Fullness": "Заповненість",
   "City": "Місто",
-  "Kyiv": "Київ",
   "$": "грн/година",
   "OK": "OK",
   "Send": "Відмінити",
@@ -107,7 +110,7 @@
     "value": "Введіть роль користувача"
   },
   "FindYourParkingLove♥Placeholder": {
-    "value":"Знайди свою парковку, любий ♥"
+    "value":"Знайти парковку"
   },
   "PhoneNumberPlaceholder": {
     "value" : "Номер телефону"
@@ -138,7 +141,7 @@
   },
 
   "FirstNamePlaceholder": {
-    "value": "Им'я"
+    "value": "Ім'я"
   },
   "LastNamePlaceholder": {
     "value": "Прізвище"
