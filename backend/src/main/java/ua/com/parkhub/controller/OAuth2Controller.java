@@ -8,13 +8,12 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.AuthUserDTO;
 import ua.com.parkhub.dto.PhoneEmailDTO;
-import ua.com.parkhub.dto.UserDTO;
 
 import ua.com.parkhub.mappers.dtoToModel.AuthUserDTOtoAuthUserModelMapper;
 import ua.com.parkhub.mappers.dtoToModel.PhoneEmailDTOtoPhoneEmailMapper;
 import ua.com.parkhub.model.AuthUserModel;
 import ua.com.parkhub.model.PhoneEmailModel;
-import ua.com.parkhub.security.JwtUtil;
+import ua.com.parkhub.service.ISignUpService;
 import ua.com.parkhub.service.impl.SignUpService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +21,6 @@ import java.io.IOException;
 
 import java.util.LinkedHashMap;
 
-import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 public class OAuth2Controller {
@@ -30,13 +28,13 @@ public class OAuth2Controller {
     @Value("${frontUrl}")
     private String frontUrl;
 
-    private final SignUpService  signUpService;
+    private final ISignUpService signUpService;
     private AuthUserDTOtoAuthUserModelMapper authUserDTOtoAuthUserModelMapper;
     private PhoneEmailDTOtoPhoneEmailMapper phoneEmailDTOtoPhoneEmailMapper;
 
 
     @Autowired
-    public OAuth2Controller(SignUpService signUpService, AuthUserDTOtoAuthUserModelMapper Mapper, PhoneEmailDTOtoPhoneEmailMapper phoneEmailDTOtoPhoneEmailMapper) {
+    public OAuth2Controller(ISignUpService signUpService, AuthUserDTOtoAuthUserModelMapper Mapper, PhoneEmailDTOtoPhoneEmailMapper phoneEmailDTOtoPhoneEmailMapper) {
         this.signUpService = signUpService;
         this.authUserDTOtoAuthUserModelMapper = Mapper;
         this.phoneEmailDTOtoPhoneEmailMapper = phoneEmailDTOtoPhoneEmailMapper;
@@ -63,15 +61,19 @@ public class OAuth2Controller {
         else{
             response.sendRedirect(frontUrl+"/home");
         }
-        //TODO create cron for deleted unused cosial accounts
+
         //TODO : add jwt
     }
 
 
     @PutMapping("/api/customer")
-    public void updatePhone(@RequestBody PhoneEmailDTO phoneEmailDTO) {
+    public ResponseEntity updatePhone(@RequestBody PhoneEmailDTO phoneEmailDTO) {
+        if (!signUpService.isNumberUnique(phoneEmailDTO.getPhoneNumber())){
+            return new ResponseEntity("This phone number is already used", HttpStatus.BAD_REQUEST);
+        }
         PhoneEmailModel phoneEmailModel=phoneEmailDTOtoPhoneEmailMapper.transform(phoneEmailDTO);
         signUpService.setPhoneNumberForAuthUser(phoneEmailModel);
+        return ResponseEntity.ok().build();
 
     }
 

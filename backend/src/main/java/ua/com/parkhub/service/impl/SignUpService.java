@@ -12,13 +12,14 @@ import ua.com.parkhub.model.enums.RoleModel;
 import ua.com.parkhub.model.enums.TicketTypeModel;
 import ua.com.parkhub.persistence.impl.*;
 import ua.com.parkhub.model.*;
+import ua.com.parkhub.service.ISignUpService;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class SignUpService {
+public class SignUpService implements ISignUpService {
 
     private static final Logger logger = LoggerFactory.getLogger(SignUpService.class);
 
@@ -31,8 +32,7 @@ public class SignUpService {
 
     @Autowired
     public SignUpService(CustomerDAO customerDAO, UserDAO userDAO, UserRoleDAO userRoleDAO,
-                         SupportTicketDAO supportTicketDAO,
-                         SupportTicketTypeDAO supportTicketTypeDAO,
+                         SupportTicketDAO supportTicketDAO, SupportTicketTypeDAO supportTicketTypeDAO,
                          PasswordEncoder passwordEncoder) {
         this.customerDAO = customerDAO;
         this.userDAO = userDAO;
@@ -43,6 +43,7 @@ public class SignUpService {
     }
 
     @Transactional
+    @Override
     public void registerManager(ManagerRegistrationDataModel manager) {
         CustomerModel customer = createCustomer(manager.getUser().getCustomer());
         customer = customerDAO.addElement(customer).orElseThrow(() ->
@@ -56,6 +57,7 @@ public class SignUpService {
     }
 
     @Transactional
+    @Override
     public CustomerModel createCustomer(CustomerModel customer) {
         return customerDAO.findCustomerByPhoneNumber(customer.getPhoneNumber()).map(existingCustomer -> {
             logger.info("Customer with phone number={} was found", customer.getPhoneNumber());
@@ -73,6 +75,7 @@ public class SignUpService {
     }
 
     @Transactional
+    @Override
     public UserModel createUser(UserModel user, CustomerModel customer) {
         Optional<UserModel> optionalUser = userDAO.findUserByEmail(user.getEmail());
         if (optionalUser.isPresent()) {
@@ -86,6 +89,7 @@ public class SignUpService {
     }
 
     @Transactional
+    @Override
     public SupportTicketModel createTicket(String description, CustomerModel customer) {
         SupportTicketModel ticket = new SupportTicketModel();
         ticket.setDescription(description);
@@ -95,24 +99,24 @@ public class SignUpService {
         logger.info("New support ticket was created");
         return ticket;
     }
-
-    private String generateDescription(String companyName, String usreouCode, String comment) {
+    @Override
+    public String generateDescription(String companyName, String usreouCode, String comment) {
         return "Company: <" + companyName + "> " +
                 "USREOU: <" + usreouCode + "> " +
                 "Comment: <" + comment + ">";
     }
-
-    RoleModel findUserRole(String name) {
+    @Override
+    public RoleModel findUserRole(String name) {
         return userRoleDAO.findUserRoleByRoleName(name).orElseThrow(() ->
                 new NotFoundInDataBaseException("Role was not found by name=" + name));
     }
-
-    private TicketTypeModel findSupportTicketType(String type) {
+    @Override
+    public TicketTypeModel findSupportTicketType(String type) {
         return supportTicketTypeDAO.findSupportTicketTypeByType(type).orElseThrow(() ->
                 new NotFoundInDataBaseException("Support ticket type was not found by type=" + type));
     }
-
-    private List<UserModel> findSolvers(String role) {
+    @Override
+    public List<UserModel> findSolvers(String role) {
         List<UserModel> solvers = userDAO.findUsersByRoleId(findUserRole(role).getId());
         if (solvers.isEmpty()) {
             throw new NotFoundInDataBaseException("Solvers were not found by role=" + role);
@@ -120,14 +124,12 @@ public class SignUpService {
         return solvers;
     }
 
+    @Override
     public boolean isUserPresentByEmail(String email) {
-        if(userDAO.findOneByFieldEqual("email", email).isPresent()){
-            return true;
-        }
-        return false;
-
+        return userDAO.findOneByFieldEqual("email", email).isPresent();
     }
 
+    @Override
     public void setPhoneNumberForAuthUser(PhoneEmailModel phoneEmailModel) {
         if(userDAO.findOneByFieldEqual("email", phoneEmailModel.getEmail()).isPresent()){
             CustomerModel customerModel = userDAO.setOauthUserPhone(phoneEmailModel);
@@ -135,6 +137,7 @@ public class SignUpService {
         }
     }
 
+    @Override
     public void createUserAfterSocialAuth(AuthUserModel userModel){
         if(!userDAO.findUserByEmail(userModel.getEmail()).isPresent()){
             UserModel user = new UserModel();
@@ -152,12 +155,14 @@ public class SignUpService {
     }
 
 
+    @Override
     public boolean isCustomerNumberEmpty(String email) {
         UserModel user = userDAO.findOneByFieldEqual("email", email).get();
         CustomerModel customer = user.getCustomer();
         return customer.getPhoneNumber().equals("Empty");
     }
 
+    @Override
     public boolean signUpUser(UserModel userModel){
 
         try {
@@ -168,6 +173,11 @@ public class SignUpService {
         }
         return false;
     }
+    @Override
+    public boolean isNumberUnique(String phoneNumber) {
+        return customerDAO.findManyByFieldEqual("phoneNumber",phoneNumber).isEmpty();
+    }
+
 
 
 }
