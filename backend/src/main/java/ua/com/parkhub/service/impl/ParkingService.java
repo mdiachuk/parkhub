@@ -20,6 +20,7 @@ import ua.com.parkhub.service.IParkingService;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -32,14 +33,16 @@ public class ParkingService implements IParkingService  {
     private final UserDAO userDAO;
     private final BookingService bookingService;
     private final SlotComparator slotComparator;
+    private final AddressGeoService addressGeoService;
 
     @Autowired
-    public ParkingService(ParkingDAO parkingDAO, AddressDAO addressDAO, UserDAO userDAO, BookingService bookingService, SlotComparator slotComparator) {
+    public ParkingService(ParkingDAO parkingDAO, AddressDAO addressDAO, UserDAO userDAO, BookingService bookingService, SlotComparator slotComparator, AddressGeoService addressGeoService) {
         this.parkingDAO = parkingDAO;
         this.addressDAO = addressDAO;
         this.userDAO = userDAO;
         this.bookingService = bookingService;
         this.slotComparator = slotComparator;
+        this.addressGeoService = addressGeoService;
     }
 
     public boolean isParkingNameUnique(ParkingModel parkingRequestModel) {
@@ -57,6 +60,7 @@ public class ParkingService implements IParkingService  {
     @Transactional
     public void createParkingByOwnerID(ParkingModel parkingModel, long id) {
         AddressModel address = parkingModel.getAddressModel();
+        address = setLatLan(address);
         if (userDAO.findElementById(id).isPresent()) {
             parkingModel.setOwner(userDAO.findElementById(id).get());}
         AddressModel addressModel = addressDAO.addWithResponse(address);
@@ -110,6 +114,9 @@ public class ParkingService implements IParkingService  {
     @Transactional
     public void updateParking(Long id, ParkingModel parkingModelParam) {
         ParkingModel parkingModel = findParkingById(id);
+        AddressModel addressModel = parkingModel.getAddressModel();
+        addressModel = setLatLan(addressModel);
+        parkingModel.setAddressModel(addressModel);
         Field[] paramFields = parkingModelParam.getClass().getDeclaredFields();
         List<String> fieldsNameList = Arrays.stream(paramFields).filter(field -> {
             try {
@@ -146,5 +153,29 @@ public class ParkingService implements IParkingService  {
         }
     }
 
+    private AddressModel setLatLan(AddressModel addressModel) {
+
+        String address = addressModel.getCity() + "," +
+                addressModel.getStreet() + " " +
+                addressModel.getBuilding();
+
+        Map<String, String> latLon = addressGeoService.getLatLon(address);
+
+        addressModel.setLat(latLon.get("lat"));
+        addressModel.setLon(latLon.get("lon"));
+
+        return addressModel;
+    }
+
+    public List<ParkingModel> findParkingInArea(String address) {
+
+        Map<String, String> map = addressGeoService.getLatLon(address);
+
+        return findAllParkingModel().stream()
+                .filter(x -> (addressGeoService
+                        .enteringTheRadius(map.get("lat"), map.get("lon"),
+                                x.getAddressModel().getLat(), x.getAddressModel().getLon())) == true)
+                .collect(Collectors.toList());
+    }
 
 }

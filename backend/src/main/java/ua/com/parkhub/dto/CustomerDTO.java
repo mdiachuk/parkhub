@@ -39,4 +39,13 @@ public class CustomerDTO {
     public void setActive(boolean active) {
         isActive = active;
     }
+
+    @Override
+    public String toString() {
+        return "CustomerDTO{" +
+                "id=" + id +
+                ", isActive=" + isActive +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
 }

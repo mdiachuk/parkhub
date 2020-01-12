@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import javax.validation.constraints.NotNull;
+
 import javax.validation.constraints.Pattern;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -39,4 +40,5 @@ public class PhoneEmailDTO {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
 }

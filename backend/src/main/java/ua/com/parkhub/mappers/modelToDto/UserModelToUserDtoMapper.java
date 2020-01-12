@@ -8,6 +8,7 @@ import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.enums.RoleModel;
 import ua.com.parkhub.model.UserModel;
 
+
 @Component
 public class UserModelToUserDtoMapper implements Mapper<UserModel, UserDTO> {
 

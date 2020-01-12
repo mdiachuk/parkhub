@@ -26,13 +26,13 @@ export class LoginService {
     //   headers: new HttpHeaders().append('Access-Control-Allow-Origin', '*')
     // }
     // const httpOptions = {
-    //   headers: new HttpHeaders({ 
+    //   headers: new HttpHeaders({
     //     'Access-Control-Allow-Origin':'*'
     //   })
     // };
     console.log("in service");
     return this.http.get<any>('http://localhost:8080/api/login/google', { withCredentials: true });
-    
+
 
   }
 

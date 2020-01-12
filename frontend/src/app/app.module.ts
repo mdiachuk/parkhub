@@ -69,7 +69,6 @@ import { AddPhoneNumberComponent } from './add-phone-number/add-phone-number.com
 import {MatChipsModule} from "@angular/material/chips";
 import {TranslateArrayService} from "./service/translatearray.service";
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -176,7 +175,7 @@ import {TranslateArrayService} from "./service/translatearray.service";
     MatSidenavModule,
     FormsModule,
     MatIconModule,
-    MatExpansionModule,
+    MatExpansionModule
   ],
   providers: [ParkingService, SlotService, ParkingService1, DataService, UserService, TranslateArrayService,
     {

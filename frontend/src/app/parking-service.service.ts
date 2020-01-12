@@ -13,10 +13,10 @@ export class ParkingServiceService {
 
   constructor(private http: HttpClient ) {
     this.parkingUrl = 'api/manager/parking';
-   }
+  }
 
-   public save(parking: Parking) : Observable<Parking>  {
-     console.log("service", parking, this.parkingUrl)
+  public save(parking: Parking) : Observable<Parking>  {
+    console.log("service", parking, this.parkingUrl)
     return this.http.post<Parking>(this.parkingUrl, parking);
     //this.router.navigate(['login'], { queryParams: { returnUrl: this.parkingUrl }});
   }

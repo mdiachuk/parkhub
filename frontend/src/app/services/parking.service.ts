@@ -10,16 +10,23 @@ import { Parking } from '../models/parking.model';
 export class ParkingService1 {
 
   private serviceUrl =  'api/home';
-    //'http://localhost:4200/assets/parkings.json';
+  //'http://localhost:4200/assets/parkings.json';
 
 
   constructor(private http: HttpClient) { }
 
-  getparking(): Observable<Parking[]> {
+  getparking(search?: string): Observable<Parking[]> {
 
-   return this.http.get<Parking[]>(this.serviceUrl);
+    let options = {};
+    if (search && (search !== "")) {
+      options = { params: {
+          address: search
+        } };
+    }
+    return this.http.get<Parking[]>(this.serviceUrl, options);
 
 
   }
 
 }
+
