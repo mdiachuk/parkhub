@@ -19,7 +19,6 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticat
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
-import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ua.com.parkhub.filters.JwtAuthenticationFilter;
@@ -95,9 +94,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/user/token/refresh", "/api/user/token", "/api/oauthJwtToken","/api/login/google", "/api/parkings/{id}", "/api/booking").permitAll()
 
                 .anyRequest().authenticated()
-                .and().exceptionHandling()
-                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/")).and().logout()
-                .logoutSuccessUrl("/").permitAll().and()
+                .and()
                 .csrf().disable()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAfter(ssoFilter(), JwtAuthenticationFilter.class);
