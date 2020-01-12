@@ -137,11 +137,6 @@ public class UserController {
     }
 
 
-
-
-
-
-
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER') or hasRole('USER')")
     @GetMapping("/api/user/{id}")
     @ResponseBody

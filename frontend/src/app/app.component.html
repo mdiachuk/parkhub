@@ -12,7 +12,7 @@
           <a *ngIf="data.currentIsManager  | async" mat-button [routerLink]='["manager/parking"]'>{{ 'Add parking' | translate }}</a>
           <a *ngIf="data.currentIsManager | async" mat-button [routerLink]='["manager/cabinet"]'>{{ 'Manager cabinet' | translate }}</a>
           <a *ngIf="data.currentIsAdmin  | async" mat-button [routerLink]='["admin"]'>{{ 'Admin cabinet' | translate }}</a>
-          <a *ngIf="data.currentIsUser | async" mat-button [routerLink]='["userPage"]'>{{'User Cabinet' | translate}}</a>
+          <a *ngIf="data.currentIsUser | async" mat-button [routerLink]='["user"]'>{{'User Cabinet' | translate}}</a>
           <a *ngIf="!(data.currentIsLogged | async)" mat-button [routerLink]='["signup/user"]'>{{ 'Sign up' | translate }}</a>
           <a *ngIf="!(data.currentIsManager | async)" mat-button [routerLink]='["signup/manager"]'>{{ 'Become partner' | translate }}</a>
           <a *ngIf="!(data.currentIsLogged | async)" mat-button [routerLink]='["login"]'>{{ 'Login' | translate }}</a>

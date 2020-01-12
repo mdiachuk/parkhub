@@ -44,7 +44,7 @@ const routes: Routes = [
   { path: 'booking', component: BookingDetailComponent },
 
   // { path: 'user', component: UserPageComponent },
-  { path: 'userPage', component: UserComponent, canActivate: [UserGuard] },
+  { path: 'user', component: UserComponent, canActivate: [UserGuard] },
   { path: 'login', component: LoginComponent },
   // {path: '', redirectTo: 'home', pathMatch: 'full'},
 
