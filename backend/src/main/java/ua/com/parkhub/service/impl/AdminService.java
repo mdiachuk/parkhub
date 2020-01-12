@@ -36,6 +36,17 @@ public class AdminService  {
         this.supportTicketDAO = supportTicketDAO;
     }
 
+    public AdminDTO getUserById(long id){
+        Optional<UserModel> targetUser = userDAO.findElementById(id);
+        return targetUser.map(target -> {
+            AdminDTO targetAdminDTO = new AdminDTO();
+            targetAdminDTO.setId(targetUser.get().getId());
+            targetAdminDTO.setFirstName(targetUser.get().getFirstName() + " " + targetUser.get().getLastName());
+            targetAdminDTO.setUserRole(targetUser.get().getRole().getRoleName());
+            return targetAdminDTO;
+        }).orElseThrow(() -> new NotFoundInDataBaseException("User not found"));
+    }
+
     @Transactional
     public void setRole(Long id){
         List<RoleModel> roleList = userRoleDAO.findAll().stream().filter(role -> role.getRoleName().equals(RoleDTO.MANAGER.toString())).collect(Collectors.toList());
@@ -91,14 +102,4 @@ public class AdminService  {
         return targetAdminTicketCounterDTO;
     }
 
-    public AdminDTO getUserById(long id){
-        Optional<UserModel> targetUser = userDAO.findElementById(id);
-        return targetUser.map(target -> {
-            AdminDTO targetAdminDTO = new AdminDTO();
-            targetAdminDTO.setId(targetUser.get().getId());
-            targetAdminDTO.setFirstName(targetUser.get().getFirstName() + " " + targetUser.get().getLastName());
-            targetAdminDTO.setUserRole(targetUser.get().getRole().getRoleName());
-            return targetAdminDTO;
-        }).orElseThrow(() -> new NotFoundInDataBaseException("User not found"));
-    }
 }
