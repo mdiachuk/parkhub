@@ -10,6 +10,8 @@ import { flatMap } from 'rxjs/operators';
 
 
 
+
+
 @Component({
   selector: 'app-parking-detail',
   templateUrl: './parking-detail.component.html',
@@ -46,7 +48,7 @@ export class ParkingDetailComponent implements OnInit {
        this.buttonStatusList[number] = this.buttonStatusList[number]  == true ? false : true;
     }
 
-    openSnackBar(parkingAttribute: string) {
+    openSnackBarString(parkingAttribute: string) {
       this._snackBar.open("Saved: ", parkingAttribute,{
         duration: 4000,
       });

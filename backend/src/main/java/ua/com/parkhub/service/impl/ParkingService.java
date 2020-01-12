@@ -1,6 +1,8 @@
 package ua.com.parkhub.service.impl;
 
 import org.hibernate.Hibernate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
 @Service
 public class ParkingService implements IParkingService  {
 
+    private static final Logger logger = LoggerFactory.getLogger(SignUpService.class);
 
     private ParkingDAO parkingDAO;
     private final AddressDAO addressDAO;
@@ -107,11 +110,11 @@ public class ParkingService implements IParkingService  {
         return parkingModel;
     }
 
-    @Transactional
-    public void updateParking(Long id, ParkingModel parkingModelParam) {
-        ParkingModel parkingModel = findParkingById(id);
+    public List<String> getNotEmptyFieldNamesFromSpecificParking(ParkingModel parkingModelParam){
+
         Field[] paramFields = parkingModelParam.getClass().getDeclaredFields();
-        List<String> fieldsNameList = Arrays.stream(paramFields).filter(field -> {
+
+        return Arrays.stream(paramFields).filter(field -> {
             try {
                 field.setAccessible(true);
                 Object value = field.get(parkingModelParam);
@@ -122,29 +125,35 @@ public class ParkingService implements IParkingService  {
                     return value != null;
                 }
             } catch (IllegalAccessException ex) {
+                logger.info("Field access denied");
                 return false;
             }
         }).map(Field::getName).collect(Collectors.toList());
+    }
 
-        for (String name : fieldsNameList) {
+    @Transactional
+    public void updateParking(Long id, ParkingModel parkingModelParam) {
+
+        ParkingModel parkingModel = findParkingById(id);
+        List<String> fieldsNameList = getNotEmptyFieldNamesFromSpecificParking(parkingModelParam);
+
+        fieldsNameList.forEach(fieldName -> {
             try {
-                Field fieldParam = parkingModelParam.getClass().getDeclaredField(name);
-                Field field = parkingModel.getClass().getDeclaredField(name);
+                Field fieldParam = parkingModelParam.getClass().getDeclaredField(fieldName);
+                Field field = parkingModel.getClass().getDeclaredField(fieldName);
                 field.setAccessible(true);
                 fieldParam.setAccessible(true);
                 field.set(parkingModel, fieldParam.get(parkingModelParam));
             } catch (NoSuchFieldException | IllegalAccessException e) {
-                e.printStackTrace();
-            }
+                logger.info("There is no field");
+        }});
 
             if (fieldsNameList.contains("addressModel")) {
-                AddressModel a = addressDAO.addWithResponse(parkingModelParam.getAddressModel()); //from non id model gets model with id
-                parkingModel.setAddressModel(a);
+                AddressModel address = addressDAO.addWithResponse(parkingModelParam.getAddressModel());
+                parkingModel.setAddressModel(address);
             }
 
             parkingDAO.updateElement(parkingModel);
         }
     }
 
-
-}
