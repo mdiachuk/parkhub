@@ -1,4 +1,4 @@
-package ua.com.parkhub.mappers.modelToDTO;
+package ua.com.parkhub.mappers.modelToDto;
 
 import ua.com.parkhub.dto.AdminSupportTicketDTO;
 import ua.com.parkhub.mappers.Mapper;

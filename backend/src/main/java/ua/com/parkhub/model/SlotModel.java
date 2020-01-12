@@ -57,4 +57,14 @@ public class SlotModel {
     public int hashCode() {
         return Objects.hash(id, slotNumber, isReserved, isActive);
     }
+
+    @Override
+    public String toString() {
+        return "SlotModel{" +
+                "id=" + id +
+                ", slotNumber='" + slotNumber + '\'' +
+                ", isReserved=" + isReserved +
+                ", isActive=" + isActive +
+                '}';
+    }
 }

@@ -5,7 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.com.parkhub.exceptions.PermissionException;
 import ua.com.parkhub.exceptions.StatusCode;
-import ua.com.parkhub.model.RoleModel;
+import ua.com.parkhub.model.enums.RoleModel;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.persistence.impl.BlockedUserDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;

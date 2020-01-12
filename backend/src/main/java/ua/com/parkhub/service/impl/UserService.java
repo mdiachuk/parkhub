@@ -16,7 +16,7 @@ import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PasswordException;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.model.UuidTokenModel;
-import ua.com.parkhub.model.UuidTokenType;
+import ua.com.parkhub.model.enums.UuidTokenType;
 import ua.com.parkhub.persistence.impl.UuidTokenDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
 import ua.com.parkhub.service.IUserService;

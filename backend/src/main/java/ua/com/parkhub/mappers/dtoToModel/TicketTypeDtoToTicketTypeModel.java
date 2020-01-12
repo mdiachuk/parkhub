@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import ua.com.parkhub.dto.TicketTypeDTO;
 import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.mappers.Mapper;
-import ua.com.parkhub.model.TicketTypeModel;
+import ua.com.parkhub.model.enums.TicketTypeModel;
 
 import java.util.Arrays;
 

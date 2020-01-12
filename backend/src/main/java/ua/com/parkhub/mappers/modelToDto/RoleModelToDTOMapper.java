@@ -1,10 +1,10 @@
-package ua.com.parkhub.mappers.modelToDTO;
+package ua.com.parkhub.mappers.modelToDto;
 
 import org.springframework.stereotype.Component;
 import ua.com.parkhub.dto.RoleDTO;
 import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.mappers.Mapper;
-import ua.com.parkhub.model.RoleModel;
+import ua.com.parkhub.model.enums.RoleModel;
 
 import java.util.Arrays;
 

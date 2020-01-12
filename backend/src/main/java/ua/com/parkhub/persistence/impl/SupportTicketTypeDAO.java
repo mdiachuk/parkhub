@@ -2,7 +2,7 @@ package ua.com.parkhub.persistence.impl;
 
 import org.springframework.stereotype.Repository;
 import ua.com.parkhub.mappers.Mapper;
-import ua.com.parkhub.model.TicketTypeModel;
+import ua.com.parkhub.model.enums.TicketTypeModel;
 import ua.com.parkhub.persistence.entities.SupportTicketType;
 
 import java.util.Optional;

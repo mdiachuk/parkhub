@@ -11,10 +11,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.InvalidTokenException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
-import ua.com.parkhub.model.RoleModel;
+import ua.com.parkhub.model.enums.RoleModel;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.model.UuidTokenModel;
-import ua.com.parkhub.model.UuidTokenType;
+import ua.com.parkhub.model.enums.UuidTokenType;
 import ua.com.parkhub.persistence.impl.UserDAO;
 import ua.com.parkhub.persistence.impl.UuidTokenDAO;
 
