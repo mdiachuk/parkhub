@@ -76,8 +76,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-
-
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
@@ -86,15 +84,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        web.ignoring()
 //                .antMatchers("/api/login");
     }
+
+
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.requestMatchers()
-                .antMatchers("/api/")
+                .antMatchers("/api/**")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/login", "/api/logout**", "/api/signup/manager",
-                        "/api/user/password/reset", "/api/user/verify", "/api/user/token/",
-                        "/api/user/token/refresh", "/api/user/token", "/api/oauthJwtToken","/api/login/google").permitAll()
+                .antMatchers("/api/login**", "/api/logout**", "/api/signup/manager",
+                        "/api/user/password/reset", "/api/user/verify", "/api/user/token/**",
+                        "/api/user/token/refresh", "/api/user/token", "/api/oauthJwtToken", "/api/login/google", "/api/parkings/{id}", "/api/booking").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/")).and().logout()

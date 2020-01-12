@@ -3,8 +3,7 @@ package ua.com.parkhub.mappers.entityToModel;
 import org.springframework.stereotype.Component;
 import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.mappers.Mapper;
-import ua.com.parkhub.model.SupportTicketTypeModel;
-import ua.com.parkhub.model.TicketTypeModel;
+import ua.com.parkhub.model.enums.TicketTypeModel;
 import ua.com.parkhub.persistence.entities.SupportTicketType;
 
 import java.util.Arrays;

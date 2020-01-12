@@ -1,7 +1,6 @@
 package ua.com.parkhub.service;
 
 import ua.com.parkhub.model.UserModel;
-import ua.com.parkhub.model.UuidTokenType;
 
 import java.util.Optional;
 

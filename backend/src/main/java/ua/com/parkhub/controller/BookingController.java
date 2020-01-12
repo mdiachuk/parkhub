@@ -13,9 +13,6 @@ import ua.com.parkhub.service.IBookingService;
 //TODO Validation: parkId, slotId, car number, phone number
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.BookingFormDTO;
 import ua.com.parkhub.dto.ParkingWithSlotsDTO;
 import ua.com.parkhub.dto.PaymentDTO;
@@ -23,7 +20,6 @@ import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.exceptions.ParkingException;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.model.PaymentModel;
-import ua.com.parkhub.service.IBookingService;
 import ua.com.parkhub.service.IParkingService;
 
 import javax.validation.Valid;
@@ -55,7 +51,7 @@ public class BookingController {
         this.paymentModelToDTOMapper = paymentModelToDTOMapper;
     }
 
-    @GetMapping("/parkings/{id}")
+    @GetMapping("/api/parkings/{id}")
     //TODO implementation w.o. pagination just for small amount of slots! Will do in a next impl steps
     public ResponseEntity<ParkingWithSlotsDTO> displayParking(@PathVariable(name = "id") @Positive @Min(1) Long id, @RequestParam @Positive Long rangeFrom,
                                                               @RequestParam @Positive Long rangeTo) {
@@ -69,7 +65,7 @@ public class BookingController {
         throw ParkingException.createWith(id);
     }
 
-    @PostMapping("/booking")
+    @PostMapping("/api/booking")
     //TODO not idempotent operation! Will do some smart restrictions on booking amount per one phone number in a next impl steps
     //TODO switch onto cyrillic after i18n impl
     public ResponseEntity<PaymentDTO> addBooking(@Valid @RequestBody BookingFormDTO bookingFormDTO/*, BindingResult result*/) {

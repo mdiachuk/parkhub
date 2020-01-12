@@ -83,7 +83,7 @@ public class ParkingService implements IParkingService  {
         ParkingModel parking = parkingDAO.findElementById(id)
                 .orElseThrow(() -> new ParkHubException("No Parking found with id " + id));
         Hibernate.initialize(parking.getSlots());
-        if (parking.getInfo().isActive()) {
+        if (parking.isActive()) {
             return parking;
         }
         throw new ParkHubException("Unfortunately this parking is temporary unavailable");
@@ -92,15 +92,18 @@ public class ParkingService implements IParkingService  {
     @Override
     public ParkingModel findParkingByIdWithSlotListAndDateRange(long id, long checkIn, long checkOut) {
         ParkingModel parkingModel = findParkingByIdWithSlotList(id);
+        //TODO if null condition
         List<SlotModel> slotList = parkingModel.getSlots();
         for (SlotModel slotModel : slotList) {
             Optional<BookingModel> bookingModel = bookingService.findBookingByIdAndDateTimeRange(slotModel.getId(), checkIn, checkOut);
             //TODO refactoring isPresent change to exception
             if (bookingModel.isPresent()) {
+                System.out.println(bookingModel.get());
                 slotModel.setReserved(true);
             }
         }
         slotList.sort(slotComparator);
+        System.out.println("Parking model : " + parkingModel);
         return parkingModel;
     }
 
