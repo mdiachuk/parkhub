@@ -24,11 +24,7 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/api/admin/{id}")
     public AdminDTO getUserByID(@PathVariable("id")long id ){
-        AdminDTO targetUserDTO = new AdminDTO();
-        targetUserDTO.setUserRole(adminService.getRole(id));
-        targetUserDTO.setFirstName(adminService.getFullName(id));
-        targetUserDTO.setId(adminService.getId(id));
-        return targetUserDTO;
+        return adminService.getUserById(id);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
