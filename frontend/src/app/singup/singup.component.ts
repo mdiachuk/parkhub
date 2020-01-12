@@ -1,5 +1,6 @@
 import {Component, NgModule, OnInit} from '@angular/core';
 import {ConfirmPass, Customer, HttpClientService, User, RoleDTO} from "../service/http-client.service";
+import {MatSnackBar} from '@angular/material';
 
 
 
@@ -20,7 +21,7 @@ export class SingupComponent implements OnInit {
   confirmPass:ConfirmPass = new ConfirmPass("");
 
   constructor(
-    private httpClientService:HttpClientService
+    private httpClientService:HttpClientService, private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -32,22 +33,24 @@ export class SingupComponent implements OnInit {
     if (this.users.password==this.confirmPass.confirmPass){
       this.httpClientService.createUser(this.users)
         .subscribe( data => {
-            alert("User SingUp");
+           this.openSnackBar('User SingUp');
             window.location.href='/home';
           },
           err => {
-            // alert("User SingUp");
-            // window.location.href='/home';
-            alert("Email or Telephone are use");
+            this.openSnackBar("Email or Telephone are use");
           });
     } else {
-      alert("Pass not Confirm")
+      this.openSnackBar("Pass not Confirm");
     }
 
 
   };
 
-
+  openSnackBar(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 4000,
+    });
+  }
 
 
   handleSuccessfulResponse(response)
