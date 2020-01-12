@@ -37,7 +37,9 @@ public class JwtAuthenticationController {
 
     @PostMapping(value = "/api/login")
     public ResponseEntity<UserDTO> loginUser(@Valid @RequestBody LoginDTO login) {
-        if (login == null){ throw new PermissionException(StatusCode.NO_ACCOUNT_FOUND); }
+        if (login == null) {
+            throw new PermissionException(StatusCode.NO_ACCOUNT_FOUND);
+        }
         UserDTO response = userModelToUserDtoMapper.transform(authenticationService.loginUser(loginDtoToUserModelMapper.transform(login)));
         response.setToken(jwtUtil.generateToken(response.getEmail(), response.getRole().toString(), response.getId()));
         return ResponseEntity.ok(response);
