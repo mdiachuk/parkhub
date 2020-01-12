@@ -27,11 +27,11 @@ public class Address implements Serializable {
 
     @Column (name = "lat")
     @NotNull
-    private String lat;
+    private String lat="-500";
 
     @Column (name = "lon")
     @NotNull
-    private String lon;
+    private String lon="-500";
 
     public Long getId() {
         return id;
