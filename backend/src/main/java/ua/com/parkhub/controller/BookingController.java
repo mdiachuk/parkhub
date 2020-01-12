@@ -55,7 +55,7 @@ public class BookingController {
         this.paymentModelToDTOMapper = paymentModelToDTOMapper;
     }
 
-    @GetMapping("/parkings/{id}")
+    @GetMapping("/api/parkings/{id}")
     //TODO implementation w.o. pagination just for small amount of slots! Will do in a next impl steps
     public ResponseEntity<ParkingWithSlotsDTO> displayParking(@PathVariable(name = "id") @Positive @Min(1) Long id, @RequestParam @Positive Long rangeFrom,
                                                               @RequestParam @Positive Long rangeTo) {
@@ -69,7 +69,7 @@ public class BookingController {
         throw ParkingException.createWith(id);
     }
 
-    @PostMapping("/booking")
+    @PostMapping("/api/booking")
     //TODO not idempotent operation! Will do some smart restrictions on booking amount per one phone number in a next impl steps
     //TODO switch onto cyrillic after i18n impl
     public ResponseEntity<PaymentDTO> addBooking(@Valid @RequestBody BookingFormDTO bookingFormDTO/*, BindingResult result*/) {
