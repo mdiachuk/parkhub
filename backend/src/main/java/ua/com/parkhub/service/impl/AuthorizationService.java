@@ -39,13 +39,13 @@ public class AuthorizationService implements IAuthorizationService {
                 .orElseThrow(() -> new PermissionException(StatusCode.NO_ACCOUNT_FOUND));
         activateIfPossible(user);
         if (user.getNumberOfFailedPassEntering() >= THREE_TRIES_TO_ENTER) {
-            blockUser(user);
+            block(user);
         }
         return checkCredentials(loginUser, user);
     }
 
 
-    private void blockUser(UserModel user) {
+    private void block(UserModel user) {
         if (!(blockedUserDAO.isBlocked(user))) {
             blockedUserDAO.blockUser(user);
             throw new PermissionException(StatusCode.ACCOUNT_BLOCKED);
