@@ -1,10 +1,10 @@
-    <h2>Admins page</h2>
+    <h2>{{'Admin' | translate}}</h2>
     <table>
         <col width="130">
         <col width="700">
         <thead>
-            <th>Get User by Id</th>
-            <th>Ticket List</th>
+            <th>{{'Get User by Id' | translate}}</th>
+            <th>{{'Ticket List' |translate}}</th>
         </thead>
         <tbody>
             <tr>
@@ -13,17 +13,17 @@
                     <mat-card-content>
                     <div>
                         <mat-form-field>
-                            <input matInput type="number" min="2" [formControl]="idGetter" placeholder="Type User ID">
+                            <input matInput type="number" min="2" [formControl]="idGetter" [placeholder]="'Type User ID' | translate">
                         </mat-form-field>
                         <p>
-                        <button mat-raised-button color="primary" (click)="idGetterMethod()">Get User by Id</button>
+                        <button mat-raised-button color="primary" (click)="idGetterMethod()">{{'Get User by Id' | translate}}</button>
                         </p>
                         <mat-card-content>
-                        <div>Id: {{admin.id}}</div>
-                        <div>Name: {{admin.firstName}}</div>
-                        <div>Role: {{admin.userRole}}</div>
+                        <div>{{'ID:' | translate}}: {{admin.id}}</div>
+                        <div>{{'Name' | translate}}: {{admin.firstName}}</div>
+                        <div>{{'Role' | translate}}: {{admin.userRole}}</div>
                         <p>
-                            <button mat-raised-button color="primary" (click)="updateRoleName()">Set As Manager</button>
+                            <button mat-raised-button color="primary" (click)="updateRoleName()">{{'Set As Manager' | translate}}</button>
                         </p>
                         </mat-card-content>
                     </div>
