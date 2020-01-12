@@ -4,16 +4,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.ManagerRegistrationDataDTO;
+import ua.com.parkhub.dto.UserDTO;
 import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberException;
 import ua.com.parkhub.mappers.dtoToModel.ManagerRegistrationRequestDtoToModel;
 import ua.com.parkhub.mappers.dtoToModel.UserDtoToUserModelMapper;
+import ua.com.parkhub.model.enums.UuidTokenType;
 import ua.com.parkhub.service.impl.SignUpService;
 import ua.com.parkhub.service.impl.UserService;
 import ua.com.parkhub.validation.groups.CustomerChecks;
@@ -81,25 +84,17 @@ public class SignUpController {
     }
 
 
+    @PostMapping ("/user")
+    public ResponseEntity registerUser(@RequestBody UserDTO userDTO) {
+        if ( signUpService.signUpUser(userDtoToUserModelMapper.transform(userDTO))){
+            userService.sendToken(userDTO.getEmail(), UuidTokenType.EMAIL.getType());
+            logger.info("New User signup");
+            return ResponseEntity.ok().build();
+        } else {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
-    /**
-     *
-//     * @param userDTO
-     * @return 200 Status if new User be create
-     *         500 Status if new User not be create
-     */
-//    @PostMapping ("/user")
-//    public ResponseEntity create(@RequestBody UserDTO userDTO) {
-//        userDTO.setRole(RoleDTO.USER);
-//        System.out.println(userDTO.toString());
-//
-//        if (signUpService.createUser(userDtoToUserModelMapper.transform(userDTO))){
-//            return ResponseEntity.ok().build();
-//        } else {
-//            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//
-//    }
 
 
 }

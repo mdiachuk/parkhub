@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.SupportTicketModel;
-import ua.com.parkhub.model.SupportTicketTypeModel;
 import ua.com.parkhub.persistence.entities.SupportTicket;
 
 import java.util.stream.Collectors;

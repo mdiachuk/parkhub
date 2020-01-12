@@ -33,7 +33,7 @@ export class AddParkingComponent implements OnInit {
               private translateArrayService: TranslateArrayService,
               private translateService: TranslateService,
               private service:Oauth2googleService,private addservice:UserService) {
-    }
+  }
 
   ngOnInit() {
     this.createForm();
@@ -65,7 +65,7 @@ export class AddParkingComponent implements OnInit {
 
   getErrorSlotsNumber() {
     return this.formGroup.get('slotsNumber').hasError('required') ? this.translateService.instant('FieldIsRequired') :
-     this.formGroup.get('slotsNumber').hasError('pattern') ? this.translateService.instant('NotAValidNumberOfSlotsShouldBePositiveInteger') : '';
+      this.formGroup.get('slotsNumber').hasError('pattern') ? this.translateService.instant('NotAValidNumberOfSlotsShouldBePositiveInteger') : '';
 
   }
 

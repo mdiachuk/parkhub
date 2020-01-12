@@ -35,17 +35,17 @@ public class AuthorizationService implements IAuthorizationService {
 
     @Override
     public UserModel loginUser(UserModel loginUser) {
-            UserModel user = userDAO.findUserByEmail(loginUser.getEmail())
-                    .orElseThrow(() -> new PermissionException(StatusCode.NO_ACCOUNT_FOUND));
-                activateIfPossible(user);
-                if (user.getNumberOfFailedPassEntering() >= THREE_TRIES_TO_ENTER) {
-                    blockUser(user);
-                }
-                return checkCredentials(loginUser, user);
+        UserModel user = userDAO.findUserByEmail(loginUser.getEmail())
+                .orElseThrow(() -> new PermissionException(StatusCode.NO_ACCOUNT_FOUND));
+        activateIfPossible(user);
+        if (user.getNumberOfFailedPassEntering() >= THREE_TRIES_TO_ENTER) {
+            block(user);
+        }
+        return checkCredentials(loginUser, user);
     }
 
 
-    private void blockUser(UserModel user) {
+    private void block(UserModel user) {
         if (!(blockedUserDAO.isBlocked(user))) {
             blockedUserDAO.blockUser(user);
             throw new PermissionException(StatusCode.ACCOUNT_BLOCKED);

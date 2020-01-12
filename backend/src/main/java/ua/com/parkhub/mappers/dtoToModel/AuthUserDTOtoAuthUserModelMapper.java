@@ -15,4 +15,5 @@ public class AuthUserDTOtoAuthUserModelMapper implements Mapper<AuthUserDTO, Aut
         authUserModel.setEmail(from.getEmail());
         return authUserModel;
     }
+
 }

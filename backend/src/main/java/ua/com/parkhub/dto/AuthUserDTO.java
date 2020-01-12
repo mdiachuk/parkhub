@@ -51,3 +51,4 @@ public class AuthUserDTO {
         this.email = email;
     }
 }
+

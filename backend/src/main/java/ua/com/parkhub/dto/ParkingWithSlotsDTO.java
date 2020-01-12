@@ -1,5 +1,6 @@
 package ua.com.parkhub.dto;
 
+
 import java.util.List;
 
 public class ParkingWithSlotsDTO {

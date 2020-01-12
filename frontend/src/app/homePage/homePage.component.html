@@ -1,5 +1,18 @@
 <div align="center"><h1>{{'ParkHub' | translate}}</h1></div>
 <div align="center"><h2>{{'RECOMMENDED BY THE MOST CAPRICIOUS DRIVERS!' | translate}}</h2></div>
 <div align="center"><h3>{{'HomePageChooseParking'| translate}}</h3></div>
+
+<div align="center">
+  <mat-card-content>
+    <mat-form-field>
+      <mat-label>Nearest parking</mat-label>
+      <input type="text" matInput  placeholder="Search" [(ngModel)]="search" name="Search"  required>
+    </mat-form-field>
+  </mat-card-content>
+  &#160;
+  <button class="btn btn-success" mat-raised-button color="primary" (click)="addSearch()"  >Search</button>
+
+</div>
+
 <br>
-<app-parking-list></app-parking-list>
+<app-parking-list [search]="childSearch"></app-parking-list>
