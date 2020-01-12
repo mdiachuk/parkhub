@@ -2,9 +2,11 @@ package ua.com.parkhub.service.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.com.parkhub.dto.AdminDTO;
 import ua.com.parkhub.dto.AdminSupportTicketDTO;
 import ua.com.parkhub.dto.AdminTicketCounterDTO;
 import ua.com.parkhub.dto.RoleDTO;
+import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.mappers.modelToDto.TicketSupportModelToAdminSupportTicketDTO;
 import ua.com.parkhub.model.enums.RoleModel;
 import ua.com.parkhub.model.SupportTicketModel;
@@ -20,6 +22,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class AdminService  {
+    final int listAdjusterStart = 1;
+    final int listAdjusterFinish = 6;
     private UserDAO userDAO;
     private UserRoleDAO userRoleDAO;
     private SupportTicketDAO supportTicketDAO;
@@ -45,7 +49,7 @@ public class AdminService  {
         long ticketCounter = targetSupportList.size();
         List<AdminSupportTicketDTO> adminSupportTicketDTOList = new ArrayList<>();
         if (ticketCounter>5) {
-            for (long i = ticketCounter - 1; i > ticketCounter - 6; i--) {
+            for (long i = ticketCounter - listAdjusterStart; i > ticketCounter - listAdjusterFinish; i--) {
                 AdminSupportTicketDTO adminSupportTicketDTO = new TicketSupportModelToAdminSupportTicketDTO().transform(targetSupportList.get((int) i));
                 adminSupportTicketDTO.setSupportTicketType(targetSupportList.get((int) i).getType().getValue());
                 adminSupportTicketDTO.setTicketHighlight(ticketHighlightBuilder(targetSupportList.get((int) i).getDescription()));
@@ -85,18 +89,15 @@ public class AdminService  {
         targetAdminTicketCounterDTO.setAdminTicketCounter(ticketCounter);
         return targetAdminTicketCounterDTO;
     }
-    public String getRole(long id){
-        Optional<UserModel> targetUser = userDAO.findElementById(id);
-        return targetUser.get().getRole().getRoleName();
-    }
 
-    public String getFullName(long id){
+    public AdminDTO getUserById(long id){
         Optional<UserModel> targetUser = userDAO.findElementById(id);
-        return targetUser.get().getFirstName() + " " + targetUser.get().getLastName();
-    }
-
-    public long getId(long id){
-        Optional<UserModel> targetUser = userDAO.findElementById(id);
-        return targetUser.get().getId();
+        return targetUser.map(target -> {
+            AdminDTO targetAdminDTO = new AdminDTO();
+            targetAdminDTO.setId(targetUser.get().getId());
+            targetAdminDTO.setFirstName(targetUser.get().getFirstName() + " " + targetUser.get().getLastName());
+            targetAdminDTO.setUserRole(targetUser.get().getRole().getRoleName());
+            return targetAdminDTO;
+        }).orElseThrow(() -> new NotFoundInDataBaseException("User not found"));
     }
 }
