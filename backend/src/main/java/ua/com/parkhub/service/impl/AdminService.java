@@ -22,8 +22,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class AdminService  {
-    final int listAdjusterStart = 1;
-    final int listAdjusterFinish = 6;
+    final int LIST_ADJUSTER_START = 1;
+    final int LIST_ADJUSTER_FINISH = 6;
     private UserDAO userDAO;
     private UserRoleDAO userRoleDAO;
     private SupportTicketDAO supportTicketDAO;
@@ -49,7 +49,7 @@ public class AdminService  {
         long ticketCounter = targetSupportList.size();
         List<AdminSupportTicketDTO> adminSupportTicketDTOList = new ArrayList<>();
         if (ticketCounter>5) {
-            for (long i = ticketCounter - listAdjusterStart; i > ticketCounter - listAdjusterFinish; i--) {
+            for (long i = ticketCounter - LIST_ADJUSTER_START; i > ticketCounter - LIST_ADJUSTER_FINISH; i--) {
                 AdminSupportTicketDTO adminSupportTicketDTO = new TicketSupportModelToAdminSupportTicketDTO().transform(targetSupportList.get((int) i));
                 adminSupportTicketDTO.setSupportTicketType(targetSupportList.get((int) i).getType().getValue());
                 adminSupportTicketDTO.setTicketHighlight(ticketHighlightBuilder(targetSupportList.get((int) i).getDescription()));
