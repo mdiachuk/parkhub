@@ -31,7 +31,8 @@ public class SignUpService {
 
     @Autowired
     public SignUpService(CustomerDAO customerDAO, UserDAO userDAO, UserRoleDAO userRoleDAO,
-                         SupportTicketDAO supportTicketDAO, SupportTicketTypeDAO supportTicketTypeDAO,
+                         SupportTicketDAO supportTicketDAO,
+                         SupportTicketTypeDAO supportTicketTypeDAO,
                          PasswordEncoder passwordEncoder) {
         this.customerDAO = customerDAO;
         this.userDAO = userDAO;
@@ -54,7 +55,7 @@ public class SignUpService {
         supportTicketDAO.addElement(ticket);
     }
 
-@Transactional
+    @Transactional
     public CustomerModel createCustomer(CustomerModel customer) {
         return customerDAO.findCustomerByPhoneNumber(customer.getPhoneNumber()).map(existingCustomer -> {
             logger.info("Customer with phone number={} was found", customer.getPhoneNumber());
@@ -155,6 +156,17 @@ public class SignUpService {
         UserModel user = userDAO.findOneByFieldEqual("email", email).get();
         CustomerModel customer = user.getCustomer();
         return customer.getPhoneNumber().equals("Empty");
+    }
+
+    public boolean signUpUser(UserModel userModel){
+
+        try {
+            userDAO.addElement( createUser( userModel, createCustomer(userModel.getCustomer())));
+            return true;
+        } catch (Exception e){
+            logger.error(""+e);
+        }
+        return false;
     }
 
 

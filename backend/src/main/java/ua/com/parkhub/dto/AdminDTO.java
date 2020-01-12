@@ -6,6 +6,7 @@ import ua.com.parkhub.service.impl.AdminService;
 
 @Service
 public class AdminDTO {
+
     private long id;
     private String firstName;
     private String userRole;

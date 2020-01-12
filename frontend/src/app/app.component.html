@@ -7,7 +7,7 @@
         <div fxShow="true" fxHide.lt-md="true">
           <a mat-button [routerLink]='["home"]'>{{ 'Home' | translate }}</a>
           <a mat-button [routerLink]='["cancel"]'>{{ 'CancelPrepayment' | translate }}</a>
-<!--          <a mat-button [routerLink]='["parkings"]'>Parking</a>-->
+          <!--          <a mat-button [routerLink]='["parkings"]'>Parking</a>-->
 
           <a *ngIf="data.currentIsManager  | async" mat-button [routerLink]='["manager/parking"]'>{{ 'Add parking' | translate }}</a>
           <a *ngIf="data.currentIsManager | async" mat-button [routerLink]='["manager/cabinet"]'>{{ 'Manager cabinet' | translate }}</a>
@@ -23,11 +23,13 @@
       </mat-toolbar>
       <mat-sidenav-container fxFlexFill class="example-container">
         <mat-sidenav-content fxFlexFill>
-<!--          CONTENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+          <!--          CONTENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
         </mat-sidenav-content>
       </mat-sidenav-container>
     </div>
   </section>
   <router-outlet></router-outlet>
-</div>
+
+ </div>
+
 

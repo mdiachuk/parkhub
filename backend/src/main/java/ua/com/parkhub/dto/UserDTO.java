@@ -113,4 +113,19 @@ public class UserDTO {
     public void setNumberOfFailedPassEntering(int numberOfFailedPassEntering) {
         this.numberOfFailedPassEntering = numberOfFailedPassEntering;
     }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "id=" + id +
+                ", customer=" + customer +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", token='" + token + '\'' +
+                ", numberOfFailedPassEntering=" + numberOfFailedPassEntering +
+                '}';
+    }
 }

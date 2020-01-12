@@ -21,6 +21,7 @@ export class Oauth2googleService {
    //this.router.navigate(['login'], { queryParams: { returnUrl: this.parkingUrl }});
  }
 
+
 //  public oAuthJwt() : Observable<string>  {
 //  return this.http.get<string>("http://localhost:8080/api/oauthJwtToken");
 //  //this.router.navigate(['login'], { queryParams: { returnUrl: this.parkingUrl }});

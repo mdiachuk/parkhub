@@ -1,10 +1,8 @@
 package ua.com.parkhub.mappers.dtoToModel;
 
 import org.springframework.stereotype.Component;
-import ua.com.parkhub.dto.AuthUserDTO;
 import ua.com.parkhub.dto.PhoneEmailDTO;
 import ua.com.parkhub.mappers.Mapper;
-import ua.com.parkhub.model.AuthUserModel;
 import ua.com.parkhub.model.PhoneEmailModel;
 
 @Component
@@ -16,4 +14,5 @@ public class PhoneEmailDTOtoPhoneEmailMapper implements Mapper<PhoneEmailDTO, Ph
         phoneEmailModel.setPhoneNumber(from.getPhoneNumber());
         return phoneEmailModel;
     }
+
 }
