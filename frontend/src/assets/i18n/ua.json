@@ -2,7 +2,11 @@
   "Logo": {
     "value": "assets/ParkhubLogoUkr.png"
   },
+
   "ParkHub": "ParkHub",
+  "RECOMMENDED BY THE MOST CAPRICIOUS DRIVERS!": "РЕКОМЕНДОВАНО НАЙБІЛЬШ ПРИМХЛИВИМИ ВОДІЯМИ",
+  "Parking created successfully.": "Парковка створена успішно.",
+  "Dear user,please input your phone number to be able to have full access cabinet!": "Шановний користувач, будь ласка, введіть свій номер телефону, щоб мати можливість мати повний доступ до кабінету!",
   "Home": "Головна",
   "CancelPrepayment": "Відмінити замовлення",
   "Cancel Prepayment": "Журбинка, що ти нас покидаєш",

@@ -108,7 +108,7 @@ export class AddParkingComponent implements OnInit {
     console.log(this.parking)
      this.parkingService.save(this.parking)
      .subscribe( data => {
-       this.openSnackBar(('Parking created successfully.'));
+       this.openSnackBar((this.translateService.instant('Parking created successfully.')));
     },
     err => {
       this.openSnackBar1((err.error));

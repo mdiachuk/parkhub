@@ -5,10 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.exceptions.StatusCode;
-import ua.com.parkhub.model.BookingModel;
-import ua.com.parkhub.model.CustomerModel;
-import ua.com.parkhub.model.PaymentModel;
-import ua.com.parkhub.model.SlotModel;
+import ua.com.parkhub.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.com.parkhub.exceptions.BookingException;
@@ -79,14 +76,11 @@ public class BookingService implements IBookingService {
     }
 
     public Optional<BookingModel> findPrepaidBooking(CustomerModel customerModel){
-        Instant now = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
-        System.out.println(now);
         BookingModel bookingModel;
         List<BookingModel> bookingModels = bookingDAO.findBookingsByCustomer(customerModel);
         bookingModel = bookingModels.stream()
-                .filter((x -> x.getCheckIn().toInstant(ZoneOffset.UTC).compareTo(now) > 0)).filter(BookingModel::isActive)
+                .filter((x -> x.getCheckIn().compareTo(LocalDateTime.now()) > 0)).filter(BookingModel::isActive)
                 .findFirst().orElseThrow(()-> new BookingException(StatusCode.BOOKING_NOT_FOUND));
-        System.out.println(bookingModel.getCheckIn().toInstant(ZoneOffset.UTC));
         return Optional.of(bookingModel);
     }
 
@@ -95,9 +89,7 @@ public class BookingService implements IBookingService {
         return bookingModel.map(bm -> {
             bm.setCheckOut(LocalDateTime.now());
             bm.setActive(false);
-            PaymentModel paymentModel = paymentService.findPaymentByBooking(bm);
-            price = paymentModel.getPrice();
-            paymentService.updateIsCancelled(paymentModel, true);
+            price = paymentService.findPriceIfCancelled(bm);
             bookingDAO.updateElement(bm);
             return price;
         }).orElseThrow(() -> new BookingException(StatusCode.BOOKING_NOT_FOUND));
