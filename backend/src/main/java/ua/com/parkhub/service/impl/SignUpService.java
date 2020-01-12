@@ -26,19 +26,19 @@ public class SignUpService {
     private final UserDAO userDAO;
     private final UserRoleDAO userRoleDAO;
     private final SupportTicketDAO supportTicketDAO;
-//    private final SupportTicketTypeDAO supportTicketTypeDAO;
+    private final SupportTicketTypeDAO supportTicketTypeDAO;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public SignUpService(CustomerDAO customerDAO, UserDAO userDAO, UserRoleDAO userRoleDAO,
                          SupportTicketDAO supportTicketDAO,
-//                         SupportTicketTypeDAO supportTicketTypeDAO,
+                         SupportTicketTypeDAO supportTicketTypeDAO,
                          PasswordEncoder passwordEncoder) {
         this.customerDAO = customerDAO;
         this.userDAO = userDAO;
         this.userRoleDAO = userRoleDAO;
         this.supportTicketDAO = supportTicketDAO;
-//        this.supportTicketTypeDAO = supportTicketTypeDAO;
+        this.supportTicketTypeDAO = supportTicketTypeDAO;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -108,9 +108,8 @@ public class SignUpService {
     }
 
     private TicketTypeModel findSupportTicketType(String type) {
-//        return supportTicketTypeDAO.findSupportTicketTypeByType(type).orElseThrow(() ->
-//                new NotFoundInDataBaseException("Support ticket type was not found by type=" + type));
-        return null;
+        return supportTicketTypeDAO.findSupportTicketTypeByType(type).orElseThrow(() ->
+                new NotFoundInDataBaseException("Support ticket type was not found by type=" + type));
     }
 
     private List<UserModel> findSolvers(String role) {
