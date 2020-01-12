@@ -77,23 +77,20 @@
   "Create": "Create",
   "Required": "Required",
   "$": "UAH/hour",
-
   "Forgot your password?": "Forgot your password?",
   "Type your email in the field below and we will\nsend you link to reset your password.": "Type your email in the field below and we will\nsend you link to reset your password.",
-
   "FieldIsRequired": "Field is required",
-
   "TypeUserIDPlaceholder": {
     "value": "Type User ID"
   },
   "TypeUserRolePlaceholder": {
     "value": "Type user role"
   },
-    "FindYourParkingLove♥Placeholder": {
-    "value" : "Find your parking, love ♥"
+  "FindYourParkingLove♥Placeholder": {
+    "value": "Find your parking, love ♥"
   },
   "PhoneNumberPlaceholder": {
-    "value" : "Enter phone number"
+    "value": "Phone number"
   },
   "addParkingNamePlaceholder": {
     "value": "Parking name"
@@ -137,5 +134,11 @@
   "managerCommentPlaceholder": {
     "value": "Comment"
   },
-  "Cities": ["Kyiv", "Lviv", "Chernivtsi", "Dnipro", "Kharkiv"]
+  "Cities": [
+    "Kyiv",
+    "Lviv",
+    "Chernivtsi",
+    "Dnipro",
+    "Kharkiv"
+  ]
 }
