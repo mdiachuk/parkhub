@@ -13,7 +13,8 @@ public class UserModelToEntityMapper implements Mapper<UserModel, User> {
     private RoleModelToEntityMapper roleModelToEntityMapper;
 
     @Autowired
-    public UserModelToEntityMapper(CustomerModelToEntityMapper customerModelToEntityMapper, RoleModelToEntityMapper roleModelToEntityMapper) {
+    public UserModelToEntityMapper(CustomerModelToEntityMapper customerModelToEntityMapper,
+                                   RoleModelToEntityMapper roleModelToEntityMapper) {
         this.customerModelToEntityMapper = customerModelToEntityMapper;
         this.roleModelToEntityMapper = roleModelToEntityMapper;
     }
@@ -21,15 +22,15 @@ public class UserModelToEntityMapper implements Mapper<UserModel, User> {
     @Override
     public User transform(UserModel from) {
         if(from == null) {
-            return null;
+            return null; //exception?
         }
         User user = new User();
+        user.setId(from.getId());
+        user.setCustomer(customerModelToEntityMapper.transform(from.getCustomer()));
         user.setEmail(from.getEmail());
         user.setFirstName(from.getFirstName());
         user.setLastName(from.getLastName());
-        user.setId(from.getId());
         user.setPassword(from.getPassword());
-        user.setCustomer(customerModelToEntityMapper.transform(from.getCustomer()));
         user.setNumberOfFailedPassEntering(from.getNumberOfFailedPassEntering());
         user.setRole(roleModelToEntityMapper.transform(from.getRole()));
         return user;

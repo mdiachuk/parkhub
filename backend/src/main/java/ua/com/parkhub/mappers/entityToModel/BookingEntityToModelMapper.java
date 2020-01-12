@@ -9,8 +9,8 @@ import ua.com.parkhub.persistence.entities.Booking;
 @Component
 public class BookingEntityToModelMapper implements Mapper<Booking, BookingModel> {
 
-    private final SlotEntityToModelMapper slotEntityToModelMapper;
-    private final CustomerEntityToModelMapper customerEntityToModelMapper;
+    SlotEntityToModelMapper slotEntityToModelMapper;
+    CustomerEntityToModelMapper customerEntityToModelMapper;
 
     @Autowired
     public BookingEntityToModelMapper(SlotEntityToModelMapper slotEntityToModelMapper, CustomerEntityToModelMapper customerEntityToModelMapper) {
