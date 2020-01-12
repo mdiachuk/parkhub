@@ -13,6 +13,6 @@ public interface IBookingService {
     Optional<BookingModel> findBookingByIdAndDateTimeRange(long id, long checkIn, long checkOut);
 
     int findPrice(String phoneNumber);
+
     Optional<BookingModel> findPrepaidBooking(CustomerModel customerModel);
-    BookingModel addBooking(String phoneNumber, String carNumber, long slotId);
 }

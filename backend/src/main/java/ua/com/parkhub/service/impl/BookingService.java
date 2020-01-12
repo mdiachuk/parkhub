@@ -78,19 +78,19 @@ public class BookingService implements IBookingService {
         return bookingDAO.findElementByFieldsEqual(id, localDateTimeCheckIn, localDateTimeCheckOut, fieldNameId, fieldNameCheckIn, fieldNameCheckOut);
     }
 
-    public Optional<BookingModel> findPrepaidBooking(CustomerModel customerModel){
+    public Optional<BookingModel> findPrepaidBooking(CustomerModel customerModel) {
         Instant now = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
         System.out.println(now);
         BookingModel bookingModel;
         List<BookingModel> bookingModels = bookingDAO.findBookingsByCustomer(customerModel);
         bookingModel = bookingModels.stream()
                 .filter((x -> x.getCheckIn().toInstant(ZoneOffset.UTC).compareTo(now) > 0)).filter(BookingModel::isActive)
-                .findFirst().orElseThrow(()-> new BookingException(StatusCode.BOOKING_NOT_FOUND));
+                .findFirst().orElseThrow(() -> new BookingException(StatusCode.BOOKING_NOT_FOUND));
         System.out.println(bookingModel.getCheckIn().toInstant(ZoneOffset.UTC));
         return Optional.of(bookingModel);
     }
 
-    public int findPrice(String phoneNumber){
+    public int findPrice(String phoneNumber) {
         Optional<BookingModel> bookingModel = findPrepaidBooking(customerService.findCustomerByPhoneNumber(phoneNumber));
         return bookingModel.map(bm -> {
             bm.setCheckOut(LocalDateTime.now());
@@ -101,10 +101,5 @@ public class BookingService implements IBookingService {
             bookingDAO.updateElement(bm);
             return price;
         }).orElseThrow(() -> new BookingException(StatusCode.BOOKING_NOT_FOUND));
-    }
-
-    @Override
-    public BookingModel addBooking(String phoneNumber, String carNumber, long slotId) {
-        return null;
     }
 }
