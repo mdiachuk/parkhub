@@ -96,7 +96,6 @@ public class ParkingService implements IParkingService  {
         List<SlotModel> slotList = parkingModel.getSlots();
         for (SlotModel slotModel : slotList) {
             Optional<BookingModel> bookingModel = bookingService.findBookingByIdAndDateTimeRange(slotModel.getId(), checkIn, checkOut);
-            System.out.println(bookingModel+"OMG");
             //TODO refactoring isPresent change to exception
             if (bookingModel.isPresent()) {
                 System.out.println(bookingModel.get());
