@@ -96,7 +96,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/user/token/refresh", "/api/user/token", "/api/oauthJwtToken","/api/login/google", "/api/parkings/{id}", "/api/booking").permitAll()
 
                 .anyRequest().authenticated()
-                .and()
+                .and().exceptionHandling().and().logout().logoutSuccessUrl("/").permitAll().and()
                 .csrf().disable()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAfter(ssoFilter(), JwtAuthenticationFilter.class);
