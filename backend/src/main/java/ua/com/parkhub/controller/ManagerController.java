@@ -31,11 +31,10 @@ public class ManagerController {
     }
 
     @PreAuthorize("hasRole('MANAGER') ")
-    @GetMapping()
-    public ResponseEntity<List<ParkingDTO>> getAllParking() {
+    @GetMapping(value = "/all/{ownerId}")
+    public ResponseEntity<List<ParkingDTO>> getAllParkingByOwnerId(@PathVariable("ownerId") Long parkingId) {
 
-        List<ParkingModel> parking = parkingService.findAllParking();
-        return ResponseEntity.ok(parkingService.findAllParking().stream().map(parkingMapper::transform).collect(Collectors.toList()));
+        return ResponseEntity.ok(parkingService.findAllParkingByOwnerId(parkingId).stream().map(parkingMapper::transform).collect(Collectors.toList()));
     }
 
     @PreAuthorize("hasRole('MANAGER') ")

@@ -11,6 +11,8 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class ParkingDAO extends ElementDAO<Parking, ParkingModel> {
@@ -40,6 +42,15 @@ public class ParkingDAO extends ElementDAO<Parking, ParkingModel> {
                         (cb.equal(root.get("building"), addressModel.getBuilding())));
         TypedQuery<Long> count = emp.createQuery(cr);
         return count.getSingleResult();
+    }
+
+    public List<ParkingModel> findAllParkingByOwnerId(Long id) {
+        CriteriaBuilder cb = emp.getCriteriaBuilder();
+        CriteriaQuery<Parking> cr = cb.createQuery(elementClass);
+        Root<Parking> root = cr.from(elementClass);
+        cr.select(root);
+        cr.where(cb.equal(root.get("owner").get("id"), id));
+        return emp.createQuery(cr).getResultList().stream().map(entityToModel::transform).collect(Collectors.toList());
     }
 }
 

@@ -64,10 +64,6 @@ public class ParkingService implements IParkingService  {
         parkingDAO.addElement(parkingModel);
     }
 
-    public List<ParkingModel> findAllParkingModel(){
-        return parkingDAO.findAll();
-    }
-
     public ParkingModel findParkingById(long id) {
         return parkingDAO.findElementById(id).orElseThrow(() -> new ParkingDoesntExistException(StatusCode.PARKING_DOESNT_EXIST));
     }
@@ -76,6 +72,10 @@ public class ParkingService implements IParkingService  {
     public List<ParkingModel> findAllParking() {
 
         return parkingDAO.findAll();
+    }
+
+    public List<ParkingModel> findAllParkingByOwnerId(Long id){
+        return parkingDAO.findAllParkingByOwnerId(id);
     }
 
     @Transactional(readOnly = true)
