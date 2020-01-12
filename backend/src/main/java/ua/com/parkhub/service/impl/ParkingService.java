@@ -60,6 +60,7 @@ public class ParkingService implements IParkingService  {
     @Transactional
     public void createParkingByOwnerID(ParkingModel parkingModel, long id) {
         AddressModel address = parkingModel.getAddressModel();
+        address = setLatLan(address);
         if (userDAO.findElementById(id).isPresent()) {
             parkingModel.setOwner(userDAO.findElementById(id).get());}
         AddressModel addressModel = addressDAO.addWithResponse(address);
@@ -113,6 +114,9 @@ public class ParkingService implements IParkingService  {
     @Transactional
     public void updateParking(Long id, ParkingModel parkingModelParam) {
         ParkingModel parkingModel = findParkingById(id);
+        AddressModel addressModel = parkingModel.getAddressModel();
+        addressModel = setLatLan(addressModel);
+        parkingModel.setAddressModel(addressModel);
         Field[] paramFields = parkingModelParam.getClass().getDeclaredFields();
         List<String> fieldsNameList = Arrays.stream(paramFields).filter(field -> {
             try {
