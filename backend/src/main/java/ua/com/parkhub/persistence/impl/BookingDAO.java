@@ -3,24 +3,13 @@ package ua.com.parkhub.persistence.impl;
 import org.springframework.stereotype.Repository;
 import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.BookingModel;
-import ua.com.parkhub.model.ParkingModel;
-import ua.com.parkhub.model.PaymentModel;
-import ua.com.parkhub.exceptions.NullCustomerException;
-import ua.com.parkhub.mappers.Mapper;
-import ua.com.parkhub.model.BookingModel;
 import ua.com.parkhub.model.CustomerModel;
 import ua.com.parkhub.persistence.entities.Booking;
-import ua.com.parkhub.persistence.entities.Parking;
-import ua.com.parkhub.persistence.entities.Payment;
-import ua.com.parkhub.persistence.entities.Customer;
-
-import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository

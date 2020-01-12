@@ -16,7 +16,7 @@ import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberException;
 import ua.com.parkhub.mappers.dtoToModel.ManagerRegistrationRequestDtoToModel;
 import ua.com.parkhub.mappers.dtoToModel.UserDtoToUserModelMapper;
-import ua.com.parkhub.model.UuidTokenType;
+import ua.com.parkhub.model.enums.UuidTokenType;
 import ua.com.parkhub.service.impl.SignUpService;
 import ua.com.parkhub.service.impl.UserService;
 import ua.com.parkhub.validation.groups.CustomerChecks;

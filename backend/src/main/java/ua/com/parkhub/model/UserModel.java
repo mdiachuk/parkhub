@@ -1,5 +1,7 @@
 package ua.com.parkhub.model;
 
+import ua.com.parkhub.model.enums.RoleModel;
+
 import java.util.Objects;
 
 public class UserModel {

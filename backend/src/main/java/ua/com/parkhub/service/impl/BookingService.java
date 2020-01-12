@@ -54,7 +54,7 @@ public class BookingService implements IBookingService {
     @Transactional
     public PaymentModel addBooking(String carNumber, String phoneNumber, long slotId, long checkIn, long checkOut, int price) {
         BookingModel booking = new BookingModel();
-        CustomerModel customer = customerService.findCustomerByPhoneNumber(phoneNumber);
+        CustomerModel customer = customerService.findCustomerByPhoneNumberOrAdd(phoneNumber);
         booking.setCustomer(customer);
         booking.setCarNumber(carNumber);
         SlotModel slot = findSlotById(slotId);

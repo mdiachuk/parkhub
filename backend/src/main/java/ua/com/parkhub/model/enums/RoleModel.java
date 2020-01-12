@@ -1,4 +1,4 @@
-package ua.com.parkhub.model;
+package ua.com.parkhub.model.enums;
 
 public enum RoleModel {
     ADMIN("ADMIN"),

@@ -68,8 +68,8 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
         Root<E> elementRoot = criteriaQuery.from(elementClass);
         Predicate[] predicates = new Predicate[3];
         predicates[0] = criteriaBuilder.equal(elementRoot.get(fieldNameSlotId), slotId);
-        predicates[1] = criteriaBuilder.greaterThanOrEqualTo(elementRoot.get(fieldNameCheckIn), checkIn);
-        predicates[2] = criteriaBuilder.lessThanOrEqualTo(elementRoot.get(fieldNameCheckOut), checkOut);
+        predicates[1] = criteriaBuilder.lessThanOrEqualTo(elementRoot.get(fieldNameCheckIn), checkIn);
+        predicates[2] = criteriaBuilder.greaterThanOrEqualTo(elementRoot.get(fieldNameCheckOut), checkOut);
         criteriaQuery.select(elementRoot).where(predicates);
         TypedQuery<E> query = emp.createQuery(criteriaQuery).setMaxResults(1);
         E element;

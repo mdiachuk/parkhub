@@ -1,5 +1,7 @@
 package ua.com.parkhub.model;
 
+import ua.com.parkhub.model.enums.TicketTypeModel;
+
 import java.util.List;
 
 public class SupportTicketModel {

@@ -27,7 +27,6 @@ public class CustomerService implements ICustomerService {
         return customerDAO.findCustomerByPhoneNumber(phoneNumber).orElseThrow(() -> new ParkHubException("No Customer found with phone number " + phoneNumber));
     }
 
-
     @Override
     public CustomerModel findCustomerByPhoneNumber(String phoneNumber) {
         return customerDAO.findCustomerByPhoneNumber(phoneNumber).orElseThrow(() -> new CustomerException(StatusCode.CUSTOMER_NOT_FOUND));

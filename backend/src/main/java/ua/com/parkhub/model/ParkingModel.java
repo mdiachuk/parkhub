@@ -13,7 +13,6 @@ public class ParkingModel {
     private List<SlotModel> slots;
     private boolean isActive;
     private UserModel owner;
-    private ParkingInfoModel info;
 
     public void setId(Long id) {
         this.id = id;
@@ -82,19 +81,25 @@ public class ParkingModel {
         this.slotsNumber = slotsNumber;
     }
 
-    public ParkingInfoModel getInfo() {
-        return info;
-    }
-
-    public void setInfo(ParkingInfoModel info) {
-        this.info = info;
-    }
-
     public AddressModel getAddressModel() {
         return addressModel;
     }
 
     public void setAddressModel(AddressModel addressModel) {
         this.addressModel = addressModel;
+    }
+
+    @Override
+    public String toString() {
+        return "ParkingModel{" +
+                "id=" + id +
+                ", parkingName='" + parkingName + '\'' +
+                ", slotsNumber=" + slotsNumber +
+                ", tariff=" + tariff +
+                ", addressModel=" + addressModel +
+                ", slots=" + slots +
+                ", isActive=" + isActive +
+                ", owner=" + owner +
+                '}';
     }
 }

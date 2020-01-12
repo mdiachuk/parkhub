@@ -1,12 +1,11 @@
 package ua.com.parkhub.mappers.modelToDto;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.com.parkhub.dto.RoleDTO;
 import ua.com.parkhub.dto.UserDTO;
 import ua.com.parkhub.mappers.Mapper;
-import ua.com.parkhub.model.RoleModel;
+import ua.com.parkhub.model.enums.RoleModel;
 import ua.com.parkhub.model.UserModel;
 
 

@@ -68,4 +68,17 @@ public class BookingModel {
     public void setActive(boolean active) {
         isActive = active;
     }
+
+    @Override
+    public String toString() {
+        return "BookingModel{" +
+                "id=" + id +
+                ", carNumber='" + carNumber + '\'' +
+                ", checkIn=" + checkIn +
+                ", checkOut=" + checkOut +
+                ", isActive=" + isActive +
+                ", customer=" + customer +
+                ", slot=" + slot +
+                '}';
+    }
 }
