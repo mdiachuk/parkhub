@@ -1,0 +1,33 @@
+<div class="date-container">
+    <section>
+        <form [formGroup]="bookingTimeForm" (submit)="saveReactive()">
+            <label>
+                Date Time Range From:
+                <input [min]="minFrom" [max]="maxFrom"
+                       [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1"
+                       [formControl]="rangeFrom" required>
+                <owl-date-time [startAt]="minFrom" #dt1></owl-date-time>
+                <br>
+                <mat-error *ngIf="rangeFrom.invalid && (rangeFrom.dirty || rangeFrom.touched)">{{isErrorRangeFrom()}}
+                </mat-error>
+            </label>
+            <br>
+            <br>
+            <label>
+                Date Time Range To:
+                <input [min]="minTo" [max]="maxTo"
+                       [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2"
+                       [formControl]="rangeTo" required>
+                <owl-date-time [startAt]="minTo" #dt2></owl-date-time>
+                <br>
+                <mat-error *ngIf="rangeTo.invalid && (rangeTo.dirty || rangeTo.touched)">{{isErrorRangeTo()}}
+                </mat-error>
+            </label>
+            <br>
+            <br>
+            <a [routerLink]="['/parkings/1']" [queryParams]="{rangeFrom: rangeFrom, rangeTo: rangeTo}">
+                <button type="submit" mat-raised-button color="primary">Submit</button>
+            </a>
+        </form>
+    </section>
+</div>

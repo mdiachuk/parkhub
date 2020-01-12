@@ -22,26 +22,18 @@ public class SupportTicket implements Serializable {
     @NotNull
     private boolean isSolved = false;
 
-//    @ManyToOne
-//    @JoinColumn(name = "ticket_type_id")
-//    private SupportTicketType supportTicketType;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ticket_type_id")
+    private SupportTicketType supportTicketType;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id")
     private Customer customer;
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
     @ManyToMany
     @JoinTable(name = "ticket_solver",
-               joinColumns = { @JoinColumn(name = "ticket_id") },
-               inverseJoinColumns = { @JoinColumn(name = "solver_id") }
+            joinColumns = { @JoinColumn(name = "ticket_id") },
+            inverseJoinColumns = { @JoinColumn(name = "solver_id") }
     )
     private List<User> solvers;
 
@@ -69,13 +61,21 @@ public class SupportTicket implements Serializable {
         isSolved = solved;
     }
 
-//    public SupportTicketType getSupportTicketType() {
-//        return supportTicketType;
-//    }
-//
-//    public void setSupportTicketType(SupportTicketType supportTicketType) {
-//        this.supportTicketType = supportTicketType;
-//    }
+    public SupportTicketType getSupportTicketType() {
+        return supportTicketType;
+    }
+
+    public void setSupportTicketType(SupportTicketType supportTicketType) {
+        this.supportTicketType = supportTicketType;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
     public List<User> getSolvers() {
         return solvers;

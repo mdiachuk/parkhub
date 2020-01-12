@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {PhoneNumber} from './phoneNumber';
+import {CheckOutResponse} from './checkOutResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,8 @@ export class ApiService {
     private http: HttpClient
   ) { }
 
-  checkPayout(pn: PhoneNumber): Observable<any> {
+  checkPayout(pn: PhoneNumber): Observable<CheckOutResponse> {
     const body = {phoneNumber: pn.phoneNumber};
-    return this.http.post(`${this.API_URL}/parkoff`, body);
+    return this.http.post<CheckOutResponse>(`${this.API_URL}/cancel`, body);
   }
 }

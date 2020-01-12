@@ -1,17 +1,16 @@
-
-<div align="center"><img src="assets/logotitle.png"></div>
-<div align="center"><h3>Choose the Parking:</h3></div>
+<div align="center"><img [src]="'Logo.value' | translate"></div>
+<div align="center"><h3>{{'HomePageChooseParking'| translate}}</h3></div>
 
 <div align="center">
   <mat-card-content>
     <mat-form-field>
       <mat-label>Nearest parking</mat-label>
       <input type="text" matInput  placeholder="Search" [(ngModel)]="search" name="Search"  required>
-
     </mat-form-field>
   </mat-card-content>
   &#160;
   <button class="btn btn-success" mat-raised-button (click)="addSearch()"  >Search</button>
+
 </div>
 
 <br>

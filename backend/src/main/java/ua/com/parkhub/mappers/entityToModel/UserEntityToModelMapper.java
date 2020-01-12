@@ -6,26 +6,21 @@ import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.persistence.entities.User;
 
-import java.util.stream.Collectors;
-
 @Component
 public class UserEntityToModelMapper implements Mapper<User, UserModel> {
 
-    CustomerEntityToModelMapper customerEntityToModelMapper;
-    RoleEntityToModelMapper roleEntityToModelMapper;
-    SupportTicketEntityToModelMapper supportTicketEntityToModelMapper;
+    private CustomerEntityToModelMapper customerEntityToModelMapper;
+    private RoleEntityToModelMapper roleEntityToModelMapper;
 
     @Autowired
-    public UserEntityToModelMapper(CustomerEntityToModelMapper customerEntityToModelMapper, RoleEntityToModelMapper roleEntityToModelMapper, SupportTicketEntityToModelMapper supportTicketEntityToModelMapper) {
+    public UserEntityToModelMapper(CustomerEntityToModelMapper customerEntityToModelMapper, RoleEntityToModelMapper roleEntityToModelMapper) {
         this.customerEntityToModelMapper = customerEntityToModelMapper;
         this.roleEntityToModelMapper = roleEntityToModelMapper;
-        this.supportTicketEntityToModelMapper = supportTicketEntityToModelMapper;
     }
-
 
     @Override
     public UserModel transform(User from) {
-        if(from == null) {
+        if (from == null){
             return null;
         }
         UserModel userModel = new UserModel();
@@ -36,9 +31,6 @@ public class UserEntityToModelMapper implements Mapper<User, UserModel> {
         userModel.setPassword(from.getPassword());
         userModel.setCustomer(customerEntityToModelMapper.transform(from.getCustomer()));
         userModel.setNumberOfFailedPassEntering(from.getNumberOfFailedPassEntering());
-        if(from.getTickets() != null){
-            userModel.setTickets(from.getTickets().stream().map(supportTicketEntityToModelMapper::transform).collect(Collectors.toList()));
-        }
         userModel.setRole(roleEntityToModelMapper.transform(from.getRole()));
         return userModel;
     }

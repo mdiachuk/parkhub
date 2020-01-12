@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import javax.validation.constraints.NotNull;
 
+import javax.validation.constraints.Pattern;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "email",
@@ -19,6 +21,7 @@ public class PhoneEmailDTO {
     private String email;
 
     @NotNull
+    @Pattern(regexp="^380\\d{9}$", message="Invalid name of parking")
     @JsonProperty("phoneNumber")
     private String phoneNumber;
 
@@ -37,4 +40,5 @@ public class PhoneEmailDTO {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
 }

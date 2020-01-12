@@ -2,7 +2,7 @@ package ua.com.parkhub.model;
 
 import java.util.Objects;
 
-public class AddressModel extends AbstractModel {
+public class AddressModel {
 
     private Long id;
     private String city;

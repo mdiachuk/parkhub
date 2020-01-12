@@ -12,13 +12,12 @@ export class ParkingServiceService {
   private parkingUrl: string;
 
   constructor(private http: HttpClient ) {
-    this.parkingUrl = '/api/manager/parking ';
-   }
+    this.parkingUrl = 'api/manager/parking';
+  }
 
-   public save(parking: Parking) : Observable<Parking>  {
-     console.log("service", parking, this.parkingUrl)
-     // return this.http.post<Parking>('http://localhost:8080/api/manager/parking', parking);
+  public save(parking: Parking) : Observable<Parking>  {
+    console.log("service", parking, this.parkingUrl)
     return this.http.post<Parking>(this.parkingUrl, parking);
-    // this.router.navigate(['login'], { queryParams: { returnUrl: this.parkingUrl }});
+    //this.router.navigate(['login'], { queryParams: { returnUrl: this.parkingUrl }});
   }
 }

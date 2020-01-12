@@ -1,4 +1,3 @@
-export class CheckOutResponse {
-  status: boolean;
+export interface CheckOutResponse {
   price: number;
 }

@@ -1,58 +1,65 @@
 
-<!--<div align="center">Sing Up User Form</div>-->
-
 <div align="center">
-  <mat-card>
+  <mat-card *ngIf="!isSent">
 
 
     <mat-card-content>
 
-          <mat-card-title >Sign Up User Form</mat-card-title>
+      <mat-card-title>{{'SingUpUserForm' | translate}}</mat-card-title>
 
       <div align="center">
 
         <mat-form-field>
-          <mat-label>Name</mat-label>
-          <input type="text" matInput placeholder="First Name" [(ngModel)]="users.firstName" name="First Name" required>
+          <mat-label>{{'Name' | translate}}</mat-label>
+          <input type="text"  matInput  [placeholder]="'FirstNamePlaceholder.value' | translate"
+                 [(ngModel)]="users.firstName"   required>
         </mat-form-field>
         &#160;
         <mat-form-field>
-          <mat-label>Second Name</mat-label>
-          <input type="text" matInput placeholder="Last Name" [(ngModel)]="users.lastName" name="Last Name" required>
+          <mat-label>{{'LastName' | translate}}</mat-label>
+          <input type="text" matInput  [placeholder]="'LastNamePlaceholder.value' | translate"
+                 [(ngModel)]="users.lastName"  name="Last Name"  required>
         </mat-form-field>
       </div>
 
 
       <div align="center">
         <mat-form-field>
-          <mat-label>Telephone</mat-label>
-          <input type="tel" matInput placeholder="Telephone"
-                 [(ngModel)]="customer.phoneNumber" name="Phone Number" required pattern="[0-9]{10}">
+          <mat-label>{{'PhoneNumber' | translate}}</mat-label>
+          <input type="tel" matInput  [placeholder]="'PhoneNumberPlaceholder.value' | translate"
+                 [(ngModel)]="customer.phoneNumber"  name="Phone Number"  required pattern="[0-9]{10}">
         </mat-form-field>
         &#160;
         <mat-form-field>
-          <mat-label>Email</mat-label>
-          <input type="email" matInput placeholder="Email" [(ngModel)]="users.email" name="Email" required>
+          <mat-label>{{'Email' | translate}}</mat-label>
+          <input type="email" matInput  [placeholder]="'EmailPlaceholder.value' | translate"
+                 [(ngModel)]="users.email"  name="Email"  required>
         </mat-form-field>
       </div>
 
       <div align="center">
         <mat-form-field>
-          <mat-label>Password</mat-label>
-          <input type="password" matInput placeholder="Password" [(ngModel)]="users.password" name="Password" required>
+          <mat-label>{{'Password' | translate}}</mat-label>
+          <input type="password" matInput  [placeholder]="'PasswordPlaceholder.value' | translate"
+                 [(ngModel)]="users.password"  name="Password"  required>
         </mat-form-field>
         &#160;
         <mat-form-field>
-          <mat-label>Confirm Password</mat-label>
-          <input type="password" matInput placeholder="Confirm Password"
-                 [(ngModel)]="confirmPass.confirmPass" name="Confirm Password" required>
+          <mat-label>{{'ConfirmPassword' | translate}}</mat-label>
+          <input type="password" matInput  [placeholder]="'ConfirmPasswordPlaceholder.value' | translate"
+                 [(ngModel)]="confirmPass.confirmPass" name="Confirm Password"  required>
         </mat-form-field>
       </div>
 
     </mat-card-content>
-    <button class="btn btn-success" mat-raised-button (click)="singUpUser()">Create</button>
+    <button class="btn btn-success" mat-raised-button color="primary" (click)="singUpUser()">{{'Create' | translate}}</button>
   </mat-card>
 
 
 </div>
 
+<div class="success" *ngIf="isSent">
+  <div><img src="assets/tick.png" class="success-image"></div>
+  <div class="success-message">Link for veifying email adress was sent<br>to your email-box!</div>
+  <div class="homepage-link"><a href="home" class="homepage-link">Go to the homepage</a></div>
+</div>

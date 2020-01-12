@@ -5,6 +5,7 @@ import {FormBuilder} from '@angular/forms';
 import {DataService} from '../DataService/data.service';
 import {LoginService} from '../services/login.service';
 import {MatSnackBar} from '@angular/material';
+import {TranslateService} from '@ngx-translate/core';
 
 
 @Component({
@@ -17,7 +18,8 @@ export class LoginComponent implements OnInit {
               private fb: FormBuilder,
               private loginSvc: LoginService,
               public data: DataService,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,
+              private translate: TranslateService) {
   }
 
   loginForm = this.fb.group({
@@ -31,7 +33,7 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     this.loginSvc.login({email: this.loginForm.get('username').value,
-                              password: this.loginForm.get('password').value}).subscribe(user => {
+      password: this.loginForm.get('password').value}).subscribe(user => {
         if (user) {
           if (user.role === 'USER') {
             this.changeIsLogged(true);
@@ -67,16 +69,19 @@ export class LoginComponent implements OnInit {
 
   checkStatusCode(code: number): string {
     if (code === 1) {
-      return 'Your account was blocked for 24 hours because of 3 unsuccessful tries to login. Please, try again later.';
+      return this.translate.instant('Your account was blocked for 24 hours because of 3 unsuccessful tries to login. Please, try again later.');
     }
     if (code === 2) {
-      return 'Your account was blocked. Cannot activate account: less than 24 hours have passed.';
+      return this.translate.instant('Cannot activate account: less than 24 hours have passed.');
     }
     if (code === 4) {
-      return 'No account with such email was found.';
+      return this.translate.instant('No account with such email was found.');
     }
     if (code === 8) {
-      return 'Please enter valid credentials!';
+      return this.translate.instant('Please enter valid credentials!');
+    }
+    if (code === 256) {
+      return 'Your account is not verified.';
     }
   }
 
@@ -102,16 +107,11 @@ export class LoginComponent implements OnInit {
     this.data.changeIsUser(isUser);
   }
 
-  public  openModal(text: string) {
-    this.data.changeMessage(text);
-    // this.modalService.show(CongratulationComponent);
-  }
-
   onClickMe():void{
     console.log("click");
     this.loginSvc.oauthlogin().subscribe(
       user => {console.log(user);
-      this.router.navigate(['/home'])}
+        this.router.navigate(['/home'])}
     );
   }
 

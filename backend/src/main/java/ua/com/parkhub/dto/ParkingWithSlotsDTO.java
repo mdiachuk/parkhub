@@ -1,11 +1,10 @@
 package ua.com.parkhub.dto;
 
-import java.io.Serializable;
+
 import java.util.List;
 
-public class ParkingWithSlotsDTO implements Serializable {
+public class ParkingWithSlotsDTO {
 
-    private static final long serialVersionUID = 1L;
     private Long id;
     private String name;
     private String tariff;
@@ -32,9 +31,9 @@ public class ParkingWithSlotsDTO implements Serializable {
         return address;
     }
 
-//    public void setAddress(Address address) {
-//        this.address = address.toString();
-//}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public String getTariff() {
         return tariff;

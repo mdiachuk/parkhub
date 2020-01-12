@@ -15,7 +15,7 @@ public class AddressDAO  extends ElementDAO<Address, AddressModel> {
     public AddressModel addWithResponse(AddressModel addressModel) {
         Address entity = modelToEntity.transform(addressModel);
         emp.persist(entity);
-        AddressModel addressModel1 = entityToModel.transform(entity);
-        return addressModel1;
+        return entityToModel.transform(entity);
     }
 }
+

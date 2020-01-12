@@ -1,13 +1,20 @@
 package ua.com.parkhub.dto;
 
-import java.util.List;
+import ua.com.parkhub.validation.annotations.ValidPhoneNumber;
+import ua.com.parkhub.validation.groups.CustomerChecks;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class CustomerDTO {
 
     private Long id;
-    private String phoneNumber;
     private boolean isActive;
-    private List<SupportTicketDTO> supportTickets;
+
+    @ValidPhoneNumber(groups = CustomerChecks.class)
+    @NotNull(message = "Phone number required", groups = CustomerChecks.class)
+    @NotEmpty(message = "Phone number must not be empty", groups = CustomerChecks.class)
+    private String phoneNumber;
 
     public Long getId() {
         return id;
@@ -33,21 +40,12 @@ public class CustomerDTO {
         isActive = active;
     }
 
-    public List<SupportTicketDTO> getSupportTickets() {
-        return supportTickets;
-    }
-
-    public void setSupportTickets(List<SupportTicketDTO> supportTickets) {
-        this.supportTickets = supportTickets;
-    }
-
     @Override
     public String toString() {
         return "CustomerDTO{" +
                 "id=" + id +
-                ", phoneNumber='" + phoneNumber + '\'' +
                 ", isActive=" + isActive +
-                ", supportTickets=" + supportTickets +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }
 }

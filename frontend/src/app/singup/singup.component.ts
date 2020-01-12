@@ -1,6 +1,5 @@
 import {Component, NgModule, OnInit} from '@angular/core';
 import {ConfirmPass, Customer, HttpClientService, User, RoleDTO} from "../service/http-client.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 
@@ -16,15 +15,12 @@ export class SingupComponent implements OnInit {
 
   customer:Customer = new Customer("", true);
 
-  roleDTO:RoleDTO = new RoleDTO("USER")
-
-  users:User = new User("","",this.customer,"","",this.roleDTO,"");
-
+  users:User = new User("","",this.customer,"","","");
 
   confirmPass:ConfirmPass = new ConfirmPass("");
 
   constructor(
-    private httpClientService:HttpClientService,private snackBar: MatSnackBar
+    private httpClientService:HttpClientService
   ) { }
 
   ngOnInit() {
@@ -40,8 +36,9 @@ export class SingupComponent implements OnInit {
             window.location.href='/home';
           },
           err => {
-          alert("Email or Phone are used")
-            err.error;
+            // alert("User SingUp");
+            // window.location.href='/home';
+            alert("Email or Telephone are use");
           });
     } else {
       alert("Pass not Confirm")
@@ -51,7 +48,9 @@ export class SingupComponent implements OnInit {
   };
 
 
-handleSuccessfulResponse(response)
+
+
+  handleSuccessfulResponse(response)
   {
     this.users=response;
   }

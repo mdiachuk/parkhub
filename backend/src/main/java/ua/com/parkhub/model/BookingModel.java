@@ -5,20 +5,21 @@ import java.time.LocalDateTime;
 public class BookingModel {
 
     private Long id;
-    private CustomerModel customer;
     private String carNumber;
-    private SlotModel slot;
     private LocalDateTime checkIn;
     private LocalDateTime checkOut;
     private boolean isActive;
+    private CustomerModel customer;
+    private SlotModel slot;
+
+    public void setCustomer(CustomerModel customer) {
+        this.customer = customer;
+    }
 
     public CustomerModel getCustomer() {
         return customer;
     }
 
-    public void setCustomer(CustomerModel customer) {
-        this.customer = customer;
-    }
 
     public SlotModel getSlot() {
         return slot;
@@ -67,14 +68,4 @@ public class BookingModel {
     public void setActive(boolean active) {
         isActive = active;
     }
-
-//    public int countPrice() {
-//        if (checkOut != null) {
-//            int hours = (int) ChronoUnit.HOURS.between(checkIn, checkOut);
-//            int tariff = slot.getParking().getTariff();
-//            return hours * tariff;
-//        } else {
-//            return 0;
-//        }
-//    }
 }

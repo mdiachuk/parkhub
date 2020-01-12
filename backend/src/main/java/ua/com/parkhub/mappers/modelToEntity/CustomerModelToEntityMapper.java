@@ -1,7 +1,6 @@
 package ua.com.parkhub.mappers.modelToEntity;
 
 import org.springframework.stereotype.Component;
-import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.CustomerModel;
 import ua.com.parkhub.persistence.entities.Customer;

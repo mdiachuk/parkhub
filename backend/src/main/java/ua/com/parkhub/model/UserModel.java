@@ -1,9 +1,8 @@
 package ua.com.parkhub.model;
 
-import java.util.List;
 import java.util.Objects;
 
-public class UserModel extends AbstractModel {
+public class UserModel {
 
     private Long id;
     private String firstName;
@@ -13,9 +12,7 @@ public class UserModel extends AbstractModel {
     private RoleModel role;
     private CustomerModel customer;
     private String token;
-
     private int numberOfFailedPassEntering;
-    private List<SupportTicketModel> tickets;
 
     public Long getId() {
         return id;
@@ -89,40 +86,31 @@ public class UserModel extends AbstractModel {
         this.numberOfFailedPassEntering = numberOfFailedPassEntering;
     }
 
-    public List<SupportTicketModel> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(List<SupportTicketModel> tickets) {
-        this.tickets = tickets;
-    }
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserModel userModel = (UserModel) o;
-        return numberOfFailedPassEntering == userModel.numberOfFailedPassEntering &&
-                Objects.equals(id, userModel.id) &&
-                Objects.equals(firstName, userModel.firstName) &&
-                Objects.equals(lastName, userModel.lastName) &&
-                Objects.equals(email, userModel.email) &&
-                Objects.equals(password, userModel.password) &&
-                role == userModel.role &&
-                Objects.equals(customer, userModel.customer) &&
-                Objects.equals(token, userModel.token) &&
-                Objects.equals(tickets, userModel.tickets);
+        UserModel user = (UserModel) o;
+        return numberOfFailedPassEntering == user.numberOfFailedPassEntering &&
+                Objects.equals(id, user.id) &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(password, user.password) &&
+                role == user.role &&
+                Objects.equals(customer, user.customer) &&
+                Objects.equals(token, user.token);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email, password, role, customer, token, numberOfFailedPassEntering, tickets);
+        return Objects.hash(id, firstName, lastName, email, password, role, customer, token, numberOfFailedPassEntering);
     }
 
     @Override
     public String toString() {
-        return "UserModel{" +
+        return "User{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
@@ -132,7 +120,6 @@ public class UserModel extends AbstractModel {
                 ", customer=" + customer +
                 ", token='" + token + '\'' +
                 ", numberOfFaildPassEntering=" + numberOfFailedPassEntering +
-                ", tickets=" + tickets +
                 '}';
     }
 }

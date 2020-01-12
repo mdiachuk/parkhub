@@ -1,0 +1,141 @@
+{
+  "Logo": {
+    "value": "assets/logotitle.png"
+  },
+  "ParkHub": "ParkHub",
+  "Home": "Home",
+  "CancelPrepayment": "Cancel prepayment",
+  "Cancel Prepayment": "Cancel prepayment",
+  "Success": "Success",
+  "Error": "Error",
+  "User Cabinet": "User Cabinet",
+  "Customer with this phone number was not found": "Customer with this phone number was not found, please, check the correct input",
+  "No pre-order": "No pre-order for this phone number found",
+  "Your reservation is already in progress": "Your reservation is already in progress",
+  "UAH": " UAH",
+  "Become partner": "Become partner",
+  "The price of your booking is": "Refund amount is ",
+  "WrongPhoneNumberPleaseTryAgain": "Wrong phone number, please try again",
+  "WrongPhoneNumberSpecified": "Wrong phone number specified",
+  "CustomToolbar": "Custom Toolbar",
+  "Add parking": "Add parking",
+  "Manager cabinet": "Manager cabinet",
+  "Admin cabinet": "Admin cabinet",
+  "Sign up": "Sign up",
+  "Sign up Manager": "Sign up Manager",
+  "Login": "Login",
+  "LogOut": "Logout",
+  "en": "en",
+  "ua": "ua",
+  "City": "City",
+  "Kyiv": "Kyiv",
+  "OK": "OK",
+  "Send": "Send",
+  "AdminCabinet": "Admin Cabinet",
+  "GetUserById": "Get user by id",
+  "UpdateRoleForm": "Update role form",
+  "UpdateRole": "Update role",
+  "ID": "ID",
+  "Role": "Role",
+  "Go to Parking owner cabinet": "Go to Parking owner cabinet",
+  "HomePageChooseParking": "Choose the Parking:",
+  "PleaseFillInThisFormToBecomeOurPartner": "Please, fill in this form to become our partner",
+  "MustContain8Numbers": "Must contain 8 numbers",
+  "InvalidEmailFormat": "Invalid email format",
+  "InvalidPhoneNumberFormat": "Invalid phone number format",
+  "MustContainAtLeastOneNumberOneUppercaseAndOneLowercaseLetterAndAtLeast6Characters": "Must contain at least one number, one uppercase and one lowercase letter, and at\n            least 6 characters",
+  "PasswordsMustMatch": "Passwords must match!",
+  "Max200Characters": "Max 200 characters",
+  "IAgreeWithTermsConditionsAndPrivacyPolicy": "I agree with terms, conditions and privacy policy",
+  "Your account was blocked for 24 hours because of 3 unsuccessful tries to login. Please, try again later.": "Your account was blocked for 24 hours because of 3 unsuccessful tries to login. Please, try again later.",
+  "Cannot activate account: less than 24 hours have passed.": "Cannot activate account: less than 24 hours have passed.",
+  "No account with such email was found.": "No account with such email was found.",
+  "Please enter valid credentials!": "Please enter valid credentials!",
+  "Reset": "Reset",
+  "Submit": "Submit",
+  "wasSentToTheAdministrator": "was sent to the administrator!",
+  "GoToTheHomepage": "Go to the homepage",
+  "ParkingName": "Parking Name",
+  "Address": "Address",
+  "Tariff": "Tariff",
+  "Fullness": "Fullness",
+  "Add": "Add",
+  "Delete": "Delete",
+  "SingUpUserForm": "Sing Up User Form",
+  "Name": "Name",
+  "LastName": "Last Name",
+  "PhoneNumber": "Phone Number",
+  "Email": "Email",
+  "Password": "Password",
+  "ConfirmPassword": "Confirm password",
+  "PricePerHour": "Price per hour",
+  "PleaseChooseAvailableSlot": "Please, choose available slot",
+  "NotAValidNameOfStreet": "Not a valid name of street.",
+  "NotAValidBuilding": "Not a valid building",
+  "NotAValidParkingName": "Not a valid parking name",
+  "NotAValidNumberOfSlotsShouldBePositiveInteger": "Not a valid number of slots. Should be positive integer",
+  "Create": "Create",
+  "Required": "Required",
+  "$": "UAH/hour",
+
+  "Forgot your password?": "Forgot your password?",
+  "Type your email in the field below and we will\nsend you link to reset your password.": "Type your email in the field below and we will\nsend you link to reset your password.",
+
+  "FieldIsRequired": "Field is required",
+
+  "TypeUserIDPlaceholder": {
+    "value": "Type User ID"
+  },
+  "TypeUserRolePlaceholder": {
+    "value": "Type user role"
+  },
+    "FindYourParkingLove♥Placeholder": {
+    "value" : "Find your parking, love ♥"
+  },
+  "PhoneNumberPlaceholder": {
+    "value" : "Enter phone number"
+  },
+  "addParkingNamePlaceholder": {
+    "value": "Parking name"
+  },
+  "addParkingSlotsNumberPlaceholder": {
+    "value": "Slots number"
+  },
+  "addParkingTariffPlaceholder": {
+    "value": "Tariff UAH/hour"
+  },
+  "addParkingStreetPlaceholder": {
+    "value": "Street"
+  },
+  "addParkingBuildingPlaceholder": {
+    "value": "Building number"
+  },
+  "bookingDetailCarNumberPlaceholder": {
+    "value": "car number"
+  },
+  "EmailPlaceholder": {
+    "value": "Email"
+  },
+  "PasswordPlaceholder": {
+    "value": "Password"
+  },
+  "FirstNamePlaceholder": {
+    "value": "First name"
+  },
+  "LastNamePlaceholder": {
+    "value": "Last name"
+  },
+  "managerCompanyPlaceholder": {
+    "value": "Company"
+  },
+  "managerUSREOUPlaceholder": {
+    "value": "USREOU"
+  },
+  "ConfirmPasswordPlaceholder": {
+    "value": "Confirm password"
+  },
+  "managerCommentPlaceholder": {
+    "value": "Comment"
+  },
+  "Cities": ["Kyiv", "Lviv", "Chernivtsi", "Dnipro", "Kharkiv"]
+}

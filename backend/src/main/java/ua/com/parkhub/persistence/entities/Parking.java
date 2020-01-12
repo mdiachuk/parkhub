@@ -3,12 +3,11 @@ package ua.com.parkhub.persistence.entities;
 import javax.persistence.Entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "parking",schema = "park_hub")
-public class Parking implements Serializable {
+public class Parking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,11 +28,11 @@ public class Parking implements Serializable {
     @Column
     private boolean isActive = true;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "parking_owner_id")
     private User owner;
 

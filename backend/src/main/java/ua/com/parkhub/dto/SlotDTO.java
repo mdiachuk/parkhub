@@ -1,12 +1,11 @@
 package ua.com.parkhub.dto;
 
-import java.io.Serializable;
+public class SlotDTO {
 
-public class SlotDTO implements Serializable {
-
-    private static final long serialVersionUID = 1L;
     private Long id;
     private String slotNumber;
+    private boolean isReserved;
+    private boolean isActive;
 
     public boolean isReserved() {
         return isReserved;
@@ -24,9 +23,6 @@ public class SlotDTO implements Serializable {
         isActive = active;
     }
 
-    private boolean isReserved;
-    private boolean isActive;
-
     public Long getId() {
         return id;
     }
@@ -43,11 +39,4 @@ public class SlotDTO implements Serializable {
         this.slotNumber = slotNumber;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("SlotDTO" + ", id: ").append(id);
-        sb.append(", slotNumber: ").append(slotNumber);
-        return sb.toString();
-    }
 }

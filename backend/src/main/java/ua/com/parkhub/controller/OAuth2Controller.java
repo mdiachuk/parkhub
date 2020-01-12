@@ -2,6 +2,7 @@ package ua.com.parkhub.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,8 @@ import java.io.IOException;
 
 import java.util.LinkedHashMap;
 
+import static org.springframework.http.ResponseEntity.ok;
+
 @RestController
 public class OAuth2Controller {
 
@@ -28,21 +31,19 @@ public class OAuth2Controller {
     private String frontUrl;
 
     private final SignUpService  signUpService;
-    private JwtUtil jwtUtil;
     private AuthUserDTOtoAuthUserModelMapper authUserDTOtoAuthUserModelMapper;
     private PhoneEmailDTOtoPhoneEmailMapper phoneEmailDTOtoPhoneEmailMapper;
 
 
     @Autowired
-    public OAuth2Controller(SignUpService signUpService, AuthUserDTOtoAuthUserModelMapper Mapper, PhoneEmailDTOtoPhoneEmailMapper phoneEmailDTOtoPhoneEmailMapper,  JwtUtil jwtUtil) {
+    public OAuth2Controller(SignUpService signUpService, AuthUserDTOtoAuthUserModelMapper Mapper, PhoneEmailDTOtoPhoneEmailMapper phoneEmailDTOtoPhoneEmailMapper) {
         this.signUpService = signUpService;
         this.authUserDTOtoAuthUserModelMapper = Mapper;
         this.phoneEmailDTOtoPhoneEmailMapper = phoneEmailDTOtoPhoneEmailMapper;
-        this.jwtUtil = jwtUtil;
     }
 
-    @RequestMapping("/oauthSuccess")
-    public void handleFoo(HttpServletResponse response,OAuth2Authentication user) throws IOException {
+    @RequestMapping("/api/oauthSuccess")
+    public void setAuthUser(HttpServletResponse response,OAuth2Authentication user) throws IOException {
         LinkedHashMap<String,String> authMap = (LinkedHashMap<String,String>) user.getUserAuthentication().getDetails();
         String firstName = authMap.get("given_name");
         String lastName = authMap.get("family_name");
@@ -62,12 +63,12 @@ public class OAuth2Controller {
         else{
             response.sendRedirect(frontUrl+"/home");
         }
-            //TODO create cron for deleted unused cosial accounts
+        //TODO create cron for deleted unused cosial accounts
         //TODO : add jwt
     }
 
 
-    @PutMapping("/customer")
+    @PutMapping("/api/customer")
     public void updatePhone(@RequestBody PhoneEmailDTO phoneEmailDTO) {
         PhoneEmailModel phoneEmailModel=phoneEmailDTOtoPhoneEmailMapper.transform(phoneEmailDTO);
         signUpService.setPhoneNumberForAuthUser(phoneEmailModel);

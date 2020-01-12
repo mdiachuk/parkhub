@@ -3,7 +3,7 @@ package ua.com.parkhub.model;
 
 import java.util.Objects;
 
-public class SlotModel extends AbstractModel {
+public class SlotModel {
 
     private Long id;
     private String slotNumber;
@@ -14,7 +14,7 @@ public class SlotModel extends AbstractModel {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -56,15 +56,5 @@ public class SlotModel extends AbstractModel {
     @Override
     public int hashCode() {
         return Objects.hash(id, slotNumber, isReserved, isActive);
-    }
-
-    @Override
-    public String toString() {
-        return "SlotModel{" +
-                "id=" + id +
-                ", slotNumber='" + slotNumber + '\'' +
-                ", isReserved=" + isReserved +
-                ", isActive=" + isActive +
-                '}';
     }
 }

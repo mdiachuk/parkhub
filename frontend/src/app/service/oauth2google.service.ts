@@ -20,4 +20,10 @@ export class Oauth2googleService {
    return this.http.put<PhoneNumber>(this.customerUrl, parking);
    //this.router.navigate(['login'], { queryParams: { returnUrl: this.parkingUrl }});
  }
+
+
+//  public oAuthJwt() : Observable<string>  {
+//  return this.http.get<string>("http://localhost:8080/api/oauthJwtToken");
+//  //this.router.navigate(['login'], { queryParams: { returnUrl: this.parkingUrl }});
+// }
 }

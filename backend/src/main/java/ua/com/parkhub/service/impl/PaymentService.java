@@ -1,69 +1,57 @@
 package ua.com.parkhub.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import ua.com.parkhub.persistence.entities.Booking;
-import ua.com.parkhub.persistence.entities.Customer;
-import ua.com.parkhub.persistence.entities.Payment;
-import ua.com.parkhub.persistence.impl.BookingDAO;
-import ua.com.parkhub.persistence.impl.CustomerDAO;
+import ua.com.parkhub.exceptions.BookingException;
+import ua.com.parkhub.exceptions.StatusCode;
+import ua.com.parkhub.model.BookingModel;
+import ua.com.parkhub.model.PaymentModel;
 import ua.com.parkhub.persistence.impl.PaymentDAO;
+import ua.com.parkhub.service.IPaymentService;
 
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Optional;
 
 @Service
-public class PaymentService {
+@Transactional
+public class PaymentService implements IPaymentService {
 
-    private BookingDAO bookingDAO;
-    private CustomerDAO customerDAO;
+    private static final Logger logger = LoggerFactory.getLogger(PaymentService.class);
+
     private PaymentDAO paymentDAO;
 
     @Autowired
-    public PaymentService(BookingDAO bookingDAO,
-                          CustomerDAO customerDAO,
-                          PaymentDAO paymentDAO) {
-        this.bookingDAO = bookingDAO;
-        this.customerDAO = customerDAO;
+    public PaymentService(PaymentDAO paymentDAO) {
         this.paymentDAO = paymentDAO;
     }
 
-    @Transactional
-    public Optional<Customer> checkCustomerIfPresent(String phoneNumber) {
-//        return  customerDAO.findElementByPhone(phoneNumber);
-        return null;
+    public void updateIsCancelled(PaymentModel paymentModel, boolean isCancelled){
+        paymentModel.setCancelled(isCancelled);
+        paymentDAO.updateElement(paymentModel);
     }
 
-    private int countPrice(Booking booking){
-        if (booking.getCheckOut() != null){
-            int hours = (int) ChronoUnit.HOURS.between(booking.getCheckIn(), booking.getCheckOut());
-            int tariff = booking.getSlot().getParking().getTariff();
-            return hours * tariff;
-        }else {
-            return 0;
-        }
+    public PaymentModel findPaymentByBooking(BookingModel bookingModel) {
+        return paymentDAO.findPaymentByBooking(bookingModel).orElseThrow(() -> new BookingException(StatusCode.BOOKING_NOT_FOUND));
     }
 
-    private Optional<Payment> createPayment(String phoneNumber){
-        Customer customer = checkCustomerIfPresent(phoneNumber).get();
-//        Booking booking = bookingDAO.findActiveBookingByCustomer(customer).get();
-//        booking.setCheckOut(LocalDateTime.now());
-//        booking.getSlot().setActive(false);
-//        booking.setActive(false);
-//        bookingDAO.updateElement(booking);
-//        int price = countPrice(booking);
-//        Payment payment = new Payment();
-//        payment.setBooking(booking);
-//        payment.setPaid(false);
-//        payment.setPrice(price);
-//        paymentDAO.addElement(payment);
-//        return Optional.of(payment);
-        return null;
+    public int calculatePrice(BookingModel bookingModel, int tariff) {
+        LocalDateTime checkIn = bookingModel.getCheckIn();
+        LocalDateTime checkOut = bookingModel.getCheckOut();
+        long hours = ChronoUnit.HOURS.between(checkIn, checkOut);
+        return hours > 0 ? (int) (tariff * hours) : tariff;
     }
 
-    @Transactional
-    public int getPrice(String phoneNumber) {
-        return createPayment(phoneNumber).get().getPrice();
+    @Override
+    public PaymentModel addPayment(BookingModel bookingModel, int tariff) {
+        PaymentModel paymentModel = new PaymentModel();
+        paymentModel.setBooking(bookingModel);
+        int price = calculatePrice(bookingModel, tariff);
+        paymentModel.setPrice(price);
+        paymentModel.setPaid(true);
+        paymentDAO.addElement(paymentModel);
+        return paymentModel;
     }
 }

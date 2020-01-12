@@ -2,7 +2,7 @@ package ua.com.parkhub.mappers.entityToModel;
 
 import org.springframework.stereotype.Component;
 import ua.com.parkhub.mappers.Mapper;
-import ua.com.parkhub.model.SupportTicketType;
+import ua.com.parkhub.persistence.entities.SupportTicketType;
 import ua.com.parkhub.model.SupportTicketTypeModel;
 
 @Component

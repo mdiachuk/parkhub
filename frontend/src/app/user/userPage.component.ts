@@ -4,6 +4,7 @@ import { Observable, empty } from 'rxjs';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import {UserService} from '../service/http-client.service';
 import {UserInfo} from '../interfaces/userInfo';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 var i = 0;
 var j = 0;
@@ -23,7 +24,7 @@ export class UserComponent implements OnInit {
   updateForm: FormGroup;
 
   // tslint:disable-next-line:no-shadowed-variable
-  constructor( private uf: FormBuilder, private UserService: UserService) { }
+  constructor( private uf: FormBuilder, private UserService: UserService, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
 
@@ -44,42 +45,56 @@ export class UserComponent implements OnInit {
 
   }
   EditUserInfo() {
-    if (i == 0 ) {
+    if (i == 0) {
       document.getElementById("displayUserInfo").style.display = "none";
       document.getElementById("editUserInfo").style.display = "";
+      document.getElementById("editButton").innerText = "Close";
       i++;
     }
     else {
       document.getElementById("displayUserInfo").style.display = "";
       document.getElementById("editUserInfo").style.display = "none";
+      document.getElementById("editButton").innerText = "Edit";
       i--;
     }
   }
   PostData() {
     this.UserService.PostData({...this.updateForm.value,id: this.UserService.getUserID()}).subscribe(res => {
       console.log(res);
+      alert("Changes were accepted");
     });
   }
   changePassword() {
 
     if (j == 0) {
       document.getElementById("ChangePassword").style.display = "";
+      document.getElementById("buttonChangePassword").innerText = "Close";
       document.getElementById("buttonSavePassword").style.display = "";
       j++;
     } else {
       document.getElementById("ChangePassword").style.display = "none";
       document.getElementById("buttonSavePassword").style.display = "none";
+      document.getElementById("buttonChangePassword").innerText = "Change Password";
       j--;
     }
 
   }
 
-  PostPassword(){
-    this.UserService.PostDataPassword({id:this.UserService.getUserID(),
+  PostPassword() {
+    this.UserService.PostDataPassword({
+      id: this.UserService.getUserID(),
       password: this.updateForm.get('userPassword').value,
-      newPassword: this.updateForm.get('newPassword').value}).subscribe(res => {
-      console.log(res);
-    });
+      newPassword: this.updateForm.get('newPassword').value
+    }).subscribe(res => {
+        this._snackBar.open("Password Changed!", "Ok", {
+          duration: 2000,
+        });
+      },
+      err => {
+        this._snackBar.open("Failed to change password!", "Ok", {
+          duration: 2000,
+        });
+      });
   }
 
 

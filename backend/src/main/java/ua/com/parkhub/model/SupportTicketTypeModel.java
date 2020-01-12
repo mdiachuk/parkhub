@@ -2,6 +2,7 @@ package ua.com.parkhub.model;
 
 public class SupportTicketTypeModel {
 
+
     private Long id;
     private String type;
     private boolean isActive = true;
@@ -29,4 +30,5 @@ public class SupportTicketTypeModel {
     public void setActive(boolean active) {
         isActive = active;
     }
+
 }

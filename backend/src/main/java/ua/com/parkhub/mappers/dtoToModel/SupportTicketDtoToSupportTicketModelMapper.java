@@ -8,11 +8,14 @@ import ua.com.parkhub.model.SupportTicketModel;
 @Component
 public class SupportTicketDtoToSupportTicketModelMapper implements Mapper<SupportTicketDTO, SupportTicketModel> {
 
-    private final SupportTicketTypeDtoToSupportTicketTypeModelMapper supportTicketTypeDtoToSupportTicketTypeModelMapper;
+    private final TicketTypeDtoToTicketTypeModel ticketTypeDtoToTicketTypeModel;
+    private final CustomerDtoToCustomerModelMapper customerDtoToCustomerModelMapper;
 
     public SupportTicketDtoToSupportTicketModelMapper(
-            SupportTicketTypeDtoToSupportTicketTypeModelMapper supportTicketTypeDtoToSupportTicketTypeModelMapper) {
-        this.supportTicketTypeDtoToSupportTicketTypeModelMapper = supportTicketTypeDtoToSupportTicketTypeModelMapper;
+            TicketTypeDtoToTicketTypeModel ticketTypeDtoToTicketTypeModel,
+            CustomerDtoToCustomerModelMapper customerDtoToCustomerModelMapper) {
+        this.ticketTypeDtoToTicketTypeModel = ticketTypeDtoToTicketTypeModel;
+        this.customerDtoToCustomerModelMapper = customerDtoToCustomerModelMapper;
     }
 
     @Override
@@ -22,10 +25,12 @@ public class SupportTicketDtoToSupportTicketModelMapper implements Mapper<Suppor
         supportTicketModel.setId(from.getId());
         supportTicketModel.setDescription(from.getDescription());
         supportTicketModel.setSolved(from.isSolved());
-        supportTicketModel.setCustomer(from.getCustomer());
-        supportTicketModel.setSupportTicketType(
-                supportTicketTypeDtoToSupportTicketTypeModelMapper.transform(from.getSupportTicketType()));
+        supportTicketModel.setCustomer(customerDtoToCustomerModelMapper.transform(from.getCustomer()));
+        supportTicketModel.setType(
+                ticketTypeDtoToTicketTypeModel.transform(from.getSupportTicketType()));
 
         return supportTicketModel;
     }
 }
+
+

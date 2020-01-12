@@ -3,7 +3,6 @@ package ua.com.parkhub.mappers.entityToModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.com.parkhub.mappers.Mapper;
-
 import ua.com.parkhub.model.BookingModel;
 import ua.com.parkhub.persistence.entities.Booking;
 
@@ -21,6 +20,9 @@ public class BookingEntityToModelMapper implements Mapper<Booking, BookingModel>
 
     @Override
     public BookingModel transform(Booking from) {
+        if(from == null) {
+            return null;
+        }
         BookingModel bookingModel = new BookingModel();
         bookingModel.setId(from.getId());
         bookingModel.setActive(from.isActive());

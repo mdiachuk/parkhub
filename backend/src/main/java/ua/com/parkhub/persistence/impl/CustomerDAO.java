@@ -3,7 +3,6 @@ package ua.com.parkhub.persistence.impl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.exceptions.NullCustomerException;
-
 import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.CustomerModel;
 import ua.com.parkhub.persistence.entities.Customer;
@@ -37,8 +36,10 @@ public class CustomerDAO extends ElementDAO<Customer, CustomerModel> {
 
             return Optional.of(Optional.ofNullable(entityToModel.transform(this.emp.createQuery(criteriaQuery).getSingleResult()))).orElseThrow(NullCustomerException::new);
         }catch (Exception e){
-            throw new NullCustomerException("Failed to find customer by phone number");
+            throw new NullCustomerException(
+//                    "Failed to find customer by phone number"
+            );
         }
     }
-}
 
+}

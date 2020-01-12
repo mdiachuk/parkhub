@@ -1,43 +1,40 @@
 package ua.com.parkhub.service.impl;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.com.parkhub.persistence.entities.Customer;
+import ua.com.parkhub.exceptions.ParkHubException;
+import ua.com.parkhub.exceptions.CustomerException;
+import ua.com.parkhub.exceptions.StatusCode;
+import ua.com.parkhub.model.CustomerModel;
 import ua.com.parkhub.persistence.impl.CustomerDAO;
 import ua.com.parkhub.service.ICustomerService;
-
-//import ua.com.parkhub.model.Customer;
 
 @Service
 public class CustomerService implements ICustomerService {
 
     private final CustomerDAO customerDAO;
-    private final ModelMapper mapper;
 
     @Autowired
-    public CustomerService(CustomerDAO customerDAO, ModelMapper mapper) {
+    public CustomerService(CustomerDAO customerDAO) {
         this.customerDAO = customerDAO;
-        this.mapper = mapper;
     }
 
-    private Customer addCustomerAndGet(String phoneNumber) {
-//        Customer customerEntity = new Customer();
-//        customerEntity.setPhoneNumber(phoneNumber);
-//        customerDAO.addElement(customerEntity);
-//        Optional<Customer> optionalUser = customerDAO.findCustomerByPhoneNumber(phoneNumber);
-//        if (optionalUser.isPresent()) {
-//            return optionalUser.get();
-//        }
-//        throw new ParkHubException("No Customer found with phone number " + phoneNumber);
-        return null;
+    private CustomerModel addCustomer(String phoneNumber) {
+        CustomerModel customerModel = new CustomerModel();
+        customerModel.setPhoneNumber(phoneNumber);
+        customerDAO.addElement(customerModel);
+        return customerDAO.findCustomerByPhoneNumber(phoneNumber).orElseThrow(() -> new ParkHubException("No Customer found with phone number " + phoneNumber));
+    }
+
+
+    @Override
+    public CustomerModel findCustomerByPhoneNumber(String phoneNumber) {
+        return customerDAO.findCustomerByPhoneNumber(phoneNumber).orElseThrow(() -> new CustomerException(StatusCode.CUSTOMER_NOT_FOUND));
     }
 
     @Transactional
-    public ua.com.parkhub.model.CustomerModel findCustomerByPhoneNumberOrAdd(String phoneNumber) {
-//        Customer customerEntity = customerDAO.findCustomerByPhoneNumber(phoneNumber).orElseGet(() -> addCustomerAndGet(phoneNumber));
-//        return mapper.map(customerEntity, ua.com.parkhub.model.Customer.class);
-        return null;
+    public CustomerModel findCustomerByPhoneNumberOrAdd(String phoneNumber) {
+        return customerDAO.findCustomerByPhoneNumber(phoneNumber).orElseGet(() -> addCustomer(phoneNumber));
     }
 }
