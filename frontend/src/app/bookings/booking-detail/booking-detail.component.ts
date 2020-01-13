@@ -29,6 +29,7 @@ export class BookingDetailComponent implements OnInit {
     private bookingService: BookingService,
     private paymentService: PaymentService,
     private route: ActivatedRoute,
+    private router: Router,
     private snackBar: MatSnackBar,
   ) {
   }
@@ -62,14 +63,20 @@ export class BookingDetailComponent implements OnInit {
 
   saveReactive() {
     this.bookingService.addBooking({...this.bookingForm.value, slotId: this.newBooking.slotId, rangeFrom: this.newBooking.rangeFrom, rangeTo: this.newBooking.rangeTo, tariff: this.newBooking.tariff}).subscribe(o => {
-      console.log("success!");
+      this.openSnackBar(`Parking price is: ${o.price}`);
     });
   }
 
   openSnackBar(message: string) {
     this.snackBar.open(message, 'Close', {
-      duration: 5000,
+      duration: 20000,
     });
+    let snackBarRef = this.snackBar.open(message, 'Close', {
+      duration: 20000,
+    });
+    snackBarRef.onAction().subscribe(a => {
+      this.router.navigate(['home']);
+    })
   }
 }
 
