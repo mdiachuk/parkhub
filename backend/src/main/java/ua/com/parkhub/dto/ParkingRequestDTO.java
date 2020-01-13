@@ -21,7 +21,7 @@ import javax.validation.constraints.Pattern;
 public class ParkingRequestDTO {
 
     @NotNull(message = "Name of parking must not be null")
-    @Pattern(regexp="^[a-zA-Z 0-9-]+$", message="Invalid name of parking")
+    @Pattern(regexp="^[a-zA-ZА-Яа-яйєї 0-9-]+$", message="Invalid name of parking")
     @JsonProperty("parkingName")
     private String parkingName;
 
@@ -34,17 +34,16 @@ public class ParkingRequestDTO {
     private int tariff;
 
     @NotNull(message = "Name of city must not be null")
-    @Pattern(regexp="^([a-zA-Z -]+)$", message="Invalid name of city")
     @JsonProperty("city")
     private String city;
 
     @NotNull(message = "Name of street must not be null")
-    @Pattern(regexp="^([a-zA-Z -]+)$", message="Invalid name of street")
+    @Pattern(regexp="^([a-zA-ZА-Яа-яйєї -]+)$", message="Invalid name of street")
     @JsonProperty("street")
     private String street;
 
     @NotNull(message = "Name of building must not be null")
-    @Pattern(regexp="^([a-zA-Z 0-9-]+)$", message="Invalid number of building")
+    @Pattern(regexp="^([a-zA-ZА-Яа-яйєї 0-9-]+)$", message="Invalid number of building")
     @JsonProperty("building")
     private String building;
 

@@ -3,7 +3,6 @@ package ua.com.parkhub.persistence.entities;
 import javax.persistence.Entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.List;
 
 @Entity

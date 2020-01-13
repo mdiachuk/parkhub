@@ -1,25 +1,20 @@
 package ua.com.parkhub.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.*;
 import ua.com.parkhub.exceptions.BookingException;
 import ua.com.parkhub.exceptions.CustomerException;
-import ua.com.parkhub.mappers.modelToDto.ParkingWithSlotsModelToDTOMapper;
-import ua.com.parkhub.mappers.modelToDto.PaymentModelToDTOMapper;
-import ua.com.parkhub.service.IBookingService;
-
-//TODO Validation: parkId, slotId, car number, phone number
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ua.com.parkhub.dto.BookingFormDTO;
-import ua.com.parkhub.dto.ParkingWithSlotsDTO;
-import ua.com.parkhub.dto.PaymentDTO;
 import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.exceptions.ParkingException;
+import ua.com.parkhub.mappers.modelToDto.ParkingWithSlotsModelToDTOMapper;
+import ua.com.parkhub.mappers.modelToDto.PaymentModelToDTOMapper;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.model.PaymentModel;
+import ua.com.parkhub.service.IBookingService;
 import ua.com.parkhub.service.IParkingService;
 
 import javax.validation.Valid;
@@ -27,6 +22,10 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+
+//TODO Validation: parkId, slotId, car number, phone number
+
+//TODO Validation: parkId, slotId, car number, phone number
 
 //TODO Validation: parkId, slotId, car number, phone number
 

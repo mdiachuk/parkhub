@@ -10,13 +10,12 @@ public class RoleModelToEntityMapper implements Mapper<RoleModel, UserRole> {
 
     @Override
     public UserRole transform(RoleModel from) {
-        if (from == null) {
+        if(from == null) {
             return null;
         }
-        UserRole userRole = new UserRole();
-        userRole.setId(from.getId());
-        userRole.setRoleName(from.getRoleName());
-        return userRole;
+        UserRole role = new UserRole();
+        role.setId(from.getId());
+        role.setRoleName(from.getRoleName());
+        return role;
     }
 }
-

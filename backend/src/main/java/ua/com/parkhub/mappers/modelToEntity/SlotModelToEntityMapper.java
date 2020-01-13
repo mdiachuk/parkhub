@@ -8,6 +8,7 @@ import ua.com.parkhub.persistence.entities.Slot;
 @Component
 public class SlotModelToEntityMapper implements Mapper<SlotModel, Slot> {
 
+
     @Override
     public Slot transform(SlotModel from) {
         if (from == null) {

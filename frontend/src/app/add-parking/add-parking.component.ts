@@ -20,10 +20,10 @@ export class AddParkingComponent implements OnInit {
   parking: NewParking = new NewParking()
   formGroup: FormGroup;
   CityArray: string[] = [];
-  nameregex: RegExp = /^[a-zA-Z 0-9-]+$/;
+  nameregex: RegExp = /^[a-zA-ZА-Яа-яйєї 0-9-]+$/;
   onlyPositiveIntegersregex: RegExp = /^[1-9]+[0-9]*$/;
-  streetregex: RegExp = /^([a-zA-Z -]+)$/;
-  buildingregex: RegExp = /^([a-zA-Z0-9 -]+)$/;
+  streetregex: RegExp = /^([a-zA-ZА-Яа-яйєї -]+)$/;
+  buildingregex: RegExp = /^([a-zA-ZА-Яа-яйєї0-9 -]+)$/;
   parkNameValidator: any;
   MatSnackBar: any;
 
@@ -33,7 +33,7 @@ export class AddParkingComponent implements OnInit {
               private translateArrayService: TranslateArrayService,
               private translateService: TranslateService,
               private service:Oauth2googleService,private addservice:UserService) {
-    }
+  }
 
   ngOnInit() {
     this.createForm();
@@ -65,7 +65,7 @@ export class AddParkingComponent implements OnInit {
 
   getErrorSlotsNumber() {
     return this.formGroup.get('slotsNumber').hasError('required') ? this.translateService.instant('FieldIsRequired') :
-     this.formGroup.get('slotsNumber').hasError('pattern') ? this.translateService.instant('NotAValidNumberOfSlotsShouldBePositiveInteger') : '';
+      this.formGroup.get('slotsNumber').hasError('pattern') ? this.translateService.instant('NotAValidNumberOfSlotsShouldBePositiveInteger') : '';
 
   }
 
@@ -106,12 +106,12 @@ export class AddParkingComponent implements OnInit {
     for(let property in formGroup){this.parking[property] = formGroup[property];}
     this.parking["id"] = Number(this.addservice.getUserID());
     console.log(this.parking)
-     this.parkingService.save(this.parking)
-     .subscribe( data => {
-       this.openSnackBar(('Parking created successfully.'));
-    },
-    err => {
-      this.openSnackBar1((err.error));
-    });
+    this.parkingService.save(this.parking)
+      .subscribe( data => {
+          this.openSnackBar(('Parking created successfully.'));
+        },
+        err => {
+          this.openSnackBar1((err.error));
+        });
   }
 }

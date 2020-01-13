@@ -1,6 +1,5 @@
 package ua.com.parkhub.controller;
 
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -10,10 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.com.parkhub.dto.ParkingRequestDTO;
 import ua.com.parkhub.mappers.dtoToModel.ParkingRequestDTOWithIDtoParkingModel;
 import ua.com.parkhub.model.ParkingModel;
+import ua.com.parkhub.service.IParkingService;
 import ua.com.parkhub.service.impl.ParkingService;
 
 import javax.validation.Valid;
@@ -24,11 +23,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/manager/parking")
 public class ParkingController {
 
-    private final ParkingService parkingService;
+    private final IParkingService parkingService;
     private final ParkingRequestDTOWithIDtoParkingModel parkingRequestDTOWithIDtoParkingModel;
 
     @Autowired
-    public ParkingController(ParkingService parkingService, ParkingRequestDTOWithIDtoParkingModel parkingRequestDTOWithIDtoParkingModel) {
+    public ParkingController(IParkingService parkingService, ParkingRequestDTOWithIDtoParkingModel parkingRequestDTOWithIDtoParkingModel) {
         this.parkingService = parkingService;
         this.parkingRequestDTOWithIDtoParkingModel = parkingRequestDTOWithIDtoParkingModel;
     }
