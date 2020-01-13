@@ -1,16 +1,22 @@
 package ua.com.parkhub;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import ua.com.parkhub.persistence.entities.Slot;
+import ua.com.parkhub.service.impl.BookingService;
+
+import java.util.List;
 
 @SpringBootApplication
 
 public class BackendApplication {
     /*@Bean
-    CommandLineRunner init(CustomerService customerService) {
+    CommandLineRunner init(BookingService bookingService) {
         return args -> {
-            CustomerModel customerModel = customerService.findCustomerByPhoneNumberOrAdd("+380672202222");
-            System.out.println(customerModel);
+            List<Slot> list = bookingService.findAllAvailableSlots();
+            System.out.println(list);
         };
     }*/
 
