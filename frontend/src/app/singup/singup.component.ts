@@ -33,8 +33,8 @@ export class SingupComponent implements OnInit {
     if (this.users.password==this.confirmPass.confirmPass){
       this.httpClientService.createUser(this.users)
         .subscribe( data => {
-           this.openSnackBar('User SingUp');
-            window.location.href='/home';
+           this.openSnackBarAndHref('A registration confirmation email has been sent to your mail. ' +
+             'You can now return to the homepage');
           },
           err => {
             this.openSnackBar("Email or Telephone are use");
@@ -48,10 +48,17 @@ export class SingupComponent implements OnInit {
 
   openSnackBar(message: string) {
     this.snackBar.open(message, 'Close', {
+
       duration: 4000,
     });
   }
 
+  openSnackBarAndHref(message: string) {
+    this.snackBar.open(message, 'Close', {
+
+      duration: 4000,
+    }).onAction().subscribe(() => window.location.href='/home');
+  }
 
   handleSuccessfulResponse(response)
   {

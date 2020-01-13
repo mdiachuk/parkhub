@@ -156,13 +156,14 @@ public class ParkingService implements IParkingService  {
         }});
 
             if (fieldsNameList.contains("addressModel")) {
-                AddressModel address = addressDAO.addWithResponse(parkingModelParam.getAddressModel());
+                AddressModel address = addressDAO.addWithResponse(setLatLan(parkingModelParam.getAddressModel()));
                 parkingModel.setAddressModel(address);
             }
 
             parkingDAO.updateElement(parkingModel);
         }
-    }
+
+
     @Override
     public AddressModel setLatLan(AddressModel addressModel) {
 
@@ -178,6 +179,11 @@ public class ParkingService implements IParkingService  {
         return addressModel;
     }
 
+    public List<ParkingModel> findAllParkingModel(){
+        return parkingDAO.findAll();
+    }
+
+
     public List<ParkingModel> findParkingInArea(String address) {
 
         Map<String, String> map = addressGeoService.getLatLon(address);
@@ -188,3 +194,4 @@ public class ParkingService implements IParkingService  {
                                 x.getAddressModel().getLat(), x.getAddressModel().getLon())) == true)
                 .collect(Collectors.toList());
     }
+}

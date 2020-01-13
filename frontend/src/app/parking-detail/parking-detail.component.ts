@@ -48,7 +48,7 @@ export class ParkingDetailComponent implements OnInit {
        this.buttonStatusList[number] = this.buttonStatusList[number]  == true ? false : true;
     }
 
-    openSnackBarString(parkingAttribute: string) {
+    openSnackBar(parkingAttribute: string) {
       this._snackBar.open("Saved: ", parkingAttribute,{
         duration: 4000,
       });
