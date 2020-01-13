@@ -1,0 +1,32 @@
+image: maven:latest
+
+services:
+  - postgres:latest
+
+stages:
+  - build
+  - test
+  - deploy
+
+unit_test:
+  stage: test
+  script:
+    - cd backend
+    - mvn clean test -B
+
+build:
+  stage: build
+  script:
+    - cd backend
+    - mvn package -B -Dmaven.test.skip=true -P release
+
+production:
+  stage: deploy
+  image: docker:latest
+  script:
+    - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_BUILD_TAG target/docker/
+    - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
+  only:
+    - master
+    - dev
