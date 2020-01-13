@@ -1,5 +1,6 @@
-import { Component, NgModule, OnInit } from '@angular/core';
-import { ConfirmPass, Customer, HttpClientService, User, UserRole } from "../service/http-client.service";
+import {Component, NgModule, OnInit} from '@angular/core';
+import {ConfirmPass, Customer, HttpClientService, User, RoleDTO} from "../service/http-client.service";
+import {MatSnackBar} from '@angular/material';
 
 
 
@@ -9,21 +10,18 @@ import { ConfirmPass, Customer, HttpClientService, User, UserRole } from "../ser
   templateUrl: './singup.component.html',
   styleUrls: ['./singup.component.scss']
 })
+
+
 export class SingupComponent implements OnInit {
 
-  isSent: boolean;
+  customer:Customer = new Customer("", true);
 
-  customer: Customer = new Customer("", true);
+  users:User = new User("","",this.customer,"","","");
 
-  userRole: UserRole = new UserRole("1")
-
-  users: User = new User("", "", this.customer, "", "", this.userRole, "");
-
-
-  confirmPass: ConfirmPass = new ConfirmPass("");
+  confirmPass:ConfirmPass = new ConfirmPass("");
 
   constructor(
-    private httpClientService: HttpClientService
+    private httpClientService:HttpClientService, private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -31,29 +29,32 @@ export class SingupComponent implements OnInit {
   }
 
   singUpUser(): void {
-    if (this.users.password == this.confirmPass.confirmPass) {
+
+    if (this.users.password==this.confirmPass.confirmPass){
       this.httpClientService.createUser(this.users)
-        .subscribe(data => {
-          // alert("User SingUp");
-          // window.location.href='/home';
-          this.isSent = true;
-        },
+        .subscribe( data => {
+           this.openSnackBar('User SingUp');
+            window.location.href='/home';
+          },
           err => {
-            // alert("User SingUp");
-            // window.location.href='/home';
-            alert("Email or Telephone are use");
+            this.openSnackBar("Email or Telephone are use");
           });
     } else {
-      alert("Pass not Confirm")
+      this.openSnackBar("Pass not Confirm");
     }
 
 
   };
 
+  openSnackBar(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 4000,
+    });
+  }
 
 
-
-  handleSuccessfulResponse(response) {
-    this.users = response;
+  handleSuccessfulResponse(response)
+  {
+    this.users=response;
   }
 }

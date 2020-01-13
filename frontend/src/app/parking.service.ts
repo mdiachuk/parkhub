@@ -30,7 +30,7 @@ export class ParkingService {
     // let parameters = new HttpParams().set("parkingId", id.toString());
     console.log("service",this.parkingsUrl)
     return this.http.get<ParkingDetail>(`${this.parkingsUrl}/${id}`)
-    .pipe(catchError(this.handleError));
+      .pipe(catchError(this.handleError));
   }
 
   updateParking (parking: ParkingDetail, id: string): Observable<any> {
@@ -38,8 +38,8 @@ export class ParkingService {
   }
 
   private handleError(error: HttpErrorResponse) {
-        return throwError(
-          error.error);
-    }
-  };
+    return throwError(
+      error.error);
+  }
+};
 

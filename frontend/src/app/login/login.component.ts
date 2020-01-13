@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     this.loginSvc.login({email: this.loginForm.get('username').value,
-                              password: this.loginForm.get('password').value}).subscribe(user => {
+      password: this.loginForm.get('password').value}).subscribe(user => {
         if (user) {
           if (user.role === 'USER') {
             this.changeIsLogged(true);
@@ -111,7 +111,7 @@ export class LoginComponent implements OnInit {
     console.log("click");
     this.loginSvc.oauthlogin().subscribe(
       user => {console.log(user);
-      this.router.navigate(['/home'])}
+        this.router.navigate(['/home'])}
     );
   }
 

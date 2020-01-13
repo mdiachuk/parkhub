@@ -3,12 +3,23 @@
     "value": "assets/logotitle.png"
   },
   "ParkHub": "ParkHub",
+  "RECOMMENDED BY THE MOST CAPRICIOUS DRIVERS!": "RECOMMENDED BY THE MOST CAPRICIOUS DRIVERS!",
+  "Parking created successfully.": "Parking created successfully.",
+  "Dear user,please input your phone number to be able to have full access cabinet!": "Dear user,please input your phone number to be able to have full access cabinet!",
   "Home": "Home",
+  "From:": "From:",
+  "To:": "To:",
+  "Login via Google!": "Login via Google!",
+  "Price per hour:": "Price per hour:",
   "CancelPrepayment": "Cancel prepayment",
   "Cancel Prepayment": "Cancel prepayment",
   "Success": "Success",
+  "Search": "Search",
+  "Nearest parking" : "Nearest parking",
   "Error": "Error",
-  "User Cabinet": "User Cabinet",
+  "User": "User",
+  "Enter your car number": "Enter your car number",
+  "User Info": "User Info",
   "Customer with this phone number was not found": "Customer with this phone number was not found, please, check the correct input",
   "No pre-order": "No pre-order for this phone number found",
   "Your reservation is already in progress": "Your reservation is already in progress",
@@ -17,11 +28,15 @@
   "The price of your booking is": "Refund amount is ",
   "WrongPhoneNumberPleaseTryAgain": "Wrong phone number, please try again",
   "WrongPhoneNumberSpecified": "Wrong phone number specified",
-  "CustomToolbar": "Custom Toolbar",
+  "CustomToolbar": "Custom toolbar",
   "Add parking": "Add parking",
-  "Manager cabinet": "Manager cabinet",
-  "Admin cabinet": "Admin cabinet",
+  "Manager": "Manager",
+  "Admin": "Admin",
   "Sign up": "Sign up",
+  "Get User by Id": "Get User by ID",
+  "ID:": "ID",
+  "Ticket List": "Ticket list",
+  "Type User ID": "Type user ID",
   "Sign up Manager": "Sign up Manager",
   "Login": "Login",
   "LogOut": "Logout",
@@ -31,6 +46,14 @@
   "Kyiv": "Kyiv",
   "OK": "OK",
   "Send": "Send",
+  "Set As Manager": "Set as manager",
+  "Ticket ID": "Ticket ID",
+  "New tickets": "New tickets",
+  "Actions": "Actions",
+  "Ticket Details": "Ticket Details",
+  "Ticket Type": "Ticket type",
+  "Ticket Description": "Ticket description",
+  "Back to Admin Page": "Back to Admin cabinet",
   "AdminCabinet": "Admin Cabinet",
   "GetUserById": "Get user by id",
   "UpdateRoleForm": "Update role form",
@@ -55,6 +78,7 @@
   "Submit": "Submit",
   "wasSentToTheAdministrator": "was sent to the administrator!",
   "GoToTheHomepage": "Go to the homepage",
+  "Type your email in the field below and we will<br>send you link to reset your password.": "Type your email in the field below and we will<br>send you link to reset your password.",
   "ParkingName": "Parking Name",
   "Address": "Address",
   "Tariff": "Tariff",
@@ -77,12 +101,9 @@
   "Create": "Create",
   "Required": "Required",
   "$": "UAH/hour",
-
   "Forgot your password?": "Forgot your password?",
   "Type your email in the field below and we will\nsend you link to reset your password.": "Type your email in the field below and we will\nsend you link to reset your password.",
-
   "FieldIsRequired": "Field is required",
-
   "TypeUserIDPlaceholder": {
     "value": "Type User ID"
   },
@@ -90,10 +111,10 @@
     "value": "Type user role"
   },
     "FindYourParkingLove♥Placeholder": {
-    "value" : "Find your parking, love ♥"
+    "value" : "Find parking"
   },
   "PhoneNumberPlaceholder": {
-    "value" : "Enter phone number"
+    "value": "Phone number"
   },
   "addParkingNamePlaceholder": {
     "value": "Parking name"
@@ -137,5 +158,11 @@
   "managerCommentPlaceholder": {
     "value": "Comment"
   },
-  "Cities": ["Kyiv", "Lviv", "Chernivtsi", "Dnipro", "Kharkiv"]
+  "Cities": [
+    "Kyiv",
+    "Lviv",
+    "Chernivtsi",
+    "Dnipro",
+    "Kharkiv"
+  ]
 }

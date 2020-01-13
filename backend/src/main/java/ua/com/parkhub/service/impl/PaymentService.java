@@ -28,10 +28,6 @@ public class PaymentService implements IPaymentService {
         this.paymentDAO = paymentDAO;
     }
 
-    public void updateIsCancelled(PaymentModel paymentModel, boolean isCancelled){
-        paymentModel.setCancelled(isCancelled);
-        paymentDAO.updateElement(paymentModel);
-    }
 
     public PaymentModel findPaymentByBooking(BookingModel bookingModel) {
         return paymentDAO.findPaymentByBooking(bookingModel).orElseThrow(() -> new BookingException(StatusCode.BOOKING_NOT_FOUND));
@@ -42,6 +38,13 @@ public class PaymentService implements IPaymentService {
         LocalDateTime checkOut = bookingModel.getCheckOut();
         long hours = ChronoUnit.HOURS.between(checkIn, checkOut);
         return hours > 0 ? (int) (tariff * hours) : tariff;
+    }
+
+    public int findPriceIfCancelled(BookingModel bookingModel){
+        PaymentModel paymentModel = findPaymentByBooking(bookingModel);
+        paymentModel.setCancelled(true);
+        paymentDAO.updateElement(paymentModel);
+        return paymentModel.getPrice();
     }
 
     @Override

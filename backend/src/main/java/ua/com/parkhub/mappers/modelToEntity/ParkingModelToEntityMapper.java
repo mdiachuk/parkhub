@@ -6,7 +6,6 @@ import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.persistence.entities.Parking;
 
-
 import java.util.stream.Collectors;
 
 @Component

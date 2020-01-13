@@ -1,9 +1,9 @@
 <p>Ticket {{ticket.id}} Details</p>
 <mat-card>
     <mat-card-content>
-        <div><label><b>Ticket ID: </b></label>{{ticket.id}}</div>
-        <div><label><b>Ticket Type: </b></label>{{ticket.supportTicketType}}</div>
-        <div><label><b>Ticket Description: </b></label>{{ticket.description}}</div>
-        <button mat-raised-button color="primary" (click)="backToAdminPage()">Back to Admin Page</button><br>
+        <div><label><b>{{'Ticket ID' |translate}}: </b></label>{{ticket.id}}</div>
+        <div><label><b>{{'Ticket Type' | translate}}: </b></label>{{ticket.supportTicketType}}</div>
+        <div><label><b>{{'Ticket Description' | translate}}: </b></label>{{ticket.description}}</div>
+        <button mat-raised-button color="primary" (click)="backToAdminPage()">{{'Back to Admin Page'| translate}}</button><br>
     </mat-card-content>
 </mat-card>

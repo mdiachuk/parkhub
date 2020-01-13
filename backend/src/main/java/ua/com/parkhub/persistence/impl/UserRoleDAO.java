@@ -1,6 +1,7 @@
 package ua.com.parkhub.persistence.impl;
 
 import org.springframework.stereotype.Repository;
+
 import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.enums.RoleModel;
 import ua.com.parkhub.persistence.entities.UserRole;

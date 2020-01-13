@@ -189,7 +189,7 @@ public class UserService implements IUserService {
     @Override
     public void changePassword(long id, String newPassword, UserModel userModel){
         UserModel user = findUserById(id).get();
-        if (passwordEncoder.matches(userModel.getPassword(), user.getPassword())){
+        if (validatePassword(userModel.getPassword(), user) & validateNewPassword(newPassword, user)){
             user.setPassword(passwordEncoder.encode(newPassword));
             userDAO.updateElement(user);
             logger.info("Password was updated");
@@ -197,5 +197,11 @@ public class UserService implements IUserService {
             logger.info("Password was not updated");
             throw new PasswordException();
         }
+    }
+    public boolean validatePassword(String passsword, UserModel userModel){
+        return passwordEncoder.matches(passsword, userModel.getPassword());
+    }
+    public boolean validateNewPassword(String passsword, UserModel userModel){
+        return ((passsword != "") && (!passwordEncoder.matches(passsword, userModel.getPassword())));
     }
 }

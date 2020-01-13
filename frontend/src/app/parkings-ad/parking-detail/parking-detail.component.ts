@@ -19,12 +19,12 @@ export class ParkingDetailSlotsComponent implements OnInit, OnDestroy {
   // Min moment from
   public minFrom = new Date(Date.now());
   // Max moment from
-  public maxFrom = new Date(2020, 0, 11, 17, 30);
+  public maxFrom = new Date(2020, 0, 25, 20, 0);
 
   // Min moment to +1 hour!
-  public minTo = new Date(2020, 0, 10, 18, 30);
+  public minTo = new Date(2020, 0, 10, 19, 30);
   // Max moment to + 1 hour!
-  public maxTo = new Date(2020, 0, 11, 18, 30);
+  public maxTo = new Date(2020, 0, 25, 21, 0);
 
   @Input()parking: Parking;
 

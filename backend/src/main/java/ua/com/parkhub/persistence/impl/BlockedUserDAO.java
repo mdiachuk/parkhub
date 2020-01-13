@@ -1,3 +1,4 @@
+
 package ua.com.parkhub.persistence.impl;
 
 import org.springframework.stereotype.Repository;

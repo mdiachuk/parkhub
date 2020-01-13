@@ -2,13 +2,22 @@
   "Logo": {
     "value": "assets/ParkhubLogoUkr.png"
   },
+
   "ParkHub": "ParkHub",
+  "RECOMMENDED BY THE MOST CAPRICIOUS DRIVERS!": "РЕКОМЕНДОВАНО НАЙБІЛЬШ ПРИМХЛИВИМИ ВОДІЯМИ!",
+  "Parking created successfully.": "Парковка створена успішно.",
+  "Dear user,please input your phone number to be able to have full access cabinet!": "Шановний користувач, будь ласка, введіть свій номер телефону, щоб мати можливість мати повний доступ до кабінету!",
   "Home": "Головна",
+  "From:": "З:",
+  "To:": "По:",
+  "Login via Google!": "Увійти за допомогою Google!",
+  "Price per hour:": "Ціна за годину:",
   "CancelPrepayment": "Відмінити замовлення",
   "Cancel Prepayment": "Журбинка, що ти нас покидаєш",
   "Success": "Тримай гроші за броню",
   "Error": "От халепа",
-  "User Cabinet": "Кабінет коритсувача",
+  "User": "Користувач",
+  "User Info": "Інформація користувача",
   " UAH": " грн",
   "The price of your booking is ": "",
   "Customer with this phone number was not found": "Вибач, але в нас немає користувача з таким номером телефону, спробуй ще разок",
@@ -18,8 +27,10 @@
   "WrongPhoneNumberSpecified": "Невірно набраний номер",
   "CustomToolbar": "Налаштування",
   "Add parking": "Додати парковку",
-  "Manager cabinet": "Кабінет менеджера",
-  "Admin cabinet": "Кабінет Адміна",
+  "Search": "Пошук",
+  "Nearest parking": "Найближчий паркінг",
+  "Manager": "Менеджер",
+  "Admin": "Адмін",
   "Sign up": "Реєстрація",
   "Sign up Manager": "Реєстарція менеджера",
   "Login": "Увійти",
@@ -27,6 +38,18 @@
   "AdminCabinet": "Кабінет Адміна",
   "GetUserById": "Отримати користувача по ID",
   "ID": "ID",
+  "Enter your car number": "Введіть номер свого автомобіля",
+  "Actions": "Дії",
+  "Ticket Details": "Інформація про заявки",
+  "Set As Manager": "Встановити як менеджера",
+  "Ticket ID": "ID заявки",
+  "New tickets": "Нові заявки",
+  "Ticket Type": "Форма заявки",
+  "Ticket Description": "Опис заявки",
+  "Back to Admin Page": "Повернутися до кабінету адміністратора",
+  "Get User by Id": "Отримати користувача по ID",
+  "Ticket List": "Список заявок",
+  "Type User ID": "Введіть ID користувача",
   "Role": "Роль",
   "PricePerHour": "Ціна за годину",
   "PleaseChooseAvailableSlot": "Будь ласка, виберіть вільне місце",
@@ -39,7 +62,6 @@
   "Tariff": "Тариф",
   "Fullness": "Заповненість",
   "City": "Місто",
-  "Kyiv": "Київ",
   "$": "грн/година",
   "OK": "OK",
   "Send": "Відмінити",
@@ -52,11 +74,11 @@
   "MustContainAtLeastOneNumberOneUppercaseAndOneLowercaseLetterAndAtLeast6Characters": "Повинен містити принаймні одне число, одну велику і одну малу літеру та принаймні 6 символів",
   "PasswordsMustMatch": "Паролі мають співпадати!",
   "Max200Characters": "Максимум 200 символів",
-  "IAgreeWithTermsConditionsAndPrivacyPolicy": "Я погоджуюся з умовами, умовами та політикою конфіденційності",
+  "IAgreeWithTermsConditionsAndPrivacyPolicy": "Я погоджуюся з умовами та політикою конфіденційності",
   "Reset": "Видалити все",
   "Submit": "Зберегти",
   "wasSentToTheAdministrator": "було надіслано адміністратору!",
-  "GoToTheHomepage": "Перейдіть на головну сторінку",
+  "GoToTheHomepage": "Перейти на головну сторінку",
   "Add": "Додати",
   "Become partner": "Стати партнером",
   "Delete": "Видалити",
@@ -68,7 +90,7 @@
   "Password": "Пароль",
   "ConfirmPassword": "Підтвердити пароль",
   "Create": "Створити",
-  "PleaseFillInThisFormToBecomeOurPartner": "Заповніть форму нижче...",
+  "PleaseFillInThisFormToBecomeOurPartner": "Щоб стати нашим партнером, заповніть форму нижче",
   "FieldIsRequired": "Поле не має бути пустим",
   "NotAValidParkingName": "Не коректне ім'я парковки",
   "NotAValidNumberOfSlotsShouldBePositiveInteger": "Кількість парковочних місць не має бути від'ємним",
@@ -78,9 +100,8 @@
   "Cannot activate account: less than 24 hours have passed.": "Не вдається активувати обліковий запис: минуло менше 24 годин.",
   "No account with such email was found.": "Не знайдено жодного облікового запису з такою електронною адресою",
   "Please enter valid credentials!": "Введіть дійсні облікові дані!",
-
   "Forgot your password?": "Забули свій пароль?",
-  "Type your email in the field below and we will send you link to reset your password.": "Введіть електронну пошту в поле нижче, і ми надішлемо вам посилання, щоб скинути пароль.",
+  "Type your email in the field below and we will send you link to reset your password.": "Введіть електронну пошту в поле нижче і ми надішлемо вам посилання, щоб скинути пароль.",
   "TypeUserIDPlaceholder": {
     "value": "Введіть ID користувача"
   },
@@ -88,10 +109,10 @@
     "value": "Введіть роль користувача"
   },
   "FindYourParkingLove♥Placeholder": {
-    "value":"Знайди свою парковку, любий ♥"
+    "value":"Знайти парковку"
   },
   "PhoneNumberPlaceholder": {
-    "value" : "Номер телефону"
+    "value": "Номер телефону"
   },
   "addParkingNamePlaceholder": {
     "value": "Назва парковки"
@@ -117,9 +138,8 @@
   "PasswordPlaceholder": {
     "value": "Пароль"
   },
-
   "FirstNamePlaceholder": {
-    "value": "Им'я"
+    "value": "Ім'я"
   },
   "LastNamePlaceholder": {
     "value": "Прізвище"
@@ -136,5 +156,11 @@
   "managerCommentPlaceholder": {
     "value": "Коментар"
   },
-  "Cities": ["Київ", "Львів", "Чернівці", "Дніпро", "Харків"]
+  "Cities": [
+    "Київ",
+    "Львів",
+    "Чернівці",
+    "Дніпро",
+    "Харків"
+  ]
 }

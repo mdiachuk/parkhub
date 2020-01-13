@@ -5,7 +5,7 @@
         <br>
         <br>
         <mat-form-field>
-          <input matInput placeholder="Enter your car number" [formControl]="carNumber" required>
+          <input matInput [placeholder]="'Enter your car number' | translate" [formControl]="carNumber" required>
           <mat-error *ngIf="carNumber.invalid">{{isErrorCarNumber()}}</mat-error>
         </mat-form-field>
       </div>
@@ -13,14 +13,14 @@
       <br>
       <div>
         <mat-form-field>
-          <input matInput placeholder="Enter your phone number" [formControl]="phoneNumber" required>
+          <input matInput [placeholder]="'Enter your phone number' | translate" [formControl]="phoneNumber" required>
           <mat-error *ngIf="phoneNumber.invalid">{{isErrorPhoneNumber()}}</mat-error>
         </mat-form-field>
       </div>
       <br>
       <br>
       <button type="submit" color="primary" mat-button (click)="openSnackBar()" aria-label="snack-bar">
-        Submit
+        {{'Submit' | translate}}
       </button>
     </form>
   </section>
