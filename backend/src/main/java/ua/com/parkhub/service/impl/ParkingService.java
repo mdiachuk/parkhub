@@ -45,12 +45,14 @@ public class ParkingService implements IParkingService  {
         this.addressGeoService = addressGeoService;
     }
 
+    @Override
     public boolean isParkingNameUnique(ParkingModel parkingRequestModel) {
         Long count = parkingDAO.
                 countOfParkingsByName(parkingRequestModel.getParkingName());
         return count == 0;
     }
 
+    @Override
     public boolean checkIfAddressIsUnique(ParkingModel parkingRequestModel) {
         Long count = parkingDAO.
                 countOfParkingsByAddress(parkingRequestModel.getAddressModel());
@@ -58,6 +60,7 @@ public class ParkingService implements IParkingService  {
     }
 
     @Transactional
+    @Override
     public void createParkingByOwnerID(ParkingModel parkingModel, long id) {
         AddressModel address = parkingModel.getAddressModel();
         address = setLatLan(address);
@@ -152,8 +155,8 @@ public class ParkingService implements IParkingService  {
             parkingDAO.updateElement(parkingModel);
         }
     }
-
-    private AddressModel setLatLan(AddressModel addressModel) {
+    @Override
+    public AddressModel setLatLan(AddressModel addressModel) {
 
         String address = addressModel.getCity() + "," +
                 addressModel.getStreet() + " " +

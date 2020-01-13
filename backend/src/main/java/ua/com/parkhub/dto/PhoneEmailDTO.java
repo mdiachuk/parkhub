@@ -21,7 +21,7 @@ public class PhoneEmailDTO {
     private String email;
 
     @NotNull
-    @Pattern(regexp="^380\\d{9}$", message="Invalid name of parking")
+    @Pattern(regexp="^380\\d{9}$", message="Invalid phonenumber")
     @JsonProperty("phoneNumber")
     private String phoneNumber;
 

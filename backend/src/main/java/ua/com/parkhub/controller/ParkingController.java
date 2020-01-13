@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ua.com.parkhub.dto.ParkingRequestDTO;
 import ua.com.parkhub.mappers.dtoToModel.ParkingRequestDTOWithIDtoParkingModel;
 import ua.com.parkhub.model.ParkingModel;
+import ua.com.parkhub.service.IParkingService;
 import ua.com.parkhub.service.impl.ParkingService;
 
 import javax.validation.Valid;
@@ -22,11 +23,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/manager/parking")
 public class ParkingController {
 
-    private final ParkingService parkingService;
+    private final IParkingService parkingService;
     private final ParkingRequestDTOWithIDtoParkingModel parkingRequestDTOWithIDtoParkingModel;
 
     @Autowired
-    public ParkingController(ParkingService parkingService, ParkingRequestDTOWithIDtoParkingModel parkingRequestDTOWithIDtoParkingModel) {
+    public ParkingController(IParkingService parkingService, ParkingRequestDTOWithIDtoParkingModel parkingRequestDTOWithIDtoParkingModel) {
         this.parkingService = parkingService;
         this.parkingRequestDTOWithIDtoParkingModel = parkingRequestDTOWithIDtoParkingModel;
     }

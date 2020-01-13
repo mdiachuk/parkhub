@@ -1,27 +1,27 @@
 <mat-toolbar color="primary">
-  <span>{{'User' | translate}}</span>
+  <span>User</span>
 </mat-toolbar>
 
 
 <div>
   <div class="left-page">
-    <mat-card>User Info</mat-card>
+    <mat-card>User Details</mat-card>
     <span id="displayUserInfo">
       <mat-list>
         <mat-list-item>
-          <h4>{{'First name' | translate}}: </h4> {{user?.firstName}}
+          <h4>First name: </h4> {{user?.firstName}}
         </mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item>
-          <h4>{{'Last Name' | translate}}: </h4> {{user?.lastName}}
+          <h4>Last Name: </h4> {{user?.lastName}}
         </mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item>
-          <h4>{{'Email' | translate}}: </h4> {{user?.email}}
+          <h4>Email: </h4> {{user?.email}}
         </mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item>
-          <h4>Phone number: </h4> {{user?.phoneNumber}}
+          <h4>Phone: </h4> {{user?.phoneNumber}}
         </mat-list-item>
         <mat-divider></mat-divider>
       </mat-list>
@@ -48,8 +48,8 @@
         </mat-form-field>
       </form>
     </span>
-    <button id="editButton" mat-raised-button (click)="EditUserInfo()">Edit</button>
-    <button mat-raised-button (click)="PostData()">Save</button>
+    <button id="editButton" mat-raised-button color="primary" (click)="EditUserInfo()">Edit</button>
+    <button mat-raised-button color="primary" (click)="PostData()">Save</button>
   </div>
   <div class="right-page">
     <span id="ChangePassword" style="display: none;">
@@ -71,8 +71,8 @@
         </mat-form-field>
       </form>
     </span>
-    <button id="buttonChangePassword" mat-raised-button (click)="changePassword()">Change Password</button>
-    <button id="buttonSavePassword" style="display: none;" mat-raised-button (click)="PostPassword()">Save
+    <button id="buttonChangePassword" mat-raised-button color="primary" (click)="changePassword()">Change Password</button>
+    <button id="buttonSavePassword" style="display: none;"  mat-raised-button color="primary" (click)="PostPassword()">Save
       Password</button>
   </div>
 </div>

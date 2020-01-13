@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Oauth2googleService } from '../service/oauth2google.service';
 import { PhoneNumberEmail } from './PhoneNumberEmail';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-phone-number',
@@ -15,7 +16,7 @@ export class AddPhoneNumberComponent implements OnInit {
   phoneregex: RegExp = /^380\d{9}$/
 
 
-  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder,private oauth2Service:Oauth2googleService,private router: Router,) {
+  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder,private oauth2Service:Oauth2googleService,private router: Router,private snackBar: MatSnackBar) {
     this.phoneNumber=new PhoneNumberEmail();
   }
 
@@ -40,6 +41,15 @@ export class AddPhoneNumberComponent implements OnInit {
     return this.formGroup.get('phoneNumber').hasError('required') ? 'Field is required' :
       this.formGroup.get('phoneNumber').hasError('pattern') ? 'Phone number should start with 380 and contain 12 numbers': '';
   }
+  
+  openSnackBar1(message: string) {
+    console.log(message);
+    this.snackBar.open(message, 'Close', {
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+    });
+  }
+
 
   onSubmit(formGroup) {
     console.log(formGroup);
@@ -49,7 +59,7 @@ export class AddPhoneNumberComponent implements OnInit {
           console.log(data);
         },
         err => {
-          //this.openSnackBar1((err.error));
+          this.openSnackBar1((err.error));
           console.log(err.error);
         });
   }

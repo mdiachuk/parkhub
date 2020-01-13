@@ -5,6 +5,7 @@ import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms'
 import {UserService} from '../service/http-client.service';
 import {UserInfo} from '../interfaces/userInfo';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { delay } from 'rxjs/operators';
 
 var i = 0;
 var j = 0;
@@ -60,9 +61,19 @@ export class UserComponent implements OnInit {
   }
   PostData() {
     this.UserService.PostData({...this.updateForm.value,id: this.UserService.getUserID()}).subscribe(res => {
+    
       console.log(res);
-      alert("Changes were accepted");
+      this._snackBar.open('Changes were accepted!', 'Close', {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 2000,
+       
+     
     });
+    this.updateForm.reset(); 
+    location.reload();
+    
+  });
   }
   changePassword() {
 
@@ -86,15 +97,22 @@ export class UserComponent implements OnInit {
       password: this.updateForm.get('userPassword').value,
       newPassword: this.updateForm.get('newPassword').value
     }).subscribe(res => {
-        this._snackBar.open("Password Changed!", "Ok", {
+        this._snackBar.open("Password Changed!", "Close", {
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
           duration: 2000,
+          
         });
       },
       err => {
-        this._snackBar.open("Failed to change password!", "Ok", {
+        this._snackBar.open("Failed to change password!", "Close", {
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
           duration: 2000,
         });
       });
+    
+   
   }
 
 

@@ -17,6 +17,7 @@ import ua.com.parkhub.exceptions.PhoneNumberException;
 import ua.com.parkhub.mappers.dtoToModel.ManagerRegistrationRequestDtoToModel;
 import ua.com.parkhub.mappers.dtoToModel.UserDtoToUserModelMapper;
 import ua.com.parkhub.model.enums.UuidTokenType;
+import ua.com.parkhub.service.ISignUpService;
 import ua.com.parkhub.service.impl.SignUpService;
 import ua.com.parkhub.service.impl.UserService;
 import ua.com.parkhub.validation.groups.CustomerChecks;
@@ -32,13 +33,13 @@ public class SignUpController {
 
     private static final Logger logger = LoggerFactory.getLogger(SignUpController.class);
 
-    private final SignUpService signUpService;
+    private final ISignUpService signUpService;
     private final ManagerRegistrationRequestDtoToModel managerRegistrationRequestDtoToModel;
     private final UserDtoToUserModelMapper userDtoToUserModelMapper;
     private final UserService userService;
 
     @Autowired
-    public SignUpController(SignUpService signUpService,
+    public SignUpController(ISignUpService signUpService,
                             ManagerRegistrationRequestDtoToModel managerRegistrationRequestDtoToModel,
                             UserDtoToUserModelMapper userDtoToUserModelMapper, UserService userService) {
         this.signUpService = signUpService;

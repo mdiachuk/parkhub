@@ -20,10 +20,10 @@ export class AddParkingComponent implements OnInit {
   parking: NewParking = new NewParking()
   formGroup: FormGroup;
   CityArray: string[] = [];
-  nameregex: RegExp = /^[a-zA-Z 0-9-]+$/;
+  nameregex: RegExp = /^[a-zA-ZА-Яа-яйєї 0-9-]+$/;
   onlyPositiveIntegersregex: RegExp = /^[1-9]+[0-9]*$/;
-  streetregex: RegExp = /^([a-zA-Z -]+)$/;
-  buildingregex: RegExp = /^([a-zA-Z0-9 -]+)$/;
+  streetregex: RegExp = /^([a-zA-ZА-Яа-яйєї -]+)$/;
+  buildingregex: RegExp = /^([a-zA-ZА-Яа-яйєї0-9 -]+)$/;
   parkNameValidator: any;
   MatSnackBar: any;
 

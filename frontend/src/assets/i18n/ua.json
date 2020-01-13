@@ -74,11 +74,11 @@
   "MustContainAtLeastOneNumberOneUppercaseAndOneLowercaseLetterAndAtLeast6Characters": "Повинен містити принаймні одне число, одну велику і одну малу літеру та принаймні 6 символів",
   "PasswordsMustMatch": "Паролі мають співпадати!",
   "Max200Characters": "Максимум 200 символів",
-  "IAgreeWithTermsConditionsAndPrivacyPolicy": "Я погоджуюся з умовами, умовами та політикою конфіденційності",
+  "IAgreeWithTermsConditionsAndPrivacyPolicy": "Я погоджуюся з умовами та політикою конфіденційності",
   "Reset": "Видалити все",
   "Submit": "Зберегти",
   "wasSentToTheAdministrator": "було надіслано адміністратору!",
-  "GoToTheHomepage": "Перейдіть на головну сторінку",
+  "GoToTheHomepage": "Перейти на головну сторінку",
   "Add": "Додати",
   "Become partner": "Стати партнером",
   "Delete": "Видалити",
@@ -90,7 +90,7 @@
   "Password": "Пароль",
   "ConfirmPassword": "Підтвердити пароль",
   "Create": "Створити",
-  "PleaseFillInThisFormToBecomeOurPartner": "Заповніть форму нижче...",
+  "PleaseFillInThisFormToBecomeOurPartner": "Щоб стати нашим партнером, заповніть форму нижче",
   "FieldIsRequired": "Поле не має бути пустим",
   "NotAValidParkingName": "Не коректне ім'я парковки",
   "NotAValidNumberOfSlotsShouldBePositiveInteger": "Кількість парковочних місць не має бути від'ємним",
@@ -100,9 +100,8 @@
   "Cannot activate account: less than 24 hours have passed.": "Не вдається активувати обліковий запис: минуло менше 24 годин.",
   "No account with such email was found.": "Не знайдено жодного облікового запису з такою електронною адресою",
   "Please enter valid credentials!": "Введіть дійсні облікові дані!",
-
   "Forgot your password?": "Забули свій пароль?",
-  "Type your email in the field below and we will send you link to reset your password.": "Введіть електронну пошту в поле нижче, і ми надішлемо вам посилання, щоб скинути пароль.",
+  "Type your email in the field below and we will send you link to reset your password.": "Введіть електронну пошту в поле нижче і ми надішлемо вам посилання, щоб скинути пароль.",
   "TypeUserIDPlaceholder": {
     "value": "Введіть ID користувача"
   },
@@ -113,7 +112,7 @@
     "value":"Знайти парковку"
   },
   "PhoneNumberPlaceholder": {
-    "value" : "Номер телефону"
+    "value": "Номер телефону"
   },
   "addParkingNamePlaceholder": {
     "value": "Назва парковки"
@@ -139,7 +138,6 @@
   "PasswordPlaceholder": {
     "value": "Пароль"
   },
-
   "FirstNamePlaceholder": {
     "value": "Ім'я"
   },
@@ -158,5 +156,11 @@
   "managerCommentPlaceholder": {
     "value": "Коментар"
   },
-  "Cities": ["Київ", "Львів", "Чернівці", "Дніпро", "Харків"]
+  "Cities": [
+    "Київ",
+    "Львів",
+    "Чернівці",
+    "Дніпро",
+    "Харків"
+  ]
 }
