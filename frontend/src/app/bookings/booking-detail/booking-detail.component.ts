@@ -4,6 +4,8 @@ import {BookingService} from '../../service/booking.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormGroup, FormControl, Validators, AbstractControl} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { Payment } from '../../interfaces/payment';
+import { PaymentService } from 'src/app/service/payment.service';
 
 @Component({
   selector: 'app-booking-detail',
@@ -25,6 +27,7 @@ export class BookingDetailComponent implements OnInit {
 
   constructor(
     private bookingService: BookingService,
+    private paymentService: PaymentService,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
   ) {

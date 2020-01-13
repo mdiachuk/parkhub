@@ -1,3 +1,7 @@
+.parking-container {
+  text-align: center;
+}
+
 .parking-card {
   max-width: 400px;
 }
@@ -8,8 +12,10 @@
 }
 
 .date-container {
+  padding: 10px;
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
 
 .date-container > * {
@@ -17,5 +23,9 @@
 }
 
 .date-container {
+  text-align: center;
+}
+
+.test {
   text-align: center;
 }
