@@ -7,10 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -57,7 +54,6 @@ public class ElementDAO<E, M> implements IElementDAO<M> {
         TypedQuery<E> allQuery = emp.createQuery(all);
         List<M> list = allQuery.getResultList().stream().map(entityToModel::transform).collect(Collectors.toList());
         return allQuery.getResultList().stream().map(entityToModel::transform).collect(Collectors.toList());
-
     }
 
     @Transactional

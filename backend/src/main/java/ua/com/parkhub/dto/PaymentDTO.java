@@ -1,8 +1,18 @@
 package ua.com.parkhub.dto;
 
 public class PaymentDTO {
-    private int price;
+
+    private Long id;
+    private Integer price;
     private BookingDTO booking;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public int getPrice() {
         return price;
@@ -23,7 +33,8 @@ public class PaymentDTO {
     @Override
     public String toString() {
         return "PaymentDTO{" +
-                "price=" + price +
+                "id=" + id +
+                ", price=" + price +
                 ", booking=" + booking +
                 '}';
     }

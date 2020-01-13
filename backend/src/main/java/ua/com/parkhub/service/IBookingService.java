@@ -3,7 +3,9 @@ package ua.com.parkhub.service;
 import ua.com.parkhub.model.BookingModel;
 import ua.com.parkhub.model.PaymentModel;
 import ua.com.parkhub.model.CustomerModel;
+import ua.com.parkhub.persistence.entities.Slot;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IBookingService {
@@ -13,6 +15,8 @@ public interface IBookingService {
     Optional<BookingModel> findBookingByIdAndDateTimeRange(long id, long checkIn, long checkOut);
 
     int findPrice(String phoneNumber);
+
     Optional<BookingModel> findPrepaidBooking(CustomerModel customerModel);
-    BookingModel addBooking(String phoneNumber, String carNumber, long slotId);
+
+    List<Slot> findAllAvailableSlots(long checkIn, long checkOut);
 }

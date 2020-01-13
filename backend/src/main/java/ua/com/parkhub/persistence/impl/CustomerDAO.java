@@ -23,23 +23,4 @@ public class CustomerDAO extends ElementDAO<Customer, CustomerModel> {
     public Optional<CustomerModel> findCustomerByPhoneNumber(String phoneNumber) {
         return findOneByFieldEqual("phoneNumber", phoneNumber);
     }
-
-    @Transactional
-    public Optional<CustomerModel> findElementByPhone(String phone) throws NullCustomerException{
-        try {
-            CriteriaBuilder criteriaBuilder = this.emp.getCriteriaBuilder();
-            CriteriaQuery<Customer> criteriaQuery = criteriaBuilder.createQuery(Customer.class);
-            Root<Customer> itemRoot = criteriaQuery.from(Customer.class);
-            Predicate predicate
-                    = criteriaBuilder.equal(itemRoot.get("phoneNumber"), phone);
-            criteriaQuery.where(predicate);
-
-            return Optional.of(Optional.ofNullable(entityToModel.transform(this.emp.createQuery(criteriaQuery).getSingleResult()))).orElseThrow(NullCustomerException::new);
-        }catch (Exception e){
-            throw new NullCustomerException(
-//                    "Failed to find customer by phone number"
-            );
-        }
-    }
-
 }

@@ -67,4 +67,15 @@ public class Slot implements Serializable {
     public void setParking(Parking parking) {
         this.parking = parking;
     }
+
+    @Override
+    public String toString() {
+        return "Slot{" +
+                "id=" + id +
+                ", slotNumber='" + slotNumber + '\'' +
+                ", isReserved=" + isReserved +
+                ", isActive=" + isActive +
+                ", parking=" + parking +
+                '}';
+    }
 }

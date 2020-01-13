@@ -5,14 +5,20 @@
   "ParkHub": "ParkHub",
   "RECOMMENDED BY THE MOST CAPRICIOUS DRIVERS!": "RECOMMENDED BY THE MOST CAPRICIOUS DRIVERS!",
   "Parking created successfully.": "Parking created successfully.",
+  "Please, insert your car number and phone number": "Please, insert your car number and phone number",
   "Dear user,please input your phone number to be able to have full access cabinet!": "Dear user,please input your phone number to be able to have full access cabinet!",
   "Home": "Home",
   "From:": "From:",
   "To:": "To:",
+  "LIKE": "LIKE",
+  "SHARE": "SHARE",
   "Login via Google!": "Login via Google!",
+  "Enter your phone number": "Enter your phone number",
   "Price per hour:": "Price per hour:",
   "CancelPrepayment": "Cancel prepayment",
   "Cancel Prepayment": "Cancel prepayment",
+  "Please, select preferred time": "Please, select preferred time",
+  "Please, select available slot. Price per hour:" : "Please, select available slot. Tariff per hour:",
   "Success": "Success",
   "Search": "Search",
   "Nearest parking" : "Nearest parking",
@@ -114,7 +120,7 @@
     "value" : "Find parking"
   },
   "PhoneNumberPlaceholder": {
-    "value": "Phone number"
+    "value": "Enter phone number"
   },
   "addParkingNamePlaceholder": {
     "value": "Parking name"

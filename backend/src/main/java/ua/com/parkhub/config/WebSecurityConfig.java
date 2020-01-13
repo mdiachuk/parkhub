@@ -91,11 +91,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/**")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/login**", "/api/logout**", "/api/signup/manager", "/api/signup/user",
-                        "/api/user/password/reset", "/api/user/verify", "/api/user/token/**", "/api/home",
-                        "/api/user/token/refresh", "/api/user/token","/api/signup/user", "/api/cancel", "/api/oauthJwtToken","/api/login/google", "/api/parkings/{id}", "/api/booking").permitAll()
+                .antMatchers("/api/login**", "/api/logout**", "/api/signup/manager", "/api/signup/user", "/api/user/password/reset", "/api/user/verify", "/api/user/token/**", "/api/home",
+                        "/api/user/token/refresh", "/api/user/token","/api/signup/user", "/api/cancel", "/api/oauthJwtToken",
+                        "/api/login/google", "/api/parkings/{id}", "/api/booking").permitAll()
                 .anyRequest().authenticated()
-                .and().exceptionHandling().and().logout().logoutSuccessUrl("/").permitAll().and()
+                .and().exceptionHandling()
+                .and()
                 .csrf().disable()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAfter(ssoFilter(), JwtAuthenticationFilter.class);

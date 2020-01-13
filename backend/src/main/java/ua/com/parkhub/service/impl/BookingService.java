@@ -9,6 +9,7 @@ import ua.com.parkhub.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.com.parkhub.exceptions.BookingException;
+import ua.com.parkhub.persistence.entities.Slot;
 import ua.com.parkhub.persistence.impl.BookingDAO;
 import ua.com.parkhub.persistence.impl.SlotDAO;
 import ua.com.parkhub.service.IBookingService;
@@ -84,7 +85,12 @@ public class BookingService implements IBookingService {
         return Optional.of(bookingModel);
     }
 
-    public int findPrice(String phoneNumber){
+    @Override
+    public List<Slot> findAllAvailableSlots(long checkIn, long checkOut) {
+        return bookingDAO.findElementsByFieldsEqual(checkIn, checkOut);
+    }
+
+    public int findPrice(String phoneNumber) {
         Optional<BookingModel> bookingModel = findPrepaidBooking(customerService.findCustomerByPhoneNumber(phoneNumber));
         return bookingModel.map(bm -> {
             bm.setCheckOut(LocalDateTime.now());
@@ -93,10 +99,5 @@ public class BookingService implements IBookingService {
             bookingDAO.updateElement(bm);
             return price;
         }).orElseThrow(() -> new BookingException(StatusCode.BOOKING_NOT_FOUND));
-    }
-
-    @Override
-    public BookingModel addBooking(String phoneNumber, String carNumber, long slotId) {
-        return null;
     }
 }

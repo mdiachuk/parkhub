@@ -54,7 +54,8 @@ public class PaymentService implements IPaymentService {
         int price = calculatePrice(bookingModel, tariff);
         paymentModel.setPrice(price);
         paymentModel.setPaid(true);
-        paymentDAO.addElement(paymentModel);
-        return paymentModel;
+        /*paymentDAO.addElement(paymentModel);
+        return paymentModel;*/
+        return paymentDAO.addWithResponse(paymentModel);
     }
 }
