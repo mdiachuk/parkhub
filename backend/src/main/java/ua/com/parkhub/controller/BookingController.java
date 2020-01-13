@@ -66,10 +66,7 @@ public class BookingController {
 
     @PostMapping("/api/booking")
     //TODO not idempotent operation! Will do some smart restrictions on booking amount per one phone number in a next impl steps
-    //TODO switch onto cyrillic after i18n impl
     public ResponseEntity<PaymentDTO> addBooking(@Valid @RequestBody BookingFormDTO bookingFormDTO/*, BindingResult result*/) {
-        LOGGER.debug(bookingFormDTO.toString());
-        //TODO to check after Angular material impl
         String carNumber = bookingFormDTO.getCarNumber();
         String phoneNumber = bookingFormDTO.getPhoneNumber();
         Long slotId = bookingFormDTO.getSlotId();
