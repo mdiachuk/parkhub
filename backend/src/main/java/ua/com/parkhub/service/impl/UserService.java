@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,6 +31,9 @@ import java.util.UUID;
 
 @Service
 public class UserService implements IUserService {
+
+    @Value("${fronturl}")
+    String url;
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
@@ -60,14 +64,14 @@ public class UserService implements IUserService {
         switch (convertToUuidTokenType(type)) {
             case EMAIL:
                 subject = "Verify email";
-                body = "<a href=\"http://localhost:4200/verify-email?token=" + token.getToken()
+                body = "<a href=\"" + url + "/verify-email?token=" + token.getToken()
                         + "\">Verify email address</a> (expires at " + formatExpirationDate(token.getExpirationDate()) + ")";
                 sendEmail(email, subject, body);
                 logger.info("Email for verifying email address was sent to {}", email);
                 break;
             case PASSWORD:
                 subject = "Reset password";
-                body = "<a href=\"http://localhost:4200/reset-password?token=" + token.getToken()
+                body = "<a href=\"" + url + "/reset-password?token=" + token.getToken()
                         + "\">Reset password</a> (expires at " + formatExpirationDate(token.getExpirationDate()) + ")";
                 sendEmail(email, subject, body);
                 logger.info("Email for resetting password was sent to {}", email);
