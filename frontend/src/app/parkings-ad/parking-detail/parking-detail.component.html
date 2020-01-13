@@ -1,9 +1,9 @@
 <div class="date-container">
   <section>
-    <h3>Please, select preferred time</h3>
+    <h3>{{'Please, select preferred time' | translate}}</h3>
     <form [formGroup]="bookingTimeForm" (submit)="saveReactive()">
       <mat-label>
-        From:
+        {{'From:' | translate}}
         <input [min]="minFrom" [max]="maxFrom"
                [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1"
                [formControl]="rangeFrom" required>
@@ -14,7 +14,7 @@
       <br>
       <br>
       <mat-label>
-        To:
+        {{'To:' | translate}}
         <input [min]="minTo" [max]="maxTo"
                [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2"
                [formControl]="rangeTo" required>
@@ -24,7 +24,7 @@
       </mat-label>
       <br>
       <br>
-      <button type="submit" mat-raised-button color="primary">Submit</button>
+      <button type="submit" mat-raised-button color="primary">{{'Submit' | translate}}</button>
     </form>
   </section>
 </div>
@@ -40,7 +40,7 @@
       </mat-card-header>
       <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Park Hub">
       <mat-card-content>
-        <h3>Please, select available slot. Price per hour: {{parking.tariff}}</h3>
+        <h3>{{'Please, select available slot. Price per hour:' | translate}} {{parking.tariff}}</h3>
         <mat-chip-list aria-label="Slot selection">
           <mat-chip *ngFor="let slot of parking.slots">
             <div *ngIf="slot.reserved || !slot.active">
@@ -55,8 +55,8 @@
         </mat-chip-list>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button>LIKE</button>
-        <button mat-button>SHARE</button>
+        <button mat-button>{{'LIKE' | translate}}</button>
+        <button mat-button>{{'SHARE' | translate}}</button>
       </mat-card-actions>
     </mat-card>
   </div>

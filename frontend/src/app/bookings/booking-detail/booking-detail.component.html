@@ -1,5 +1,5 @@
 <div class="booking-container">
-  <h3>Please, insert your car number and phone number</h3>
+  <h3>{{'Please, insert your car number and phone number' | translate}}</h3>
   <section>
     <form [formGroup]="bookingForm" (submit)="saveReactive()">
       <div>
@@ -20,7 +20,7 @@
       </div>
       <br>
       <br>
-      <button type="submit" color="primary" mat-button (click)="openSnackBar()" aria-label="snack-bar">
+      <button type="submit" color="primary" mat-raised-button (click)="openSnackBar()" aria-label="snack-bar">
         {{'Submit' | translate}}
       </button>
     </form>
