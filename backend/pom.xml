@@ -12,7 +12,7 @@
     <artifactId>backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>backend</name>
-    <description>ParkHub - best parking in a world!</description>
+    <description>ParkHub - recommended by the most capricious drivers!</description>
     <packaging>war</packaging>
     <dependencyManagement>
         <dependencies>
@@ -122,26 +122,6 @@
                             </execution>
                         </executions>
                     </plugin>
-<!--                    <plugin>-->
-<!--                        <groupId>org.codehaus.mojo</groupId>-->
-<!--                        <artifactId>exec-maven-plugin</artifactId>-->
-<!--                        <version>1.6.0</version>-->
-<!--                        <executions>-->
-<!--                            <execution>-->
-<!--                                <phase>validate</phase>-->
-<!--                                <goals>-->
-<!--                                    <goal>exec</goal>-->
-<!--                                </goals>-->
-<!--                            </execution>-->
-<!--                        </executions>-->
-<!--                        <configuration>-->
-<!--                            <executable>npm</executable>-->
-<!--                            <workingDirectory>../frontend</workingDirectory>-->
-<!--                            <arguments>-->
-<!--                                <argument>run build</argument>-->
-<!--                            </arguments>-->
-<!--                        </configuration>-->
-<!--                    </plugin>-->
                 </plugins>
             </build>
         </profile>
@@ -260,9 +240,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
-
-
-
         </plugins>
     </build>
 </project>
