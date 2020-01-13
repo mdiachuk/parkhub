@@ -27,7 +27,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class ParkingService implements IParkingService  {
+public class ParkingService implements IParkingService {
 
     private static final Logger logger = LoggerFactory.getLogger(SignUpService.class);
 
@@ -68,7 +68,8 @@ public class ParkingService implements IParkingService  {
         AddressModel address = parkingModel.getAddressModel();
         address = setLatLan(address);
         if (userDAO.findElementById(id).isPresent()) {
-            parkingModel.setOwner(userDAO.findElementById(id).get());}
+            parkingModel.setOwner(userDAO.findElementById(id).get());
+        }
         AddressModel addressModel = addressDAO.addWithResponse(address);
         parkingModel.setAddressModel(addressModel);
         parkingDAO.addElement(parkingModel);
@@ -84,7 +85,7 @@ public class ParkingService implements IParkingService  {
         return parkingDAO.findAll();
     }
 
-    public List<ParkingModel> findAllParkingByOwnerId(Long id){
+    public List<ParkingModel> findAllParkingByOwnerId(Long id) {
         return parkingDAO.findAllParkingByOwnerId(id);
     }
 
@@ -108,16 +109,14 @@ public class ParkingService implements IParkingService  {
             Optional<BookingModel> bookingModel = bookingService.findBookingByIdAndDateTimeRange(slotModel.getId(), checkIn, checkOut);
             //TODO refactoring isPresent change to exception
             if (bookingModel.isPresent()) {
-                System.out.println(bookingModel.get());
                 slotModel.setReserved(true);
             }
         }
         slotList.sort(slotComparator);
-        System.out.println("Parking model : " + parkingModel);
         return parkingModel;
     }
 
-    public List<String> getNotEmptyFieldNamesFromSpecificParking(ParkingModel parkingModelParam){
+    public List<String> getNotEmptyFieldNamesFromSpecificParking(ParkingModel parkingModelParam) {
 
         Field[] paramFields = parkingModelParam.getClass().getDeclaredFields();
 
@@ -125,10 +124,9 @@ public class ParkingService implements IParkingService  {
             try {
                 field.setAccessible(true);
                 Object value = field.get(parkingModelParam);
-                if (value instanceof Integer){
+                if (value instanceof Integer) {
                     return (Integer) value != 0;
-                }
-                else {
+                } else {
                     return value != null;
                 }
             } catch (IllegalAccessException ex) {
@@ -153,15 +151,16 @@ public class ParkingService implements IParkingService  {
                 field.set(parkingModel, fieldParam.get(parkingModelParam));
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 logger.info("There is no field");
-        }});
-
-            if (fieldsNameList.contains("addressModel")) {
-                AddressModel address = addressDAO.addWithResponse(setLatLan(parkingModelParam.getAddressModel()));
-                parkingModel.setAddressModel(address);
             }
+        });
 
-            parkingDAO.updateElement(parkingModel);
+        if (fieldsNameList.contains("addressModel")) {
+            AddressModel address = addressDAO.addWithResponse(setLatLan(parkingModelParam.getAddressModel()));
+            parkingModel.setAddressModel(address);
         }
+
+        parkingDAO.updateElement(parkingModel);
+    }
 
 
     @Override
@@ -179,7 +178,7 @@ public class ParkingService implements IParkingService  {
         return addressModel;
     }
 
-    public List<ParkingModel> findAllParkingModel(){
+    public List<ParkingModel> findAllParkingModel() {
         return parkingDAO.findAll();
     }
 
