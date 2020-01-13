@@ -16,7 +16,7 @@ export class ResetPasswordService {
     }
 
     checkIsExpired(token: string) {
-        return this.http.get('/api/user/token/' + token);;
+        return this.http.get('/api/user/token/' + token);
     }
 
     resetPassword(password: Password) {
