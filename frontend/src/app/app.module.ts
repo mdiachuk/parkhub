@@ -68,6 +68,7 @@ import { ManagerParkingListComponent } from './manager-parking-list/manager-park
 import { AddPhoneNumberComponent } from './add-phone-number/add-phone-number.component';
 import {MatChipsModule} from "@angular/material/chips";
 import {TranslateArrayService} from "./service/translatearray.service";
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -175,7 +176,8 @@ import {TranslateArrayService} from "./service/translatearray.service";
     MatSidenavModule,
     FormsModule,
     MatIconModule,
-    MatExpansionModule
+    MatExpansionModule,
+    FlexLayoutModule,
   ],
   providers: [ParkingService, SlotService, ParkingService1, DataService, UserService, TranslateArrayService,
     {

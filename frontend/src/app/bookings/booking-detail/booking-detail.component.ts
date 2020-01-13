@@ -69,6 +69,8 @@ export class BookingDetailComponent implements OnInit {
 
   openSnackBar(message: string) {
     this.snackBar.open(message, 'Close', {
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
       duration: 20000,
     });
     let snackBarRef = this.snackBar.open(message, 'Close', {

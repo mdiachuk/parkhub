@@ -4,6 +4,7 @@ import { Booking } from '../interfaces/booking'
 import { Observable, of } from 'rxjs'
 import { MessageService } from './message.service'
 import { catchError, map, tap } from 'rxjs/operators';
+import { Payment } from '../interfaces/payment';
 
 @Injectable({
   providedIn: 'root'
@@ -31,10 +32,10 @@ export class BookingService {
   }
 
   /** POST: add a new booking to the server */
-addBooking (booking: Booking): Observable<Booking> {
-  return this.http.post<Booking>(this.bookingUrl, booking, this.httpOptions).pipe(
-    tap((newBooking: Booking) => this.log(`added booking w/ phoneNumber=${newBooking.phoneNumber}`)),
-    catchError(this.handleError<Booking>('addBooking'))
+addBooking (booking: Booking): Observable<Payment> {
+  return this.http.post<Payment>(this.bookingUrl, booking, this.httpOptions).pipe(
+    tap((newBooking: Payment) => this.log(`added booking w/ phoneNumber=${newBooking.price}`)),
+    catchError(this.handleError<Payment>('addBooking'))
   );
 }
 
