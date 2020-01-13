@@ -106,12 +106,12 @@ export class AddParkingComponent implements OnInit {
     for(let property in formGroup){this.parking[property] = formGroup[property];}
     this.parking["id"] = Number(this.addservice.getUserID());
     console.log(this.parking)
-    this.parkingService.save(this.parking)
-      .subscribe( data => {
-          this.openSnackBar(('Parking created successfully.'));
-        },
-        err => {
-          this.openSnackBar1((err.error));
-        });
+     this.parkingService.save(this.parking)
+     .subscribe( data => {
+       this.openSnackBar((this.translateService.instant('Parking created successfully.')));
+    },
+    err => {
+      this.openSnackBar1((err.error));
+    });
   }
 }

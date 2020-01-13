@@ -24,6 +24,7 @@ public class PaymentEntityToModelMapper implements Mapper<Payment, PaymentModel>
         PaymentModel paymentModel = new PaymentModel();
         paymentModel.setId(from.getId());
         paymentModel.setPaid(from.isPaid());
+        paymentModel.setCancelled(from.isCancelled());
         paymentModel.setPrice(from.getPrice());
         paymentModel.setBooking(bookingEntityToModelMapper.transform(from.getBooking()));
         return paymentModel;

@@ -1,6 +1,8 @@
 package ua.com.parkhub.service.impl;
 
 import org.hibernate.Hibernate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,7 @@ import java.util.stream.Collectors;
 @Service
 public class ParkingService implements IParkingService  {
 
+    private static final Logger logger = LoggerFactory.getLogger(SignUpService.class);
 
     private ParkingDAO parkingDAO;
     private final AddressDAO addressDAO;
@@ -71,10 +74,6 @@ public class ParkingService implements IParkingService  {
         parkingDAO.addElement(parkingModel);
     }
 
-    public List<ParkingModel> findAllParkingModel(){
-        return parkingDAO.findAll();
-    }
-
     public ParkingModel findParkingById(long id) {
         return parkingDAO.findElementById(id).orElseThrow(() -> new ParkingDoesntExistException(StatusCode.PARKING_DOESNT_EXIST));
     }
@@ -83,6 +82,10 @@ public class ParkingService implements IParkingService  {
     public List<ParkingModel> findAllParking() {
 
         return parkingDAO.findAll();
+    }
+
+    public List<ParkingModel> findAllParkingByOwnerId(Long id){
+        return parkingDAO.findAllParkingByOwnerId(id);
     }
 
     @Transactional(readOnly = true)
@@ -114,14 +117,11 @@ public class ParkingService implements IParkingService  {
         return parkingModel;
     }
 
-    @Transactional
-    public void updateParking(Long id, ParkingModel parkingModelParam) {
-        ParkingModel parkingModel = findParkingById(id);
-        AddressModel addressModel = parkingModel.getAddressModel();
-        addressModel = setLatLan(addressModel);
-        parkingModel.setAddressModel(addressModel);
+    public List<String> getNotEmptyFieldNamesFromSpecificParking(ParkingModel parkingModelParam){
+
         Field[] paramFields = parkingModelParam.getClass().getDeclaredFields();
-        List<String> fieldsNameList = Arrays.stream(paramFields).filter(field -> {
+
+        return Arrays.stream(paramFields).filter(field -> {
             try {
                 field.setAccessible(true);
                 Object value = field.get(parkingModelParam);
@@ -132,29 +132,38 @@ public class ParkingService implements IParkingService  {
                     return value != null;
                 }
             } catch (IllegalAccessException ex) {
+                logger.info("Field access denied");
                 return false;
             }
         }).map(Field::getName).collect(Collectors.toList());
+    }
 
-        for (String name : fieldsNameList) {
+    @Transactional
+    public void updateParking(Long id, ParkingModel parkingModelParam) {
+
+        ParkingModel parkingModel = findParkingById(id);
+        List<String> fieldsNameList = getNotEmptyFieldNamesFromSpecificParking(parkingModelParam);
+
+        fieldsNameList.forEach(fieldName -> {
             try {
-                Field fieldParam = parkingModelParam.getClass().getDeclaredField(name);
-                Field field = parkingModel.getClass().getDeclaredField(name);
+                Field fieldParam = parkingModelParam.getClass().getDeclaredField(fieldName);
+                Field field = parkingModel.getClass().getDeclaredField(fieldName);
                 field.setAccessible(true);
                 fieldParam.setAccessible(true);
                 field.set(parkingModel, fieldParam.get(parkingModelParam));
             } catch (NoSuchFieldException | IllegalAccessException e) {
-                e.printStackTrace();
-            }
+                logger.info("There is no field");
+        }});
 
             if (fieldsNameList.contains("addressModel")) {
-                AddressModel a = addressDAO.addWithResponse(parkingModelParam.getAddressModel()); //from non id model gets model with id
-                parkingModel.setAddressModel(a);
+                AddressModel address = addressDAO.addWithResponse(setLatLan(parkingModelParam.getAddressModel()));
+                parkingModel.setAddressModel(address);
             }
 
             parkingDAO.updateElement(parkingModel);
         }
-    }
+
+
     @Override
     public AddressModel setLatLan(AddressModel addressModel) {
 
@@ -170,6 +179,11 @@ public class ParkingService implements IParkingService  {
         return addressModel;
     }
 
+    public List<ParkingModel> findAllParkingModel(){
+        return parkingDAO.findAll();
+    }
+
+
     public List<ParkingModel> findParkingInArea(String address) {
 
         Map<String, String> map = addressGeoService.getLatLon(address);
@@ -180,5 +194,4 @@ public class ParkingService implements IParkingService  {
                                 x.getAddressModel().getLat(), x.getAddressModel().getLon())) == true)
                 .collect(Collectors.toList());
     }
-
 }

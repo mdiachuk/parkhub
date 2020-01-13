@@ -21,9 +21,9 @@ export class ParkingService {
     this.parkingsUrl = '/api/manager/cabinet';
   }
 
-  getAllParkings(): Observable<ParkingItem[]> {
+  getAllParkings(id : string): Observable<ParkingItem[]> {
     console.log("service",this.parkingsUrl)
-    return this.http.get<ParkingItem[]>(this.parkingsUrl);
+    return this.http.get<ParkingItem[]>(`${this.parkingsUrl}/all/${id}`);
   }
 
   getParking(id: string) : Observable<ParkingDetail>{

@@ -6,9 +6,7 @@ import ua.com.parkhub.persistence.entities.Payment;
 
 public interface IPaymentService {
     int calculatePrice(BookingModel bookingModel, int price);
-
     PaymentModel addPayment(BookingModel bookingModel, int price);
-
     PaymentModel findPaymentByBooking(BookingModel bookingModel);
-    void updateIsCancelled(PaymentModel paymentModel, boolean isCancelled);
+    int findPriceIfCancelled(BookingModel bookingModel);
 }

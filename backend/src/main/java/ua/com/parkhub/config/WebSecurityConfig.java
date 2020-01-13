@@ -93,8 +93,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/login**", "/api/logout**", "/api/signup/manager", "/api/signup/user",
                         "/api/user/password/reset", "/api/user/verify", "/api/user/token/**", "/api/home",
-                        "/api/user/token/refresh", "/api/user/token", "/api/oauthJwtToken","/api/login/google", "/api/parkings/{id}", "/api/booking").permitAll()
-
+                        "/api/user/token/refresh", "/api/user/token","/api/signup/user", "/api/cancel", "/api/oauthJwtToken","/api/login/google", "/api/parkings/{id}", "/api/booking").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling().and().logout().logoutSuccessUrl("/").permitAll().and()
                 .csrf().disable()
