@@ -5,6 +5,7 @@ import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.BookingModel;
 import ua.com.parkhub.model.CustomerModel;
 import ua.com.parkhub.persistence.entities.Booking;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;

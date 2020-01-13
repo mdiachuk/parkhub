@@ -5,6 +5,7 @@ import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.BookingModel;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.model.PaymentModel;
+import ua.com.parkhub.persistence.entities.Booking;
 import ua.com.parkhub.persistence.entities.Payment;
 
 import java.util.Optional;
@@ -16,7 +17,13 @@ public class PaymentDAO extends ElementDAO<Payment, PaymentModel> {
         super(Payment.class, modelToEntity, entityToModel);
     }
 
-    public Optional<PaymentModel> findPaymentByBooking (BookingModel booking){
+    public PaymentModel addWithResponse(PaymentModel paymentModel) {
+        Payment entity = modelToEntity.transform(paymentModel);
+        emp.persist(entity);
+        return entityToModel.transform(entity);
+    }
+
+    public Optional<PaymentModel> findPaymentByBooking(BookingModel booking) {
         return this.findOneByFieldEqual("booking", booking.getId());
     }
 }

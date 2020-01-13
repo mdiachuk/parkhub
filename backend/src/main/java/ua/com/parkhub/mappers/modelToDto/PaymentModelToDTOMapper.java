@@ -17,10 +17,11 @@ public class PaymentModelToDTOMapper implements Mapper<PaymentModel, PaymentDTO>
 
     @Override
     public PaymentDTO transform(PaymentModel from) {
-        if(from == null) {
+        if (from == null) {
             return null;
         }
         PaymentDTO paymentDTO = new PaymentDTO();
+        paymentDTO.setId(from.getId());
         paymentDTO.setPrice(from.getPrice());
         paymentDTO.setBooking(bookingModelToDTOMapper.transform(from.getBooking()));
         return paymentDTO;
