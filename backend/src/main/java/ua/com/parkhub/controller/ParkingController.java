@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +14,6 @@ import ua.com.parkhub.dto.ParkingRequestDTO;
 import ua.com.parkhub.mappers.dtoToModel.ParkingRequestDTOWithIDtoParkingModel;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.service.IParkingService;
-import ua.com.parkhub.service.impl.ParkingService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -32,6 +32,7 @@ public class ParkingController {
         this.parkingRequestDTOWithIDtoParkingModel = parkingRequestDTOWithIDtoParkingModel;
     }
 
+    @PreAuthorize("MANAGER")
     @PostMapping
     public ResponseEntity addParking(@Valid @RequestBody ParkingRequestDTO parkingRequestDTO, BindingResult result) {
         if (result.hasErrors()) {
