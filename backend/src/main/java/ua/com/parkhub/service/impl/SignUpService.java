@@ -49,9 +49,10 @@ public class SignUpService implements ISignUpService {
         customer = customerDAO.addElement(customer).orElseThrow(() ->
                 new NotFoundInDataBaseException("Customer not found"));
         UserModel user = createUser(manager.getUser(), customer);
-        userDAO.addElement(user);
-        String description = generateDescription(manager.getCompanyName(), manager.getUsreouCode(),
-                manager.getComment());
+        user = userDAO.addElement(user).orElseThrow(() ->
+                new NotFoundInDataBaseException("Customer not found"));
+        String description = generateDescription(user.getId(), manager.getCompanyName(),
+                manager.getUsreouCode(), manager.getComment());
         SupportTicketModel ticket = createTicket(description, customer);
         supportTicketDAO.addElement(ticket);
     }
@@ -100,10 +101,11 @@ public class SignUpService implements ISignUpService {
         return ticket;
     }
     @Override
-    public String generateDescription(String companyName, String usreouCode, String comment) {
-        return "Company: <" + companyName + "> " +
-                "USREOU: <" + usreouCode + "> " +
-                "Comment: <" + comment + ">";
+    public String generateDescription(long id, String companyName, String usreouCode, String comment) {
+        return "ID: " + id + " " +
+                "Company: \"" + companyName + "\" " +
+                "USREOU: " + usreouCode + " " +
+                "Comment: \"" + comment + "\'";
     }
     @Override
     public RoleModel findUserRole(String name) {
@@ -154,7 +156,6 @@ public class SignUpService implements ISignUpService {
         }
     }
 
-
     @Override
     public boolean isCustomerNumberEmpty(String email) {
         UserModel user = userDAO.findOneByFieldEqual("email", email).get();
@@ -177,7 +178,4 @@ public class SignUpService implements ISignUpService {
     public boolean isNumberUnique(String phoneNumber) {
         return customerDAO.findManyByFieldEqual("phoneNumber",phoneNumber).isEmpty();
     }
-
-
-
 }
