@@ -4,16 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.BookingModel;
+import ua.com.parkhub.model.CustomerModel;
+import ua.com.parkhub.model.SlotModel;
 import ua.com.parkhub.persistence.entities.Booking;
+import ua.com.parkhub.persistence.entities.Customer;
+import ua.com.parkhub.persistence.entities.Slot;
 
 @Component
 public class BookingModelToEntityMapper implements Mapper<BookingModel, Booking> {
 
-    SlotModelToEntityMapper slotModelToEntityMapper;
-    CustomerModelToEntityMapper customerModelToEntityMapper;
+    private Mapper<SlotModel, Slot> slotModelToEntityMapper;
+    private Mapper<CustomerModel, Customer> customerModelToEntityMapper;
 
     @Autowired
-    public BookingModelToEntityMapper(SlotModelToEntityMapper slotModelToEntityMapper, CustomerModelToEntityMapper customerModelToEntityMapper) {
+    public BookingModelToEntityMapper(Mapper<SlotModel, Slot> slotModelToEntityMapper,
+                                      Mapper<CustomerModel, Customer> customerModelToEntityMapper) {
         this.slotModelToEntityMapper = slotModelToEntityMapper;
         this.customerModelToEntityMapper = customerModelToEntityMapper;
     }
@@ -33,5 +38,4 @@ public class BookingModelToEntityMapper implements Mapper<BookingModel, Booking>
         booking.setCustomer(customerModelToEntityMapper.transform(from.getCustomer()));
         return booking;
     }
-
 }
