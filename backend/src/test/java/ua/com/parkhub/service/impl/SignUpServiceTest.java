@@ -1,4 +1,4 @@
-package ua.com.parkhub.service;
+package ua.com.parkhub.service.impl;
 
 
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +15,6 @@ import ua.com.parkhub.model.*;
 import ua.com.parkhub.model.enums.RoleModel;
 import ua.com.parkhub.model.enums.TicketTypeModel;
 import ua.com.parkhub.persistence.impl.*;
-import ua.com.parkhub.service.impl.SignUpService;
 
 import java.time.Duration;
 import java.util.Arrays;
