@@ -14,11 +14,12 @@ import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.InvalidTokenException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PasswordException;
+import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.mappers.dtoToModel.PasswordDTOtoUserModelMapper;
-import ua.com.parkhub.mappers.dtoToModel.UserDtoToUserModelMapper;
 import ua.com.parkhub.mappers.dtoToModel.UserInfoDTOtoUserModelMapper;
 import ua.com.parkhub.mappers.modelToDto.UserModelToUserInfoDTOMapper;
-import ua.com.parkhub.service.impl.UserService;
+import ua.com.parkhub.model.UserModel;
+import ua.com.parkhub.service.IUserService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -29,20 +30,17 @@ public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    private final UserService userService;
-    UserModelToUserInfoDTOMapper userModelToUserInfoDTOMapper;
-    UserDtoToUserModelMapper userDTOtoModelMapper;
-    PasswordDTOtoUserModelMapper passwordDTOtoUserModelMapper;
-    UserInfoDTOtoUserModelMapper userInfoDTOtoUserModelMapper;
+    private final IUserService userService;
+    private final Mapper<UserModel, UserInfoDTO> userModelToUserInfoDTOMapper;
+    private final Mapper<PasswordDTO, UserModel> passwordDTOtoUserModelMapper;
+    private final Mapper<UserInfoDTO, UserModel> userInfoDTOtoUserModelMapper;
 
     @Autowired
-    public UserController(UserService userService, UserModelToUserInfoDTOMapper userModelToUserInfoDTOMapper,
-                          UserDtoToUserModelMapper userDTOtoModelMapper,
+    public UserController(IUserService userService, UserModelToUserInfoDTOMapper userModelToUserInfoDTOMapper,
                           PasswordDTOtoUserModelMapper passwordDTOtoUserModelMapper,
                           UserInfoDTOtoUserModelMapper userInfoDTOtoUserModelMapper){
         this.userService = userService;
         this.userModelToUserInfoDTOMapper = userModelToUserInfoDTOMapper;
-        this.userDTOtoModelMapper = userDTOtoModelMapper;
         this.passwordDTOtoUserModelMapper = passwordDTOtoUserModelMapper;
         this.userInfoDTOtoUserModelMapper = userInfoDTOtoUserModelMapper;
     }
