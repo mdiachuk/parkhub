@@ -4,7 +4,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
-    <include file="classpath:/db/changelog/production-table-init.xml"/>
+
     <include file="classpath:/db/changelog/09_12_2019_db_update.xml"/>
     <include file="classpath:/db/changelog/12_12_2019_db_update.xml"/>
     <include file="classpath:/db/changelog/27_12_2019_db_update.xml"/>
