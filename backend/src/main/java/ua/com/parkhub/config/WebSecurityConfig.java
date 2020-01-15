@@ -8,11 +8,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
@@ -95,13 +95,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/login**", "/api/logout**", "/api/signup/manager", "/api/signup/user", "/api/user/password/reset", "/api/user/verify", "/api/user/token/**", "/api/home",
                         "/api/user/token/refresh", "/api/user/token","/api/signup/user", "/api/cancel", "/api/oauthJwtToken",
                         "/api/login/google", "/api/parkings/{id}", "/api/booking").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/admin/**").hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/admin/**").hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/admin/ticketlist").hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/admin/ticket/**").hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/admin/ticketlistcounter").hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/manager/parking").hasAnyRole("MANAGER")
+                .antMatchers(HttpMethod.GET, "/api/user/**").hasAnyRole("MANAGER", "ADMIN", "USER")
+                .antMatchers(HttpMethod.POST, "/api/user/**").hasAnyRole("MANAGER", "ADMIN", "USER")
+                .antMatchers(HttpMethod.POST, "/api/user/password").hasAnyRole("MANAGER", "ADMIN", "USER")
+
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .and()
                 .csrf().disable()
                     .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterAfter(ssoFilter(), JwtAuthenticationFilter.class)
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .addFilterAfter(ssoFilter(), JwtAuthenticationFilter.class);
     }
 
 
