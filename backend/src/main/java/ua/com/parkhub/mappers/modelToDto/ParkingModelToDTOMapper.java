@@ -8,9 +8,9 @@ import ua.com.parkhub.model.SlotModel;
 
 @Component
 public class ParkingModelToDTOMapper implements Mapper<ParkingModel, ParkingDTO> {
+
     @Override
     public ParkingDTO transform(ParkingModel from) {
-
         ParkingDTO parkingDTO = new ParkingDTO();
         parkingDTO.setId(from.getId());
         parkingDTO.setParkingName(from.getParkingName());

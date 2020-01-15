@@ -8,10 +8,11 @@ import ua.com.parkhub.model.UserModel;
 
 @Component
 public class UserModelToUserInfoDTOMapper implements Mapper<UserModel, UserInfoDTO> {
+
     @Override
     public UserInfoDTO transform(UserModel from) {
         if(from == null) {
-            throw new ParkHubException("UserModel to be mapped to UserDTO is null.");
+            return null;
         }
         UserInfoDTO userInfoDTO = new UserInfoDTO();
         userInfoDTO.setFirstName(from.getFirstName());

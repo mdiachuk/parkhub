@@ -1,17 +1,18 @@
 package ua.com.parkhub.mappers.modelToDto;
 
 import org.springframework.stereotype.Component;
+import ua.com.parkhub.dto.BookingDTO;
 import ua.com.parkhub.dto.PaymentDTO;
 import ua.com.parkhub.mappers.Mapper;
+import ua.com.parkhub.model.BookingModel;
 import ua.com.parkhub.model.PaymentModel;
 
 @Component
 public class PaymentModelToDTOMapper implements Mapper<PaymentModel, PaymentDTO> {
 
-    private final BookingModelToDTOMapper bookingModelToDTOMapper;
+    private final Mapper<BookingModel, BookingDTO> bookingModelToDTOMapper;
 
-
-    public PaymentModelToDTOMapper(BookingModelToDTOMapper bookingModelToDTOMapper) {
+    public PaymentModelToDTOMapper(Mapper<BookingModel, BookingDTO> bookingModelToDTOMapper) {
         this.bookingModelToDTOMapper = bookingModelToDTOMapper;
     }
 

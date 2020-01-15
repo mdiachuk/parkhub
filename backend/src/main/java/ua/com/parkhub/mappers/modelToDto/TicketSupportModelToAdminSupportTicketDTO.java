@@ -5,6 +5,7 @@ import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.SupportTicketModel;
 
 public class TicketSupportModelToAdminSupportTicketDTO implements Mapper<SupportTicketModel, AdminSupportTicketDTO> {
+
     @Override
     public AdminSupportTicketDTO transform(SupportTicketModel from){
         AdminSupportTicketDTO adminSupportTicketDTO = new AdminSupportTicketDTO();
