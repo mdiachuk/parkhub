@@ -15,8 +15,6 @@ import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberException;
 import ua.com.parkhub.mappers.Mapper;
-import ua.com.parkhub.mappers.dtoToModel.ManagerRegistrationRequestDtoToModel;
-import ua.com.parkhub.mappers.dtoToModel.UserDtoToUserModelMapper;
 import ua.com.parkhub.model.ManagerRegistrationDataModel;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.model.enums.UuidTokenType;
@@ -43,8 +41,9 @@ public class SignUpController {
 
     @Autowired
     public SignUpController(ISignUpService signUpService, IUserService userService,
-                            ManagerRegistrationRequestDtoToModel managerRegistrationRequestDtoToModel,
-                            UserDtoToUserModelMapper userDtoToUserModelMapper) {
+                            Mapper<UserDTO, UserModel> userDtoToUserModelMapper,
+                            Mapper<ManagerRegistrationDataDTO, ManagerRegistrationDataModel>
+                                        managerRegistrationRequestDtoToModel) {
         this.signUpService = signUpService;
         this.managerRegistrationRequestDtoToModel = managerRegistrationRequestDtoToModel;
         this.userDtoToUserModelMapper = userDtoToUserModelMapper;

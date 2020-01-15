@@ -36,9 +36,9 @@ public class UserController {
     private final Mapper<UserInfoDTO, UserModel> userInfoDTOtoUserModelMapper;
 
     @Autowired
-    public UserController(IUserService userService, UserModelToUserInfoDTOMapper userModelToUserInfoDTOMapper,
-                          PasswordDTOtoUserModelMapper passwordDTOtoUserModelMapper,
-                          UserInfoDTOtoUserModelMapper userInfoDTOtoUserModelMapper){
+    public UserController(IUserService userService, Mapper<UserModel, UserInfoDTO> userModelToUserInfoDTOMapper,
+                          Mapper<PasswordDTO, UserModel> passwordDTOtoUserModelMapper,
+                          Mapper<UserInfoDTO, UserModel> userInfoDTOtoUserModelMapper){
         this.userService = userService;
         this.userModelToUserInfoDTOMapper = userModelToUserInfoDTOMapper;
         this.passwordDTOtoUserModelMapper = passwordDTOtoUserModelMapper;
