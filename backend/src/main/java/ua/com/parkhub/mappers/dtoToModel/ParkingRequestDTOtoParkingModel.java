@@ -8,6 +8,7 @@ import ua.com.parkhub.model.ParkingModel;
 
 @Component
 public class ParkingRequestDTOtoParkingModel implements Mapper<ParkingRequestDTO, ParkingModel> {
+
     @Override
     public ParkingModel transform(ParkingRequestDTO from) {
         if(from == null) {
@@ -24,5 +25,4 @@ public class ParkingRequestDTOtoParkingModel implements Mapper<ParkingRequestDTO
         parkingModel.setAddressModel(addressModel);
         return parkingModel;
     }
-
 }

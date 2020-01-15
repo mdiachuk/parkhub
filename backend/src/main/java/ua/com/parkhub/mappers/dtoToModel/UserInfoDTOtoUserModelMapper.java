@@ -5,14 +5,10 @@ import ua.com.parkhub.dto.UserInfoDTO;
 import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.CustomerModel;
 import ua.com.parkhub.model.UserModel;
+
 @Component
 public class UserInfoDTOtoUserModelMapper implements Mapper<UserInfoDTO, UserModel> {
 
-    private final CustomerDtoToCustomerModelMapper customerDtoToCustomerModelMapper;
-
-    public UserInfoDTOtoUserModelMapper(CustomerDtoToCustomerModelMapper customerDtoToCustomerModelMapper){
-        this.customerDtoToCustomerModelMapper = customerDtoToCustomerModelMapper;
-    }
     @Override
     public UserModel transform(UserInfoDTO from) {
         if(from == null) {

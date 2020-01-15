@@ -7,6 +7,7 @@ import ua.com.parkhub.model.PhoneEmailModel;
 
 @Component
 public class PhoneEmailDTOtoPhoneEmailMapper implements Mapper<PhoneEmailDTO, PhoneEmailModel> {
+
     @Override
     public PhoneEmailModel transform(PhoneEmailDTO from) {
         PhoneEmailModel phoneEmailModel = new PhoneEmailModel();
@@ -14,5 +15,4 @@ public class PhoneEmailDTOtoPhoneEmailMapper implements Mapper<PhoneEmailDTO, Ph
         phoneEmailModel.setPhoneNumber(from.getPhoneNumber());
         return phoneEmailModel;
     }
-
 }

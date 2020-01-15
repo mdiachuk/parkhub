@@ -8,6 +8,7 @@ import ua.com.parkhub.model.ParkingModel;
 
 @Component
 public class ParkingRequestDtoToModelMapper implements Mapper<ParkingUpdateRequestDTO, ParkingModel> {
+
     @Override
     public ParkingModel transform(ParkingUpdateRequestDTO from) {
         ParkingModel parkingModel = new ParkingModel();
