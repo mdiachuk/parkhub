@@ -3,16 +3,18 @@ package ua.com.parkhub.mappers.entityToModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.com.parkhub.mappers.Mapper;
+import ua.com.parkhub.model.BookingModel;
 import ua.com.parkhub.model.PaymentModel;
+import ua.com.parkhub.persistence.entities.Booking;
 import ua.com.parkhub.persistence.entities.Payment;
 
 @Component
 public class PaymentEntityToModelMapper implements Mapper<Payment, PaymentModel> {
 
-    BookingEntityToModelMapper bookingEntityToModelMapper;
+    private Mapper<Booking, BookingModel> bookingEntityToModelMapper;
 
     @Autowired
-    public PaymentEntityToModelMapper(BookingEntityToModelMapper bookingEntityToModelMapper) {
+    public PaymentEntityToModelMapper(Mapper<Booking, BookingModel> bookingEntityToModelMapper) {
         this.bookingEntityToModelMapper = bookingEntityToModelMapper;
     }
 

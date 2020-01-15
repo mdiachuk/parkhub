@@ -7,6 +7,7 @@ import ua.com.parkhub.persistence.entities.Address;
 
 @Component
 public class AddressEntityToModelMapper implements Mapper<Address, AddressModel> {
+
     @Override
     public AddressModel transform(Address from) {
         if(from == null) {
