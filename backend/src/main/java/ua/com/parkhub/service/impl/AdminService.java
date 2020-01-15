@@ -15,6 +15,7 @@ import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.persistence.impl.SupportTicketDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
 import ua.com.parkhub.persistence.impl.UserRoleDAO;
+import ua.com.parkhub.service.IAdminService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class AdminService  {
+public class AdminService implements IAdminService {
     final int LIST_ADJUSTER_START = 1;
     final int LIST_ADJUSTER_FINISH = 6;
     private UserDAO userDAO;
@@ -48,7 +49,7 @@ public class AdminService  {
     }
 
     @Transactional
-    public void setRole(Long id){
+    public void setRole(long id){
         List<RoleModel> roleList = userRoleDAO.findAll().stream().filter(role -> role.getRoleName().equals(RoleDTO.MANAGER.toString())).collect(Collectors.toList());
         Optional<UserModel> targetOptionalUser = userDAO.findElementById(id);
         UserModel targetUser = targetOptionalUser.get();

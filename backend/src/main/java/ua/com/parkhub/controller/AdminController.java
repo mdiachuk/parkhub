@@ -7,17 +7,17 @@ import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.AdminDTO;
 import ua.com.parkhub.dto.AdminSupportTicketDTO;
 import ua.com.parkhub.dto.AdminTicketCounterDTO;
-import ua.com.parkhub.service.impl.AdminService;
+import ua.com.parkhub.service.IAdminService;
 
 import java.util.List;
 
 
 @RestController
 public class AdminController {
-    private AdminService adminService;
+    private IAdminService adminService;
 
     @Autowired
-    public AdminController(AdminService adminService) {
+    public AdminController(IAdminService adminService) {
         this.adminService = adminService;
     }
 
