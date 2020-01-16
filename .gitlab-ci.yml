@@ -1,4 +1,4 @@
-image: maven:3-jdk-8
+image: maven:latest
 
 services:
   - postgres:latest
@@ -8,30 +8,17 @@ stages:
   - test
   - deploy
 
-before_script:
-  - chmod +x mvnw
-
 unit_test:
   stage: test
   script:
+    - cd backend
     - mvn clean test -B
 
-.build: &build_template
+build:
   stage: build
   script:
-    - mvn package -B
-
-develop_build:
-  <<: *build_template
-  only:
-    - branches
-  except:
-    - master
-    - dev
-  artifacts:
-    expire_in: 1 day
-    paths:
-      - target/*.jar
+    - cd backend
+    - mvn package -B -Dmaven.test.skip=true -P release
 
 production:
   stage: deploy

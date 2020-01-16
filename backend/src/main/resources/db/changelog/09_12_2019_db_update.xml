@@ -5,8 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
-    <changeSet id="2" author="Alex Syrin">
-        <validCheckSum>8:758a2fad17494013a36b3bb3c444b4c1</validCheckSum>
+    <changeSet id="1" author="Alex Syrin">
         <sqlFile path="classpath:/db/changelog/sqlFile/sql_script_for_db_update_v3.sql"/>
     </changeSet>
 </databaseChangeLog>

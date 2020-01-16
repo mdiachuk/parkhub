@@ -1,4 +1,36 @@
-<ul class="parking">
+<div class="date-container">
+  <section>
+    <h3>{{'Please, select preferred time' | translate}}</h3>
+    <form [formGroup]="bookingTimeForm" (submit)="saveReactive()">
+      <mat-label>
+        {{'From:' | translate}}
+        <input [min]="minFrom" [max]="maxFrom"
+               [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1"
+               [formControl]="rangeFrom" required>
+        <owl-date-time [startAt]="minFrom" #dt1></owl-date-time>
+        <br>
+        <mat-error *ngIf="rangeFrom.invalid && (rangeFrom.dirty || rangeFrom.touched)">{{isErrorRangeFrom()}}</mat-error>
+      </mat-label>
+      <br>
+      <br>
+      <mat-label>
+        {{'To:' | translate}}
+        <input [min]="minTo" [max]="maxTo"
+               [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2"
+               [formControl]="rangeTo" required>
+        <owl-date-time [startAt]="minTo" #dt2></owl-date-time>
+        <br>
+        <mat-error *ngIf="rangeTo.invalid && (rangeTo.dirty || rangeTo.touched)">{{isErrorRangeTo()}}</mat-error>
+      </mat-label>
+      <br>
+      <br>
+      <button type="submit" mat-raised-button color="primary">{{'Submit' | translate}}</button>
+    </form>
+  </section>
+</div>
+<br>
+<br>
+<div class="parking-container" fxLayoutAlign="center center">
   <div *ngIf="parking">
     <mat-card class="parking-card">
       <mat-card-header>
@@ -8,24 +40,26 @@
       </mat-card-header>
       <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Park Hub">
       <mat-card-content>
-        <p>Price per hour: {{parking.tariff}}</p>
+        <h3>{{'Please, select available slot. Price per hour:' | translate}} {{parking.tariff}}</h3>
         <mat-chip-list aria-label="Slot selection">
-          <li *ngFor="let slot of parking.slots">
+          <mat-chip *ngFor="let slot of parking.slots">
             <div *ngIf="slot.reserved || !slot.active">
-              <mat-chip color="accent" disabled>{{slot.slotNumber}} </mat-chip>
+              <mat-chip color="primary" disabled>{{slot.slotNumber}} </mat-chip>
             </div>
-            <div *ngIf="!slot.reserved">
-              <a [routerLink]="['/booking']" [queryParams]="{slot: slot.id}">
+            <a [routerLink]="['/booking']" [queryParams]="{slot: slot.id, rangeFrom: rangeFrom.value.getTime(), rangeTo: rangeTo.value.getTime(), tariff: parking.tariff}">
+              <div *ngIf="!slot.reserved && slot.active">
                 <mat-chip color="primary" selected>{{slot.slotNumber}} </mat-chip>
-              </a>
-            </div>
-          </li>
+              </div>
+            </a>
+          </mat-chip>
         </mat-chip-list>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button>LIKE</button>
-        <button mat-button>SHARE</button>
+        <button mat-button>{{'LIKE' | translate}}</button>
+        <button mat-button>{{'SHARE' | translate}}</button>
       </mat-card-actions>
     </mat-card>
   </div>
-</ul>
+</div>
+
+

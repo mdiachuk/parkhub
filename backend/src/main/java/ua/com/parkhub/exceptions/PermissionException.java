@@ -1,9 +1,8 @@
 package ua.com.parkhub.exceptions;
 
-/**
- * Created by Miha on 17.11.2017.
- */
 public class PermissionException extends RuntimeException{
+
+    private StatusCode statusCode;
 
     public PermissionException() {
         super();
@@ -11,5 +10,13 @@ public class PermissionException extends RuntimeException{
 
     public PermissionException(String message) {
         super(message);
+    }
+
+    public PermissionException(StatusCode statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public int getStatusCode() {
+        return statusCode.getCode();
     }
 }

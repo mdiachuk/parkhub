@@ -1,0 +1,62 @@
+<div class="date-container"> 
+  <section>
+      <form [formGroup]="bookingTimeForm" (submit)="saveReactive()">
+          <label>
+              Date Time Range From:
+              <input [min]="minFrom" [max]="maxFrom"
+              [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1"
+              [formControl]="rangeFrom" required>
+              <owl-date-time [startAt]="minFrom" #dt1></owl-date-time>
+              <br>
+              <mat-error *ngIf="rangeFrom.invalid && (rangeFrom.dirty || rangeFrom.touched)">{{isErrorRangeFrom()}}</mat-error>
+          </label>
+          <br>
+          <br>
+          <label>
+              Date Time Range To:
+              <input [min]="minTo" [max]="maxTo"
+              [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2"
+              [formControl]="rangeTo" required>
+              <owl-date-time [startAt]="minTo" #dt2></owl-date-time>
+              <br>
+              <mat-error *ngIf="rangeTo.invalid && (rangeTo.dirty || rangeTo.touched)">{{isErrorRangeTo()}}</mat-error>
+          </label>
+          <br>
+          <br>
+          <button type="submit" mat-raised-button color="primary">Submit</button>
+      </form>
+</section>
+</div>
+<div class="parking">
+<div *ngIf="parking">
+  <mat-card class="parking-card">
+    <mat-card-header>
+      <div mat-card-avatar class="parking-header-image"></div>
+      <mat-card-title>{{parking.name}}</mat-card-title>
+      <mat-card-subtitle>{{parking.address}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Park Hub">
+    <mat-card-content>
+      <p>Price per hour: {{parking.tariff}}</p>
+      <mat-chip-list aria-label="Slot selection">
+        <li *ngFor="let slot of parking.slots">
+            <div *ngIf="slot.reserved || !slot.active">
+              <mat-chip color="accent" disabled>{{slot.slotNumber}} </mat-chip>
+            </div>
+            <a [routerLink]="['/booking']" [queryParams]="{slot: slot.id, rangeFrom: rangeFrom.value.getTime(), rangeTo: rangeTo.value.getTime(), tariff: parking.tariff}">
+            <div *ngIf="!slot.reserved && slot.active">
+              <mat-chip color="primary" selected>{{slot.slotNumber}} </mat-chip>
+            </div>
+          </a>
+        </li>
+      </mat-chip-list>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button>LIKE</button>
+      <button mat-button>SHARE</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+</div>
+
+  

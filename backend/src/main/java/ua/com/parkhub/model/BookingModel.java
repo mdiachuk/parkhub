@@ -1,25 +1,25 @@
 package ua.com.parkhub.model;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 public class BookingModel {
 
     private Long id;
-    private CustomerModel customer;
     private String carNumber;
-    private SlotModel slot;
     private LocalDateTime checkIn;
     private LocalDateTime checkOut;
     private boolean isActive;
+    private CustomerModel customer;
+    private SlotModel slot;
+
+    public void setCustomer(CustomerModel customer) {
+        this.customer = customer;
+    }
 
     public CustomerModel getCustomer() {
         return customer;
     }
 
-    public void setCustomer(CustomerModel customer) {
-        this.customer = customer;
-    }
 
     public SlotModel getSlot() {
         return slot;
@@ -69,13 +69,16 @@ public class BookingModel {
         isActive = active;
     }
 
-    public int countPrice() {
-        if (checkOut != null) {
-            int hours = (int) ChronoUnit.HOURS.between(checkIn, checkOut);
-            int tariff = slot.getParking().getTariff();
-            return hours * tariff;
-        } else {
-            return 0;
-        }
+    @Override
+    public String toString() {
+        return "BookingModel{" +
+                "id=" + id +
+                ", carNumber='" + carNumber + '\'' +
+                ", checkIn=" + checkIn +
+                ", checkOut=" + checkOut +
+                ", isActive=" + isActive +
+                ", customer=" + customer +
+                ", slot=" + slot +
+                '}';
     }
 }

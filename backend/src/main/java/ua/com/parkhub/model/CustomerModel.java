@@ -1,13 +1,10 @@
 package ua.com.parkhub.model;
 
-import java.util.Set;
-
 public class CustomerModel {
 
     private Long id;
     private String phoneNumber;
     private boolean isActive = true;
-    private Set<SupportTicketModel> supportTickets;
 
     public Long getId() {
         return id;
@@ -31,13 +28,5 @@ public class CustomerModel {
 
     public void setActive(boolean active) {
         isActive = active;
-    }
-
-    public Set<SupportTicketModel> getSupportTickets() {
-        return supportTickets;
-    }
-
-    public void setSupportTickets(Set<SupportTicketModel> supportTickets) {
-        this.supportTickets = supportTickets;
     }
 }

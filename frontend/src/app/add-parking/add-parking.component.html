@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <span class="fill-remaining-space">Add parking</span>
+  <span class="fill-remaining-space">{{'Add parking' | translate}}</span>
 </mat-toolbar>
 
 
@@ -7,28 +7,28 @@
   <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form">
 
     <mat-form-field class="form-element">
-      <input matInput placeholder="Parking name" formControlName="parkingName">
+      <input matInput [placeholder]="'addParkingNamePlaceholder.value' | translate" formControlName="parkingName">
       <mat-error *ngIf="!formGroup.controls['parkingName'].valid && formGroup.controls['parkingName'].touched">
         {{ getErrorParkingName() }}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field class="form-element">
-      <input type="number" matInput placeholder="Number of slots" formControlName="slotsNumber">
+      <input type="number" matInput [placeholder]="'addParkingSlotsNumberPlaceholder.value' | translate" formControlName="slotsNumber">
       <mat-error *ngIf="!formGroup.controls['slotsNumber'].valid && formGroup.controls['slotsNumber'].touched">
         {{ getErrorSlotsNumber() }}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field class="form-element">
-      <input type="number" matInput placeholder="Tariff" formControlName="tariff">
+      <input type="number" matInput [placeholder]="'addParkingTariffPlaceholder.value' | translate" formControlName="tariff">
       <mat-error *ngIf="!formGroup.controls['tariff'].valid && formGroup.controls['tariff'].touched">
         {{ getErrorTariff() }}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>City</mat-label>
+      <mat-label>{{'City' | translate}}</mat-label>
       <mat-select [(value)]="selected" formControlName="city">
         <mat-option [value]="cityArray" *ngFor="let cityArray of CityArray">{{cityArray}}
         </mat-option>
@@ -39,24 +39,24 @@
     </mat-form-field>
 
     <mat-form-field class="form-element">
-      <input matInput placeholder="Street" formControlName="street">
+      <input matInput [placeholder]="'addParkingStreetPlaceholder.value' | translate" formControlName="street">
       <mat-error *ngIf="!formGroup.controls['street'].valid && formGroup.controls['street'].touched">
         {{ getErrorStreet() }}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field class="form-element">
-      <input matInput placeholder="Building" formControlName="building">
+      <input matInput [placeholder]="'addParkingBuildingPlaceholder.value' | translate" formControlName="building">
       <mat-error *ngIf="!formGroup.controls['building'].valid && formGroup.controls['building'].touched">
         {{ getErrorBuilding() }}
       </mat-error>
     </mat-form-field>
 
     <div class="form-element">
-      <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!formGroup.valid">Add parking</button>
+      <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!formGroup.valid">{{'Add parking' | translate}}</button>
       <a mat-button color="primary" type="submit"
-         class="button-row" [routerLink]='["/manager/cabinet"]'>Go to cabinet of Manager</a>
+         class="button-row" [routerLink]='["/manager/cabinet"]'>{{'Go to Parking owner cabinet' | translate}}</a>
     </div>
   </form>
-  </div>
+</div>
 

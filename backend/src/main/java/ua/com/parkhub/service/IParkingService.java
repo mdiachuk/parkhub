@@ -1,11 +1,20 @@
 package ua.com.parkhub.service;
 
-import ua.com.parkhub.model.Parking;
+import ua.com.parkhub.model.AddressModel;
+import ua.com.parkhub.model.ParkingModel;
 
 import java.util.List;
 
+
 public interface IParkingService {
 
-    Parking findParkingByIdWithSlotList(long id);
-    List<Parking> findAllParking();
+    List<ParkingModel> findAllParking();
+    ParkingModel findParkingByIdWithSlotList(long id);
+    ParkingModel findParkingByIdWithSlotListAndDateRange(long id, long checkIn, long checkOut);
+    List<ParkingModel> findParkingInArea(String address);
+    boolean isParkingNameUnique(ParkingModel parkingRequestModel);
+    boolean checkIfAddressIsUnique(ParkingModel parkingRequestModel);
+    void createParkingByOwnerID(ParkingModel parkingModel, long id);
+    AddressModel setLatLan(AddressModel addressModel);
+
 }

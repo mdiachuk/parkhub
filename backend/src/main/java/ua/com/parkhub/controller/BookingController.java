@@ -1,24 +1,31 @@
 package ua.com.parkhub.controller;
 
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.com.parkhub.dto.BookingDTO;
-import ua.com.parkhub.dto.BookingFormDTO;
-import ua.com.parkhub.dto.ParkingWithSlotsDTO;
+import ua.com.parkhub.dto.*;
+import ua.com.parkhub.exceptions.BookingException;
+import ua.com.parkhub.exceptions.CustomerException;
 import ua.com.parkhub.exceptions.ParkHubException;
-import ua.com.parkhub.exceptions.ParkingNotFoundException;
-import ua.com.parkhub.model.Booking;
-import ua.com.parkhub.model.Parking;
+import ua.com.parkhub.exceptions.ParkingException;
+import ua.com.parkhub.mappers.modelToDto.ParkingWithSlotsModelToDTOMapper;
+import ua.com.parkhub.mappers.modelToDto.PaymentModelToDTOMapper;
+import ua.com.parkhub.model.ParkingModel;
+import ua.com.parkhub.model.PaymentModel;
 import ua.com.parkhub.service.IBookingService;
 import ua.com.parkhub.service.IParkingService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
+//TODO Validation: parkId, slotId, car number, phone number
+
+//TODO Validation: parkId, slotId, car number, phone number
 
 //TODO Validation: parkId, slotId, car number, phone number
 
@@ -28,44 +35,64 @@ public class BookingController {
 
     private final IParkingService parkingService;
     private final IBookingService bookingService;
-    private final ModelMapper mapper;
+    private final ParkingWithSlotsModelToDTOMapper parkingWithSlotsModelToDTOMapper;
+    private final PaymentModelToDTOMapper paymentModelToDTOMapper;
+    //TODO @Min annotation add for rangeFrom and rangeTo validation
+    public static final long NOW = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
+    public static final long NOW_PLUS_HOUR = LocalDateTime.now().plusHours(1).toEpochSecond(ZoneOffset.UTC);
 
     @Autowired
-    public BookingController(IParkingService parkingService, IBookingService bookingService, ModelMapper mapper) {
+    public BookingController(IParkingService parkingService, IBookingService bookingService, ParkingWithSlotsModelToDTOMapper parkingWithSlotsModelToDTOMapper,
+                             PaymentModelToDTOMapper paymentModelToDTOMapper) {
         this.parkingService = parkingService;
         this.bookingService = bookingService;
-        this.mapper = mapper;
+        this.parkingWithSlotsModelToDTOMapper = parkingWithSlotsModelToDTOMapper;
+        this.paymentModelToDTOMapper = paymentModelToDTOMapper;
     }
 
-    @GetMapping("/parkings/{id}")
+    @GetMapping("/api/parkings/{id}")
     //TODO implementation w.o. pagination just for small amount of slots! Will do in a next impl steps
-    public ResponseEntity<ParkingWithSlotsDTO> displayParking(@PathVariable(name = "id") @Positive Long id) {
+    public ResponseEntity<ParkingWithSlotsDTO> displayParking(@PathVariable(name = "id") @Positive @Min(1) Long id, @RequestParam @Positive Long rangeFrom,
+                                                              @RequestParam @Positive Long rangeTo) {
         try {
-            Parking parking = parkingService.findParkingByIdWithSlotList(id);
-            return ResponseEntity.ok(mapper.map(parking, ParkingWithSlotsDTO.class));
+            ParkingModel parking = parkingService.findParkingByIdWithSlotListAndDateRange(id, rangeFrom, rangeTo);
+            LOGGER.info("Request displayParking() successfully completed");
+            return ResponseEntity.ok(parkingWithSlotsModelToDTOMapper.transform(parking));
         } catch (ParkHubException e) {
             LOGGER.error(e.getMessage());
         }
-        throw ParkingNotFoundException.createWith(id);
+        throw ParkingException.createWith(id);
     }
 
-    @PostMapping("/booking")
+    @PostMapping("/api/booking")
     //TODO not idempotent operation! Will do some smart restrictions on booking amount per one phone number in a next impl steps
-    //TODO switch onto cyrillic after i18n impl
-    public ResponseEntity<BookingDTO> addBooking(@Valid @RequestBody BookingFormDTO bookingFormDTO/*, BindingResult result*/) {
-        //TODO to check after Angular material impl
-        /*if (result.hasErrors()) {
-            List<ObjectError> errors = result.getAllErrors().stream()
-                    .map(error -> new ObjectError(error.toString(), "is not appropriate"))
-                    .collect(Collectors.toList());
-            LOGGER.error("Validation errors: {}", errors);
-            throw AddBookingException.createWith(errors);
-        }*/
+    public ResponseEntity<PaymentDTO> addBooking(@Valid @RequestBody BookingFormDTO bookingFormDTO) {
         String carNumber = bookingFormDTO.getCarNumber();
         String phoneNumber = bookingFormDTO.getPhoneNumber();
         Long slotId = bookingFormDTO.getSlotId();
-        Booking booking = bookingService.addBooking(carNumber, phoneNumber, slotId);
-        BookingDTO bookingDTO = mapper.map(booking, BookingDTO.class);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        Long checkIn = bookingFormDTO.getRangeFrom();
+        Long checkOut = bookingFormDTO.getRangeTo();
+        Integer tariff = bookingFormDTO.getTariff();
+        PaymentModel payment = bookingService.addBooking(carNumber, phoneNumber, slotId, checkIn, checkOut, tariff);
+        LOGGER.info("Request addBooking() successfully completed");
+        return ResponseEntity.ok(paymentModelToDTOMapper.transform(payment));
+    }
+
+    @PostMapping(value = "/api/cancel")
+    public ResponseEntity<PaymentResponseDTO> getPhoneNumber(@RequestBody PhoneNumberDTO phoneNumber) {
+        PaymentResponseDTO paymentResponseDTO = new PaymentResponseDTO();
+        int price = bookingService.findPrice(phoneNumber.getPhoneNumber());
+        paymentResponseDTO.setPrice(price);
+        return ResponseEntity.ok(paymentResponseDTO);
+    }
+
+    @ExceptionHandler(BookingException.class)
+    public ResponseEntity handleBookingException(BookingException e) {
+        return ResponseEntity.badRequest().body(e.getStatusCode());
+    }
+
+    @ExceptionHandler(CustomerException.class)
+    public ResponseEntity handleCustomerException(CustomerException e) {
+        return ResponseEntity.badRequest().body(e.getStatusCode());
     }
 }

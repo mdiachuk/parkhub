@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 
 import { Observable, empty } from 'rxjs';
 import {DataSource} from '@angular/cdk/collections';
-import { Parking } from '../models/parking.model';
-import { ParkingService1 } from '../services/parking.service';
+import { ParkingModel } from '../model/parking.model';
+import { ParkingService1 } from '../service/parking.service';
 
 
 
@@ -15,34 +15,55 @@ import { ParkingService1 } from '../services/parking.service';
 
 })
 
-export class ParkingListComponent implements OnInit {
+export class ParkingListComponent implements OnInit, OnChanges {
 
-  parkings: Parking[];
+  private _search: string;
+
+
+
+  @Input()
+  set search(val: string) {
+    this._search = val;
+  }
+
+  get search(): string {
+    return this._search;
+  }
+
+  parkings: ParkingModel[];
   dataSource = new ParkingDataSource(this.parkingService);
   displayedColumns = ['parkingName','address', 'tariff', 'fullness'];
 
   constructor(private parkingService: ParkingService1) {
 
 
-   }
+  }
 
   ngOnInit() {}
 
+
+  ngOnChanges(changes: SimpleChanges) {
+    const currentItem: SimpleChange = changes.search.currentValue;
+    if (typeof currentItem === 'string')
+      this.dataSource = new ParkingDataSource(this.parkingService, currentItem);
+  }
 }
 
 export class ParkingDataSource extends DataSource<any> {
 
-  constructor(private parkingService: ParkingService1) {
+  constructor(private parkingService: ParkingService1, private search?: string) {
     super();
   }
 
-  connect(): Observable<Parking[]> {
+  connect(): Observable<ParkingModel[]> {
+    console.log(this.search)
+    return this.parkingService.getparking(this.search);
+  }
 
-  return this.parkingService.getparking();
 
-}
+
   disconnect() {
 
   }
 
- }
+}

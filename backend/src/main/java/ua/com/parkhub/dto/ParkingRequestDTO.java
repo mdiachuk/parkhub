@@ -14,13 +14,14 @@ import javax.validation.constraints.Pattern;
         "tariff",
         "city",
         "street",
-        "building"
+        "building",
+        "id"
 
 })
 public class ParkingRequestDTO {
 
     @NotNull(message = "Name of parking must not be null")
-    @Pattern(regexp="^[a-zA-Z 0-9-]+$", message="Invalid name of parking")
+    @Pattern(regexp="^[a-zA-ZА-Яа-яйєї 0-9-]+$", message="Invalid name of parking")
     @JsonProperty("parkingName")
     private String parkingName;
 
@@ -33,20 +34,22 @@ public class ParkingRequestDTO {
     private int tariff;
 
     @NotNull(message = "Name of city must not be null")
-    @Pattern(regexp="^([a-zA-Z -]+)$", message="Invalid name of city")
     @JsonProperty("city")
     private String city;
 
     @NotNull(message = "Name of street must not be null")
-    @Pattern(regexp="^([a-zA-Z -]+)$", message="Invalid name of street")
+    @Pattern(regexp="^([a-zA-ZА-Яа-яйєї -]+)$", message="Invalid name of street")
     @JsonProperty("street")
     private String street;
 
-    @NotNull@NotNull(message = "Name of building must not be null")
-    @Pattern(regexp="^([a-zA-Z 0-9-]+)$", message="Invalid number of building")
+    @NotNull(message = "Name of building must not be null")
+    @Pattern(regexp="^([a-zA-ZА-Яа-яйєї 0-9-]+)$", message="Invalid number of building")
     @JsonProperty("building")
     private String building;
 
+    @NotNull
+    @JsonProperty("id")
+    private Long id;
     public String getParkingName() {
         return parkingName;
     }
@@ -93,5 +96,13 @@ public class ParkingRequestDTO {
 
     public void setBuilding(String building) {
         this.building = building;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
