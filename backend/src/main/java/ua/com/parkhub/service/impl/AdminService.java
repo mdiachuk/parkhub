@@ -9,9 +9,11 @@ import ua.com.parkhub.dto.RoleDTO;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.mappers.modelToDto.TicketSupportModelToAdminSupportTicketDTO;
 
+import ua.com.parkhub.model.SupportTicketTypeModel;
 import ua.com.parkhub.model.enums.RoleModel;
 import ua.com.parkhub.model.SupportTicketModel;
 import ua.com.parkhub.model.UserModel;
+import ua.com.parkhub.model.enums.TicketTypeModel;
 import ua.com.parkhub.persistence.impl.SupportTicketDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
 import ua.com.parkhub.persistence.impl.UserRoleDAO;
@@ -84,6 +86,11 @@ public class AdminService implements IAdminService {
         return array[0] + " " + array[1] + " " + "...";
     }
 
+    public long ticketParser(String incomingString){
+        String[]array = incomingString.split(" ");
+        return Integer.parseInt(array[1]);
+    }
+
     public AdminSupportTicketDTO getSingleTicketById(long id){
         Optional<SupportTicketModel> targetSupportTicket = supportTicketDAO.findElementById(id);
         return targetSupportTicket.map( target -> {
@@ -91,6 +98,10 @@ public class AdminService implements IAdminService {
             adminSupportTicketDTO.setId(target.getId());
             adminSupportTicketDTO.setDescription(target.getDescription());
             adminSupportTicketDTO.setSupportTicketType(target.getType().getValue());
+            if (adminSupportTicketDTO.getSupportTicketType().equals(TicketTypeModel.MANAGER_REGISTRATION_REQUEST.getValue())){
+                adminSupportTicketDTO.setTargetManagerId(ticketParser(target.getDescription()));
+            }else
+                adminSupportTicketDTO.setTargetManagerId(0);
             adminSupportTicketDTO.setSolved(target.isSolved());
             return adminSupportTicketDTO;
         }).orElseGet(AdminSupportTicketDTO::new);
@@ -102,5 +113,4 @@ public class AdminService implements IAdminService {
         targetAdminTicketCounterDTO.setAdminTicketCounter(ticketCounter);
         return targetAdminTicketCounterDTO;
     }
-
 }
