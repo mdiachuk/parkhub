@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 
 import {FormBuilder} from '@angular/forms';
 import {DataService} from '../DataService/data.service';
-import {LoginService} from '../services/login.service';
+import {LoginService} from '../service/login.service';
 import {MatSnackBar} from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
 

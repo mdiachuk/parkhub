@@ -1,4 +1,4 @@
-export interface Parking {
+export interface ParkingModel {
     id: number;
     parking_name: string;
     address_id: string;

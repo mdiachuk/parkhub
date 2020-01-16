@@ -4,6 +4,7 @@ import { MessageService } from './message.service';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Parking } from '../interfaces/parking';
+import { ParkingModel} from '../model/parking.model';
 import { FormGroup, FormControl } from '@angular/forms';
 
 @Injectable({
@@ -87,3 +88,27 @@ export class ParkingService {
    }
   }
 
+  
+  @Injectable()
+  export class ParkingService1 {
+  
+    private serviceUrl =  'api/home';
+  
+    constructor(private http: HttpClient) { }
+  
+    getparking(search?: string): Observable<ParkingModel[]> {
+  
+      let options = {};
+      if (search && (search !== "")) {
+        options = { params: {
+            address: search
+          } };
+      }
+      return this.http.get<ParkingModel[]>(this.serviceUrl, options);
+  
+  
+    }
+  
+  }
+  
+  

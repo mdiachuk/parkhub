@@ -1,10 +1,5 @@
 package ua.com.parkhub.dto;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import ua.com.parkhub.service.impl.AdminService;
-
-@Service
 public class AdminDTO {
 
     private long id;

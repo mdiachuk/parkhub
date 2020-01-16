@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { Parking } from './parking';
+import { Parking } from '../add-parking/parking';
 import { Router } from '@angular/router';
 
 @Injectable({

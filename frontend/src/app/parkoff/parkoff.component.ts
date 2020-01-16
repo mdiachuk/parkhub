@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../api.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
-import {PhoneNumber} from '../phoneNumber';
+import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
+import { PhoneNumber } from './phoneNumber';
 import {TranslateService} from '@ngx-translate/core';
+import { ApiService } from '../service/api.service';
 
 @Component({
   selector: 'app-parkoff',

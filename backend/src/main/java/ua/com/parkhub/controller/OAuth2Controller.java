@@ -13,8 +13,9 @@ import ua.com.parkhub.mappers.dtoToModel.AuthUserDTOtoAuthUserModelMapper;
 import ua.com.parkhub.mappers.dtoToModel.PhoneEmailDTOtoPhoneEmailMapper;
 import ua.com.parkhub.model.AuthUserModel;
 import ua.com.parkhub.model.PhoneEmailModel;
+import ua.com.parkhub.model.UserModel;
+import ua.com.parkhub.security.JwtUtil;
 import ua.com.parkhub.service.ISignUpService;
-import ua.com.parkhub.service.impl.SignUpService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -29,15 +30,17 @@ public class OAuth2Controller {
     private String frontUrl;
 
     private final ISignUpService signUpService;
+    private JwtUtil jwtUtil;
     private AuthUserDTOtoAuthUserModelMapper authUserDTOtoAuthUserModelMapper;
     private PhoneEmailDTOtoPhoneEmailMapper phoneEmailDTOtoPhoneEmailMapper;
 
 
     @Autowired
-    public OAuth2Controller(ISignUpService signUpService, AuthUserDTOtoAuthUserModelMapper Mapper, PhoneEmailDTOtoPhoneEmailMapper phoneEmailDTOtoPhoneEmailMapper) {
+    public OAuth2Controller(ISignUpService signUpService, AuthUserDTOtoAuthUserModelMapper Mapper, PhoneEmailDTOtoPhoneEmailMapper phoneEmailDTOtoPhoneEmailMapper,JwtUtil jwtUtil) {
         this.signUpService = signUpService;
         this.authUserDTOtoAuthUserModelMapper = Mapper;
         this.phoneEmailDTOtoPhoneEmailMapper = phoneEmailDTOtoPhoneEmailMapper;
+        this.jwtUtil = jwtUtil;
     }
 
     @RequestMapping("/api/oauthSuccess")
@@ -59,10 +62,15 @@ public class OAuth2Controller {
             response.sendRedirect(frontUrl+"/phone-number?email="+email);
         }
         else{
+            UserModel userModel = signUpService.findUserbyEmail(email);
+            String token = jwtUtil.generateToken(userModel.getEmail(),userModel.getRole().getRoleName(), userModel.getId());
+            String value = "TOKEN=";
+            String value1 = value + token;
+            String value2 =value1 +"; Max-Age=604800; Path=/";
+            response.setHeader("Set-Cookie",value2);
             response.sendRedirect(frontUrl+"/home");
         }
 
-        //TODO : add jwt
     }
 
 

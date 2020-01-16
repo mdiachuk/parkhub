@@ -178,4 +178,9 @@ public class SignUpService implements ISignUpService {
     public boolean isNumberUnique(String phoneNumber) {
         return customerDAO.findManyByFieldEqual("phoneNumber",phoneNumber).isEmpty();
     }
+
+    @Override
+    public UserModel findUserbyEmail(String email) {
+        return userDAO.findOneByFieldEqual("email", email).get();
+    }
 }

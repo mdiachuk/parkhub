@@ -15,9 +15,6 @@ import ua.com.parkhub.exceptions.InvalidTokenException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PasswordException;
 import ua.com.parkhub.mappers.Mapper;
-import ua.com.parkhub.mappers.dtoToModel.PasswordDTOtoUserModelMapper;
-import ua.com.parkhub.mappers.dtoToModel.UserInfoDTOtoUserModelMapper;
-import ua.com.parkhub.mappers.modelToDto.UserModelToUserInfoDTOMapper;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.service.IUserService;
 

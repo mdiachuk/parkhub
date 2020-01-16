@@ -1,5 +1,5 @@
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
-import {LoginService} from '../services/login.service';
+import {LoginService} from '../service/login.service';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import 'rxjs/add/operator/do';

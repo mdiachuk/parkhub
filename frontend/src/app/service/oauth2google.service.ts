@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
-import { PhoneNumber } from '../phoneNumber';
+import { PhoneNumberEmail } from '../add-phone-number/PhoneNumberEmail';
 
 
 @Injectable({
@@ -15,9 +15,9 @@ export class Oauth2googleService {
     this.customerUrl = 'api/customer';
    }
 
-   public save(parking: PhoneNumber) : Observable<PhoneNumber>  {
+   public save(parking: PhoneNumberEmail) : Observable<PhoneNumberEmail>  {
     console.log("service", parking, this.customerUrl)
-   return this.http.put<PhoneNumber>(this.customerUrl, parking);
+   return this.http.put<PhoneNumberEmail>(this.customerUrl, parking);
    //this.router.navigate(['login'], { queryParams: { returnUrl: this.parkingUrl }});
  }
 

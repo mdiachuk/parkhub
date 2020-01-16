@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Parking } from '../models/parking.model';
+import { ParkingModel } from '../model/parking.model';
 import { Router } from '@angular/router';
 import { Manager } from '../model/manager';
 import { Admin } from '../Classes/admin';
@@ -9,6 +9,7 @@ import {UserInfo} from '../interfaces/userInfo';
 // import {User} from '../interfaces/user';
 import { Login } from '../interfaces/login';
 import * as jwt_decode from 'jwt-decode';
+import { userRole } from '../model/userRole';
 
 export class User {
   constructor(
@@ -121,9 +122,9 @@ export class ParkingService {
   ) {
   }
 
-  getparking(): Observable<Parking[]> {
+  getparking(): Observable<ParkingModel[]> {
 
-    return this.http.get<Parking[]>(this.serviceUrl);
+    return this.http.get<ParkingModel[]>(this.serviceUrl);
 
   }
 
@@ -140,8 +141,8 @@ export class ParkingServiceService {
     this.parkingUrl = 'manager/parking';
   }
 
-  public save(parking: Parking): Observable<Parking> {
-    return this.http.post<Parking>(this.parkingUrl, parking);
+  public save(parking: ParkingModel): Observable<ParkingModel> {
+    return this.http.post<ParkingModel>(this.parkingUrl, parking);
     // this.router.navigate(['login'], { queryParams: { returnUrl: this.parkingUrl }});
   }
 }
@@ -184,6 +185,7 @@ export class AdminService {
 export class UserService {
 
   private decoded: UserInfo;
+  private decodedROLE: userRole;
 
   constructor(private http: HttpClient) {
 
@@ -206,6 +208,16 @@ export class UserService {
   }
   PostDataPassword(userPass: UserPassword) {
     return this.http.post('/api/user/password/' + this.getUserID(), userPass);
+  }
+
+  getUserROLE(): string {
+    const token = localStorage.getItem('TOKEN');
+    if (token) {
+     this.decodedROLE = jwt_decode(token);
+     return this.decodedROLE.role.toString();
+    } else {
+      return '';
+    }
   }
 
 }

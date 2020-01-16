@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     OAuth2ClientContext oauth2ClientContext;
 
     @Bean
-    public FilterRegistrationBean<OAuth2ClientContextFilter> oauth2ClientFilterRegistration(OAuth2ClientContextFilter filter) {
+    public FilterRegistrationBean<OAuth2ClientContextFilter> registerOauth2ClientFilter(OAuth2ClientContextFilter filter) {
         FilterRegistrationBean<OAuth2ClientContextFilter> registration = new FilterRegistrationBean<OAuth2ClientContextFilter>();
         registration.setFilter(filter);
         registration.setOrder(-100);
@@ -49,24 +49,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     @ConfigurationProperties("google.client")
-    public AuthorizationCodeResourceDetails google() {
+    public AuthorizationCodeResourceDetails createGoogleResourceDetails() {
         return new AuthorizationCodeResourceDetails();
     }
 
     @Bean
     @ConfigurationProperties("google.resource")
-    public ResourceServerProperties googleResource() {
+    public ResourceServerProperties createGoogleResourceServerProperties() {
         return new ResourceServerProperties();
     }
 
-    private Filter ssoFilter() {
+    private Filter createSsoFilter() {
         OAuth2ClientAuthenticationProcessingFilter googleFilter = new OAuth2ClientAuthenticationProcessingFilter(
                 "/api/login/google");
-        OAuth2RestTemplate googleTemplate = new OAuth2RestTemplate(google(), oauth2ClientContext);
+        OAuth2RestTemplate googleTemplate = new OAuth2RestTemplate(createGoogleResourceDetails(), oauth2ClientContext);
         googleFilter.setRestTemplate(googleTemplate);
         googleFilter.setAuthenticationSuccessHandler(new SimpleUrlAuthenticationSuccessHandler("/api/oauthSuccess"));
-        UserInfoTokenServices tokenServices = new UserInfoTokenServices(googleResource().getUserInfoUri(),
-                google().getClientId());
+        UserInfoTokenServices tokenServices = new UserInfoTokenServices(createGoogleResourceServerProperties().getUserInfoUri(),
+                createGoogleResourceDetails().getClientId());
         tokenServices.setRestTemplate(googleTemplate);
         googleFilter.setTokenServices(tokenServices);
         SecurityContextHolder.getContext();
@@ -94,7 +94,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/login**", "/api/logout**", "/api/signup/manager", "/api/signup/user", "/api/user/password/reset", "/api/user/verify", "/api/user/token/**", "/api/home",
                         "/api/user/token/refresh", "/api/user/token","/api/signup/user", "/api/cancel", "/api/oauthJwtToken",
-                        "/api/login/google", "/api/parkings/{id}", "/api/booking").permitAll()
+                        "/api/login/google", "/api/parkings/{id}", "/api/booking","/api/oauthSuccess").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/admin/**").hasAnyRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/admin/**").hasAnyRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/admin/ticketlist").hasAnyRole("ADMIN")
@@ -112,7 +112,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                     .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterAfter(ssoFilter(), JwtAuthenticationFilter.class);
+                .addFilterAfter(createSsoFilter(), JwtAuthenticationFilter.class);
     }
 
 

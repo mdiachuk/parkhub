@@ -66,7 +66,7 @@ public class BookingController {
 
     @PostMapping("/api/booking")
     //TODO not idempotent operation! Will do some smart restrictions on booking amount per one phone number in a next impl steps
-    public ResponseEntity<PaymentDTO> addBooking(@Valid @RequestBody BookingFormDTO bookingFormDTO/*, BindingResult result*/) {
+    public ResponseEntity<PaymentDTO> addBooking(@Valid @RequestBody BookingFormDTO bookingFormDTO) {
         String carNumber = bookingFormDTO.getCarNumber();
         String phoneNumber = bookingFormDTO.getPhoneNumber();
         Long slotId = bookingFormDTO.getSlotId();
