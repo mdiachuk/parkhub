@@ -21,11 +21,11 @@ export class AdminTicketDetailViewerComponent implements OnInit {
     private adminService: AdminService) { }
 
   ngOnInit() {
-    this.ticket = new AdminTicketDetail;
     this.id = this.route.snapshot.params['id'];
-    this.adminTicketService.getSingleTicket(this.id).subscribe(response =>this.ticket = response);
-    
+    this.ticket = new AdminTicketDetail;
+    this.adminTicketService.getSingleTicket(this.id).subscribe(response =>this.ticket = response);  
   }
+
   backToAdminPage(){
     this.router.navigate(['admin']);
   }
@@ -35,6 +35,4 @@ export class AdminTicketDetailViewerComponent implements OnInit {
   updateUserRole(){
     this.adminService.updateRole(this.admin);
   }
-  
-
 }
