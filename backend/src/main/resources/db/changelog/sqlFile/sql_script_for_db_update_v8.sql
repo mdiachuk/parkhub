@@ -1,0 +1,1 @@
+ALTER TABLE park_hub.payment ADD COLUMN is_cancelled BOOLEAN NOT NULL DEFAULT FALSE;

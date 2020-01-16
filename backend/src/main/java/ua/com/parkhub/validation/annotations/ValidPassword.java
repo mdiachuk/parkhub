@@ -18,7 +18,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = PasswordValidator.class)
 public @interface ValidPassword {
 
-    String message() default "Invalid email";
+    String message() default "Invalid password";
 
     Class<?>[] groups() default {};
 

@@ -1,20 +1,19 @@
 <div>
-
     <mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="parkingName">
-        <mat-header-cell *matHeaderCellDef> Parking Name </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>{{'ParkingName' | translate}}</mat-header-cell>
         <mat-cell *matCellDef="let parking"><a href="/parkings/{{parking.id}}">  {{parking.parkingName}} </a></mat-cell>
       </ng-container>
       <ng-container matColumnDef="address">
-        <mat-header-cell *matHeaderCellDef> Address </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>{{'Address' | translate}} </mat-header-cell>
         <mat-cell *matCellDef="let parking"> {{parking.address}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="tariff">
-        <mat-header-cell *matHeaderCellDef> Tariff </mat-header-cell>
-        <mat-cell *matCellDef="let parking"> {{parking.tariff}} $</mat-cell>
+        <mat-header-cell *matHeaderCellDef> {{'Tariff' | translate}} </mat-header-cell>
+        <mat-cell *matCellDef="let parking"> {{parking.tariff}} {{'$' | translate}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="fullness">
-        <mat-header-cell *matHeaderCellDef> Fullness </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>{{'Fullness' | translate}} </mat-header-cell>
         <mat-cell *matCellDef="let parking"> {{parking.fullness}} </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

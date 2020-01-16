@@ -5,6 +5,7 @@ public class PaymentModel {
     private Long id;
     private int price;
     private boolean isPaid = false;
+    private boolean isCancelled;
     private BookingModel booking;
 
     public Long getId() {
@@ -29,6 +30,14 @@ public class PaymentModel {
 
     public void setPaid(boolean paid) {
         isPaid = paid;
+    }
+
+    public boolean isCancelled() {
+        return isCancelled;
+    }
+
+    public void setCancelled(boolean cancelled) {
+        isCancelled = cancelled;
     }
 
     public BookingModel getBooking() {

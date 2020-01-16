@@ -1,37 +1,39 @@
-<div class="booking-container"> 
-    <section>
-        <form [formGroup]="bookingForm" (submit)="saveReactive()">
-            <div>
-            <br>
-            <br>
-               
-                <mat-form-field>
-                    <input matInput type="text" formControlName="carNumber" placeholder="car number"/>
-                </mat-form-field>
-        </div>
-            <br>
-            <br>
-            <div>
-                <mat-form-field>
-                    <input matInput type="text" formControlName="phoneNumber" placeholder="phone number"/>
-                </mat-form-field>
-        </div>
-            <br>
-            <br>
-            <button type="submit" color="primary" mat-button (click)="openSnackBar()" aria-label="snack-bar">
-                Submit
-              </button>
-        </form>
-    </section>
+<div class="booking-container">
+  <h3>Please, insert your car number and phone number</h3>
+  <section>
+    <form [formGroup]="bookingForm" (submit)="saveReactive()">
+      <div>
+        <br>
+        <br>
+        <mat-form-field>
+          <input matInput [placeholder]="'Enter your car number' | translate" [formControl]="carNumber" required>
+          <mat-error *ngIf="carNumber.invalid">{{isErrorCarNumber()}}</mat-error>
+        </mat-form-field>
+      </div>
+      <br>
+      <br>
+      <div>
+        <mat-form-field>
+          <input matInput [placeholder]="'Enter your phone number' | translate" [formControl]="phoneNumber" required>
+          <mat-error *ngIf="phoneNumber.invalid">{{isErrorPhoneNumber()}}</mat-error>
+        </mat-form-field>
+      </div>
+      <br>
+      <br>
+      <button type="submit" color="primary" mat-raised-button aria-label="snack-bar">
+        {{'Submit' | translate}}
+      </button>
+    </form>
+  </section>
 </div>
 
 
-  
 
 
 
 
-  
+
+
 
 
 

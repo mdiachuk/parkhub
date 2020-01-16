@@ -55,4 +55,5 @@ public class UserRole implements Serializable {
         isActive = active;
     }
 
+
 }
