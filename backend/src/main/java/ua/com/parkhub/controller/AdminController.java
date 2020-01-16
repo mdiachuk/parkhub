@@ -1,6 +1,7 @@
 package ua.com.parkhub.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +24,8 @@ public class AdminController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/api/admin/{id}")
-    public AdminDTO getUserByID(@PathVariable("id")long id ){
-        return adminService.getUserById(id);
+    public ResponseEntity<AdminDTO> getUserByID(@PathVariable("id")long id ){
+        return ResponseEntity.ok(adminService.getUserById(id));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -36,19 +37,19 @@ public class AdminController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/api/admin/ticketlist")
-    public List<AdminSupportTicketDTO> getTicketList(){
-        return adminService.getTicketsList();
+    public ResponseEntity<List<AdminSupportTicketDTO>> getTicketList(){
+        return ResponseEntity.ok(adminService.getTicketsList());
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/api/admin/ticket/{id}")
-    public AdminSupportTicketDTO getTicketById(@PathVariable("id")long id){
-        return adminService.getSingleTicketById(id);
+    public ResponseEntity<AdminSupportTicketDTO> getTicketById(@PathVariable("id")long id){
+        return ResponseEntity.ok(adminService.getSingleTicketById(id));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/api/admin/ticketlistcounter")
-    public AdminTicketCounterDTO getTicketCounter(){
-        return adminService.getTicketCounter();
+    public ResponseEntity<AdminTicketCounterDTO> getTicketCounter(){
+        return ResponseEntity.ok(adminService.getTicketCounter());
     }
 }
