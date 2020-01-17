@@ -9,10 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.exceptions.ParkingDoesntExistException;
 import ua.com.parkhub.exceptions.StatusCode;
-import ua.com.parkhub.model.AddressModel;
-import ua.com.parkhub.model.BookingModel;
-import ua.com.parkhub.model.ParkingModel;
-import ua.com.parkhub.model.SlotModel;
+import ua.com.parkhub.model.*;
 import ua.com.parkhub.model.comparator.SlotComparator;
 import ua.com.parkhub.persistence.impl.AddressDAO;
 import ua.com.parkhub.persistence.impl.ParkingDAO;
@@ -20,11 +17,9 @@ import ua.com.parkhub.persistence.impl.UserDAO;
 import ua.com.parkhub.service.IParkingService;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 public class ParkingService implements IParkingService {
@@ -51,27 +46,35 @@ public class ParkingService implements IParkingService {
     @Override
     public boolean isParkingNameUnique(ParkingModel parkingRequestModel) {
         Long count = parkingDAO.
-                countOfParkingsByName(parkingRequestModel.getParkingName());
+                countOfParkingsByName(parkingRequestModel.getInfo().getParkingName());
         return count == 0;
     }
 
     @Override
     public boolean checkIfAddressIsUnique(ParkingModel parkingRequestModel) {
         Long count = parkingDAO.
-                countOfParkingsByAddress(parkingRequestModel.getAddressModel());
+                countOfParkingsByAddress(parkingRequestModel.getInfo().getAddressModel());
         return count == 0;
     }
 
     @Transactional
     @Override
     public void createParkingByOwnerID(ParkingModel parkingModel, long id) {
-        AddressModel address = parkingModel.getAddressModel();
+        AddressModel address = parkingModel.getInfo().getAddressModel();
         address = setLatLan(address);
         if (userDAO.findElementById(id).isPresent()) {
-            parkingModel.setOwner(userDAO.findElementById(id).get());
+            parkingModel.getInfo().setOwner(userDAO.findElementById(id).get());
         }
         AddressModel addressModel = addressDAO.addWithResponse(address);
-        parkingModel.setAddressModel(addressModel);
+        parkingModel.getInfo().setAddressModel(addressModel);
+        List<SlotModel> slotModels = new ArrayList<>();
+        IntStream.rangeClosed(1, parkingModel.getInfo().getSlotsNumber()).forEach(i -> {
+                    SlotModel slotModel = new SlotModel();
+                    slotModel.setSlotNumber("A" + i);
+                    slotModels.add(slotModel);
+                }
+        );
+        parkingModel.setSlots(slotModels);
         parkingDAO.addElement(parkingModel);
     }
 
@@ -94,7 +97,7 @@ public class ParkingService implements IParkingService {
         ParkingModel parking = parkingDAO.findElementById(id)
                 .orElseThrow(() -> new ParkHubException("No Parking found with id " + id));
         Hibernate.initialize(parking.getSlots());
-        if (parking.isActive()) {
+        if (parking.getInfo().isActive()) {
             return parking;
         }
         throw new ParkHubException("Unfortunately this parking is temporary unavailable");
@@ -116,7 +119,7 @@ public class ParkingService implements IParkingService {
         return parkingModel;
     }
 
-    public List<String> getNotEmptyFieldNamesFromSpecificParking(ParkingModel parkingModelParam) {
+    public List<String> getNotEmptyFieldNamesFromSpecificParking(ParkingInfoModel parkingModelParam) {
 
         Field[] paramFields = parkingModelParam.getClass().getDeclaredFields();
 
@@ -140,23 +143,23 @@ public class ParkingService implements IParkingService {
     public void updateParking(Long id, ParkingModel parkingModelParam) {
 
         ParkingModel parkingModel = findParkingById(id);
-        List<String> fieldsNameList = getNotEmptyFieldNamesFromSpecificParking(parkingModelParam);
+        List<String> fieldsNameList = getNotEmptyFieldNamesFromSpecificParking(parkingModelParam.getInfo());
 
         fieldsNameList.forEach(fieldName -> {
             try {
-                Field fieldParam = parkingModelParam.getClass().getDeclaredField(fieldName);
-                Field field = parkingModel.getClass().getDeclaredField(fieldName);
+                Field fieldParam = parkingModelParam.getInfo().getClass().getDeclaredField(fieldName);
+                Field field = parkingModel.getInfo().getClass().getDeclaredField(fieldName);
                 field.setAccessible(true);
                 fieldParam.setAccessible(true);
-                field.set(parkingModel, fieldParam.get(parkingModelParam));
+                field.set(parkingModel.getInfo(), fieldParam.get(parkingModelParam.getInfo()));
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 logger.info("There is no field");
             }
         });
 
         if (fieldsNameList.contains("addressModel")) {
-            AddressModel address = addressDAO.addWithResponse(setLatLan(parkingModelParam.getAddressModel()));
-            parkingModel.setAddressModel(address);
+            AddressModel address = addressDAO.addWithResponse(setLatLan(parkingModelParam.getInfo().getAddressModel()));
+            parkingModel.getInfo().setAddressModel(address);
         }
 
         parkingDAO.updateElement(parkingModel);
@@ -190,7 +193,7 @@ public class ParkingService implements IParkingService {
         return findAllParkingModel().stream()
                 .filter(x -> (addressGeoService
                         .enteringTheRadius(map.get("lat"), map.get("lon"),
-                                x.getAddressModel().getLat(), x.getAddressModel().getLon())) == true)
+                                x.getInfo().getAddressModel().getLat(), x.getInfo().getAddressModel().getLon())) == true)
                 .collect(Collectors.toList());
     }
 }
