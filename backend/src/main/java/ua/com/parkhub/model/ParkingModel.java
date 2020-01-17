@@ -24,17 +24,17 @@ public class ParkingModel {
         this.slots = slots;
     }
 
-//    @Override
-//    public String toString() {
-//        return "ParkingModel{" +
-//                "id=" + info.getId() +
-//                ", parkingName='" + info.getParkingName()+ '\'' +
-//                ", slotsNumber=" + info.getSlotsNumber() +
-//                ", tariff=" + info.getTariff() +
-//                ", addressModel=" + info.getAddressModel() +
-//                ", slots=" + slots +
-//                ", isActive=" + info.isActive() +
-//                ", owner=" +info.getOwner() +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "ParkingModel{" +
+                "id=" + info.getId() +
+                ", parkingName='" + info.getParkingName()+ '\'' +
+                ", slotsNumber=" + info.getSlotsNumber() +
+                ", tariff=" + info.getTariff() +
+                ", addressModel=" + info.getAddressModel() +
+                ", slots=" + slots +
+                ", isActive=" + info.isActive() +
+                ", owner=" +info.getOwner() +
+                '}';
+    }
 }
