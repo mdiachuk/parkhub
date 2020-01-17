@@ -59,6 +59,14 @@ public class AdminService implements IAdminService {
         userDAO.updateElement(targetUser);
     }
 
+    public void setTicketAsSolved(long id){
+        Optional<SupportTicketModel> targetOptionalTicket = supportTicketDAO.findElementById(id);
+        SupportTicketModel targetTicket = targetOptionalTicket.get();
+        targetTicket.setSolved(true);
+        supportTicketDAO.updateElement(targetTicket);
+
+    }
+
     public List<AdminSupportTicketDTO> getTicketsList(){
         List<SupportTicketModel> targetSupportList = supportTicketDAO.findAll().stream().filter(isActive -> !isActive.isSolved()).collect(Collectors.toList());
         long ticketCounter = targetSupportList.size();

@@ -23,13 +23,13 @@ public class AdminController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/api/admin/{id}")
+    @GetMapping("/api/admin/manager/{id}")
     public ResponseEntity<AdminDTO> getUserByID(@PathVariable("id")long id ){
         return ResponseEntity.ok(adminService.getUserById(id));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/api/admin/{id}")
+    @PostMapping("/api/admin/manager/{id}")
     public ResponseEntity setRole(@RequestBody AdminDTO adminDTO){
         adminService.setRole(adminDTO.getId());
         return ResponseEntity.ok().build();
@@ -45,6 +45,12 @@ public class AdminController {
     @GetMapping("/api/admin/ticket/{id}")
     public ResponseEntity<AdminSupportTicketDTO> getTicketById(@PathVariable("id")long id){
         return ResponseEntity.ok(adminService.getSingleTicketById(id));
+    }
+
+    @PostMapping("/api/admin/ticket/setsolved/{id}")
+    public ResponseEntity setAsSolved(@RequestBody AdminSupportTicketDTO adminSupportTicketDTO){
+        adminService.setTicketAsSolved(adminSupportTicketDTO.getId());
+        return ResponseEntity.ok().build();
     }
 
     @PreAuthorize("hasRole('ADMIN')")

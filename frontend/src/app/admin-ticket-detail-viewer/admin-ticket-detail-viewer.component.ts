@@ -4,6 +4,7 @@ import { AdminTicketService } from '../admin-ticket.service';
 import { AdminService } from '../service/http-client.service'
 import { Admin } from '../Classes/admin'
 import { Router, ActivatedRoute } from '@angular/router';
+import { tap, flatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-ticket-detail-viewer',
@@ -23,16 +24,18 @@ export class AdminTicketDetailViewerComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
     this.ticket = new AdminTicketDetail;
-    this.adminTicketService.getSingleTicket(this.id).subscribe(response =>this.ticket = response);  
+    this.adminTicketService.getSingleTicket(this.id).pipe(
+      tap(ticket => this.ticket = ticket),
+      flatMap(ticket => this.adminService.getUserById(ticket.targetManagerId))
+    ).subscribe(response =>this.admin = response);  
   }
 
   backToAdminPage(){
     this.router.navigate(['admin']);
   }
-  getUserFromTicket(){
-    this.adminService.getUserById(this.ticket.targetManagerId).subscribe(response =>this.admin = response);
-  }
+
   updateUserRole(){
     this.adminService.updateRole(this.admin);
+    this.adminService.setTicketAsSolved(this.ticket);
   }
 }
