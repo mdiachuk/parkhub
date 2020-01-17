@@ -1,7 +1,6 @@
 package ua.com.parkhub.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +31,7 @@ public class AdminController {
     @PostMapping("/api/admin/manager/{id}")
     public ResponseEntity setRole(@RequestBody AdminDTO adminDTO){
         adminService.setRole(adminDTO.getId());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.accepted().build();
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -47,10 +46,11 @@ public class AdminController {
         return ResponseEntity.ok(adminService.getSingleTicketById(id));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/api/admin/ticket/setsolved/{id}")
     public ResponseEntity setAsSolved(@RequestBody AdminSupportTicketDTO adminSupportTicketDTO){
         adminService.setTicketAsSolved(adminSupportTicketDTO.getId());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.accepted().build();
     }
 
     @PreAuthorize("hasRole('ADMIN')")
