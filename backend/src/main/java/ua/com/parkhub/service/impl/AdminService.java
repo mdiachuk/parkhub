@@ -9,7 +9,6 @@ import ua.com.parkhub.dto.RoleDTO;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.mappers.modelToDto.TicketSupportModelToAdminSupportTicketDTO;
 
-import ua.com.parkhub.model.SupportTicketTypeModel;
 import ua.com.parkhub.model.enums.RoleModel;
 import ua.com.parkhub.model.SupportTicketModel;
 import ua.com.parkhub.model.UserModel;
@@ -64,7 +63,6 @@ public class AdminService implements IAdminService {
         SupportTicketModel targetTicket = targetOptionalTicket.get();
         targetTicket.setSolved(true);
         supportTicketDAO.updateElement(targetTicket);
-
     }
 
     public List<AdminSupportTicketDTO> getTicketsList(){
