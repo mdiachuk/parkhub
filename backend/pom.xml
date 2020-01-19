@@ -23,6 +23,14 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--TODO: ask DIMA-->
+            <dependency>
+                <groupId>com.google.cloud</groupId>
+                <artifactId>libraries-bom</artifactId>
+                <version>3.0.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -35,7 +43,8 @@
         <profile>
             <id>develop</id>
             <properties>
-                <activatedProperties>develop</activatedProperties>
+                <!--<activatedProperties>develop</activatedProperties>-->
+                <spring.profiles.active>develop</spring.profiles.active>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -56,7 +65,8 @@
         <profile>
             <id>release</id>
             <properties>
-                <activatedProperties>release</activatedProperties>
+                <!--<activatedProperties>release</activatedProperties>-->
+                <spring.profiles.active>release</spring.profiles.active>
             </properties>
             <dependencies>
                 <dependency>
@@ -81,6 +91,13 @@
                 </dependency>
             </dependencies>
             <build>
+                <resources>
+                    <!--enable resource filtering in pom.xml-->
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
                 <plugins>
                     <plugin>
                         <!-- https://mvnrepository.com/artifact/com.github.eirslett/frontend-maven-plugin -->
