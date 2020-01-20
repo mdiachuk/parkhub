@@ -87,12 +87,12 @@ public class AdminService implements IAdminService {
         return adminSupportTicketDTOList;
     }
 
-    public String ticketHighlightBuilder(String incomingString){
+    private String ticketHighlightBuilder(String incomingString){
         String[]array= incomingString.split(" ");
         return array[0] + " " + array[1] + " " + "...";
     }
 
-    public long ticketParser(String incomingString){
+    private long ticketParser(String incomingString){
         String[]array = incomingString.split(" ");
         return Integer.parseInt(array[1]);
     }
