@@ -38,7 +38,7 @@ public class AdminService implements IAdminService {
         this.supportTicketDAO = supportTicketDAO;
     }
 
-    public AdminDTO getUserById(long id){
+    public AdminDTO findUser(long id){
         Optional<UserModel> targetUser = userDAO.findElementById(id);
         return targetUser.map(target -> {
             AdminDTO targetAdminDTO = new AdminDTO();
@@ -50,7 +50,7 @@ public class AdminService implements IAdminService {
     }
 
     @Transactional
-    public void setRole(long id){
+    public void updateRole(long id){
         List<RoleModel> roleList = userRoleDAO.findAll().stream().filter(role -> role.getRoleName().equals(RoleDTO.MANAGER.toString())).collect(Collectors.toList());
         Optional<UserModel> targetOptionalUser = userDAO.findElementById(id);
         UserModel targetUser = targetOptionalUser.get();
@@ -58,14 +58,14 @@ public class AdminService implements IAdminService {
         userDAO.updateElement(targetUser);
     }
 
-    public void setTicketAsSolved(long id){
+    public void solveTicket(long id){
         Optional<SupportTicketModel> targetOptionalTicket = supportTicketDAO.findElementById(id);
         SupportTicketModel targetTicket = targetOptionalTicket.get();
         targetTicket.setSolved(true);
         supportTicketDAO.updateElement(targetTicket);
     }
 
-    public List<AdminSupportTicketDTO> getTicketsList(){
+    public List<AdminSupportTicketDTO> ticketsList(){
         List<SupportTicketModel> targetSupportList = supportTicketDAO.findAll().stream().filter(isActive -> !isActive.isSolved()).collect(Collectors.toList());
         long ticketCounter = targetSupportList.size();
         List<AdminSupportTicketDTO> adminSupportTicketDTOList = new ArrayList<>();
@@ -73,31 +73,31 @@ public class AdminService implements IAdminService {
             for (long i = ticketCounter - LIST_ADJUSTER_START; i > ticketCounter - LIST_ADJUSTER_FINISH; i--) {
                 AdminSupportTicketDTO adminSupportTicketDTO = new TicketSupportModelToAdminSupportTicketDTO().transform(targetSupportList.get((int) i));
                 adminSupportTicketDTO.setSupportTicketType(targetSupportList.get((int) i).getType().getValue());
-                adminSupportTicketDTO.setTicketHighlight(ticketHighlightBuilder(targetSupportList.get((int) i).getDescription()));
+                adminSupportTicketDTO.setTicketHighlight(ticketHighlight(targetSupportList.get((int) i).getDescription()));
                 adminSupportTicketDTOList.add(adminSupportTicketDTO);
             }
         }else {
             for(SupportTicketModel supportTicketList: targetSupportList){
                 AdminSupportTicketDTO adminSupportTicketDTO = new TicketSupportModelToAdminSupportTicketDTO().transform(supportTicketList);
                 adminSupportTicketDTO.setSupportTicketType(supportTicketList.getType().getValue());
-                adminSupportTicketDTO.setTicketHighlight(ticketHighlightBuilder(supportTicketList.getDescription()));
+                adminSupportTicketDTO.setTicketHighlight(ticketHighlight(supportTicketList.getDescription()));
                 adminSupportTicketDTOList.add(adminSupportTicketDTO);
             }
         }
         return adminSupportTicketDTOList;
     }
 
-    private String ticketHighlightBuilder(String incomingString){
+    private String ticketHighlight(String incomingString){
         String[]array= incomingString.split(" ");
         return array[0] + " " + array[1] + " " + "...";
     }
 
-    private long ticketParser(String incomingString){
+    private long userIdFind(String incomingString){
         String[]array = incomingString.split(" ");
         return Integer.parseInt(array[1]);
     }
 
-    public AdminSupportTicketDTO getSingleTicketById(long id){
+    public AdminSupportTicketDTO findTicket(long id){
         Optional<SupportTicketModel> targetSupportTicket = supportTicketDAO.findElementById(id);
         return targetSupportTicket.map( target -> {
             AdminSupportTicketDTO adminSupportTicketDTO = new AdminSupportTicketDTO();
@@ -105,7 +105,7 @@ public class AdminService implements IAdminService {
             adminSupportTicketDTO.setDescription(target.getDescription());
             adminSupportTicketDTO.setSupportTicketType(target.getType().getValue());
             if (adminSupportTicketDTO.getSupportTicketType().equals(TicketTypeModel.MANAGER_REGISTRATION_REQUEST.getValue())){
-                adminSupportTicketDTO.setTargetManagerId(ticketParser(target.getDescription()));
+                adminSupportTicketDTO.setTargetManagerId(userIdFind(target.getDescription()));
             }else
                 adminSupportTicketDTO.setTargetManagerId(0);
             adminSupportTicketDTO.setSolved(target.isSolved());
@@ -113,7 +113,7 @@ public class AdminService implements IAdminService {
         }).orElseGet(AdminSupportTicketDTO::new);
     }
 
-    public AdminTicketCounterDTO getTicketCounter(){
+    public AdminTicketCounterDTO ticketCounter(){
         long ticketCounter = supportTicketDAO.findAll().stream().filter(isActive -> !isActive.isSolved()).count();
         AdminTicketCounterDTO targetAdminTicketCounterDTO = new AdminTicketCounterDTO();
         targetAdminTicketCounterDTO.setAdminTicketCounter(ticketCounter);

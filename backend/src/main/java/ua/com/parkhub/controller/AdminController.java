@@ -23,39 +23,39 @@ public class AdminController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/api/admin/manager/{id}")
-    public ResponseEntity<AdminDTO> getUserByID(@PathVariable("id")long id ){
-        return ResponseEntity.ok(adminService.getUserById(id));
+    public ResponseEntity<AdminDTO> findUser(@PathVariable("id")long id ){
+        return ResponseEntity.ok(adminService.findUser(id));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/api/admin/manager/{id}")
-    public ResponseEntity setRole(@RequestBody AdminDTO adminDTO){
-        adminService.setRole(adminDTO.getId());
+    public ResponseEntity updateRole(@RequestBody AdminDTO adminDTO){
+        adminService.updateRole(adminDTO.getId());
         return ResponseEntity.accepted().build();
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/api/admin/ticketlist")
-    public ResponseEntity<List<AdminSupportTicketDTO>> getTicketList(){
-        return ResponseEntity.ok(adminService.getTicketsList());
+    public ResponseEntity<List<AdminSupportTicketDTO>> ticketsList(){
+        return ResponseEntity.ok(adminService.ticketsList());
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/api/admin/ticket/{id}")
-    public ResponseEntity<AdminSupportTicketDTO> getTicketById(@PathVariable("id")long id){
-        return ResponseEntity.ok(adminService.getSingleTicketById(id));
+    public ResponseEntity<AdminSupportTicketDTO> findTicket(@PathVariable("id")long id){
+        return ResponseEntity.ok(adminService.findTicket(id));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/api/admin/ticket/setsolved/{id}")
-    public ResponseEntity setAsSolved(@RequestBody AdminSupportTicketDTO adminSupportTicketDTO){
-        adminService.setTicketAsSolved(adminSupportTicketDTO.getId());
+    public ResponseEntity solveTicket(@RequestBody AdminSupportTicketDTO adminSupportTicketDTO){
+        adminService.solveTicket(adminSupportTicketDTO.getId());
         return ResponseEntity.accepted().build();
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/api/admin/ticketlistcounter")
-    public ResponseEntity<AdminTicketCounterDTO> getTicketCounter(){
-        return ResponseEntity.ok(adminService.getTicketCounter());
+    public ResponseEntity<AdminTicketCounterDTO> ticketCounter(){
+        return ResponseEntity.ok(adminService.ticketCounter());
     }
 }
