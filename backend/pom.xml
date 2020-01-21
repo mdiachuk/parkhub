@@ -150,6 +150,7 @@
                         <artifactId>appengine-maven-plugin</artifactId>
                         <version>2.2.0</version>
                         <configuration>
+                            <serviceAccountKeyFile>gcloud-service-key.json</serviceAccountKeyFile>
                             <deploy.projectId>park-hub</deploy.projectId>
                             <deploy.version>GCLOUD_CONFIG</deploy.version>
                         </configuration>
