@@ -4,29 +4,36 @@ services:
   - postgres:latest
 
 stages:
+#  - test
   - build
-  - test
   - deploy
 
-unit_test:
-  stage: test
-  script:
-    - cd backend
-    - mvn clean test -B
+#unit_test:
+#  stage: test
+#  script:
+#    - cd backend
+#    - mvn test -B
 
 build:
   stage: build
   script:
     - cd backend
     - mvn package -B -Dmaven.test.skip=true -P release
+  artifacts:
+    paths:
+      - backend/target
+  expire_in: 1 days
 
-production:
+deploy:
   stage: deploy
-  image: docker:latest
-  script:
-    - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
-    - docker build -t $CI_REGISTRY_IMAGE:$CI_BUILD_TAG target/docker/
-    - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
   only:
     - master
-    - dev
+    - feature/app-engine-config
+  script:
+    - cd backend
+    - echo "$GCLOUD_SERVICE_KEY" > ./gcloud-service-key.json
+    - export GOOGLE_APPLICATION_CREDENTIALS=./gcloud-service-key.json
+    - bash config.sh $GC_INSTANCE $GC_DB_NAME $DB_USER $DB_PASS
+    - mvn appengine:deploy -Dmaven.test.skip=true -P release
+  after_script:
+    - rm ./gcloud-service-key.json

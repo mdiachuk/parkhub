@@ -41,6 +41,11 @@
   "Sign up": "Sign up",
   "Get User by Id": "Get User by ID",
   "ID:": "ID",
+  "First name": "First name",
+  "Last Name": "Last Name",
+  "Phone": "Phone",
+  "Edit": "Edit",
+  "Save": "Save",
   "Ticket List": "Ticket list",
   "Type User ID": "Type user ID",
   "Sign up Manager": "Sign up Manager",
@@ -97,7 +102,11 @@
   "PhoneNumber": "Phone Number",
   "Email": "Email",
   "Password": "Password",
+  "User Details": "User Details",
+  "Change Password": "Change Password",
   "ConfirmPassword": "Confirm password",
+  "Close": "Close",
+  "Save Password": "Save Password",
   "PricePerHour": "Price per hour",
   "PleaseChooseAvailableSlot": "Please, choose available slot",
   "NotAValidNameOfStreet": "Not a valid name of street.",
@@ -110,7 +119,16 @@
   "Forgot your password?": "Forgot your password?",
   "Type your email in the field below and we will\nsend you link to reset your password.": "Type your email in the field below and we will\nsend you link to reset your password.",
   "FieldIsRequired": "Field is required",
-  "TypeUserIDPlaceholder": {
+  "PhonePlaceholder":{
+    "value": "Phone"
+  },
+  "NewPasswordPlaceholder": {
+    "value": "New Password"
+  },
+  "ConfirmPasswordPlaceholder.value": {
+    "value": "Confirm Password"
+  },
+   "TypeUserIDPlaceholder": {
     "value": "Type User ID"
   },
   "TypeUserRolePlaceholder": {
