@@ -16,8 +16,6 @@ stages:
 
 build:
   stage: build
-  tags:
-    - kubernetes
   script:
     - cd backend
     - mvn package -B -Dmaven.test.skip=true -P release
