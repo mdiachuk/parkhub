@@ -37,4 +37,5 @@ deploy:
     - bash config.sh $GC_INSTANCE $GC_DB_NAME $DB_USER $DB_PASS
     - mvn appengine:deploy -Dmaven.test.skip=true -P release
   after_script:
+    - cd backend
     - rm ./gcloud-service-key.json
