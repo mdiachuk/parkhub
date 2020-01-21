@@ -92,7 +92,7 @@ public class AdminService implements IAdminService {
         return array[0] + " " + array[1] + " " + "...";
     }
 
-    private long userIdFind(String incomingString){
+    private long findUserId(String incomingString){
         String[]array = incomingString.split(" ");
         return Integer.parseInt(array[1]);
     }
@@ -105,7 +105,7 @@ public class AdminService implements IAdminService {
             adminSupportTicketDTO.setDescription(target.getDescription());
             adminSupportTicketDTO.setSupportTicketType(target.getType().getValue());
             if (adminSupportTicketDTO.getSupportTicketType().equals(TicketTypeModel.MANAGER_REGISTRATION_REQUEST.getValue())){
-                adminSupportTicketDTO.setTargetManagerId(userIdFind(target.getDescription()));
+                adminSupportTicketDTO.setTargetManagerId(findUserId(target.getDescription()));
             }else
                 adminSupportTicketDTO.setTargetManagerId(0);
             adminSupportTicketDTO.setSolved(target.isSolved());
@@ -113,7 +113,7 @@ public class AdminService implements IAdminService {
         }).orElseGet(AdminSupportTicketDTO::new);
     }
 
-    public AdminTicketCounterDTO ticketCounter(){
+    public AdminTicketCounterDTO ticketCount(){
         long ticketCounter = supportTicketDAO.findAll().stream().filter(isActive -> !isActive.isSolved()).count();
         AdminTicketCounterDTO targetAdminTicketCounterDTO = new AdminTicketCounterDTO();
         targetAdminTicketCounterDTO.setAdminTicketCounter(ticketCounter);

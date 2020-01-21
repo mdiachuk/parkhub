@@ -55,7 +55,7 @@ public class AdminController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/api/admin/ticketlistcounter")
-    public ResponseEntity<AdminTicketCounterDTO> ticketCounter(){
-        return ResponseEntity.ok(adminService.ticketCounter());
+    public ResponseEntity<AdminTicketCounterDTO> ticketCount(){
+        return ResponseEntity.ok(adminService.ticketCount());
     }
 }

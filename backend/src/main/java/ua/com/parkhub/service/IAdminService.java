@@ -12,5 +12,5 @@ public interface IAdminService {
     void solveTicket(long id);
     List<AdminSupportTicketDTO> ticketsList();
     AdminSupportTicketDTO findTicket(long id);
-    AdminTicketCounterDTO ticketCounter();
+    AdminTicketCounterDTO ticketCount();
 }
