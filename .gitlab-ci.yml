@@ -20,9 +20,10 @@ build:
     - cd backend
     - mvn package -B -Dmaven.test.skip=true -P release
   artifacts:
+    expire_in: 1 days
     paths:
       - backend/target
-  expire_in: 1 days
+
 
 deploy:
   stage: deploy
