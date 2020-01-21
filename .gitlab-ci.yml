@@ -17,8 +17,7 @@ stages:
 build:
   stage: build
   tags:
-    - docker
-    - gce
+    - kubernetes
   script:
     - cd backend
     - mvn package -B -Dmaven.test.skip=true -P release
