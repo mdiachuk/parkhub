@@ -7,7 +7,7 @@
     </system-properties>
     <env-variables>
         <env-var name="DB_USER" value="%DB_USER%" />
-        <env-var name="DB_PASS" value="%DB_PASS%" />
+        <env-var name="DB_PASSWORD" value="%DB_PASS%" />
         <env-var name="GC_INSTANCE" value="%GC_INSTANCE%" />
         <env-var name="GC_DB_NAME" value="%GC_DB_NAME%" />
     </env-variables>

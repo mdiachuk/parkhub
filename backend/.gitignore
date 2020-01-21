@@ -32,4 +32,4 @@ build/
 .DS_Store
 
 ### App Engine Config ###
-/src/main/appengine/env_variables.yaml
+src/main/webapp/WEB-INF/appengine-web.xml
