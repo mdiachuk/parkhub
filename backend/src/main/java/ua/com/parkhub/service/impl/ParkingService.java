@@ -76,7 +76,7 @@ public class ParkingService implements IParkingService {
         );
         parkingModel.setSlots(slotModels);
         parkingDAO.addElement(parkingModel);
-    }
+    }//mine
 
     public ParkingModel findParkingById(long id) {
         return parkingDAO.findElementById(id).orElseThrow(() -> new ParkingDoesntExistException(StatusCode.PARKING_DOESNT_EXIST));

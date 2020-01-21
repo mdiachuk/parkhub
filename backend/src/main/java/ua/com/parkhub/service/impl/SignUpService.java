@@ -129,7 +129,7 @@ public class SignUpService implements ISignUpService {
     @Override
     public boolean isUserPresentByEmail(String email) {
         return userDAO.findOneByFieldEqual("email", email).isPresent();
-    }
+    }//mine
 
     @Override
     public void setPhoneNumberForAuthUser(PhoneEmailModel phoneEmailModel) {
@@ -154,14 +154,14 @@ public class SignUpService implements ISignUpService {
             user.setRole(userRole);
             userDAO.addElement(user);
         }
-    }
+    }//mine
 
     @Override
     public boolean isCustomerNumberEmpty(String email) {
         UserModel user = userDAO.findOneByFieldEqual("email", email).get();
         CustomerModel customer = user.getCustomer();
         return customer.getPhoneNumber().equals("Empty");
-    }
+    }//mine
 
     @Override
     public boolean signUpUser(UserModel userModel){
@@ -182,5 +182,5 @@ public class SignUpService implements ISignUpService {
     @Override
     public UserModel findUserbyEmail(String email) {
         return userDAO.findOneByFieldEqual("email", email).get();
-    }
+    }//mine
 }
