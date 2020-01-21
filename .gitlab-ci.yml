@@ -16,6 +16,9 @@ stages:
 
 build:
   stage: build
+  tags:
+    - docker
+    - gce
   script:
     - cd backend
     - mvn package -B -Dmaven.test.skip=true -P release
