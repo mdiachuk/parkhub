@@ -30,3 +30,6 @@ build/
 ### VS Code ###
 .vscode/
 .DS_Store
+
+### App Engine Config ###
+/src/main/appengine/env_variables.yaml

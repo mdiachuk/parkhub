@@ -4,5 +4,9 @@
     <runtime>java8</runtime>
     <system-properties>
         <property name="java.util.logging.config.file" value="WEB-INF/classes/logging.properties"/>
+       <!--TODO-->
+        <property name="cloudsql"
+                  value="jdbc:postgresql://google/${database}?cloudSqlInstance=${INSTANCE_CONNECTION_NAME}&amp;socketFactory=com.google.cloud.sql.postgres.SocketFactory&amp;user=${user}&amp;password=${password}"/>
+
     </system-properties>
 </appengine-web-app>
