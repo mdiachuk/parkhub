@@ -8,6 +8,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import ua.com.parkhub.exceptions.ParkingDoesntExistException;
 import ua.com.parkhub.model.AddressModel;
+import ua.com.parkhub.model.ParkingInfoModel;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.persistence.impl.AddressDAO;
 import ua.com.parkhub.persistence.impl.ParkingDAO;
@@ -80,22 +81,27 @@ class ParkingServiceTest {
     void getNotEmptyFieldNamesFromSpecificParkingTest() {
 
         ParkingModel parkingModelTest = new ParkingModel();
-        parkingModelTest.setParkingName("Parking");
-        parkingModelTest.setSlotsNumber(100);
+        ParkingInfoModel parkingInfoModel = new ParkingInfoModel();
+        parkingInfoModel.setParkingName("Parking");
+        parkingInfoModel.setSlotsNumber(100);
 
-        assertSame("parkingName", parkingService.getNotEmptyFieldNamesFromSpecificParking(parkingModelTest).get(0));
-        assertSame("slotsNumber", parkingService.getNotEmptyFieldNamesFromSpecificParking(parkingModelTest).get(1));
+        assertSame("parkingName", parkingService.getNotEmptyFieldNamesFromSpecificParking(parkingInfoModel).get(0));
+        assertSame("slotsNumber", parkingService.getNotEmptyFieldNamesFromSpecificParking(parkingInfoModel).get(1));
     }
 
     @Test
     void updateParkingTest() {
 
         ParkingModel parkingModelSpy = Mockito.spy(new ParkingModel());
-        parkingModelSpy.setParkingName("");
+        ParkingInfoModel parkingInfoModelSpy = Mockito.spy(new ParkingInfoModel());
+        parkingInfoModelSpy.setParkingName("");
+        parkingModelSpy.setInfo(parkingInfoModelSpy);
 
         ParkingModel parkingModelTest = new ParkingModel();
-        parkingModelTest.setParkingName("Parking");
-        parkingModelTest.setSlotsNumber(100);
+        ParkingInfoModel parkingInfoModelTest = new ParkingInfoModel();
+        parkingInfoModelTest.setParkingName("Parking");
+        parkingInfoModelTest.setSlotsNumber(100);
+        parkingModelTest.setInfo(parkingInfoModelTest);
 
         Mockito.when(parkingDAO.findElementById(1)).thenReturn(Optional.of(parkingModelSpy));
         Mockito.when(addressDAO.addWithResponse(addressModel)).thenReturn(addressModel);

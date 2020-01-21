@@ -36,7 +36,7 @@ public class Parking {
     @JoinColumn(name = "parking_owner_id")
     private User owner;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name = "parking_id")
     private List<Slot> slots;
 

@@ -36,16 +36,17 @@ public class ParkingModelToEntityMapper implements Mapper<ParkingModel, Parking>
             return null;
         }
         Parking parking = new Parking();
-        parking.setId(from.getId());
-        parking.setParkingName(from.getParkingName());
-        parking.setAddress(addressModelToEntityMapper.transform(from.getAddressModel()));
-        parking.setSlotsNumber(from.getSlotsNumber());
-        parking.setTariff(from.getTariff());
-        parking.setActive(from.isActive());
+        parking.setId(from.getInfo().getId());
+        parking.setParkingName(from.getInfo().getParkingName());
+        parking.setAddress(addressModelToEntityMapper.transform(from.getInfo().getAddressModel()));
+        parking.setSlotsNumber(from.getInfo().getSlotsNumber());
+        parking.setTariff(from.getInfo().getTariff());
+        parking.setActive(true);
+        parking.setOwner(userModelToEntityMapper.transform(from.getInfo().getOwner()));
         if(from.getSlots() != null){
             parking.setSlots(from.getSlots().stream().map(slotModelToEntityMapper::transform).collect(Collectors.toList()));
+            parking.getSlots().forEach(slot -> slot.setParking(parking));
         }
-        parking.setOwner(userModelToEntityMapper.transform(from.getOwner()));
         return parking;
 
     }
