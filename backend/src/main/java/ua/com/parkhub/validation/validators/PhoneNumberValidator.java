@@ -12,7 +12,7 @@ public class PhoneNumberValidator implements ConstraintValidator<ValidPhoneNumbe
 
     private Pattern pattern;
     private Matcher matcher;
-    private static final String PHONE_NUMBER_PATTERN = "^\\+?3?8?(0\\d{9})$";
+    private static final String PHONE_NUMBER_PATTERN = "^3?8?(0\\d{9})$";
 
     @Override
     public void initialize(ValidPhoneNumber constraintAnnotation) {
