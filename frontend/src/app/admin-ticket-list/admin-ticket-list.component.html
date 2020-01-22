@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-content>
     <h3>{{'New tickets' | translate}}: {{(ticketCounter$ | async)?.adminTicketCounter}}</h3>
-<mat-table [dataSource]="tickets">
+<mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef> {{'Ticket ID' | translate}} </mat-header-cell>
         <mat-cell *matCellDef="let ticket"> {{ticket.id}} </mat-cell>
@@ -14,12 +14,16 @@
         <mat-header-cell *matHeaderCellDef> {{'Ticket Type' | translate}} </mat-header-cell>
         <mat-cell *matCellDef="let ticket"> {{ticket.supportTicketType}} </mat-cell>
       </ng-container>
-      <ng-container matColumnDef="isSolved">
+      <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef> {{'Actions' | translate}} </mat-header-cell>
         <mat-cell *matCellDef="let ticket"> <button mat-raised-button color="primary" (click)="ticketDetails(ticket.id)">{{'Ticket Details' | translate}}</button> </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
+<mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons>
+  </mat-paginator>
 </mat-card-content>
 </mat-card>
