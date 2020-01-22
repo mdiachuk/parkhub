@@ -69,13 +69,13 @@ public class AdminService implements IAdminService {
             for(SupportTicketModel supportTicketList: targetSupportList){
                 AdminSupportTicketDTO adminSupportTicketDTO = new TicketSupportModelToAdminSupportTicketDTO().transform(supportTicketList);
                 adminSupportTicketDTO.setSupportTicketType(supportTicketList.getType().getValue());
-                adminSupportTicketDTO.setTicketHighlight(cutDescription(supportTicketList.getDescription()));
+                adminSupportTicketDTO.setTicketHighlight(displayedDescription(supportTicketList.getDescription()));
                 adminSupportTicketDTOList.add(adminSupportTicketDTO);
         }
         return adminSupportTicketDTOList;
     }
 
-    private String cutDescription(String incomingDescription){
+    private String displayedDescription(String incomingDescription){
         String[]array= incomingDescription.split(" ");
         return array[0] + " " + array[1] + " " + "...";
     }
