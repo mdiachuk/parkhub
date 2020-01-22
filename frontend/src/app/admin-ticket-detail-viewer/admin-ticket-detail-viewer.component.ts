@@ -5,6 +5,7 @@ import { AdminService } from '../service/http-client.service'
 import { Admin } from '../Classes/admin'
 import { Router, ActivatedRoute } from '@angular/router';
 import { tap, flatMap } from 'rxjs/operators';
+import { MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-admin-ticket-detail-viewer',
@@ -19,7 +20,8 @@ export class AdminTicketDetailViewerComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private router: Router, 
     private adminTicketService: AdminTicketService,
-    private adminService: AdminService) { }
+    private adminService: AdminService,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
@@ -37,5 +39,13 @@ export class AdminTicketDetailViewerComponent implements OnInit {
   updateUserRole(){
     this.adminService.updateRole(this.admin);
     this.adminService.setTicketAsSolved(this.ticket);
+    this.revealSnackBar();
+  }
+
+  revealSnackBar(){
+    this.snackBar.open('User applied as manager, Ticket marked as solved.', 'Close', {
+      duration: 4000,
+      verticalPosition: 'top',
+    });
   }
 }

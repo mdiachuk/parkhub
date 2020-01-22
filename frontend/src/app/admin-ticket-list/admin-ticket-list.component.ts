@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
-
 @Component({
   selector: 'app-admin-ticket-list',
   templateUrl: './admin-ticket-list.component.html',
@@ -16,6 +15,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 export class AdminTicketListComponent implements OnInit {
 
+  message: String;
   dataSource = new MatTableDataSource<AdminTicketDetail>();
   displayedColumns = ['id','ticketHighlight','supportTicketType','actions'];
   ticketCounter$: Observable<AdminTicketCounter> = of({adminTicketCounter: 0});
