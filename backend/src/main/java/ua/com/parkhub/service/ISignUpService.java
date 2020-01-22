@@ -7,11 +7,12 @@ import ua.com.parkhub.model.enums.TicketTypeModel;
 import java.util.List;
 
 public interface ISignUpService {
+
     void registerManager(ManagerRegistrationDataModel manager);
     CustomerModel createCustomer(CustomerModel customer);
     UserModel createUser(UserModel user, CustomerModel customer);
     SupportTicketModel createTicket(String description, CustomerModel customer);
-    String generateDescription(String companyName, String usreouCode, String comment);
+    String generateDescription(long id, String companyName, String usreouCode, String comment);
     RoleModel findUserRole(String name);
     TicketTypeModel findSupportTicketType(String type);
     List<UserModel> findSolvers(String role);
@@ -21,5 +22,5 @@ public interface ISignUpService {
     boolean isCustomerNumberEmpty(String email);
     boolean signUpUser(UserModel userModel);
     boolean isNumberUnique(String phoneNumber);
-
+    UserModel findUserbyEmail(String email);
 }

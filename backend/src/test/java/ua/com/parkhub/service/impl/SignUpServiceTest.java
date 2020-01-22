@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ua.com.parkhub.exceptions.EmailException;
@@ -51,12 +50,12 @@ class SignUpServiceTest {
 
     @Test
     public void test_registerManager_pendingRoleNotFound_exceptionThrown() {
-        ManagerRegistrationDataModel manager = Mockito.mock(ManagerRegistrationDataModel.class);
         CustomerModel customer = new CustomerModel();
-        UserModel user = Mockito.mock(UserModel.class);
+        UserModel user = new UserModel();
+        ManagerRegistrationDataModel manager = new ManagerRegistrationDataModel();
+        user.setCustomer(customer);
+        manager.setUser(user);
 
-        when(manager.getUser()).thenReturn(user);
-        when(user.getCustomer()).thenReturn(customer);
         when(userRoleDAO.findUserRoleByRoleName(anyString())).thenReturn(Optional.empty());
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
@@ -66,12 +65,12 @@ class SignUpServiceTest {
 
     @Test
     public void test_registerManager_adminNotFound_exceptionThrown() {
-        ManagerRegistrationDataModel manager = Mockito.mock(ManagerRegistrationDataModel.class);
         CustomerModel customer = new CustomerModel();
-        UserModel user = Mockito.mock(UserModel.class);
+        UserModel user = new UserModel();
+        ManagerRegistrationDataModel manager = new ManagerRegistrationDataModel();
+        user.setCustomer(customer);
+        manager.setUser(user);
 
-        when(manager.getUser()).thenReturn(user);
-        when(user.getCustomer()).thenReturn(customer);
         when(userDAO.findElementById(anyLong())).thenReturn(Optional.empty());
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
@@ -81,12 +80,12 @@ class SignUpServiceTest {
 
     @Test
     public void test_registerManager_supportTicketTypeNotFound_exceptionThrown() {
-        ManagerRegistrationDataModel manager = Mockito.mock(ManagerRegistrationDataModel.class);
         CustomerModel customer = new CustomerModel();
-        UserModel user = Mockito.mock(UserModel.class);
+        UserModel user = new UserModel();
+        ManagerRegistrationDataModel manager = new ManagerRegistrationDataModel();
+        user.setCustomer(customer);
+        manager.setUser(user);
 
-        when(manager.getUser()).thenReturn(user);
-        when(user.getCustomer()).thenReturn(customer);
         when(supportTicketTypeDAO.findSupportTicketTypeByType(anyString())).thenReturn(Optional.empty());
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
@@ -96,12 +95,13 @@ class SignUpServiceTest {
 
     @Test
     public void test_registerManager_phoneNumberIsUsed_exceptionThrown() {
-        ManagerRegistrationDataModel manager = Mockito.mock(ManagerRegistrationDataModel.class);
-        CustomerModel customer = Mockito.mock(CustomerModel.class);
-        UserModel user = Mockito.mock(UserModel.class);
+        CustomerModel customer = new CustomerModel();
+        UserModel user = new UserModel();
+        ManagerRegistrationDataModel manager = new ManagerRegistrationDataModel();
+        customer.setId(1L);
+        user.setCustomer(customer);
+        manager.setUser(user);
 
-        when(manager.getUser()).thenReturn(user);
-        when(user.getCustomer()).thenReturn(customer);
         when(customerDAO.findCustomerByPhoneNumber(customer.getPhoneNumber())).thenReturn(Optional.of(customer));
         when(userDAO.findUserByCustomerId(anyLong())).thenReturn(Optional.of(user));
 
@@ -112,17 +112,18 @@ class SignUpServiceTest {
 
     @Test
     public void test_registerManager_phoneNumberIsUsedButNorRegistered_everythingCorrect() {
-        ManagerRegistrationDataModel manager = Mockito.mock(ManagerRegistrationDataModel.class);
         CustomerModel customer = new CustomerModel();
-        UserModel user = Mockito.mock(UserModel.class);
+        UserModel user = new UserModel();
+        ManagerRegistrationDataModel manager = new ManagerRegistrationDataModel();
+        user.setId(1L);
+        user.setCustomer(customer);
+        manager.setUser(user);
         RoleModel role = RoleModel.PENDING;
-        role.setId((long) 1);
+        role.setId(1L);
         TicketTypeModel ticketType = TicketTypeModel.MANAGER_REGISTRATION_REQUEST;
 
-        when(manager.getUser()).thenReturn(user);
-        when(user.getCustomer()).thenReturn(customer);
         when(customerDAO.findCustomerByPhoneNumber(customer.getPhoneNumber())).thenReturn(Optional.of(customer));
-        when(customerDAO.addElement(customer)).thenReturn(Optional.of(customer));
+        when(userDAO.addElement(user)).thenReturn(Optional.of(user));
         when(userRoleDAO.findUserRoleByRoleName(anyString())).thenReturn(Optional.of(role));
         when(userDAO.findUsersByRoleId(anyLong())).thenReturn(Arrays.asList(user));
         when(userDAO.findElementById(anyLong())).thenReturn(Optional.of(user));
@@ -133,12 +134,12 @@ class SignUpServiceTest {
 
     @Test
     public void test_registerManager_emailIsUsed_exceptionThrown() {
-        ManagerRegistrationDataModel manager = Mockito.mock(ManagerRegistrationDataModel.class);
         CustomerModel customer = new CustomerModel();
-        UserModel user = Mockito.mock(UserModel.class);
+        UserModel user = new UserModel();
+        ManagerRegistrationDataModel manager = new ManagerRegistrationDataModel();
+        user.setCustomer(customer);
+        manager.setUser(user);
 
-        when(manager.getUser()).thenReturn(user);
-        when(user.getCustomer()).thenReturn(customer);
         when(customerDAO.addElement(customer)).thenReturn(Optional.of(customer));
         when(userDAO.findUserByEmail(user.getEmail())).thenReturn(Optional.of(user));
 
@@ -149,16 +150,17 @@ class SignUpServiceTest {
 
     @Test
     public void test_registerManager_everythingCorrect() {
-        ManagerRegistrationDataModel manager = Mockito.mock(ManagerRegistrationDataModel.class);
         CustomerModel customer = new CustomerModel();
-        UserModel user = Mockito.mock(UserModel.class);
+        UserModel user = new UserModel();
+        ManagerRegistrationDataModel manager = new ManagerRegistrationDataModel();
+        user.setId(1L);
+        user.setCustomer(customer);
+        manager.setUser(user);
         RoleModel role = RoleModel.PENDING;
-        role.setId((long) 1);
+        role.setId(1L);
         TicketTypeModel ticketType = TicketTypeModel.MANAGER_REGISTRATION_REQUEST;
 
-        when(manager.getUser()).thenReturn(user);
-        when(user.getCustomer()).thenReturn(customer);
-        when(customerDAO.addElement(customer)).thenReturn(Optional.of(customer));
+        when(userDAO.addElement(user)).thenReturn(Optional.of(user));
         when(userRoleDAO.findUserRoleByRoleName(anyString())).thenReturn(Optional.of(role));
         when(userDAO.findUsersByRoleId(anyLong())).thenReturn(Arrays.asList(user));
         when(userDAO.findElementById(anyLong())).thenReturn(Optional.of(user));

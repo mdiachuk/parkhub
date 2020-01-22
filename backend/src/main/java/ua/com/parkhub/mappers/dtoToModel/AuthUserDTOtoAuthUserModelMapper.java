@@ -7,13 +7,16 @@ import ua.com.parkhub.model.AuthUserModel;
 
 @Component
 public class AuthUserDTOtoAuthUserModelMapper implements Mapper<AuthUserDTO, AuthUserModel> {
+
     @Override
     public AuthUserModel transform(AuthUserDTO from) {
+        if (from == null) {
+            return null;
+        }
         AuthUserModel authUserModel = new AuthUserModel();
         authUserModel.setLastName(from.getLastName());
         authUserModel.setFirstName(from.getFirstName());
         authUserModel.setEmail(from.getEmail());
         return authUserModel;
     }
-
 }

@@ -2,7 +2,7 @@ import {Component, Injectable, OnInit} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {User} from '../interfaces/user';
 import {Observable} from 'rxjs';
-import {LoginService} from '../services/login.service';
+import {LoginService} from '../service/login.service';
 
 
 

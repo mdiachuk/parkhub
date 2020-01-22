@@ -46,13 +46,12 @@ public class SignUpService implements ISignUpService {
     @Override
     public void registerManager(ManagerRegistrationDataModel manager) {
         CustomerModel customer = createCustomer(manager.getUser().getCustomer());
-        customer = customerDAO.addElement(customer).orElseThrow(() ->
-                new NotFoundInDataBaseException("Customer not found"));
         UserModel user = createUser(manager.getUser(), customer);
-        userDAO.addElement(user);
-        String description = generateDescription(manager.getCompanyName(), manager.getUsreouCode(),
-                manager.getComment());
-        SupportTicketModel ticket = createTicket(description, customer);
+        user = userDAO.addElement(user).orElseThrow(() ->
+                new NotFoundInDataBaseException("Customer not found"));
+        String description = generateDescription(user.getId(), manager.getCompanyName(),
+                manager.getUsreouCode(), manager.getComment());
+        SupportTicketModel ticket = createTicket(description, user.getCustomer());
         supportTicketDAO.addElement(ticket);
     }
 
@@ -99,22 +98,25 @@ public class SignUpService implements ISignUpService {
         logger.info("New support ticket was created");
         return ticket;
     }
+
     @Override
-    public String generateDescription(String companyName, String usreouCode, String comment) {
-        return "Company: <" + companyName + "> " +
-                "USREOU: <" + usreouCode + "> " +
-                "Comment: <" + comment + ">";
+    public String generateDescription(long id, String companyName, String usreouCode, String comment) {
+        return String.format("ID: %d Company: \"%s\" USREOU code: %s Comment: \"%s\"", id, companyName,
+                usreouCode, comment);
     }
+
     @Override
     public RoleModel findUserRole(String name) {
         return userRoleDAO.findUserRoleByRoleName(name).orElseThrow(() ->
                 new NotFoundInDataBaseException("Role was not found by name=" + name));
     }
+
     @Override
     public TicketTypeModel findSupportTicketType(String type) {
         return supportTicketTypeDAO.findSupportTicketTypeByType(type).orElseThrow(() ->
                 new NotFoundInDataBaseException("Support ticket type was not found by type=" + type));
     }
+
     @Override
     public List<UserModel> findSolvers(String role) {
         List<UserModel> solvers = userDAO.findUsersByRoleId(findUserRole(role).getId());
@@ -154,7 +156,6 @@ public class SignUpService implements ISignUpService {
         }
     }
 
-
     @Override
     public boolean isCustomerNumberEmpty(String email) {
         UserModel user = userDAO.findOneByFieldEqual("email", email).get();
@@ -164,7 +165,6 @@ public class SignUpService implements ISignUpService {
 
     @Override
     public boolean signUpUser(UserModel userModel){
-
         try {
             userDAO.addElement( createUser( userModel, createCustomer(userModel.getCustomer())));
             return true;
@@ -173,11 +173,14 @@ public class SignUpService implements ISignUpService {
         }
         return false;
     }
+
     @Override
     public boolean isNumberUnique(String phoneNumber) {
         return customerDAO.findManyByFieldEqual("phoneNumber",phoneNumber).isEmpty();
     }
 
-
-
+    @Override
+    public UserModel findUserbyEmail(String email) {
+        return userDAO.findOneByFieldEqual("email", email).get();
+    }
 }

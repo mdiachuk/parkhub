@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {PhoneNumber} from './phoneNumber';
-import {CheckOutResponse} from './checkOutResponse';
+import { PhoneNumber } from '../parkoff/phoneNumber';
+import { CheckOutResponse } from '../parkoff/checkOutResponse';
+
+
+
 
 @Injectable({
   providedIn: 'root'

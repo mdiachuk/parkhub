@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 @Component
 public class SupportTicketTypeEntityToModelMapper implements Mapper<SupportTicketType, TicketTypeModel> {
+
     @Override
     public TicketTypeModel transform(SupportTicketType from) {
         if (from == null) {
@@ -27,5 +28,4 @@ public class SupportTicketTypeEntityToModelMapper implements Mapper<SupportTicke
         }
         return ticketTypeModel;
     }
-
 }

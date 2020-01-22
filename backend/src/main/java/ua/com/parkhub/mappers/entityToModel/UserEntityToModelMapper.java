@@ -3,17 +3,21 @@ package ua.com.parkhub.mappers.entityToModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.com.parkhub.mappers.Mapper;
+import ua.com.parkhub.model.CustomerModel;
 import ua.com.parkhub.model.UserModel;
+import ua.com.parkhub.model.enums.RoleModel;
+import ua.com.parkhub.persistence.entities.Customer;
 import ua.com.parkhub.persistence.entities.User;
+import ua.com.parkhub.persistence.entities.UserRole;
 
 @Component
 public class UserEntityToModelMapper implements Mapper<User, UserModel> {
 
-    private CustomerEntityToModelMapper customerEntityToModelMapper;
-    private RoleEntityToModelMapper roleEntityToModelMapper;
+    private Mapper<Customer, CustomerModel> customerEntityToModelMapper;
+    private Mapper<UserRole, RoleModel> roleEntityToModelMapper;
 
     @Autowired
-    public UserEntityToModelMapper(CustomerEntityToModelMapper customerEntityToModelMapper, RoleEntityToModelMapper roleEntityToModelMapper) {
+    public UserEntityToModelMapper(Mapper<Customer, CustomerModel> customerEntityToModelMapper, Mapper<UserRole, RoleModel> roleEntityToModelMapper) {
         this.customerEntityToModelMapper = customerEntityToModelMapper;
         this.roleEntityToModelMapper = roleEntityToModelMapper;
     }

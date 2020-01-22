@@ -1,8 +1,5 @@
 package ua.com.parkhub.dto;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class PasswordDTO {
     long id;
     private String password;

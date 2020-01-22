@@ -11,7 +11,7 @@ import {HttpClientModule , HttpClient} from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { PageComponent } from './homePage/homePage.component';
-import { ParkingService1 } from './services/parking.service';
+import { ParkingService1 } from './service/parking.service';
 import { ParkingListComponent } from './parking-list/parking-list.component';
 import { ParkingService, UserService } from './service/http-client.service';
 import { AddParkingComponent } from './add-parking/add-parking.component';
@@ -50,7 +50,7 @@ import { SlotService } from './serviceSlot/slot.service';
 import { DataService } from './DataService/data.service';
 import { ParkhubInterceptorComponent } from './parkhub-interceptor/parkhub-interceptor.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
+import { AlertDialogComponent } from './parkoff/alert-dialog/alert-dialog.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { AdminTicketDetailViewerComponent } from './admin-ticket-detail-viewer/admin-ticket-detail-viewer.component';
 import { LoginComponent } from './login/login.component';
@@ -69,6 +69,7 @@ import { AddPhoneNumberComponent } from './add-phone-number/add-phone-number.com
 import {MatChipsModule} from "@angular/material/chips";
 import {TranslateArrayService} from "./service/translatearray.service";
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -179,7 +180,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatExpansionModule,
     FlexLayoutModule,
   ],
-  providers: [ParkingService, SlotService, ParkingService1, DataService, UserService, TranslateArrayService,
+  providers: [ParkingService, SlotService, ParkingService1, DataService, UserService, TranslateArrayService,CookieService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ParkhubInterceptorComponent,

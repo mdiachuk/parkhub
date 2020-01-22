@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 
 import {FormBuilder} from '@angular/forms';
 import {DataService} from '../DataService/data.service';
-import {LoginService} from '../services/login.service';
+import {LoginService} from '../service/login.service';
 import {MatSnackBar} from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
       return this.translate.instant('Cannot activate account: less than 24 hours have passed.');
     }
     if (code === 4) {
-      return this.translate.instant('No account with such email was found.');
+      return this.translate.instant('Please enter valid credentials!');
     }
     if (code === 8) {
       return this.translate.instant('Please enter valid credentials!');

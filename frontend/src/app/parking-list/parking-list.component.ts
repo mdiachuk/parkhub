@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges, SimpleCh
 
 import { Observable, empty } from 'rxjs';
 import {DataSource} from '@angular/cdk/collections';
-import { Parking } from '../models/parking.model';
-import { ParkingService1 } from '../services/parking.service';
+import { ParkingModel } from '../model/parking.model';
+import { ParkingService1 } from '../service/parking.service';
 
 
 
@@ -30,7 +30,7 @@ export class ParkingListComponent implements OnInit, OnChanges {
     return this._search;
   }
 
-  parkings: Parking[];
+  parkings: ParkingModel[];
   dataSource = new ParkingDataSource(this.parkingService);
   displayedColumns = ['parkingName','address', 'tariff', 'fullness'];
 
@@ -55,7 +55,7 @@ export class ParkingDataSource extends DataSource<any> {
     super();
   }
 
-  connect(): Observable<Parking[]> {
+  connect(): Observable<ParkingModel[]> {
     console.log(this.search)
     return this.parkingService.getparking(this.search);
   }

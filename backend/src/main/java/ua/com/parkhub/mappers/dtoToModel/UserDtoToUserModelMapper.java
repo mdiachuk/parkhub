@@ -1,18 +1,22 @@
 package ua.com.parkhub.mappers.dtoToModel;
 
 import org.springframework.stereotype.Component;
+import ua.com.parkhub.dto.CustomerDTO;
+import ua.com.parkhub.dto.RoleDTO;
 import ua.com.parkhub.dto.UserDTO;
 import ua.com.parkhub.mappers.Mapper;
+import ua.com.parkhub.model.CustomerModel;
 import ua.com.parkhub.model.UserModel;
+import ua.com.parkhub.model.enums.RoleModel;
 
 @Component
 public class UserDtoToUserModelMapper implements Mapper<UserDTO, UserModel> {
 
-    private final CustomerDtoToCustomerModelMapper customerDtoToCustomerModelMapper;
-    private final RoleDtoToRoleModelMapper roleDtoToRoleModelMapper;
+    private final Mapper<CustomerDTO, CustomerModel> customerDtoToCustomerModelMapper;
+    private final Mapper<RoleDTO, RoleModel> roleDtoToRoleModelMapper;
 
-    public UserDtoToUserModelMapper(CustomerDtoToCustomerModelMapper customerDtoToCustomerModelMapper,
-                                    RoleDtoToRoleModelMapper roleDtoToRoleModelMapper) {
+    public UserDtoToUserModelMapper(Mapper<CustomerDTO, CustomerModel> customerDtoToCustomerModelMapper,
+                                    Mapper<RoleDTO, RoleModel> roleDtoToRoleModelMapper) {
         this.customerDtoToCustomerModelMapper = customerDtoToCustomerModelMapper;
         this.roleDtoToRoleModelMapper = roleDtoToRoleModelMapper;
     }

@@ -5,29 +5,15 @@ import java.util.List;
 
 public class ParkingModel {
 
-    private Long id;
-    private String parkingName;
-    private Integer slotsNumber;
-    private Integer tariff;
-    private AddressModel addressModel;
+    private ParkingInfoModel info;
     private List<SlotModel> slots;
-    private boolean isActive;
-    private UserModel owner;
 
-    public void setId(Long id) {
-        this.id = id;
+    public ParkingInfoModel getInfo() {
+        return info;
     }
 
-    public void setSlotsNumber(Integer slotsNumber) {
-        this.slotsNumber = slotsNumber;
-    }
-
-    public void setTariff(Integer tariff) {
-        this.tariff = tariff;
-    }
-
-    public Integer getTariff() {
-        return tariff;
+    public void setInfo(ParkingInfoModel info) {
+        this.info = info;
     }
 
     public List<SlotModel> getSlots() {
@@ -38,68 +24,17 @@ public class ParkingModel {
         this.slots = slots;
     }
 
-    public boolean getActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public UserModel getOwner() {
-        return owner;
-    }
-
-    public void setOwner(UserModel owner) {
-        this.owner = owner;
-    }
-
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-
-    public String getParkingName() {
-        return parkingName;
-    }
-
-    public void setParkingName(String parkingName) {
-        this.parkingName = parkingName;
-    }
-
-    public int getSlotsNumber() {
-        return slotsNumber;
-    }
-
-    public void setSlotsNumber(int slotsNumber) {
-        this.slotsNumber = slotsNumber;
-    }
-
-    public AddressModel getAddressModel() {
-        return addressModel;
-    }
-
-    public void setAddressModel(AddressModel addressModel) {
-        this.addressModel = addressModel;
-    }
-
     @Override
     public String toString() {
         return "ParkingModel{" +
-                "id=" + id +
-                ", parkingName='" + parkingName + '\'' +
-                ", slotsNumber=" + slotsNumber +
-                ", tariff=" + tariff +
-                ", addressModel=" + addressModel +
+                "id=" + info.getId() +
+                ", parkingName='" + info.getParkingName()+ '\'' +
+                ", slotsNumber=" + info.getSlotsNumber() +
+                ", tariff=" + info.getTariff() +
+                ", addressModel=" + info.getAddressModel() +
                 ", slots=" + slots +
-                ", isActive=" + isActive +
-                ", owner=" + owner +
+                ", isActive=" + info.isActive() +
+                ", owner=" +info.getOwner() +
                 '}';
     }
 }

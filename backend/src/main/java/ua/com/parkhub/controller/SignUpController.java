@@ -14,12 +14,12 @@ import ua.com.parkhub.dto.UserDTO;
 import ua.com.parkhub.exceptions.EmailException;
 import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
 import ua.com.parkhub.exceptions.PhoneNumberException;
-import ua.com.parkhub.mappers.dtoToModel.ManagerRegistrationRequestDtoToModel;
-import ua.com.parkhub.mappers.dtoToModel.UserDtoToUserModelMapper;
+import ua.com.parkhub.mappers.Mapper;
+import ua.com.parkhub.model.ManagerRegistrationDataModel;
+import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.model.enums.UuidTokenType;
 import ua.com.parkhub.service.ISignUpService;
-import ua.com.parkhub.service.impl.SignUpService;
-import ua.com.parkhub.service.impl.UserService;
+import ua.com.parkhub.service.IUserService;
 import ua.com.parkhub.validation.groups.CustomerChecks;
 import ua.com.parkhub.validation.groups.ManagerChecks;
 import ua.com.parkhub.validation.groups.UserChecks;
@@ -34,14 +34,16 @@ public class SignUpController {
     private static final Logger logger = LoggerFactory.getLogger(SignUpController.class);
 
     private final ISignUpService signUpService;
-    private final ManagerRegistrationRequestDtoToModel managerRegistrationRequestDtoToModel;
-    private final UserDtoToUserModelMapper userDtoToUserModelMapper;
-    private final UserService userService;
+    private final IUserService userService;
+    private final Mapper<ManagerRegistrationDataDTO, ManagerRegistrationDataModel>
+            managerRegistrationRequestDtoToModel;
+    private final Mapper<UserDTO, UserModel> userDtoToUserModelMapper;
 
     @Autowired
-    public SignUpController(ISignUpService signUpService,
-                            ManagerRegistrationRequestDtoToModel managerRegistrationRequestDtoToModel,
-                            UserDtoToUserModelMapper userDtoToUserModelMapper, UserService userService) {
+    public SignUpController(ISignUpService signUpService, IUserService userService,
+                            Mapper<UserDTO, UserModel> userDtoToUserModelMapper,
+                            Mapper<ManagerRegistrationDataDTO, ManagerRegistrationDataModel>
+                                        managerRegistrationRequestDtoToModel) {
         this.signUpService = signUpService;
         this.managerRegistrationRequestDtoToModel = managerRegistrationRequestDtoToModel;
         this.userDtoToUserModelMapper = userDtoToUserModelMapper;
@@ -95,7 +97,4 @@ public class SignUpController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
-
 }

@@ -8,8 +8,6 @@ import ua.com.parkhub.model.enums.RoleModel;
 
 import java.util.Arrays;
 
-
-
 @Component
 public class RoleModelToDTOMapper implements Mapper<RoleModel, RoleDTO> {
 

@@ -6,6 +6,7 @@ public class AdminSupportTicketDTO {
     private String ticketHighlight;
     private boolean isSolved;
     private String supportTicketType;
+    private long targetManagerId;
 
     public Long getId() {
         return id;
@@ -44,5 +45,13 @@ public class AdminSupportTicketDTO {
 
     public void setTicketHighlight(String ticketHighlight) {
         this.ticketHighlight = ticketHighlight;
+    }
+
+    public long getTargetManagerId() {
+        return targetManagerId;
+    }
+
+    public void setTargetManagerId(long targetManagerId) {
+        this.targetManagerId = targetManagerId;
     }
 }

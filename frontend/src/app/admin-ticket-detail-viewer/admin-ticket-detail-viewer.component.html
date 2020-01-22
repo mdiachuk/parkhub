@@ -3,7 +3,10 @@
     <mat-card-content>
         <div><label><b>{{'Ticket ID' |translate}}: </b></label>{{ticket.id}}</div>
         <div><label><b>{{'Ticket Type' | translate}}: </b></label>{{ticket.supportTicketType}}</div>
+        <div><label><b>Target Manager ID:</b></label>{{ticket.targetManagerId}}</div>
+        <div><label><b>Target Manager Name:</b></label>{{admin.firstName}}</div>
         <div><label><b>{{'Ticket Description' | translate}}: </b></label>{{ticket.description}}</div>
-        <button mat-raised-button color="primary" (click)="backToAdminPage()">{{'Back to Admin Page'| translate}}</button><br>
+        <button mat-raised-button color="primary" (click)="backToAdminPage()">{{'Back to Admin Page'| translate}}</button>
+        <button mat-raised-button color="primary" (click)="updateUserRole()">Set As Manager</button>
     </mat-card-content>
 </mat-card>

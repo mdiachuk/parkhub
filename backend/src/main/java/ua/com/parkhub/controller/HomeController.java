@@ -39,7 +39,6 @@ public class HomeController {
                 ParkingDTO parkingDTO = new ParkingDTO();
                 parkingDTO.setAddress("There is no parking at the designated location: "+address);
                 list.add(parkingDTO);
-                return ResponseEntity.ok(list);
             }
             return ResponseEntity.ok(list);
         }

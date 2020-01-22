@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.LoginDTO;
-import ua.com.parkhub.dto.UserDTO;
+import ua.com.parkhub.dto.UserResponseDTO;
 import ua.com.parkhub.exceptions.PermissionException;
 import ua.com.parkhub.exceptions.StatusCode;
 import ua.com.parkhub.mappers.dtoToModel.LoginDtoToUserModelMapper;
-import ua.com.parkhub.mappers.modelToDto.UserModelToUserDtoMapper;
+import ua.com.parkhub.mappers.modelToDTO.UserModelToUserResponseDtoMapper;
 import ua.com.parkhub.security.JwtUtil;
 import ua.com.parkhub.service.IAuthorizationService;
 
@@ -24,11 +24,11 @@ public class JwtAuthenticationController {
     private IAuthorizationService authenticationService;
     private static Logger logger = LoggerFactory.getLogger(JwtAuthenticationController.class.getSimpleName());
     private JwtUtil jwtUtil;
-    private UserModelToUserDtoMapper userModelToUserDtoMapper;
+    private UserModelToUserResponseDtoMapper userModelToUserDtoMapper;
     private LoginDtoToUserModelMapper loginDtoToUserModelMapper;
 
     @Autowired
-    public JwtAuthenticationController(IAuthorizationService authenticationService, JwtUtil jwtUtil, UserModelToUserDtoMapper userModelToUserDtoMapper, LoginDtoToUserModelMapper loginDtoToUserModelMapper) {
+    public JwtAuthenticationController(IAuthorizationService authenticationService, JwtUtil jwtUtil,UserModelToUserResponseDtoMapper userModelToUserDtoMapper, LoginDtoToUserModelMapper loginDtoToUserModelMapper) {
         this.authenticationService = authenticationService;
         this.jwtUtil = jwtUtil;
         this.userModelToUserDtoMapper = userModelToUserDtoMapper;
@@ -36,12 +36,12 @@ public class JwtAuthenticationController {
     }
 
     @PostMapping(value = "/api/login")
-    public ResponseEntity<UserDTO> loginUser(@Valid @RequestBody LoginDTO login) {
+    public ResponseEntity<UserResponseDTO> loginUser(@Valid @RequestBody LoginDTO login) {
         if (login == null) {
             throw new PermissionException(StatusCode.NO_ACCOUNT_FOUND);
         }
-        UserDTO response = userModelToUserDtoMapper.transform(authenticationService.loginUser(loginDtoToUserModelMapper.transform(login)));
-        response.setToken(jwtUtil.generateToken(response.getEmail(), response.getRole().toString(), response.getId()));
+        UserResponseDTO response = userModelToUserDtoMapper.transform(authenticationService.loginUser(loginDtoToUserModelMapper.transform(login)));
+        response.setToken(jwtUtil.generateToken(response.getEmail(), response.getRole(), response.getId()));
         return ResponseEntity.ok(response);
     }
 

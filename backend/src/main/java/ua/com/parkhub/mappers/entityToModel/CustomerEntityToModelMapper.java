@@ -1,20 +1,12 @@
 package ua.com.parkhub.mappers.entityToModel;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.CustomerModel;
 import ua.com.parkhub.persistence.entities.Customer;
 
 @Component
-public class CustomerEntityToModelMapper implements Mapper<Customer, CustomerModel> {
-
-    SupportTicketEntityToModelMapper supportTicketEntityToModelMapper;
-
-    @Autowired
-    public CustomerEntityToModelMapper(SupportTicketEntityToModelMapper supportTicketEntityToModelMapper) {
-        this.supportTicketEntityToModelMapper = supportTicketEntityToModelMapper;
-    }
+public class CustomerEntityToModelMapper implements Mapper<Customer , CustomerModel> {
 
     @Override
     public CustomerModel transform(Customer from) {
