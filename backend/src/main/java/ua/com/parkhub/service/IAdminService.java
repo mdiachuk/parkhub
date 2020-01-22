@@ -10,7 +10,7 @@ public interface IAdminService {
     AdminDTO findUser(long id);
     void updateRole(long id);
     void solveTicket(long id);
-    List<AdminSupportTicketDTO> ticketsList();
+    List<AdminSupportTicketDTO> retrieveTickets();
     AdminSupportTicketDTO findTicket(long id);
-    AdminTicketCounterDTO ticketCount();
+    AdminTicketCounterDTO countTickets();
 }

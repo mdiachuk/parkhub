@@ -25,8 +25,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class AdminService implements IAdminService {
-    final int LIST_ADJUSTER_START = 1;
-    final int LIST_ADJUSTER_FINISH = 6;
     private UserDAO userDAO;
     private UserRoleDAO userRoleDAO;
     private SupportTicketDAO supportTicketDAO;
@@ -65,24 +63,14 @@ public class AdminService implements IAdminService {
         supportTicketDAO.updateElement(targetTicket);
     }
 
-    public List<AdminSupportTicketDTO> ticketsList(){
+    public List<AdminSupportTicketDTO> retrieveTickets(){
         List<SupportTicketModel> targetSupportList = supportTicketDAO.findAll().stream().filter(isActive -> !isActive.isSolved()).collect(Collectors.toList());
-        long ticketCounter = targetSupportList.size();
         List<AdminSupportTicketDTO> adminSupportTicketDTOList = new ArrayList<>();
-        if (ticketCounter>5) {
-            for (long i = ticketCounter - LIST_ADJUSTER_START; i > ticketCounter - LIST_ADJUSTER_FINISH; i--) {
-                AdminSupportTicketDTO adminSupportTicketDTO = new TicketSupportModelToAdminSupportTicketDTO().transform(targetSupportList.get((int) i));
-                adminSupportTicketDTO.setSupportTicketType(targetSupportList.get((int) i).getType().getValue());
-                adminSupportTicketDTO.setTicketHighlight(ticketHighlight(targetSupportList.get((int) i).getDescription()));
-                adminSupportTicketDTOList.add(adminSupportTicketDTO);
-            }
-        }else {
             for(SupportTicketModel supportTicketList: targetSupportList){
                 AdminSupportTicketDTO adminSupportTicketDTO = new TicketSupportModelToAdminSupportTicketDTO().transform(supportTicketList);
                 adminSupportTicketDTO.setSupportTicketType(supportTicketList.getType().getValue());
                 adminSupportTicketDTO.setTicketHighlight(ticketHighlight(supportTicketList.getDescription()));
                 adminSupportTicketDTOList.add(adminSupportTicketDTO);
-            }
         }
         return adminSupportTicketDTOList;
     }
@@ -113,7 +101,7 @@ public class AdminService implements IAdminService {
         }).orElseGet(AdminSupportTicketDTO::new);
     }
 
-    public AdminTicketCounterDTO ticketCount(){
+    public AdminTicketCounterDTO countTickets(){
         long ticketCounter = supportTicketDAO.findAll().stream().filter(isActive -> !isActive.isSolved()).count();
         AdminTicketCounterDTO targetAdminTicketCounterDTO = new AdminTicketCounterDTO();
         targetAdminTicketCounterDTO.setAdminTicketCounter(ticketCounter);
