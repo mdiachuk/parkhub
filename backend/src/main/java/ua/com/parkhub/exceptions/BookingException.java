@@ -4,7 +4,7 @@ import org.springframework.validation.ObjectError;
 
 import java.util.List;
 
-public class BookingException extends ParkHubException {
+public class BookingException extends RuntimeException {
     List<ObjectError> errors;
     private StatusCode statusCode;
 

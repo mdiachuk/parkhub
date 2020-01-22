@@ -11,9 +11,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.ManagerRegistrationDataDTO;
 import ua.com.parkhub.dto.UserDTO;
-import ua.com.parkhub.exceptions.EmailException;
-import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
-import ua.com.parkhub.exceptions.PhoneNumberException;
 import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.ManagerRegistrationDataModel;
 import ua.com.parkhub.model.UserModel;
@@ -63,27 +60,6 @@ public class SignUpController {
         signUpService.registerManager(managerRegistrationRequestDtoToModel.transform(manager));
         logger.info("Manager registration request created");
         return ResponseEntity.ok().build();
-    }
-
-    @ExceptionHandler(PhoneNumberException.class)
-    public ResponseEntity handlePhoneNumberIsUsedException(PhoneNumberException e) {
-        String message = e.getMessage();
-        logger.info(message);
-        return ResponseEntity.badRequest().body(message);
-    }
-
-    @ExceptionHandler(EmailException.class)
-    public ResponseEntity handleEmailIsUsedException(EmailException e) {
-        String message = e.getMessage();
-        logger.info(message);
-        return ResponseEntity.badRequest().body(message);
-    }
-
-    @ExceptionHandler(NotFoundInDataBaseException.class)
-    public ResponseEntity handleNotFoundInDataBaseException(NotFoundInDataBaseException e) {
-        logger.info(e.getMessage());
-        String message = "Something went wrong on our server. Please, try again later.";
-        return ResponseEntity.status(500).body(message);
     }
 
 

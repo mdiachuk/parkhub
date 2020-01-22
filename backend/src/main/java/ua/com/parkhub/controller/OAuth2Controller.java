@@ -2,25 +2,29 @@ package ua.com.parkhub.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.AuthUserDTO;
 import ua.com.parkhub.dto.PhoneEmailDTO;
 
+import ua.com.parkhub.dto.TokenDTO;
 import ua.com.parkhub.mappers.dtoToModel.AuthUserDTOtoAuthUserModelMapper;
 import ua.com.parkhub.mappers.dtoToModel.PhoneEmailDTOtoPhoneEmailMapper;
 import ua.com.parkhub.model.AuthUserModel;
 import ua.com.parkhub.model.PhoneEmailModel;
-import ua.com.parkhub.model.UserModel;
-import ua.com.parkhub.security.JwtUtil;
 import ua.com.parkhub.service.ISignUpService;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -30,17 +34,15 @@ public class OAuth2Controller {
     private String frontUrl;
 
     private final ISignUpService signUpService;
-    private JwtUtil jwtUtil;
     private AuthUserDTOtoAuthUserModelMapper authUserDTOtoAuthUserModelMapper;
     private PhoneEmailDTOtoPhoneEmailMapper phoneEmailDTOtoPhoneEmailMapper;
 
 
     @Autowired
-    public OAuth2Controller(ISignUpService signUpService, AuthUserDTOtoAuthUserModelMapper Mapper, PhoneEmailDTOtoPhoneEmailMapper phoneEmailDTOtoPhoneEmailMapper,JwtUtil jwtUtil) {
+    public OAuth2Controller(ISignUpService signUpService, AuthUserDTOtoAuthUserModelMapper Mapper, PhoneEmailDTOtoPhoneEmailMapper phoneEmailDTOtoPhoneEmailMapper) {
         this.signUpService = signUpService;
         this.authUserDTOtoAuthUserModelMapper = Mapper;
         this.phoneEmailDTOtoPhoneEmailMapper = phoneEmailDTOtoPhoneEmailMapper;
-        this.jwtUtil = jwtUtil;
     }
 
     @RequestMapping("/api/oauthSuccess")
@@ -58,16 +60,12 @@ public class OAuth2Controller {
             signUpService.createUserAfterSocialAuth(model);
             response.sendRedirect(frontUrl+"/phone-number?email="+email);
         }
-        else if(signUpService.isCustomerNumberEmpty(email)){
+        else if(signUpService.isCustomerNumberEmpty(model.getEmail())){
             response.sendRedirect(frontUrl+"/phone-number?email="+email);
         }
         else{
-            UserModel userModel = signUpService.findUserbyEmail(email);
-            String token = jwtUtil.generateToken(userModel.getEmail(),userModel.getRole().getRoleName(), userModel.getId());
-            String value = "TOKEN=";
-            String value1 = value + token;
-            String value2 =value1 +"; Max-Age=604800; Path=/";
-            response.setHeader("Set-Cookie",value2);
+            String tokenCookie = "TOKEN=" + signUpService.generateTokenForOauthUser(email) +"; Max-Age=604800; Path=/";
+            response.setHeader("Set-Cookie",tokenCookie);
             response.sendRedirect(frontUrl+"/home");
         }
 
@@ -75,13 +73,22 @@ public class OAuth2Controller {
 
 
     @PutMapping("/api/customer")
-    public ResponseEntity updatePhone(@RequestBody PhoneEmailDTO phoneEmailDTO) {
+    public ResponseEntity<TokenDTO> updatePhone(@Valid @RequestBody PhoneEmailDTO phoneEmailDTO, BindingResult result) {
+        if (result.hasErrors()) {
+            List<String> errors = result.getAllErrors().stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .collect(Collectors.toList());
+            return new ResponseEntity(errors, HttpStatus.BAD_REQUEST);
+        }
         if (!signUpService.isNumberUnique(phoneEmailDTO.getPhoneNumber())){
             return new ResponseEntity("This phone number is already used", HttpStatus.BAD_REQUEST);
         }
         PhoneEmailModel phoneEmailModel=phoneEmailDTOtoPhoneEmailMapper.transform(phoneEmailDTO);
         signUpService.setPhoneNumberForAuthUser(phoneEmailModel);
-        return ResponseEntity.ok().build();
+        String jwtToken = signUpService.generateTokenForOauthUser(phoneEmailDTO.getEmail());
+        TokenDTO token = new TokenDTO();
+        token.setToken(jwtToken);
+        return ResponseEntity.ok(token);
 
     }
 

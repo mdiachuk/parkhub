@@ -1,6 +1,6 @@
 package ua.com.parkhub.exceptions;
 
-public class ParkingException extends ParkHubException {
+public class ParkingException extends RuntimeException {
     private Long parkingId;
 
     public static ParkingException createWith(Long parkingId) {

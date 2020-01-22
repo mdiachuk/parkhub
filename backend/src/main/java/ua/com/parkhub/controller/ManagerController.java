@@ -6,7 +6,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.ParkingDTO;
 import ua.com.parkhub.dto.ParkingUpdateRequestDTO;
-import ua.com.parkhub.exceptions.ParkingDoesntExistException;
 import ua.com.parkhub.mappers.dtoToModel.ParkingRequestDtoToModelMapper;
 import ua.com.parkhub.mappers.modelToDto.ParkingModelToDTOMapper;
 import ua.com.parkhub.service.impl.ParkingService;
@@ -50,9 +49,5 @@ public class ManagerController {
         return ResponseEntity.ok().build();
     }
 
-    @ExceptionHandler(ParkingDoesntExistException.class)
-    public ResponseEntity<Integer> handleEmailException(ParkingDoesntExistException e) {
-        return ResponseEntity.badRequest().body(e.getStatusCode().getCode());
-    }
 }
 

@@ -12,6 +12,7 @@ import ua.com.parkhub.model.enums.RoleModel;
 import ua.com.parkhub.model.enums.TicketTypeModel;
 import ua.com.parkhub.persistence.impl.*;
 import ua.com.parkhub.model.*;
+import ua.com.parkhub.security.JwtUtil;
 import ua.com.parkhub.service.ISignUpService;
 
 import javax.transaction.Transactional;
@@ -29,17 +30,20 @@ public class SignUpService implements ISignUpService {
     private final SupportTicketDAO supportTicketDAO;
     private final SupportTicketTypeDAO supportTicketTypeDAO;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     @Autowired
     public SignUpService(CustomerDAO customerDAO, UserDAO userDAO, UserRoleDAO userRoleDAO,
                          SupportTicketDAO supportTicketDAO, SupportTicketTypeDAO supportTicketTypeDAO,
-                         PasswordEncoder passwordEncoder) {
+                         PasswordEncoder passwordEncoder,
+                         JwtUtil jwtUtil) {
         this.customerDAO = customerDAO;
         this.userDAO = userDAO;
         this.userRoleDAO = userRoleDAO;
         this.supportTicketDAO = supportTicketDAO;
         this.supportTicketTypeDAO = supportTicketTypeDAO;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
     }
 
     @Transactional
@@ -128,20 +132,24 @@ public class SignUpService implements ISignUpService {
 
     @Override
     public boolean isUserPresentByEmail(String email) {
-        return userDAO.findOneByFieldEqual("email", email).isPresent();
+        return userDAO.findUserByEmail(email).isPresent();
     }//mine
 
     @Override
     public void setPhoneNumberForAuthUser(PhoneEmailModel phoneEmailModel) {
-        if(userDAO.findOneByFieldEqual("email", phoneEmailModel.getEmail()).isPresent()){
-            CustomerModel customerModel = userDAO.setOauthUserPhone(phoneEmailModel);
-            customerDAO.updateElement(customerModel);
-        }
+        logger.info("Setting phone number for Oauth2 user");
+        UserModel userModel = userDAO.findUserByEmail(phoneEmailModel.getEmail()).orElseThrow(() ->
+                new NotFoundInDataBaseException("User was not found" ));
+        CustomerModel customerModel = userModel.getCustomer();
+        customerModel.setPhoneNumber(phoneEmailModel.getPhoneNumber());
+        customerDAO.updateElement(customerModel);
+        logger.info("Phone number for Oauth2 user is set successfully");
+
     }
 
     @Override
     public void createUserAfterSocialAuth(AuthUserModel userModel){
-        if(!userDAO.findUserByEmail(userModel.getEmail()).isPresent()){
+            logger.info("Creating new user that was authorized via Google ");
             UserModel user = new UserModel();
             CustomerModel customer = new CustomerModel();
             customer.setPhoneNumber("Empty");
@@ -150,16 +158,17 @@ public class SignUpService implements ISignUpService {
             user.setPassword(passwordEncoder.encode("oauth2user"));
             user.setLastName(userModel.getLastName());
             user.setFirstName(userModel.getFirstName());
-            RoleModel userRole = userRoleDAO.findOneByFieldEqual("roleName", "USER").get();
+            RoleModel userRole =  findUserRole("USER");
             user.setRole(userRole);
             userDAO.addElement(user);
-        }
+            logger.info("User created successfully ");
     }//mine
 
     @Override
     public boolean isCustomerNumberEmpty(String email) {
-        UserModel user = userDAO.findOneByFieldEqual("email", email).get();
-        CustomerModel customer = user.getCustomer();
+        UserModel userModel = userDAO.findUserByEmail(email).orElseThrow(() ->
+                new NotFoundInDataBaseException("User was not found" ));
+        CustomerModel customer = userModel.getCustomer();
         return customer.getPhoneNumber().equals("Empty");
     }//mine
 
@@ -180,7 +189,10 @@ public class SignUpService implements ISignUpService {
     }
 
     @Override
-    public UserModel findUserbyEmail(String email) {
-        return userDAO.findOneByFieldEqual("email", email).get();
+    public String generateTokenForOauthUser(String email){
+        UserModel userModel = userDAO.findUserByEmail(email).orElseThrow(() ->
+                new NotFoundInDataBaseException("User was not found" ));
+           String token = jwtUtil.generateToken(userModel.getEmail(),userModel.getRole().getRoleName(), userModel.getId());
+           return token;
     }//mine
 }

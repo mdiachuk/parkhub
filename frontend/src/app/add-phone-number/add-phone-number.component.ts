@@ -55,6 +55,7 @@ export class AddPhoneNumberComponent implements OnInit {
     console.log(formGroup);
     this.oauth2Service.save(formGroup)
       .subscribe( data => {
+        localStorage.setItem('TOKEN', data.token);
           this.router.navigate(['/home']);
           console.log(data);
         },
