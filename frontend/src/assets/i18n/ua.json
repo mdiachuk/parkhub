@@ -2,14 +2,13 @@
   "Logo": {
     "value": "assets/ParkhubLogoUkr.png"
   },
-
   "ParkHub": "ParkHub",
   "RECOMMENDED BY THE MOST CAPRICIOUS DRIVERS!": "РЕКОМЕНДОВАНО НАЙБІЛЬШ ПРИМХЛИВИМИ ВОДІЯМИ!",
   "Parking created successfully.": "Парковка створена успішно.",
   "Dear user,please input your phone number to be able to have full access cabinet!": "Шановний користувач, будь ласка, введіть свій номер телефону, щоб мати можливість мати повний доступ до кабінету!",
   "Home": "Головна",
   "From:": "З:",
-  "Please, select available slot. Price per hour:" : "Виберіть доступний слот. Тариф за годину:",
+  "Please, select available slot. Price per hour:": "Виберіть доступний слот. Тариф за годину:",
   "Please, insert your car number and phone number": "Будь ласка, введіть свій номер автівки та номер телефону",
   "LIKE": "ВПОДОБАТИ",
   "SHARE": "ПОШИРИТИ",
@@ -81,9 +80,9 @@
   "PasswordsMustMatch": "Паролі мають співпадати!",
   "Max200Characters": "Максимум 200 символів",
   "IAgreeWithTermsConditionsAndPrivacyPolicy": "Я погоджуюся з умовами та політикою конфіденційності",
-  "Reset": "Видалити все",
-  "Submit": "Зберегти",
-  "wasSentToTheAdministrator": "було надіслано адміністратору!",
+  "Reset": "Очистити",
+  "Submit": "Підтвердити",
+  "YourRegistrationRequestWasSentToTheAdministrator": "Запит на реєстрацію було надіслано адміністратору!",
   "GoToTheHomepage": "Перейти на головну сторінку",
   "Add": "Додати",
   "Become partner": "Стати партнером",
@@ -108,6 +107,7 @@
   "Please enter valid credentials!": "Введіть дійсні облікові дані!",
   "Forgot your password?": "Забули свій пароль?",
   "Type your email in the field below and we will send you link to reset your password.": "Введіть електронну пошту в поле нижче і ми надішлемо вам посилання, щоб скинути пароль.",
+  "BecomePartner": "Стати партнером",
   "TypeUserIDPlaceholder": {
     "value": "Введіть ID користувача"
   },
@@ -115,7 +115,7 @@
     "value": "Введіть роль користувача"
   },
   "FindYourParkingLove♥Placeholder": {
-    "value":"Знайти парковку"
+    "value": "Знайти парковку"
   },
   "PhoneNumberPlaceholder": {
     "value": "Номер телефону"
