@@ -30,20 +30,20 @@
         <mat-form-field>
           <input matInput formControlName="usreouCode" [placeholder]="'managerUSREOUPlaceholder.value' | translate"
             required pattern="[0-9]{8}">
-          <mat-error><small>{{'MustContain8Numbers' | translate}}</small></mat-error>
+          <mat-error>{{'MustContain8Numbers' | translate}}</mat-error>
         </mat-form-field>
       </li>
       <li>
         <mat-form-field>
           <input matInput type="email" formControlName="email" [placeholder]="'EmailPlaceholder.value' | translate"
             required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}">
-          <mat-error><small>{{'InvalidEmailFormat' | translate}}</small></mat-error>
+          <mat-error>{{'InvalidEmailFormat' | translate}}</mat-error>
         </mat-form-field>
         &nbsp;
         <mat-form-field>
           <input matInput type="tel" formControlName="phoneNumber"
-            [placeholder]="'PhoneNumberPlaceholder.value' | translate" required pattern="^3?8?(0\d{9})$">
-          <mat-error><small>{{'InvalidPhoneNumberFormat' | translate}}</small></mat-error>
+            [placeholder]="'PhoneNumberPlaceholder.value' | translate" required pattern="^\+?3?8?(0\d{9})$">
+          <mat-error>{{'InvalidPhoneNumberFormat' | translate}}</mat-error>
         </mat-form-field>
       </li>
       <li>
