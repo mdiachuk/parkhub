@@ -10,6 +10,7 @@ import {UserInfo} from '../interfaces/userInfo';
 import { Login } from '../interfaces/login';
 import * as jwt_decode from 'jwt-decode';
 import { userRole } from '../model/userRole';
+import { AdminTicketDetail } from '../Classes/admin-ticket-detail';
 
 export class User {
   constructor(
@@ -171,11 +172,15 @@ export class AdminService {
   }
 
   getUserById(id: number): Observable<Admin> {
-    return this.http.get<Admin>(`/api/admin/${id}`);
+    return this.http.get<Admin>(`/api/admin/manager/${id}`);
   }
 
   updateRole(admin: Admin) {
-    this.http.post('/api/admin/{id}', admin).subscribe(res => console.log('ok'));
+    this.http.post(`/api/admin/manager/${admin.id}`, admin).subscribe(res => console.log('ok'));
+  }
+
+  setTicketAsSolved(adminTicketDetail: AdminTicketDetail){
+    this.http.post(`/api/admin/ticket/setsolved/${adminTicketDetail.id}`, adminTicketDetail).subscribe(res => console.log('ok'));
   }
 }
 

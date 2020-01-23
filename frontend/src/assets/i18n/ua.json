@@ -2,14 +2,13 @@
   "Logo": {
     "value": "assets/ParkhubLogoUkr.png"
   },
-
   "ParkHub": "ParkHub",
   "RECOMMENDED BY THE MOST CAPRICIOUS DRIVERS!": "РЕКОМЕНДОВАНО НАЙБІЛЬШ ПРИМХЛИВИМИ ВОДІЯМИ!",
   "Parking created successfully.": "Парковка створена успішно.",
   "Dear user,please input your phone number to be able to have full access cabinet!": "Шановний користувач, будь ласка, введіть свій номер телефону, щоб мати можливість мати повний доступ до кабінету!",
   "Home": "Головна",
   "From:": "З:",
-  "Please, select available slot. Price per hour:" : "Виберіть доступний слот. Тариф за годину:",
+  "Please, select available slot. Price per hour:": "Виберіть доступний слот. Тариф за годину:",
   "Please, insert your car number and phone number": "Будь ласка, введіть свій номер автівки та номер телефону",
   "LIKE": "ВПОДОБАТИ",
   "SHARE": "ПОШИРИТИ",
@@ -70,7 +69,7 @@
   "City": "Місто",
   "$": "грн/година",
   "OK": "OK",
-  "Send": "Відмінити",
+  "Send": "Відправити",
   "Required": "Обов'язкове",
   "Go to Parking owner cabinet": "До кабінету менеджера",
   "HomePageChooseParking": "Обери парковку:",
@@ -81,9 +80,9 @@
   "PasswordsMustMatch": "Паролі мають співпадати!",
   "Max200Characters": "Максимум 200 символів",
   "IAgreeWithTermsConditionsAndPrivacyPolicy": "Я погоджуюся з умовами та політикою конфіденційності",
-  "Reset": "Видалити все",
-  "Submit": "Зберегти",
-  "wasSentToTheAdministrator": "було надіслано адміністратору!",
+  "Reset": "Очистити",
+  "Submit": "Підтвердити",
+  "YourRegistrationRequestWasSentToTheAdministrator": "Запит на реєстрацію було надіслано адміністратору!",
   "GoToTheHomepage": "Перейти на головну сторінку",
   "Add": "Додати",
   "Become partner": "Стати партнером",
@@ -107,7 +106,18 @@
   "No account with such email was found.": "Не знайдено жодного облікового запису з такою електронною адресою",
   "Please enter valid credentials!": "Введіть дійсні облікові дані!",
   "Forgot your password?": "Забули свій пароль?",
+  "Type your email in the field below and we will ": "Введіть електронну пошту в поле нижче і ми ",
+  "send you link to reset your password.": "надішлемо вам посилання, щоб скинути пароль.",
+  "ResetForgottenPassword": "Скинути забутий пароль",
   "Type your email in the field below and we will send you link to reset your password.": "Введіть електронну пошту в поле нижче і ми надішлемо вам посилання, щоб скинути пароль.",
+  "BecomePartner": "Стати партнером",
+  "Link for resetting password was sent": "Посилання для скидання паролю було надіслано",
+  "to your email-box!": "на вашу поштову скриньку!",
+  "Note, that password must contain at least one number, one uppercase": "Зверніть увагу, що пароль повинен містити принаймні одне число,",
+  "and one lowercase letter, and at least 6 characters": "одну велику і одну малу літеру та принаймні 6 символів",
+  "Password must match requirements": "Пароль повинен відповідати вимогам",
+  "Resend link": "Повторно надіслати посилання",
+  "Link for veifying email adress was sent": "Посилання для підтвердження пошти було надіслано",
   "TypeUserIDPlaceholder": {
     "value": "Введіть ID користувача"
   },
@@ -115,7 +125,7 @@
     "value": "Введіть роль користувача"
   },
   "FindYourParkingLove♥Placeholder": {
-    "value":"Знайти парковку"
+    "value": "Знайти парковку"
   },
   "PhoneNumberPlaceholder": {
     "value": "Номер телефону"
@@ -143,6 +153,9 @@
   },
   "PasswordPlaceholder": {
     "value": "Пароль"
+  },
+  "NewPasswordPlaceholder": {
+    "value": "Новий пароль"
   },
   "FirstNamePlaceholder": {
     "value": "Ім'я"

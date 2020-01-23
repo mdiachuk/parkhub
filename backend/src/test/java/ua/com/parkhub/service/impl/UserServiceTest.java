@@ -93,11 +93,10 @@ class UserServiceTest {
 
     @Test
     public void test_isLinkActive_tokenExpired_returnFalse() {
-        UuidTokenModel token = Mockito.mock(UuidTokenModel.class);
-        LocalDateTime expirationDate  = LocalDateTime.now().minusMinutes(100);
+        UuidTokenModel token = new UuidTokenModel();
+        token.setExpirationDate(LocalDateTime.now().minusMinutes(100));
 
         when(uuidTokenDAO.findUuidTokenByToken(anyString())).thenReturn(Optional.of(token));
-        when(token.getExpirationDate()).thenReturn(expirationDate);
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
             assertFalse(userService.isLinkActive("12345"));
@@ -106,11 +105,10 @@ class UserServiceTest {
 
     @Test
     public void test_isLinkActive_everythingCorrect_returnTrue() {
-        UuidTokenModel token = Mockito.mock(UuidTokenModel.class);
-        LocalDateTime expirationDate  = LocalDateTime.now().plusMinutes(100);
+        UuidTokenModel token = new UuidTokenModel();
+        token.setExpirationDate(LocalDateTime.now().plusMinutes(100));
 
         when(uuidTokenDAO.findUuidTokenByToken(anyString())).thenReturn(Optional.of(token));
-        when(token.getExpirationDate()).thenReturn(expirationDate);
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
             assertTrue(userService.isLinkActive("12345"));
@@ -119,11 +117,10 @@ class UserServiceTest {
 
     @Test
     public void test_resetPassword_tokenExpired_invalidTokenExceptionThrown() {
-        UuidTokenModel token = Mockito.mock(UuidTokenModel.class);
-        LocalDateTime expirationDate  = LocalDateTime.now().minusMinutes(100);
+        UuidTokenModel token = new UuidTokenModel();
+        token.setExpirationDate(LocalDateTime.now().minusMinutes(100));
 
         when(uuidTokenDAO.findUuidTokenByToken(anyString())).thenReturn(Optional.of(token));
-        when(token.getExpirationDate()).thenReturn(expirationDate);
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
             assertThrows(InvalidTokenException.class, () -> userService.resetPassword("12345", "qwerty"));
@@ -139,13 +136,12 @@ class UserServiceTest {
 
     @Test
     public void test_resetPassword_userNotAssigned_invalidTokenExceptionThrown() {
-        UuidTokenModel token = Mockito.mock(UuidTokenModel.class);
-        LocalDateTime expirationDate  = LocalDateTime.now().plusMinutes(100);
-        UserModel user = Mockito.mock(UserModel.class);
+        UuidTokenModel token = new UuidTokenModel();
+        token.setExpirationDate(LocalDateTime.now().plusMinutes(100));
+        UserModel user = new UserModel();
+        token.setUser(user);
 
         when(uuidTokenDAO.findUuidTokenByToken(anyString())).thenReturn(Optional.of(token));
-        when(token.getExpirationDate()).thenReturn(expirationDate);
-        when(token.getUser()).thenReturn(user);
         when(userDAO.findElementById(anyLong())).thenReturn(Optional.empty());
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
@@ -155,14 +151,13 @@ class UserServiceTest {
 
     @Test
     public void test_resetPassword_everythingCorrect() {
-        UuidTokenModel token = Mockito.mock(UuidTokenModel.class);
-        LocalDateTime expirationDate  = LocalDateTime.now().plusMinutes(100);
-        UserModel user = Mockito.mock(UserModel.class);
+        UuidTokenModel token = new UuidTokenModel();
+        token.setExpirationDate(LocalDateTime.now().plusMinutes(100));
+        UserModel user = new UserModel();
+        user.setEmail("email@test.com");
+        token.setUser(user);
 
         when(uuidTokenDAO.findUuidTokenByToken(anyString())).thenReturn(Optional.of(token));
-        when(token.getExpirationDate()).thenReturn(expirationDate);
-        when(token.getUser()).thenReturn(user);
-        when(user.getEmail()).thenReturn("email@test.com");
         when(userDAO.findUserByEmail(anyString())).thenReturn(Optional.of(user));
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
@@ -179,12 +174,12 @@ class UserServiceTest {
 
     @Test
     public void test_verifyEmail_everythingCorrect() {
-        UuidTokenModel token = Mockito.mock(UuidTokenModel.class);
-        UserModel user = Mockito.mock(UserModel.class);
+        UuidTokenModel token = new UuidTokenModel();
+        UserModel user = new UserModel();
+        token.setUser(user);
         RoleModel role = RoleModel.USER;
 
         when(uuidTokenDAO.findUuidTokenByToken(anyString())).thenReturn(Optional.of(token));
-        when(token.getUser()).thenReturn(user);
         when(signUpService.findUserRole(anyString())).thenReturn(role);
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
