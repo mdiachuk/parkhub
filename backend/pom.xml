@@ -36,7 +36,6 @@
         <profile>
             <id>develop</id>
             <properties>
-                <!--<activatedProperties>develop</activatedProperties>-->
                 <spring.profiles.active>develop</spring.profiles.active>
             </properties>
             <activation>
@@ -60,7 +59,6 @@
         <profile>
             <id>release</id>
             <properties>
-                <!--<activatedProperties>release</activatedProperties>-->
                 <spring.profiles.active>release</spring.profiles.active>
 
             </properties>
@@ -113,7 +111,6 @@
                         <configuration>
                             <nodeVersion>v12.14.0</nodeVersion>
                             <npmVersion>6.13.4</npmVersion>
-                            <!--TODO-->
                             <workingDirectory>../frontend</workingDirectory>
                         </configuration>
                         <executions>
