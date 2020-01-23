@@ -30,6 +30,8 @@
     <properties>
         <java.version>1.8</java.version>
         <parkhub-spring-cloud.version>1.2.1.RELEASE</parkhub-spring-cloud.version>
+        <sonar.projectKey>kv-057.java_parkhub</sonar.projectKey>
+        <sonar.organization>kv-057-java</sonar.organization>
     </properties>
 
     <profiles>
