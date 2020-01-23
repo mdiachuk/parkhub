@@ -11,7 +11,7 @@ public interface IUserService {
     void resetPassword(String token, String password);
     boolean isLinkActive(String token);
 
-    Optional<UserModel> findUserById(long Id);
+    UserModel findUserById(long Id);
     void changePassword(long id, String newPassword, UserModel userModel);
     void updateUser(long id, UserModel userUp);
 }

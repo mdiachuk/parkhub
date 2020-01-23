@@ -1,11 +1,13 @@
 import { AbstractControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Observable, empty } from 'rxjs';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { AlertDialogComponent } from '../parkoff/alert-dialog/alert-dialog.component';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import {UserService} from '../service/http-client.service';
 import {UserInfo} from '../interfaces/userInfo';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { delay } from 'rxjs/operators';
+import {TranslateService} from '@ngx-translate/core';
 
 var i = 0;
 var j = 0;
@@ -25,8 +27,14 @@ export class UserComponent implements OnInit {
   updateForm: FormGroup;
 
   // tslint:disable-next-line:no-shadowed-variable
-  constructor( private uf: FormBuilder, private UserService: UserService, private _snackBar: MatSnackBar) { }
+  constructor( private uf: FormBuilder, private UserService: UserService,  private translate: TranslateService, public dialog: MatDialog) { }
 
+  openDialog(title: string, message: string): MatDialogRef<AlertDialogComponent> {
+    return this.dialog.open(AlertDialogComponent, {
+      width: '350px',
+      data: { title, message }
+    });
+  }
   ngOnInit() {
 
     this.UserService.getData().subscribe((data: UserInfo) => {
@@ -49,13 +57,13 @@ export class UserComponent implements OnInit {
     if (i == 0) {
       document.getElementById("displayUserInfo").style.display = "none";
       document.getElementById("editUserInfo").style.display = "";
-      document.getElementById("editButton").innerText = "Close";
+      document.getElementById("editButton").innerText = this.translate.instant('Close');;
       i++;
     }
     else {
       document.getElementById("displayUserInfo").style.display = "";
       document.getElementById("editUserInfo").style.display = "none";
-      document.getElementById("editButton").innerText = "Edit";
+      document.getElementById("editButton").innerText = this.translate.instant('Edit');;
       i--;
     }
   }
@@ -63,15 +71,12 @@ export class UserComponent implements OnInit {
     this.UserService.PostData({...this.updateForm.value,id: this.UserService.getUserID()}).subscribe(res => {
     
       console.log(res);
-      this._snackBar.open('Changes were accepted!', 'Close', {
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
-        duration: 2000,
-       
-     
-    });
-    this.updateForm.reset(); 
-    location.reload();
+      const title =  this.translate.instant('Success');
+      const message = this.translate.instant('Changes were accepted');
+      this.openDialog(title, message).afterClosed().subscribe(() => {
+        this.updateForm.reset(); 
+        window.location.reload();
+      });
     
   });
   }
@@ -79,13 +84,13 @@ export class UserComponent implements OnInit {
 
     if (j == 0) {
       document.getElementById("ChangePassword").style.display = "";
-      document.getElementById("buttonChangePassword").innerText = "Close";
+      document.getElementById("buttonChangePassword").innerText = this.translate.instant('Close');
       document.getElementById("buttonSavePassword").style.display = "";
       j++;
     } else {
       document.getElementById("ChangePassword").style.display = "none";
       document.getElementById("buttonSavePassword").style.display = "none";
-      document.getElementById("buttonChangePassword").innerText = "Change Password";
+      document.getElementById("buttonChangePassword").innerText = this.translate.instant('Change Password');
       j--;
     }
 
@@ -97,19 +102,21 @@ export class UserComponent implements OnInit {
       password: this.updateForm.get('userPassword').value,
       newPassword: this.updateForm.get('newPassword').value
     }).subscribe(res => {
-        this._snackBar.open("Password Changed!", "Close", {
-          horizontalPosition: 'center',
-          verticalPosition: 'top',
-          duration: 2000,
-          
-        });
+      const title =  this.translate.instant('Success');
+      const message = this.translate.instant('Changes were accepted');
+      this.openDialog(title, message).afterClosed().subscribe(() => {
+        window.location.reload();
+      });
+     
+ 
       },
       err => {
-        this._snackBar.open("Failed to change password!", "Close", {
-          horizontalPosition: 'center',
-          verticalPosition: 'top',
-          duration: 2000,
+        const title =  this.translate.instant('Error');
+        const message = this.translate.instant('Failed to change password');
+        this.openDialog(title, message).afterClosed().subscribe(() => {
+          window.location.reload();
         });
+   
       });
     
    
