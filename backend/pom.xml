@@ -8,11 +8,12 @@
         <version>2.2.1.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>ua.com.parkhub</groupId>
     <artifactId>backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>backend</name>
-    <description>ParkHub - recommended by the most capricious drivers!</description>
+    <description>ParkHub - best parking in a world!</description>
     <packaging>war</packaging>
     <dependencyManagement>
         <dependencies>
@@ -35,7 +36,7 @@
         <profile>
             <id>develop</id>
             <properties>
-                <activatedProperties>develop</activatedProperties>
+                <spring.profiles.active>develop</spring.profiles.active>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -58,9 +59,16 @@
         <profile>
             <id>release</id>
             <properties>
-                <activatedProperties>release</activatedProperties>
+                <spring.profiles.active>release</spring.profiles.active>
+
             </properties>
             <dependencies>
+
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                    <scope>provided</scope>
+                </dependency>
                 <dependency>
                     <groupId>javax.servlet</groupId>
                     <artifactId>javax.servlet-api</artifactId>
@@ -68,11 +76,29 @@
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>jul-to-slf4j</artifactId>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
                     <groupId>org.springframework.cloud</groupId>
                     <artifactId>spring-cloud-gcp-starter-sql-postgresql</artifactId>
                 </dependency>
+                <dependency>
+                    <groupId>com.google.appengine</groupId>
+                    <artifactId>appengine-api-1.0-sdk</artifactId>
+                    <version>1.9.76</version>
+                    <scope>provided</scope>
+                </dependency>
             </dependencies>
             <build>
+                <resources>
+                    <!--enable resource filtering in pom.xml-->
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
                 <plugins>
                     <plugin>
                         <!-- https://mvnrepository.com/artifact/com.github.eirslett/frontend-maven-plugin -->
@@ -85,7 +111,6 @@
                         <configuration>
                             <nodeVersion>v12.14.0</nodeVersion>
                             <npmVersion>6.13.4</npmVersion>
-                            <!--TODO-->
                             <workingDirectory>../frontend</workingDirectory>
                         </configuration>
                         <executions>
@@ -114,10 +139,19 @@
                                     "install", so unless you need to run some other npm command,
                                     you can remove this whole <configuration> section.
                                     -->
-                                    <arguments>run build</arguments>
+                                    <arguments>run build-prod</arguments>
                                 </configuration>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.google.cloud.tools</groupId>
+                        <artifactId>appengine-maven-plugin</artifactId>
+                        <version>2.2.0</version>
+                        <configuration>
+                            <deploy.projectId>eng-contact-261713</deploy.projectId>
+                            <deploy.version>GCLOUD_CONFIG</deploy.version>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
@@ -139,6 +173,10 @@
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -221,11 +259,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>appengine-maven-plugin</artifactId>
-                <version>2.2.0</version>
-            </plugin>
             <!--Failsafe Plugin is designed to run integration tests and verify phases-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -237,6 +270,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
+
         </plugins>
     </build>
 </project>

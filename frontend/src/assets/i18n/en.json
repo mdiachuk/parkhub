@@ -19,6 +19,8 @@
   "Cancel Prepayment": "Cancel prepayment",
   "Please, select preferred time": "Please, select preferred time",
   "Please, select available slot. Price per hour:": "Please, select available slot. Tariff per hour:",
+  "Changes were accepted": "Changes were accepted!",
+  "Failed to change password" : "Failed to change password!",
   "Success": "Success",
   "Search": "Search",
   "Nearest parking": "Nearest parking",
@@ -26,6 +28,15 @@
   "User": "User",
   "Enter your car number": "Enter your car number",
   "User Info": "User Info",
+  "First name": "First name",
+  "Last Name": "Last Name",
+  "Phone": "Phone",
+  "Edit": "Edit",
+  "Save": "Save",
+  "User Details": "User Details",
+  "Change Password": "Change Password",
+  "Close": "Close",
+  "Save Password": "Save Password",
   "Customer with this phone number was not found": "Customer with this phone number was not found, please, check the correct input",
   "No pre-order": "No pre-order for this phone number found",
   "Your reservation is already in progress": "Your reservation is already in progress",
@@ -41,6 +52,11 @@
   "Sign up": "Sign up",
   "Get User by Id": "Get User by ID",
   "ID:": "ID",
+  "First name": "First name",
+  "Last Name": "Last Name",
+  "Phone": "Phone",
+  "Edit": "Edit",
+  "Save": "Save",
   "Ticket List": "Ticket list",
   "Type User ID": "Type user ID",
   "Sign up Manager": "Sign up Manager",
@@ -97,7 +113,11 @@
   "PhoneNumber": "Phone Number",
   "Email": "Email",
   "Password": "Password",
+  "User Details": "User Details",
+  "Change Password": "Change Password",
   "ConfirmPassword": "Confirm password",
+  "Close": "Close",
+  "Save Password": "Save Password",
   "PricePerHour": "Price per hour",
   "PleaseChooseAvailableSlot": "Please, choose available slot",
   "NotAValidNameOfStreet": "Not a valid name of street.",
@@ -120,6 +140,15 @@
   "Password must match requirements": "Password must match requirements",
   "Resend link": "Resend link",
   "Link for veifying email adress was sent": "Link for veifying email adress was sent",
+  "PhonePlaceholder":{
+    "value": "PhonePlaceholder"
+  },
+  "NewPasswordPlaceholder": {
+    "value": "NewPasswordPlaceholder"
+  },
+  "ConfirmPasswordPlaceholder": {
+    "value": "ConfirmPasswordPlaceholder"
+  },
   "TypeUserIDPlaceholder": {
     "value": "Type User ID"
   },

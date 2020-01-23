@@ -10,7 +10,8 @@ public enum StatusCode {
     CUSTOMER_NOT_FOUND(32),
     BOOKING_NOT_FOUND(64),
     PARKING_DOESNT_EXIST(128),
-    ROLE_PENDING(256);
+    ROLE_PENDING(256),
+    USER_NOT_FOUND(512);
 
     private int code;
 

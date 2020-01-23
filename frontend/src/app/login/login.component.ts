@@ -68,16 +68,10 @@ export class LoginComponent implements OnInit {
   }
 
   checkStatusCode(code: number): string {
-    if (code === 1) {
+    if ((code === 1) || (code === 2)) {
       return this.translate.instant('Your account was blocked for 24 hours because of 3 unsuccessful tries to login. Please, try again later.');
     }
-    if (code === 2) {
-      return this.translate.instant('Cannot activate account: less than 24 hours have passed.');
-    }
-    if (code === 4) {
-      return this.translate.instant('Please enter valid credentials!');
-    }
-    if (code === 8) {
+    if ((code === 4) || (code === 8)) {
       return this.translate.instant('Please enter valid credentials!');
     }
     if (code === 256) {
