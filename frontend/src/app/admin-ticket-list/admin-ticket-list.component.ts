@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdminTicketDetail } from '../Classes/admin-ticket-detail';
 import { AdminTicketCounter } from '../Classes/admin-ticket-counter';
 import { AdminTicketService } from '../admin-ticket.service';
-import {DataSource} from '@angular/cdk/collections';
 import { Observable, of } from 'rxjs';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 @Component({
@@ -12,43 +13,36 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './admin-ticket-list.component.html',
   styleUrls: ['./admin-ticket-list.component.scss']
 })
+
 export class AdminTicketListComponent implements OnInit {
 
-  tickets: AdminTicketDetail[];
-  dataSource = new AdminTicketListDataSource(this.adminTicketService);
-  displayedColumns = ['id','ticketHighlight','supportTicketType','isSolved']
+  dataSource = new MatTableDataSource<AdminTicketDetail>();
+  displayedColumns = ['id','ticketHighlight','supportTicketType','actions'];
   ticketCounter$: Observable<AdminTicketCounter> = of({adminTicketCounter: 0});
+  
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private adminTicketService: AdminTicketService,
-    private route: ActivatedRoute,
     private router: Router) { 
-  
   }
 
   ngOnInit() {
     this.reloadData();
+    this.dataSource.paginator = this.paginator;
     this.ticketCounter$ = this.getTicketCounter();
   }
+
   getTicketCounter(): Observable<AdminTicketCounter>{
     return this.adminTicketService.getAdminTicketCounter();
   }
-  reloadData(){
-    this.adminTicketService.getTicketsList().subscribe(response => this.tickets = response);
+
+  reloadData(): void{
+    this.adminTicketService.getTicketsList().subscribe(response => {
+      this.dataSource.data = response;
+    });
   }
+  
   ticketDetails(id: number){
       this.router.navigate(['admin', id])
-  }
-
-}
-
-export class AdminTicketListDataSource extends DataSource<any>{
-  constructor(private adminTicketService: AdminTicketService){
-    super();
-  }
-  connect(): Observable<AdminTicketDetail[]>{
-    return this.adminTicketService.getTicketsList();
-  }
-  disconnect(){
-
   }
 }

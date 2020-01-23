@@ -4,4 +4,5 @@ export class AdminTicketDetail{
     isSolved: boolean
     supportTicketType: String
     ticketHighlight: String
+    targetManagerId: number
 }           

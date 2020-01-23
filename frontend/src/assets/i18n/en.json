@@ -18,10 +18,10 @@
   "CancelPrepayment": "Cancel prepayment",
   "Cancel Prepayment": "Cancel prepayment",
   "Please, select preferred time": "Please, select preferred time",
-  "Please, select available slot. Price per hour:" : "Please, select available slot. Tariff per hour:",
+  "Please, select available slot. Price per hour:": "Please, select available slot. Tariff per hour:",
   "Success": "Success",
   "Search": "Search",
-  "Nearest parking" : "Nearest parking",
+  "Nearest parking": "Nearest parking",
   "Error": "Error",
   "User": "User",
   "Enter your car number": "Enter your car number",
@@ -82,7 +82,7 @@
   "Please enter valid credentials!": "Please enter valid credentials!",
   "Reset": "Reset",
   "Submit": "Submit",
-  "wasSentToTheAdministrator": "was sent to the administrator!",
+  "YourRegistrationRequestWasSentToTheAdministrator": "Your registration request was sent to the administrator!",
   "GoToTheHomepage": "Go to the homepage",
   "Type your email in the field below and we will<br>send you link to reset your password.": "Type your email in the field below and we will<br>send you link to reset your password.",
   "ParkingName": "Parking Name",
@@ -108,16 +108,26 @@
   "Required": "Required",
   "$": "UAH/hour",
   "Forgot your password?": "Forgot your password?",
-  "Type your email in the field below and we will\nsend you link to reset your password.": "Type your email in the field below and we will\nsend you link to reset your password.",
+  "Type your email in the field below and we will ": "Type your email in the field below and we will ",
+  "send you link to reset your password.": "send you link to reset your password.",
   "FieldIsRequired": "Field is required",
+  "ResetForgottenPassword": "Reset forgotten password",
+  "BecomePartner": "Become partner",
+  "Link for resetting password was sent": "Link for resetting password was sent",
+  "to your email-box!": "to your email-box!",
+  "Note, that password must contain at least one number, one uppercase": "Note, that password must contain at least one number, one uppercase",
+  "and one lowercase letter, and at least 6 characters": "and one lowercase letter, and at least 6 characters",
+  "Password must match requirements": "Password must match requirements",
+  "Resend link": "Resend link",
+  "Link for veifying email adress was sent": "Link for veifying email adress was sent",
   "TypeUserIDPlaceholder": {
     "value": "Type User ID"
   },
   "TypeUserRolePlaceholder": {
     "value": "Type user role"
   },
-    "FindYourParkingLove♥Placeholder": {
-    "value" : "Find parking"
+  "FindYourParkingLove♥Placeholder": {
+    "value": "Find parking"
   },
   "PhoneNumberPlaceholder": {
     "value": "Phone number"
@@ -145,6 +155,9 @@
   },
   "PasswordPlaceholder": {
     "value": "Password"
+  },
+  "NewPasswordPlaceholder": {
+    "value": "New password"
   },
   "FirstNamePlaceholder": {
     "value": "First name"
