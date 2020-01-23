@@ -1,6 +1,6 @@
 package ua.com.parkhub.exceptions;
 
-public class CustomerException extends RuntimeException {
+public class CustomerException extends ParkHubException {
 
     private StatusCode statusCode;
 

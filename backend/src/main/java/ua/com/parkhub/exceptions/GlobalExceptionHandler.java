@@ -11,34 +11,34 @@ public class GlobalExceptionHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler({BookingException.class,CustomerException.class,PermissionException.class})
-    public ResponseEntity handleBookingCustomerPermissionException(BookingException e) {
+    public ResponseEntity handleBookingCustomerPermissionException(ParkHubException e) {
         return ResponseEntity.badRequest().body(e.getStatusCode());
     }
 
 
     @ExceptionHandler(ParkingDoesntExistException.class)
-    public ResponseEntity<Integer> handleEmailException(ParkingDoesntExistException e) {
+    public ResponseEntity<Integer> handleParkingDoesntExistException(ParkingDoesntExistException e) {
         return ResponseEntity.badRequest().body(e.getStatusCode().getCode());
     }
 
     @ExceptionHandler({EmailException.class,ParkHubException.class,InvalidTokenException.class,PhoneNumberException.class, ExistingParkingException.class,AddressException.class,ParkingException.class})
-    public ResponseEntity handleEmailIsUsedException(RuntimeException e) {
+    public ResponseEntity handleEmailParkHubInvalidTokenException(RuntimeException e) {
         String message = e.getMessage();
         LOGGER.info(message);
         return ResponseEntity.badRequest().body(message);
     }
 
     @ExceptionHandler({NotFoundInDataBaseException.class,IllegalArgumentException.class})
-    public ResponseEntity handleNotFoundInDataBaseException(RuntimeException e) {
+    public ResponseEntity handleNotFoundInDataBaseIllegalArgumentException(RuntimeException e) {
         LOGGER.info(e.getMessage());
         String message = "Something went wrong on our server. Please, try again later.";
         return ResponseEntity.status(500).body(message);
     }
 
     @ExceptionHandler({Exception.class})
-    public ResponseEntity handleNotFoundInDataBaseException(Exception e) {
+    public ResponseEntity handleUnexpectedExceptions(Exception e) {
         LOGGER.info(e.getMessage());
-        String message = "I am global handler";
+        String message = "Sorry!Something went wrong on our server.";
         return ResponseEntity.status(500).body(message);
     }
 
