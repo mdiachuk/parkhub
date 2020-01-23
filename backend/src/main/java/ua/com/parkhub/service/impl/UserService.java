@@ -11,10 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.dto.RoleDTO;
-import ua.com.parkhub.exceptions.EmailException;
-import ua.com.parkhub.exceptions.InvalidTokenException;
-import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
-import ua.com.parkhub.exceptions.PasswordException;
+import ua.com.parkhub.exceptions.*;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.model.UuidTokenModel;
 import ua.com.parkhub.model.enums.UuidTokenType;
@@ -26,7 +23,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -175,13 +171,13 @@ public class UserService implements IUserService {
 
 
 
-    public Optional<UserModel> findUserById(long id){
-        return userDAO.findElementById(id);
+    public UserModel findUserById(long id){
+        return userDAO.findElementById(id).orElseThrow(() -> new UserDoesntExistException(StatusCode.USER_NOT_FOUND));
     }
 
     @Override
     public void updateUser(long id, UserModel userUp) {
-        UserModel userModel = findUserById(id).get();
+        UserModel userModel = findUserById(id);
         userModel.setFirstName(userUp.getFirstName());
         userModel.setLastName(userUp.getLastName());
         userModel.setEmail(userUp.getEmail());
@@ -192,7 +188,7 @@ public class UserService implements IUserService {
 
     @Override
     public void changePassword(long id, String newPassword, UserModel userModel){
-        UserModel user = findUserById(id).get();
+        UserModel user = findUserById(id);
         if (validatePassword(userModel.getPassword(), user) & validateNewPassword(newPassword, user)){
             user.setPassword(passwordEncoder.encode(newPassword));
             userDAO.updateElement(user);
