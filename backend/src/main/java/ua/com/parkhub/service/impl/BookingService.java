@@ -80,7 +80,7 @@ public class BookingService implements IBookingService {
         BookingModel bookingModel;
         List<BookingModel> bookingModels = bookingDAO.findBookingsByCustomer(customerModel);
         bookingModel = bookingModels.stream()
-                .filter((x -> x.getCheckIn().compareTo(LocalDateTime.now()) > 0)).filter(BookingModel::isActive)
+                .filter(((x) -> x.getCheckIn().compareTo(LocalDateTime.now()) > 0 && x.isActive()))
                 .findFirst().orElseThrow(()-> new BookingException(StatusCode.BOOKING_NOT_FOUND));
         return Optional.of(bookingModel);
     }
