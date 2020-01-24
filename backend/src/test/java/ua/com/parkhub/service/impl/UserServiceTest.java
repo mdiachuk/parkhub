@@ -6,18 +6,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ua.com.parkhub.exceptions.*;
 import ua.com.parkhub.model.enums.RoleModel;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.model.UuidTokenModel;
 import ua.com.parkhub.model.enums.UuidTokenType;
-import ua.com.parkhub.persistence.impl.ElementDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
 import ua.com.parkhub.persistence.impl.UuidTokenDAO;
+import ua.com.parkhub.service.IMailService;
 
-import javax.mail.internet.MimeMessage;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -37,12 +35,12 @@ class UserServiceTest {
     @Mock
     private SignUpService signUpService;
     @Mock
-    private JavaMailSender mailSender;
+    private IMailService mailService;
     @Mock
     private PasswordEncoder passwordEncoder;
 
     @InjectMocks
-    UserService userService;
+    private UserService userService;
 
     @BeforeEach
     public void init() {
@@ -62,10 +60,8 @@ class UserServiceTest {
     @Test
     public void test_sendToken_everythingCorrect() {
         UserModel user = new UserModel();
-        MimeMessage mimeMessage = Mockito.mock(MimeMessage.class);
 
         when(userDAO.findUserByEmail(anyString())).thenReturn(Optional.of(user));
-        when(mailSender.createMimeMessage()).thenReturn(mimeMessage);
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
             userService.sendToken("email@test.com", UuidTokenType.EMAIL.getType());

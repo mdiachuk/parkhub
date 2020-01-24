@@ -10,7 +10,7 @@ public interface ISignUpService {
 
     void registerManager(ManagerRegistrationDataModel manager);
     CustomerModel createCustomer(CustomerModel customer);
-    UserModel createUser(UserModel user, CustomerModel customer);
+    UserModel createUser(UserModel user);
     SupportTicketModel createTicket(String description, CustomerModel customer);
     String generateDescription(long id, String companyName, String usreouCode, String comment);
     RoleModel findUserRole(String name);

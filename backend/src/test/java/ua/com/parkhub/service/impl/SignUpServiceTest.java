@@ -14,9 +14,11 @@ import ua.com.parkhub.model.*;
 import ua.com.parkhub.model.enums.RoleModel;
 import ua.com.parkhub.model.enums.TicketTypeModel;
 import ua.com.parkhub.persistence.impl.*;
+import ua.com.parkhub.service.IMailService;
 
 import java.time.Duration;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.*;
@@ -37,6 +39,8 @@ class SignUpServiceTest {
     private SupportTicketDAO supportTicketDAO;
     @Mock
     private SupportTicketTypeDAO supportTicketTypeDAO;
+    @Mock
+    private IMailService mailService;
     @Mock
     private PasswordEncoder passwordEncoder;
 
@@ -116,18 +120,26 @@ class SignUpServiceTest {
         UserModel user = new UserModel();
         ManagerRegistrationDataModel manager = new ManagerRegistrationDataModel();
         user.setId(1L);
+        user.setFirstName("Test");
+        user.setLastName("Test");
         user.setCustomer(customer);
         manager.setUser(user);
         RoleModel role = RoleModel.PENDING;
         role.setId(1L);
         TicketTypeModel ticketType = TicketTypeModel.MANAGER_REGISTRATION_REQUEST;
+        SupportTicketModel ticket = new SupportTicketModel();
+        List<UserModel> solvers = new ArrayList<>();
+        solvers.add(user);
+        ticket.setId(1L);
+        ticket.setSolvers(solvers);
 
         when(customerDAO.findCustomerByPhoneNumber(customer.getPhoneNumber())).thenReturn(Optional.of(customer));
         when(userDAO.addElement(user)).thenReturn(Optional.of(user));
         when(userRoleDAO.findUserRoleByRoleName(anyString())).thenReturn(Optional.of(role));
-        when(userDAO.findUsersByRoleId(anyLong())).thenReturn(Arrays.asList(user));
+        when(userDAO.findUsersByRoleId(anyLong())).thenReturn(solvers);
         when(userDAO.findElementById(anyLong())).thenReturn(Optional.of(user));
         when(supportTicketTypeDAO.findSupportTicketTypeByType(anyString())).thenReturn(Optional.of(ticketType));
+        when(supportTicketDAO.addElement(any(SupportTicketModel.class))).thenReturn(Optional.of(ticket));
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> signUpService.registerManager(manager));
     }
@@ -154,17 +166,25 @@ class SignUpServiceTest {
         UserModel user = new UserModel();
         ManagerRegistrationDataModel manager = new ManagerRegistrationDataModel();
         user.setId(1L);
+        user.setFirstName("Test");
+        user.setLastName("Test");
         user.setCustomer(customer);
         manager.setUser(user);
         RoleModel role = RoleModel.PENDING;
         role.setId(1L);
         TicketTypeModel ticketType = TicketTypeModel.MANAGER_REGISTRATION_REQUEST;
+        SupportTicketModel ticket = new SupportTicketModel();
+        List<UserModel> solvers = new ArrayList<>();
+        solvers.add(user);
+        ticket.setId(1L);
+        ticket.setSolvers(solvers);
 
         when(userDAO.addElement(user)).thenReturn(Optional.of(user));
         when(userRoleDAO.findUserRoleByRoleName(anyString())).thenReturn(Optional.of(role));
-        when(userDAO.findUsersByRoleId(anyLong())).thenReturn(Arrays.asList(user));
+        when(userDAO.findUsersByRoleId(anyLong())).thenReturn(solvers);
         when(userDAO.findElementById(anyLong())).thenReturn(Optional.of(user));
         when(supportTicketTypeDAO.findSupportTicketTypeByType(anyString())).thenReturn(Optional.of(ticketType));
+        when(supportTicketDAO.addElement(any(SupportTicketModel.class))).thenReturn(Optional.of(ticket));
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> signUpService.registerManager(manager));
     }
