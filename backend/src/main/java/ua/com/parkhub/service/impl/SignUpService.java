@@ -214,7 +214,7 @@ public class SignUpService implements ISignUpService {
     public String generateTokenForOauthUser(String email){
         UserModel userModel = userDAO.findUserByEmail(email).orElseThrow(() ->
                 new NotFoundInDataBaseException("User was not found" ));
-           String token = jwtUtil.generateToken(userModel.getEmail(),userModel.getRole().getRoleName(), userModel.getId());
-           return token;
+           return jwtUtil.generateToken(userModel.getEmail(),userModel.getRole().getRoleName(), userModel.getId());
+
     }
 }

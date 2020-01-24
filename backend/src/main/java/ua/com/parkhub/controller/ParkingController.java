@@ -8,7 +8,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.ParkingRequestDTO;
-import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.mappers.dtoToModel.ParkingRequestDTOWithIDtoParkingModel;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.service.IParkingService;

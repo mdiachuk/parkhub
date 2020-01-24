@@ -198,7 +198,7 @@ class SignUpServiceTest {
         CustomerModel customer = new CustomerModel();
         customer.setPhoneNumber("Empty");
         when(userModel.getCustomer()).thenReturn(customer);
-        assertEquals(customer.getPhoneNumber().equals("Empty"),true);
+        assertTrue(customer.getPhoneNumber().equals("Empty"));
 
     }
 
