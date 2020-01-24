@@ -50,6 +50,7 @@ export class ParkingDetailComponent implements OnInit {
 
     openSnackBar(parkingAttribute: string) {
       this._snackBar.open("Saved: ", parkingAttribute,{
+        verticalPosition: 'top',
         duration: 4000,
       });
     }
@@ -62,6 +63,7 @@ export class ParkingDetailComponent implements OnInit {
 
     openErrorSnackBar(message: string) {
     this._snackBar.open(message, 'Close', {
+      verticalPosition: 'top',
       duration: 4000,
     });
   }
@@ -94,9 +96,8 @@ export class ParkingDetailComponent implements OnInit {
       );
     }
 
-  getErrorMessage(inputId: number) {
+  getErrorMessage() {
    if (this.input.hasError('required'))
-   this.buttonStatusList[inputId] = true;
    return 'You must enter a value';
   }
 }

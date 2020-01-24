@@ -86,4 +86,9 @@ public class GlobalExceptionHandler {
         }
         return new ResponseEntity<>(body, headers, status);
     }
+
+    @ExceptionHandler(ParkingDoesntExistException.class)
+    public ResponseEntity<Integer> handleEmailException(ParkingDoesntExistException e) {
+        return ResponseEntity.badRequest().body(e.getStatusCode().getCode());
+    }
 }

@@ -24,7 +24,7 @@ import java.util.stream.IntStream;
 @Service
 public class ParkingService implements IParkingService {
 
-    private static final Logger logger = LoggerFactory.getLogger(SignUpService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ParkingService.class);
 
     private ParkingDAO parkingDAO;
     private final AddressDAO addressDAO;
@@ -78,7 +78,7 @@ public class ParkingService implements IParkingService {
         parkingDAO.addElement(parkingModel);
     }
 
-    public ParkingModel findParkingById(long id) {
+    public ParkingModel findParkingById(Long id) {
         return parkingDAO.findElementById(id).orElseThrow(() -> new ParkingDoesntExistException(StatusCode.PARKING_DOESNT_EXIST));
     }
 
@@ -91,6 +91,8 @@ public class ParkingService implements IParkingService {
     public List<ParkingModel> findAllParkingByOwnerId(Long id) {
         return parkingDAO.findAllParkingByOwnerId(id);
     }
+
+
 
     @Transactional(readOnly = true)
     public ParkingModel findParkingByIdWithSlotList(long id) {
@@ -193,7 +195,7 @@ public class ParkingService implements IParkingService {
         return findAllParkingModel().stream()
                 .filter(x -> (addressGeoService
                         .enteringTheRadius(map.get("lat"), map.get("lon"),
-                                x.getInfo().getAddressModel().getLat(), x.getInfo().getAddressModel().getLon())) == true)
+                                x.getInfo().getAddressModel().getLat(), x.getInfo().getAddressModel().getLon())))
                 .collect(Collectors.toList());
     }
 }

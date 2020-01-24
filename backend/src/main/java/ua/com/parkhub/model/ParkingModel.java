@@ -2,6 +2,7 @@ package ua.com.parkhub.model;
 
 
 import java.util.List;
+import java.util.Objects;
 
 public class ParkingModel {
 
@@ -25,12 +26,25 @@ public class ParkingModel {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ParkingModel that = (ParkingModel) o;
+        return Objects.equals(info, that.info) &&
+                Objects.equals(slots, that.slots);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(info, slots);
+    }
+
+    @Override
     public String toString() {
         return "ParkingModel{" +
                 "id=" + info.getId() +
                 ", parkingName='" + info.getParkingName()+ '\'' +
                 ", slotsNumber=" + info.getSlotsNumber() +
-                ", tariff=" + info.getTariff() +
                 ", addressModel=" + info.getAddressModel() +
                 ", slots=" + slots +
                 ", isActive=" + info.isActive() +
