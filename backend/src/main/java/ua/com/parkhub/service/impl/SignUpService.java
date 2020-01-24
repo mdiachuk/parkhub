@@ -41,8 +41,7 @@ public class SignUpService implements ISignUpService {
     @Autowired
     public SignUpService(CustomerDAO customerDAO, UserDAO userDAO, UserRoleDAO userRoleDAO,
                          SupportTicketDAO supportTicketDAO, SupportTicketTypeDAO supportTicketTypeDAO,
-                         IMailService mailService, PasswordEncoder passwordEncoder) {
-                         PasswordEncoder passwordEncoder,
+                         IMailService mailService, PasswordEncoder passwordEncoder,
                          JwtUtil jwtUtil) {
         this.customerDAO = customerDAO;
         this.userDAO = userDAO;

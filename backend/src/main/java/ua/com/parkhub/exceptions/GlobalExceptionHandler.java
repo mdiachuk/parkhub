@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    @ExceptionHandler({BookingException.class,CustomerException.class,PermissionException.class})
+    @ExceptionHandler({BookingException.class,CustomerException.class,PermissionException.class,UserDoesntExistException.class})
     public ResponseEntity handleBookingCustomerPermissionException(ParkHubException e) {
         return ResponseEntity.badRequest().body(e.getStatusCode());
     }

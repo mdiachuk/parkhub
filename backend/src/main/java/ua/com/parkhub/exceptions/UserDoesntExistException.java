@@ -4,14 +4,13 @@ public class UserDoesntExistException extends ParkHubException{
     public UserDoesntExistException(String message) {
         super(message);
     }
+    private StatusCode statusCode;
 
     public UserDoesntExistException(StatusCode statusCode){
         this.statusCode = statusCode;
     }
 
-    private StatusCode statusCode;
-
-    public StatusCode getStatusCode() {
-        return statusCode;
+    public int getStatusCode() {
+        return statusCode.getCode();
     }
 }
