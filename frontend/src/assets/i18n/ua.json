@@ -19,9 +19,20 @@
   "CancelPrepayment": "Відмінити замовлення",
   "Enter your phone number": "Введіть номер телефону",
   "Cancel Prepayment": "Журбинка, що ти нас покидаєш",
-  "Success": "Тримай гроші за броню",
+  "Success": "Успішно",
+  "Changes were accepted": "Зміни були прийняті!",
+  "Failed to change password" : "Зміни не прийнято!",
   "Error": "От халепа",
   "User": "Користувач",
+  "First name": "Ім'я",
+  "Last Name": "Прізвище",
+  "Phone": "Телефон",
+  "Edit": "Змінити",
+  "Save": "Зберегти",
+  "User Details": "Деталі користувача",
+  "Change Password": "Змінити пароль",
+  "Close": "Закрити",
+  "Save Password": "Зберегти пароль",
   "User Info": "Інформація користувача",
   " UAH": " грн",
   "The price of your booking is ": "",
@@ -118,6 +129,15 @@
   "Password must match requirements": "Пароль повинен відповідати вимогам",
   "Resend link": "Повторно надіслати посилання",
   "Link for veifying email adress was sent": "Посилання для підтвердження пошти було надіслано",
+  "PhonePlaceholder":{
+    "value": "Номер телефону"
+  },
+  "NewPasswordPlaceholder": {
+    "value": "Новий пароль"
+  },
+  "ConfirmPasswordPlaceholder": {
+    "value": "Підтвердіть пароль"
+  },
   "TypeUserIDPlaceholder": {
     "value": "Введіть ID користувача"
   },
