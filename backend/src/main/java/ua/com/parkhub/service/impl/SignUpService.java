@@ -3,6 +3,7 @@ package ua.com.parkhub.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.com.parkhub.exceptions.EmailException;
@@ -12,6 +13,7 @@ import ua.com.parkhub.model.enums.RoleModel;
 import ua.com.parkhub.model.enums.TicketTypeModel;
 import ua.com.parkhub.persistence.impl.*;
 import ua.com.parkhub.model.*;
+import ua.com.parkhub.service.IMailService;
 import ua.com.parkhub.service.ISignUpService;
 
 import javax.transaction.Transactional;
@@ -21,6 +23,9 @@ import java.util.Optional;
 @Service
 public class SignUpService implements ISignUpService {
 
+    @Value("${fronturl}")
+    private String url;
+
     private static final Logger logger = LoggerFactory.getLogger(SignUpService.class);
 
     private final CustomerDAO customerDAO;
@@ -28,31 +33,35 @@ public class SignUpService implements ISignUpService {
     private final UserRoleDAO userRoleDAO;
     private final SupportTicketDAO supportTicketDAO;
     private final SupportTicketTypeDAO supportTicketTypeDAO;
+    private final IMailService mailService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public SignUpService(CustomerDAO customerDAO, UserDAO userDAO, UserRoleDAO userRoleDAO,
                          SupportTicketDAO supportTicketDAO, SupportTicketTypeDAO supportTicketTypeDAO,
-                         PasswordEncoder passwordEncoder) {
+                         IMailService mailService, PasswordEncoder passwordEncoder) {
         this.customerDAO = customerDAO;
         this.userDAO = userDAO;
         this.userRoleDAO = userRoleDAO;
         this.supportTicketDAO = supportTicketDAO;
         this.supportTicketTypeDAO = supportTicketTypeDAO;
+        this.mailService = mailService;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
     @Override
     public void registerManager(ManagerRegistrationDataModel manager) {
-        CustomerModel customer = createCustomer(manager.getUser().getCustomer());
-        UserModel user = createUser(manager.getUser(), customer);
+        UserModel user = createUser(manager.getUser());
         user = userDAO.addElement(user).orElseThrow(() ->
                 new NotFoundInDataBaseException("Customer not found"));
         String description = generateDescription(user.getId(), manager.getCompanyName(),
                 manager.getUsreouCode(), manager.getComment());
         SupportTicketModel ticket = createTicket(description, user.getCustomer());
-        supportTicketDAO.addElement(ticket);
+        ticket = supportTicketDAO.addElement(ticket).orElseThrow(() ->
+                new NotFoundInDataBaseException("Ticket not found"));
+        sendNotification(getEmails(ticket.getSolvers()), user.getFirstName(),
+                user.getLastName(), ticket.getId());
     }
 
     @Transactional
@@ -75,7 +84,8 @@ public class SignUpService implements ISignUpService {
 
     @Transactional
     @Override
-    public UserModel createUser(UserModel user, CustomerModel customer) {
+    public UserModel createUser(UserModel user) {
+        CustomerModel customer = createCustomer(user.getCustomer());
         Optional<UserModel> optionalUser = userDAO.findUserByEmail(user.getEmail());
         if (optionalUser.isPresent()) {
             throw new EmailException("Account with this email already exists!");
@@ -97,6 +107,18 @@ public class SignUpService implements ISignUpService {
         ticket.setSolvers(findSolvers(RoleModel.ADMIN.getRoleName()));
         logger.info("New support ticket was created");
         return ticket;
+    }
+
+    private void sendNotification(String[] emails, String firstName, String lastName, long ticketId) {
+        String subject = "New registration request";
+        String body = String.format("New parking owner registration request was created by %s %s. " +
+                "<a href=\"%s/admin/%d\">See details</a>.", firstName, lastName, url, ticketId);
+        mailService.sendEmail(emails, subject, body);
+        logger.info("Email notification for new parking owner registration request was sent to admins");
+    }
+
+    private String[] getEmails(List<UserModel> solvers) {
+        return solvers.stream().map(UserModel::getEmail).toArray(String[]::new);
     }
 
     @Override
@@ -166,7 +188,7 @@ public class SignUpService implements ISignUpService {
     @Override
     public boolean signUpUser(UserModel userModel){
         try {
-            userDAO.addElement( createUser( userModel, createCustomer(userModel.getCustomer())));
+            userDAO.addElement(createUser(userModel));
             return true;
         } catch (Exception e){
             logger.error(""+e);
