@@ -141,7 +141,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER') or hasRole('USER')")
     @PostMapping("/api/user/{id}")
-    public ResponseEntity updateUser(@PathVariable Long id, @RequestBody UserInfoDTO userInfoDTO){
+    public ResponseEntity<Void> updateUser(@PathVariable Long id, @RequestBody UserInfoDTO userInfoDTO){
         userService.updateUser(id, userInfoDTOtoUserModelMapper.transform(userInfoDTO));
         return ResponseEntity.ok().build();
     }
