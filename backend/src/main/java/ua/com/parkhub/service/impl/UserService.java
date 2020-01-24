@@ -154,7 +154,7 @@ public class UserService implements IUserService {
     }
 
     public UserModel findUserById(long id){
-        return userDAO.findElementById(id).orElseThrow(() -> new UserDoesntExistException(StatusCode.USER_NOT_FOUND));
+        return userDAO.findElementById(id).orElseThrow(() -> new UserDoesntExistException("User not found",StatusCode.USER_NOT_FOUND));
     }
 
     @Override
@@ -180,12 +180,10 @@ public class UserService implements IUserService {
             throw new PasswordException();
         }
     }
-
-    public boolean validatePassword(String passsword, UserModel userModel){
-        return passwordEncoder.matches(passsword, userModel.getPassword());
+    public boolean validatePassword(String password, UserModel userModel){
+        return passwordEncoder.matches(password, userModel.getPassword());
     }
-
-    public boolean validateNewPassword(String passsword, UserModel userModel){
-        return ((passsword != "") && (!passwordEncoder.matches(passsword, userModel.getPassword())));
+    public boolean validateNewPassword(String newPassword, UserModel userModel){
+        return (!("".equals(newPassword)) && (!passwordEncoder.matches(newPassword, userModel.getPassword())));
     }
 }

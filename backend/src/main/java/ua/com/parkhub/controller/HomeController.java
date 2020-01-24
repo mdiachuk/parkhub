@@ -19,8 +19,6 @@ import java.util.stream.Collectors;
 
 public class HomeController {
 
-    private static final Logger logger = LoggerFactory.getLogger(SignUpController.class);
-
     private IParkingService parkingService;
     private ParkingModelToDTOMapper parkingMapper;
 

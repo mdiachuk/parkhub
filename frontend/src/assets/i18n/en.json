@@ -1,7 +1,4 @@
 {
-  "Logo": {
-    "value": "assets/logotitle.png"
-  },
   "ParkHub": "ParkHub",
   "RECOMMENDED BY THE MOST CAPRICIOUS DRIVERS!": "RECOMMENDED BY THE MOST CAPRICIOUS DRIVERS!",
   "Parking created successfully.": "Parking created successfully.",
@@ -83,7 +80,7 @@
   "MustContain8Numbers": "Must contain 8 numbers",
   "InvalidEmailFormat": "Invalid email format",
   "InvalidPhoneNumberFormat": "Invalid phone number format",
-  "MustContainAtLeastOneNumberOneUppercaseAndOneLowercaseLetterAndAtLeast6Characters": "Must contain at least one number, one uppercase and one lowercase letter, and at\n            least 6 characters",
+  "MustContainAtLeastOneNumberOneUppercaseAndOneLowercaseLetterAndAtLeast6Characters": "Must contain at least one number, one uppercase and one lowercase letter, and at least 6 characters",
   "PasswordsMustMatch": "Passwords must match!",
   "Max200Characters": "Max 200 characters",
   "IAgreeWithTermsConditionsAndPrivacyPolicy": "I agree with terms, conditions and privacy policy",
