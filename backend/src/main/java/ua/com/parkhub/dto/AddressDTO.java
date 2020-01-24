@@ -67,6 +67,5 @@ public class AddressDTO {
 
     public void setLon(String lon) {
         this.lon = lon;
-
     }
 }
