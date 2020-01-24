@@ -105,7 +105,7 @@ public class UserController {
     @GetMapping("/api/user/{id}")
     @ResponseBody
     public ResponseEntity<UserInfoDTO> findUserById(@PathVariable Long id){
-        return ResponseEntity.ok(userModelToUserInfoDTOMapper.transform(userService.findUserById(id).get()));
+        return ResponseEntity.ok(userModelToUserInfoDTOMapper.transform(userService.findUserById(id)));
     }
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER') or hasRole('USER')")

@@ -6,19 +6,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ua.com.parkhub.exceptions.EmailException;
-import ua.com.parkhub.exceptions.InvalidTokenException;
-import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
+import ua.com.parkhub.exceptions.*;
 import ua.com.parkhub.model.enums.RoleModel;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.model.UuidTokenModel;
 import ua.com.parkhub.model.enums.UuidTokenType;
 import ua.com.parkhub.persistence.impl.UserDAO;
 import ua.com.parkhub.persistence.impl.UuidTokenDAO;
+import ua.com.parkhub.service.IMailService;
 
-import javax.mail.internet.MimeMessage;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -38,12 +35,12 @@ class UserServiceTest {
     @Mock
     private SignUpService signUpService;
     @Mock
-    private JavaMailSender mailSender;
+    private IMailService mailService;
     @Mock
     private PasswordEncoder passwordEncoder;
 
     @InjectMocks
-    UserService userService;
+    private UserService userService;
 
     @BeforeEach
     public void init() {
@@ -63,10 +60,8 @@ class UserServiceTest {
     @Test
     public void test_sendToken_everythingCorrect() {
         UserModel user = new UserModel();
-        MimeMessage mimeMessage = Mockito.mock(MimeMessage.class);
 
         when(userDAO.findUserByEmail(anyString())).thenReturn(Optional.of(user));
-        when(mailSender.createMimeMessage()).thenReturn(mimeMessage);
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
             userService.sendToken("email@test.com", UuidTokenType.EMAIL.getType());
@@ -185,5 +180,56 @@ class UserServiceTest {
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
             userService.verifyEmail("12345");
         });
+    }
+
+
+    @Test
+    void findUserByIdTest() {
+       UserModel userModelTest = new UserModel();
+        userModelTest.setFirstName("firstName");
+        userModelTest.setEmail("ok@gmail");
+
+        Mockito.when(userDAO.findElementById(1L)).thenReturn(Optional.of(userModelTest));
+
+        assertSame(userModelTest, userService.findUserById(1L));
+    }
+
+    @Test
+    public void negativeResultTest_findUserById() {
+
+        Mockito.when(userDAO.findElementById(1000)).thenReturn(Optional.empty());
+
+        assertThrows(UserDoesntExistException.class, () -> userService.findUserById(1000));
+    }
+
+    @Test
+    public void changePasswordTestNegativeResult(){
+        String newPassword = "";
+        UserModel userModelTest = new UserModel();
+        userModelTest.setId(1L);
+        userModelTest.setPassword("$2a$10$ck57rhrpiuJ0etVSuI5QVeYkjbiwLmdnkjkZ25ujcux9ivPUNtMca");
+        Mockito.when(userDAO.findElementById(1)).thenReturn(Optional.of(userModelTest));
+
+        assertThrows(PasswordException.class, () -> userService.changePassword(1, newPassword, userModelTest));
+    }
+
+
+    @Test
+    public void validatePasswordTest(){
+        String password = "qwerty";
+        UserModel userModelSpy = Mockito.spy(new UserModel());
+        Mockito.when(userModelSpy.getPassword()).thenReturn("$2a$10$ck57rhrpiuJ0etVSuI5QVeYkjbiwLmdnkjkZ25ujcux9ivPUNtMca");
+        Mockito.when(passwordEncoder.matches(password, userModelSpy.getPassword())).thenReturn(true);
+
+        assertTrue(userService.validatePassword(password, userModelSpy));
+    }
+
+    @Test
+    public void validateNewPasswordTestNegativeResult(){
+        UserModel userModelSpy = Mockito.spy(new UserModel());
+        Mockito.when(userModelSpy.getPassword()).thenReturn("$2a$10$ck57rhrpiuJ0etVSuI5QVeYkjbiwLmdnkjkZ25ujcux9ivPUNtMca");
+        String newPassword = "";
+
+        assertFalse(userService.validateNewPassword(newPassword, userModelSpy));
     }
 }
