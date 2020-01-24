@@ -170,19 +170,15 @@ public class SignUpService implements ISignUpService {
     }
 
     @Override
-    public void createUserAfterSocialAuth(AuthUserModel userModel){
+    public void createUserAfterSocialAuth(UserModel userModel){
             logger.info("Creating new user that was authorized via Google ");
-            UserModel user = new UserModel();
             CustomerModel customer = new CustomerModel();
             customer.setPhoneNumber("Empty");
-            user.setEmail(userModel.getEmail());
-            user.setCustomer(customer);
-            user.setPassword(passwordEncoder.encode("oauth2user"));
-            user.setLastName(userModel.getLastName());
-            user.setFirstName(userModel.getFirstName());
+            userModel.setCustomer(customer);
+            userModel.setPassword(passwordEncoder.encode("oauth2user"));
             RoleModel userRole =  findUserRole("USER");
-            user.setRole(userRole);
-            userDAO.addElement(user);
+            userModel.setRole(userRole);
+            userDAO.addElement(userModel);
             logger.info("User created successfully ");
     }
 

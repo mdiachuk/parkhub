@@ -4,30 +4,22 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
-import org.mockito.*;
 import ua.com.parkhub.exceptions.AddressException;
 import ua.com.parkhub.exceptions.ExistingParkingException;
 import ua.com.parkhub.exceptions.ParkingDoesntExistException;
-import ua.com.parkhub.model.AddressModel;
-import ua.com.parkhub.model.ParkingInfoModel;
-import ua.com.parkhub.model.ParkingModel;
-import ua.com.parkhub.model.UserModel;
-import ua.com.parkhub.persistence.entities.User;
+import ua.com.parkhub.model.*;
 import ua.com.parkhub.persistence.impl.AddressDAO;
 import ua.com.parkhub.persistence.impl.ParkingDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
+import ua.com.parkhub.persistence.impl.UserRoleDAO;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class ParkingServiceTest {
 
@@ -39,6 +31,9 @@ class ParkingServiceTest {
 
     @Mock
     private UserDAO userDAO;
+
+    @Mock
+    private UserRoleDAO userRoleDAO;
     @Mock
     private AddressDAO addressDAO;
 
@@ -254,7 +249,7 @@ class ParkingServiceTest {
                 countOfParkingsByAddress(addressModel)).thenReturn(1L);
         assertThrows(AddressException.class, () -> {
             parkingService.createParkingByOwnerID(parkingModel,1);
-        });
+        },"This address already exist in db");
 
     }
 
@@ -270,5 +265,32 @@ class ParkingServiceTest {
 
     }
 
+    @Test
+    void successfulParkingCreation() {
+        when(parkingModel.getInfo()).thenReturn(parkingInfoModel);
+        when(userDAO.findElementById(1)).thenReturn(Optional.of(userModel));
+        when(parkingInfoModel.getAddressModel()).thenReturn(addressModel);
+        when(parkingInfoModel.getSlotsNumber()).thenReturn(2);
+        parkingService.createParkingByOwnerID(parkingModel,1L);
+        verify(parkingDAO, times(1)).addElement(parkingModel);
+
+    }
+
+    @Test
+    void createAddressModel() {
+        when(parkingModel.getInfo()).thenReturn(parkingInfoModel);
+        when(parkingInfoModel.getAddressModel()).thenReturn(addressModel);
+        when(addressDAO.addWithResponse(addressModel)).thenReturn(addressModel);
+        assertSame(addressModel,parkingService.createAddressModel(parkingModel));
+
+    }
+
+    @Test
+    void createParkingWithSlots() {
+        when(parkingModelSpy.getInfo()).thenReturn(parkingInfoModelSpy);
+        when(parkingInfoModel.getSlotsNumber()).thenReturn(2);
+        assertSame(parkingModel,parkingService.createParkingWithSlots(parkingModel));
+
+    }
 
 }

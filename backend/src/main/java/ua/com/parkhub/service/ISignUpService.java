@@ -18,7 +18,7 @@ public interface ISignUpService {
     List<UserModel> findSolvers(String role);
     boolean isUserPresentByEmail(String email);
     void setPhoneNumberForAuthUser(PhoneEmailModel phoneEmailModel);
-    void createUserAfterSocialAuth(AuthUserModel userModel);
+    void createUserAfterSocialAuth(UserModel userModel);
     boolean isCustomerNumberEmpty(String email);
     boolean signUpUser(UserModel userModel);
     boolean isNumberUnique(String phoneNumber);

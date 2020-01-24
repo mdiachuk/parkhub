@@ -12,10 +12,10 @@ import ua.com.parkhub.dto.AuthUserDTO;
 import ua.com.parkhub.dto.PhoneEmailDTO;
 
 import ua.com.parkhub.dto.TokenDTO;
-import ua.com.parkhub.mappers.dtoToModel.AuthUserDTOtoAuthUserModelMapper;
+import ua.com.parkhub.mappers.dtoToModel.AuthUserDTOtoUserModelMapper;
 import ua.com.parkhub.mappers.dtoToModel.PhoneEmailDTOtoPhoneEmailMapper;
-import ua.com.parkhub.model.AuthUserModel;
 import ua.com.parkhub.model.PhoneEmailModel;
+import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.service.ISignUpService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -34,14 +34,14 @@ public class OAuth2Controller {
     private String frontUrl;
 
     private final ISignUpService signUpService;
-    private AuthUserDTOtoAuthUserModelMapper authUserDTOtoAuthUserModelMapper;
+    private AuthUserDTOtoUserModelMapper authUserDTOtoUserModelMapper;
     private PhoneEmailDTOtoPhoneEmailMapper phoneEmailDTOtoPhoneEmailMapper;
 
 
     @Autowired
-    public OAuth2Controller(ISignUpService signUpService, AuthUserDTOtoAuthUserModelMapper Mapper, PhoneEmailDTOtoPhoneEmailMapper phoneEmailDTOtoPhoneEmailMapper) {
+    public OAuth2Controller(ISignUpService signUpService, AuthUserDTOtoUserModelMapper Mapper, PhoneEmailDTOtoPhoneEmailMapper phoneEmailDTOtoPhoneEmailMapper) {
         this.signUpService = signUpService;
-        this.authUserDTOtoAuthUserModelMapper = Mapper;
+        this.authUserDTOtoUserModelMapper = Mapper;
         this.phoneEmailDTOtoPhoneEmailMapper = phoneEmailDTOtoPhoneEmailMapper;
     }
 
@@ -55,7 +55,7 @@ public class OAuth2Controller {
         authUser.setFirstName(firstName);
         authUser.setLastName(lastName);
         authUser.setEmail(email);
-        AuthUserModel model = authUserDTOtoAuthUserModelMapper.transform(authUser);
+        UserModel model = authUserDTOtoUserModelMapper.transform(authUser);
         if (!signUpService.isUserPresentByEmail(model.getEmail())){
             signUpService.createUserAfterSocialAuth(model);
             response.sendRedirect(frontUrl+"/phone-number?email="+email);

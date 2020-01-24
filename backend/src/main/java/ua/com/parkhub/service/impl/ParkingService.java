@@ -88,6 +88,7 @@ public class  ParkingService implements IParkingService {
 
     @Override
     public ParkingModel createParkingWithSlots(ParkingModel parkingModel) {
+        logger.info("Creating slots");
         List<SlotModel> slotModels = new ArrayList<>();
         IntStream.rangeClosed(1, parkingModel.getInfo().getSlotsNumber()).forEach(i -> {
                     SlotModel slotModel = new SlotModel();
@@ -96,6 +97,7 @@ public class  ParkingService implements IParkingService {
                 }
         );
         parkingModel.setSlots(slotModels);
+        logger.info("Slots created");
         return parkingModel;
     }
 

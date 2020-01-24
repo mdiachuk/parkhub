@@ -5,11 +5,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ua.com.parkhub.exceptions.EmailException;
-import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
-import ua.com.parkhub.exceptions.PhoneNumberException;
+import ua.com.parkhub.exceptions.*;
 import ua.com.parkhub.model.*;
 import ua.com.parkhub.model.enums.RoleModel;
 import ua.com.parkhub.model.enums.TicketTypeModel;
@@ -46,6 +45,9 @@ class SignUpServiceTest {
     private PasswordEncoder passwordEncoder;
     @Mock
     private UserModel userModel;
+
+    @Mock
+    private CustomerModel customerModel;
 
     @InjectMocks
     SignUpService signUpService;
@@ -192,14 +194,63 @@ class SignUpServiceTest {
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> signUpService.registerManager(manager));
     }
 
+    @Test
+    public void successfulUserCreationAfterOauth2(){
+        RoleModel userRole = RoleModel.USER;
+        when(userRoleDAO.findUserRoleByRoleName("USER")).thenReturn(Optional.of(userRole));
+        signUpService.createUserAfterSocialAuth(userModel);
+        verify(userDAO, times(1)).addElement(userModel);
+    }
+
+    @Test
+    public void unsuccessfulUserCreationAfterOauth2WhenRoleIsNotFound(){
+        assertThrows(NotFoundInDataBaseException.class, () -> {
+            signUpService.createUserAfterSocialAuth(userModel);
+        },"UserRole (USER) does not exist in db");
+    }
 
     @Test
     public void isCustomerNumberEmpty(){
         CustomerModel customer = new CustomerModel();
         customer.setPhoneNumber("Empty");
         when(userModel.getCustomer()).thenReturn(customer);
-        assertTrue(customer.getPhoneNumber().equals("Empty"));
+        assertTrue(customer.getPhoneNumber().equals("Empty"),"Customer number should be(Empty)");
 
     }
+
+    @Test
+    public void setPhoneNumberForOauth2User(){
+        PhoneEmailModel phoneEmailModel = new PhoneEmailModel();
+        phoneEmailModel.setPhoneNumber("380665441957");
+        phoneEmailModel.setEmail("len@gmail.de");
+        when(userModel.getCustomer()).thenReturn(customerModel);
+        when(userDAO.findUserByEmail(anyString())).thenReturn(Optional.of(userModel));
+        signUpService.setPhoneNumberForAuthUser(phoneEmailModel);
+        verify(customerDAO, times(1)).updateElement(customerModel);
+    }
+
+    @Test
+    public void checkIfUserIsPresent(){
+        String email = "dsgk@gmail.com";
+        when(userDAO.findUserByEmail(anyString())).thenReturn(Optional.of(userModel));
+        assertTrue(signUpService.isUserPresentByEmail(email),"User should be present in db");
+    }
+
+    @Test
+    void isNumberUnique(){
+        String phoneNumber = "380665331958";
+        List<CustomerModel> customerModels = new ArrayList<>();
+        when(customerDAO.findManyByFieldEqual("phoneNumber",phoneNumber)).thenReturn(customerModels);
+        assertTrue(signUpService.isNumberUnique(phoneNumber),"Number should be unique");
+    }
+
+    @Test
+    void generateTokenForOauthUse(){
+        when(userDAO.findUserByEmail(anyString())).thenReturn(Optional.empty());
+        assertThrows(NotFoundInDataBaseException.class, () -> {
+            signUpService.generateTokenForOauthUser("email");
+        },"User should be present in db");
+    }
+
 
 }

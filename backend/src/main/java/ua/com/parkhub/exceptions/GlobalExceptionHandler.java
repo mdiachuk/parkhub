@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    @ExceptionHandler({BookingException.class,CustomerException.class,PermissionException.class,UserDoesntExistException.class})
+    @ExceptionHandler({BookingException.class,CustomerException.class,PermissionException.class})
     public ResponseEntity handleBookingCustomerPermissionException(ParkHubException e) {
         return ResponseEntity.badRequest().body(e.getStatusCode());
     }
@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(e.getStatusCode().getCode());
     }
 
-    @ExceptionHandler({EmailException.class,ParkHubException.class,InvalidTokenException.class,PhoneNumberException.class, ExistingParkingException.class,AddressException.class,ParkingException.class})
+    @ExceptionHandler({EmailException.class,ParkHubException.class,InvalidTokenException.class,PhoneNumberException.class, ExistingParkingException.class,AddressException.class,ParkingException.class,UserDoesntExistException.class})
     public ResponseEntity handleEmailParkHubInvalidTokenException(RuntimeException e) {
         String message = e.getMessage();
         LOGGER.info(message);

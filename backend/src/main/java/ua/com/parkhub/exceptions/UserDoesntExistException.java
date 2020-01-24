@@ -7,4 +7,5 @@ public class UserDoesntExistException extends ParkHubException{
         super(message);
         this.statusCode = statusCode;
     }
+
 }
