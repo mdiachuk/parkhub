@@ -6,5 +6,4 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class PaymentController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(BookingController.class);
 }
