@@ -1,5 +1,7 @@
 package ua.com.parkhub.model;
 
+import java.util.Objects;
+
 public class ParkingInfoModel {
 
     private Long id;
@@ -64,5 +66,24 @@ public class ParkingInfoModel {
 
     public void setAddressModel(AddressModel addressModel) {
         this.addressModel = addressModel;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ParkingInfoModel that = (ParkingInfoModel) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(parkingName, that.parkingName) &&
+                Objects.equals(slotsNumber, that.slotsNumber) &&
+                Objects.equals(tariff, that.tariff) &&
+                Objects.equals(addressModel, that.addressModel) &&
+                Objects.equals(isActive, that.isActive) &&
+                Objects.equals(owner, that.owner);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, parkingName, slotsNumber, tariff, addressModel, isActive, owner);
     }
 }

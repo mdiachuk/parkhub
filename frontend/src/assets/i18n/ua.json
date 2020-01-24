@@ -129,14 +129,43 @@
   "Password must match requirements": "Пароль повинен відповідати вимогам",
   "Resend link": "Повторно надіслати посилання",
   "Link for veifying email adress was sent": "Посилання для підтвердження пошти було надіслано",
+  "Address:": "Адреса:",
+  "Name:": "Ім'я:",
+  "Places:": "Кількість місць:",
+  "Tariff:": "Тариф:",
+  "Back": "Назад",
+  "Change": "Змінити",
+  "Input new attributes": "Введіть нові дані",
+  "No Thanks": "Ні, дякую",
+  "Ok": "ОК",
+  "New city": "Нове місто",
+  "New street": "Нова вулиця",
+  "New building": "Новий будинок",
+  "Parking Details": "Інформація про парковку",
+  "You must enter a value": "Обов'язкове поле",
   "PhonePlaceholder":{
     "value": "Номер телефону"
   },
-  "NewPasswordPlaceholder": {
-    "value": "Новий пароль"
+  "NewCityPlaceholder": {
+    "value": "Нове місто"
   },
-  "ConfirmPasswordPlaceholder": {
-    "value": "Підтвердіть пароль"
+  "NewStreetPlaceholder": {
+    "value": "Нова вулиця"
+  },
+  "NewNamePlaceholder": {
+    "value": "Нова назва"
+  },
+  "NewAddressPlaceholder": {
+    "value": "Нова адреса"
+  },
+  "NewTariffPlaceholder": {
+    "value": "Новий тариф"
+  },
+  "NewPlacesAmountPlaceholder": {
+    "value": "Нова кількість місць"
+  },
+  "NewBuildingPlaceholder": {
+    "value": "Новий номер будинку"
   },
   "TypeUserIDPlaceholder": {
     "value": "Введіть ID користувача"

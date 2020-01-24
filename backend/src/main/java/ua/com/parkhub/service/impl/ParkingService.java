@@ -99,10 +99,7 @@ public class  ParkingService implements IParkingService {
         return parkingModel;
     }
 
-
-
-
-    public ParkingModel findParkingById(long id) {
+    public ParkingModel findParkingById(Long id) {
         return parkingDAO.findElementById(id).orElseThrow(() -> new ParkingDoesntExistException(StatusCode.PARKING_DOESNT_EXIST));
     }
 
@@ -217,7 +214,7 @@ public class  ParkingService implements IParkingService {
         return findAllParkingModel().stream()
                 .filter(x -> (addressGeoService
                         .enteringTheRadius(map.get("lat"), map.get("lon"),
-                                x.getInfo().getAddressModel().getLat(), x.getInfo().getAddressModel().getLon())) == true)
+                                x.getInfo().getAddressModel().getLat(), x.getInfo().getAddressModel().getLon())))
                 .collect(Collectors.toList());
     }
 }

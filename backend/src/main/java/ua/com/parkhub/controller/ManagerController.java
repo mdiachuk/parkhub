@@ -6,10 +6,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.ParkingDTO;
 import ua.com.parkhub.dto.ParkingUpdateRequestDTO;
-import ua.com.parkhub.mappers.dtoToModel.ParkingRequestDtoToModelMapper;
-import ua.com.parkhub.mappers.modelToDto.ParkingModelToDTOMapper;
-import ua.com.parkhub.service.impl.ParkingService;
-
+import ua.com.parkhub.mappers.Mapper;
+import ua.com.parkhub.model.ParkingModel;
+import ua.com.parkhub.service.IParkingService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,12 +16,13 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/manager/cabinet")
 public class ManagerController {
-    private ParkingService parkingService;
-    private ParkingModelToDTOMapper parkingMapper;
-    private ParkingRequestDtoToModelMapper parkingRequestDtoToModelMapper;
+
+    private IParkingService parkingService;
+    private Mapper<ParkingModel, ParkingDTO> parkingMapper;
+    private Mapper<ParkingUpdateRequestDTO, ParkingModel> parkingRequestDtoToModelMapper;
 
     @Autowired
-    public ManagerController(ParkingService parkingService, ParkingModelToDTOMapper parkingModelToDTOMapper, ParkingRequestDtoToModelMapper parkingRequestDtoToModelMapper) {
+    public ManagerController(IParkingService parkingService, Mapper<ParkingModel, ParkingDTO> parkingModelToDTOMapper,  Mapper<ParkingUpdateRequestDTO, ParkingModel> parkingRequestDtoToModelMapper) {
         this.parkingService = parkingService;
         this.parkingMapper = parkingModelToDTOMapper;
         this.parkingRequestDtoToModelMapper = parkingRequestDtoToModelMapper;
@@ -48,6 +48,5 @@ public class ManagerController {
         parkingService.updateParking(parkingId, parkingRequestDtoToModelMapper.transform(requestDTO));
         return ResponseEntity.ok().build();
     }
-
 }
 

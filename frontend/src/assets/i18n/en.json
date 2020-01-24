@@ -52,11 +52,6 @@
   "Sign up": "Sign up",
   "Get User by Id": "Get User by ID",
   "ID:": "ID",
-  "First name": "First name",
-  "Last Name": "Last Name",
-  "Phone": "Phone",
-  "Edit": "Edit",
-  "Save": "Save",
   "Ticket List": "Ticket list",
   "Type User ID": "Type user ID",
   "Sign up Manager": "Sign up Manager",
@@ -113,11 +108,7 @@
   "PhoneNumber": "Phone Number",
   "Email": "Email",
   "Password": "Password",
-  "User Details": "User Details",
-  "Change Password": "Change Password",
   "ConfirmPassword": "Confirm password",
-  "Close": "Close",
-  "Save Password": "Save Password",
   "PricePerHour": "Price per hour",
   "PleaseChooseAvailableSlot": "Please, choose available slot",
   "NotAValidNameOfStreet": "Not a valid name of street.",
@@ -146,17 +137,35 @@
   "NewPasswordPlaceholder": {
     "value": "NewPasswordPlaceholder"
   },
-  "ConfirmPasswordPlaceholder": {
-    "value": "ConfirmPasswordPlaceholder"
-  },
   "TypeUserIDPlaceholder": {
     "value": "Type User ID"
+  },
+  "NewCityPlaceholder": {
+    "value": "New city"
+  },
+  "NewStreetPlaceholder": {
+    "value": "New street"
+  },
+  "NewBuildingPlaceholder": {
+    "value": "New building"
+  },
+  "NewNamePlaceholder": {
+    "value": "New name"
+  },
+  "NewAddressPlaceholder": {
+    "value": "New address"
+  },
+  "NewTariffPlaceholder": {
+    "value": "New tariff"
+  },
+  "NewPlacesAmountPlaceholder": {
+    "value": "New places amount"
   },
   "TypeUserRolePlaceholder": {
     "value": "Type user role"
   },
-  "FindYourParkingLove♥Placeholder": {
-    "value": "Find parking"
+    "FindYourParkingLove♥Placeholder": {
+    "value" : "Find your parking"
   },
   "PhoneNumberPlaceholder": {
     "value": "Phone number"
@@ -184,9 +193,6 @@
   },
   "PasswordPlaceholder": {
     "value": "Password"
-  },
-  "NewPasswordPlaceholder": {
-    "value": "New password"
   },
   "FirstNamePlaceholder": {
     "value": "First name"
