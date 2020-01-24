@@ -83,14 +83,4 @@ public class BookingController {
         paymentResponseDTO.setPrice(price);
         return ResponseEntity.ok(paymentResponseDTO);
     }
-
-//    @ExceptionHandler(BookingException.class)
-//    public ResponseEntity handleBookingException(BookingException e) {
-//        return ResponseEntity.badRequest().body(e.getStatusCode());
-//    }
-//
-//    @ExceptionHandler(CustomerException.class)
-//    public ResponseEntity handleCustomerException(CustomerException e) {
-//        return ResponseEntity.badRequest().body(e.getStatusCode());
-//    }
 }
