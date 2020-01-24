@@ -20,7 +20,6 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Address' | translate}}</th>
       <td mat-cell *matCellDef="let parking">
           <a routerLink="/manager/cabinet/{{parking.id}}"><b>{{parking.address}}</b></a>
-        <!-- {{parking.parkingAddress}}</td> -->
     </ng-container>
 
     <tr  mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
