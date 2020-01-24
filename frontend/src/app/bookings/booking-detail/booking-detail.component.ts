@@ -4,6 +4,8 @@ import {BookingService} from '../../service/booking.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormGroup, FormControl, Validators, AbstractControl} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatDialog} from '@angular/material/dialog';
+import {MonerisComponent} from '../../moneris/moneris.component';
 
 @Component({
   selector: 'app-booking-detail',
@@ -29,6 +31,7 @@ export class BookingDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private snackBar: MatSnackBar,
+    private dialog: MatDialog,
   ) {
   }
 
@@ -60,8 +63,18 @@ export class BookingDetailComponent implements OnInit {
   }
 
   saveReactive() {
-    this.bookingService.addBooking({...this.bookingForm.value, slotId: this.newBooking.slotId, rangeFrom: this.newBooking.rangeFrom, rangeTo: this.newBooking.rangeTo, tariff: this.newBooking.tariff}).subscribe(o => {
-      this.openSnackBar(`Parking price is: ${o.price}`);
+    this.bookingService.addBooking({
+      ...this.bookingForm.value,
+      slotId: this.newBooking.slotId,
+      rangeFrom: this.newBooking.rangeFrom,
+      rangeTo: this.newBooking.rangeTo,
+      tariff: this.newBooking.tariff
+    }).subscribe(o => {
+      this.dialog.open(MonerisComponent, {
+        data: {
+          payment: o
+        }
+      });
     });
   }
 
@@ -71,7 +84,7 @@ export class BookingDetailComponent implements OnInit {
       verticalPosition: 'top',
       duration: 20000,
     });
-    let snackBarRef = this.snackBar.open(message, 'Close', {
+    let snackBarRef = this.snackBar.open(message, 'Proceed payment', {
       duration: 20000,
     });
     snackBarRef.onAction().subscribe(a => {

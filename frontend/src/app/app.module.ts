@@ -70,6 +70,7 @@ import {MatChipsModule} from "@angular/material/chips";
 import {TranslateArrayService} from "./service/translatearray.service";
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CookieService } from 'ngx-cookie-service';
+import { MonerisComponent } from './moneris/moneris.component';
 
 @NgModule({
   declarations: [
@@ -107,7 +108,8 @@ import { CookieService } from 'ngx-cookie-service';
     ForgotPasswordComponent,
     VerifyEmailComponent,
     ManagerParkingListComponent,
-    AddPhoneNumberComponent
+    AddPhoneNumberComponent,
+    MonerisComponent
   ],
   imports: [
     BrowserModule,
@@ -187,6 +189,6 @@ import { CookieService } from 'ngx-cookie-service';
       multi: true
     }],
   bootstrap: [AppComponent],
-  entryComponents: [AlertDialogComponent, AddressDialog]
+  entryComponents: [AlertDialogComponent, AddressDialog, MonerisComponent]
 })
 export class AppModule { }

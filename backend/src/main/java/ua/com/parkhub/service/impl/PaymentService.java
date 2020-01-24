@@ -37,7 +37,8 @@ public class PaymentService implements IPaymentService {
         LocalDateTime checkIn = bookingModel.getCheckIn();
         LocalDateTime checkOut = bookingModel.getCheckOut();
         long hours = ChronoUnit.HOURS.between(checkIn, checkOut);
-        return hours > 0 ? (int) (tariff * hours) : tariff;
+        /*return hours > 0 ? (int) (tariff * hours) : tariff;*/
+        return 1;
     }
 
     public int findPriceIfCancelled(BookingModel bookingModel){

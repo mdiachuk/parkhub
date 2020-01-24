@@ -69,7 +69,6 @@
             <id>release</id>
             <properties>
                 <spring.profiles.active>release</spring.profiles.active>
-
             </properties>
             <dependencies>
 
