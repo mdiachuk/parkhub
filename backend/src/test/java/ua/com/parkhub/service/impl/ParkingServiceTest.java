@@ -3,12 +3,17 @@ package ua.com.parkhub.service.impl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
+import ua.com.parkhub.exceptions.AddressException;
+import ua.com.parkhub.exceptions.ExistingParkingException;
 import ua.com.parkhub.exceptions.ParkingDoesntExistException;
 import ua.com.parkhub.model.AddressModel;
 import ua.com.parkhub.model.ParkingInfoModel;
 import ua.com.parkhub.model.ParkingModel;
+import ua.com.parkhub.model.UserModel;
+import ua.com.parkhub.persistence.entities.User;
 import ua.com.parkhub.persistence.impl.AddressDAO;
 import ua.com.parkhub.persistence.impl.ParkingDAO;
+import ua.com.parkhub.persistence.impl.UserDAO;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,23 +25,37 @@ class ParkingServiceTest {
 
     @Mock
     private ParkingDAO parkingDAO;
+
+    @Mock
+    private UserDAO userDAO;
     @Mock
     private AddressDAO addressDAO;
 
-
     @Mock
     private ParkingModel parkingModel;
+    @Mock
+    private ParkingModel parkingModel1;
 
     @Mock
     private ParkingInfoModel parkingInfoModel;
+
     @Mock
     private AddressModel addressModel;
+
+
+    @Spy
+    private AddressModel addressModelSpy;
     @Mock
     private List<ParkingModel> parkingModelList;
 
     @Spy
     ParkingModel parkingModelSpy;
 
+    @Spy
+    private ParkingInfoModel parkingInfoModelSpy;
+
+    @Spy
+    private UserModel userModel;
 
 
     @InjectMocks
@@ -130,5 +149,30 @@ class ParkingServiceTest {
         when(parkingDAO.countOfParkingsByAddress(addressModel)).thenReturn(0L);
         assertTrue(parkingService.checkIfAddressIsUnique(parkingModelSpy),"The address should be unique ");
     }
+
+    @Test
+    void unsuccessfulParkingCreationWithWrongAddress() {
+        when(parkingInfoModel.getAddressModel()).thenReturn(addressModel);
+        when(parkingModel.getInfo()).thenReturn(parkingInfoModel);
+        when(parkingDAO.
+                countOfParkingsByAddress(addressModel)).thenReturn(1L);
+        assertThrows(AddressException.class, () -> {
+            parkingService.createParkingByOwnerID(parkingModel,1);
+        });
+
+    }
+
+    @Test
+    void unsuccessfulParkingCreationWithWrongName() {
+        when(parkingModel.getInfo()).thenReturn(parkingInfoModel);
+        when(parkingInfoModel.getParkingName()).thenReturn("name");
+        when(parkingDAO.
+                countOfParkingsByName("name")).thenReturn(1L);
+        assertThrows(ExistingParkingException.class, () -> {
+            parkingService.createParkingByOwnerID(parkingModel,1);
+        },"This name already exists in db");
+
+    }
+
 
 }

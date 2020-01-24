@@ -29,7 +29,7 @@ public class ParkingDAO extends ElementDAO<Parking, ParkingModel> {
         cr.where(cb.equal(root.get("parkingName"), parkingName));
         TypedQuery<Long> count = emp.createQuery(cr);
         return count.getSingleResult();
-    }//mine
+    }
 
     public Long countOfParkingsByAddress(AddressModel addressModel) {
         CriteriaBuilder cb = emp.getCriteriaBuilder();

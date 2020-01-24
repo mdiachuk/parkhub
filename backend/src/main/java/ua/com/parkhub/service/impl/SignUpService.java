@@ -133,7 +133,7 @@ public class SignUpService implements ISignUpService {
     @Override
     public boolean isUserPresentByEmail(String email) {
         return userDAO.findUserByEmail(email).isPresent();
-    }//mine
+    }
 
     @Override
     public void setPhoneNumberForAuthUser(PhoneEmailModel phoneEmailModel) {
@@ -162,7 +162,7 @@ public class SignUpService implements ISignUpService {
             user.setRole(userRole);
             userDAO.addElement(user);
             logger.info("User created successfully ");
-    }//mine
+    }
 
     @Override
     public boolean isCustomerNumberEmpty(String email) {
@@ -170,7 +170,7 @@ public class SignUpService implements ISignUpService {
                 new NotFoundInDataBaseException("User was not found" ));
         CustomerModel customer = userModel.getCustomer();
         return customer.getPhoneNumber().equals("Empty");
-    }//mine
+    }
 
     @Override
     public boolean signUpUser(UserModel userModel){
@@ -194,5 +194,5 @@ public class SignUpService implements ISignUpService {
                 new NotFoundInDataBaseException("User was not found" ));
            String token = jwtUtil.generateToken(userModel.getEmail(),userModel.getRole().getRoleName(), userModel.getId());
            return token;
-    }//mine
+    }
 }

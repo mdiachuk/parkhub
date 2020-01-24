@@ -11,7 +11,6 @@ import ua.com.parkhub.model.*;
 import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.exceptions.ParkingDoesntExistException;
 import ua.com.parkhub.exceptions.StatusCode;
-import ua.com.parkhub.model.*;
 import ua.com.parkhub.model.comparator.SlotComparator;
 import ua.com.parkhub.persistence.impl.AddressDAO;
 import ua.com.parkhub.persistence.impl.ParkingDAO;
@@ -71,12 +70,24 @@ public class  ParkingService implements IParkingService {
             logger.warn("Parking with such name already exists");
             throw new ExistingParkingException("This parking already exists");
         }
-        AddressModel address = parkingModel.getInfo().getAddressModel();
-        address = setLatLan(address);
         parkingModel.getInfo().setOwner(userDAO.findElementById(id).orElseThrow(() ->
                 new NotFoundInDataBaseException("Manager not found")));
-        AddressModel addressModel = addressDAO.addWithResponse(address);
-        parkingModel.getInfo().setAddressModel(addressModel);
+        parkingModel.getInfo().setAddressModel(createAddressModel(parkingModel));
+        parkingDAO.addElement(createParkingWithSlots(parkingModel));
+        logger.info("Parking created successfully");
+    }
+
+    @Override
+    public AddressModel createAddressModel(ParkingModel parkingModel) {
+        logger.info("Creating address");
+        AddressModel address = parkingModel.getInfo().getAddressModel();
+        address = setLatLan(address);
+        logger.info("Address created");
+        return addressDAO.addWithResponse(address);
+    }
+
+    @Override
+    public ParkingModel createParkingWithSlots(ParkingModel parkingModel) {
         List<SlotModel> slotModels = new ArrayList<>();
         IntStream.rangeClosed(1, parkingModel.getInfo().getSlotsNumber()).forEach(i -> {
                     SlotModel slotModel = new SlotModel();
@@ -85,9 +96,11 @@ public class  ParkingService implements IParkingService {
                 }
         );
         parkingModel.setSlots(slotModels);
-        parkingDAO.addElement(parkingModel);
-        logger.info("Parking created successfully");
-    }//mine
+        return parkingModel;
+    }
+
+
+
 
     public ParkingModel findParkingById(long id) {
         return parkingDAO.findElementById(id).orElseThrow(() -> new ParkingDoesntExistException(StatusCode.PARKING_DOESNT_EXIST));

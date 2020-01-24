@@ -13,6 +13,7 @@ import ua.com.parkhub.exceptions.PhoneNumberException;
 import ua.com.parkhub.model.*;
 import ua.com.parkhub.model.enums.RoleModel;
 import ua.com.parkhub.model.enums.TicketTypeModel;
+import ua.com.parkhub.persistence.entities.Customer;
 import ua.com.parkhub.persistence.impl.*;
 
 import java.time.Duration;
@@ -20,8 +21,8 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class SignUpServiceTest {
 
@@ -39,6 +40,8 @@ class SignUpServiceTest {
     private SupportTicketTypeDAO supportTicketTypeDAO;
     @Mock
     private PasswordEncoder passwordEncoder;
+    @Mock
+    private UserModel userModel;
 
     @InjectMocks
     SignUpService signUpService;
@@ -168,4 +171,15 @@ class SignUpServiceTest {
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> signUpService.registerManager(manager));
     }
+
+
+    @Test
+    public void isCustomerNumberEmpty(){
+        CustomerModel customer = new CustomerModel();
+        customer.setPhoneNumber("Empty");
+        when(userModel.getCustomer()).thenReturn(customer);
+        assertEquals(customer.getPhoneNumber().equals("Empty"),true);
+
+    }
+
 }
