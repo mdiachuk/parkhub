@@ -121,26 +121,22 @@ public class SignUpService implements ISignUpService {
         return solvers.stream().map(UserModel::getEmail).toArray(String[]::new);
     }
 
-    @Override
-    public String generateDescription(long id, String companyName, String usreouCode, String comment) {
+    private String generateDescription(long id, String companyName, String usreouCode, String comment) {
         return String.format("ID: %d Company: \"%s\" USREOU code: %s Comment: \"%s\"", id, companyName,
                 usreouCode, comment);
     }
 
-    @Override
-    public RoleModel findUserRole(String name) {
+    private RoleModel findUserRole(String name) {
         return userRoleDAO.findUserRoleByRoleName(name).orElseThrow(() ->
                 new NotFoundInDataBaseException("Role was not found by name=" + name));
     }
 
-    @Override
-    public TicketTypeModel findSupportTicketType(String type) {
+    private TicketTypeModel findSupportTicketType(String type) {
         return supportTicketTypeDAO.findSupportTicketTypeByType(type).orElseThrow(() ->
                 new NotFoundInDataBaseException("Support ticket type was not found by type=" + type));
     }
 
-    @Override
-    public List<UserModel> findSolvers(String role) {
+    private List<UserModel> findSolvers(String role) {
         List<UserModel> solvers = userDAO.findUsersByRoleId(findUserRole(role).getId());
         if (solvers.isEmpty()) {
             throw new NotFoundInDataBaseException("Solvers were not found by role=" + role);

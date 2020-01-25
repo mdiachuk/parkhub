@@ -22,32 +22,32 @@ class EmailValidatorTest {
     }
 
     @Test
-    public void test_isValid_correctEmail_1() {
+    void test_isValid_correctEmail_1() {
         helper_isValid_correctEmail("aaaaa@gmail.com");
     }
 
     @Test
-    public void test_isValid_correctEmail_2() {
+    void test_isValid_correctEmail_2() {
         helper_isValid_correctEmail("bb@ukr.net");
     }
 
     @Test
-    public void test_isValid_correctEmail_3() {
+    void test_isValid_correctEmail_3() {
         helper_isValid_correctEmail("cccc@yahoo.com");
     }
 
     @Test
-    public void test_isValid_incorrectEmail_1() {
+    void test_isValid_incorrectEmail_1() {
         helper_isValid_incorrectEmail("aaaaagmail.com");
     }
 
     @Test
-    public void test_isValid_incorrectEmail_2() {
+    void test_isValid_incorrectEmail_2() {
         helper_isValid_incorrectEmail("bb@ukrnet");
     }
 
     @Test
-    public void test_isValid_incorrectEmail_3() {
+    void test_isValid_incorrectEmail_3() {
         helper_isValid_incorrectEmail("cccc@yahoo");
     }
 
