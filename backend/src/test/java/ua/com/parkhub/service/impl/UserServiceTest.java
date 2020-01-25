@@ -13,6 +13,7 @@ import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.model.UuidTokenModel;
 import ua.com.parkhub.model.enums.UuidTokenType;
 import ua.com.parkhub.persistence.impl.UserDAO;
+import ua.com.parkhub.persistence.impl.UserRoleDAO;
 import ua.com.parkhub.persistence.impl.UuidTokenDAO;
 import ua.com.parkhub.service.IMailService;
 
@@ -33,7 +34,7 @@ class UserServiceTest {
     @Mock
     private UuidTokenDAO uuidTokenDAO;
     @Mock
-    private SignUpService signUpService;
+    private UserRoleDAO userRoleDAO;
     @Mock
     private IMailService mailService;
     @Mock
@@ -43,12 +44,12 @@ class UserServiceTest {
     private UserService userService;
 
     @BeforeEach
-    public void init() {
+    void init() {
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void test_sendToken_userNotFound_emailExceptionThrown() {
+    void test_sendToken_userNotFound_emailExceptionThrown() {
         when(userDAO.findUserByEmail(anyString())).thenReturn(Optional.empty());
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
@@ -58,7 +59,7 @@ class UserServiceTest {
     }
 
     @Test
-    public void test_sendToken_everythingCorrect() {
+    void test_sendToken_everythingCorrect() {
         UserModel user = new UserModel();
 
         when(userDAO.findUserByEmail(anyString())).thenReturn(Optional.of(user));
@@ -70,7 +71,7 @@ class UserServiceTest {
     }
 
     @Test
-    public void test_resendToken_tokenNotFound_notFoundInDataBaseExceptionThrown() {
+    void test_resendToken_tokenNotFound_notFoundInDataBaseExceptionThrown() {
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
             assertThrows(InvalidTokenException.class, () -> userService.resendToken("12345", UuidTokenType.EMAIL.getType()));
             assertThrows(InvalidTokenException.class, () -> userService.resendToken("12345", UuidTokenType.PASSWORD.getType()));
@@ -78,7 +79,7 @@ class UserServiceTest {
     }
 
     @Test
-    public void test_isLinkActive_tokenNotFound_notFoundInDataBaseExceptionThrown() {
+    void test_isLinkActive_tokenNotFound_notFoundInDataBaseExceptionThrown() {
         when(uuidTokenDAO.findUuidTokenByToken(anyString())).thenReturn(Optional.empty());
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
@@ -87,7 +88,7 @@ class UserServiceTest {
     }
 
     @Test
-    public void test_isLinkActive_tokenExpired_returnFalse() {
+    void test_isLinkActive_tokenExpired_returnFalse() {
         UuidTokenModel token = new UuidTokenModel();
         token.setExpirationDate(LocalDateTime.now().minusMinutes(100));
 
@@ -99,7 +100,7 @@ class UserServiceTest {
     }
 
     @Test
-    public void test_isLinkActive_everythingCorrect_returnTrue() {
+    void test_isLinkActive_everythingCorrect_returnTrue() {
         UuidTokenModel token = new UuidTokenModel();
         token.setExpirationDate(LocalDateTime.now().plusMinutes(100));
 
@@ -111,7 +112,7 @@ class UserServiceTest {
     }
 
     @Test
-    public void test_resetPassword_tokenExpired_invalidTokenExceptionThrown() {
+    void test_resetPassword_tokenExpired_invalidTokenExceptionThrown() {
         UuidTokenModel token = new UuidTokenModel();
         token.setExpirationDate(LocalDateTime.now().minusMinutes(100));
 
@@ -123,14 +124,14 @@ class UserServiceTest {
     }
 
     @Test
-    public void test_resetPassword_tokenNotFound_notFoundInDataBaseExceptionThrown() {
+    void test_resetPassword_tokenNotFound_notFoundInDataBaseExceptionThrown() {
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
             assertThrows(NotFoundInDataBaseException.class, () -> userService.resetPassword("12345", "qwerty"));
         });
     }
 
     @Test
-    public void test_resetPassword_userNotAssigned_invalidTokenExceptionThrown() {
+    void test_resetPassword_userNotAssigned_invalidTokenExceptionThrown() {
         UuidTokenModel token = new UuidTokenModel();
         token.setExpirationDate(LocalDateTime.now().plusMinutes(100));
         UserModel user = new UserModel();
@@ -145,7 +146,7 @@ class UserServiceTest {
     }
 
     @Test
-    public void test_resetPassword_everythingCorrect() {
+    void test_resetPassword_everythingCorrect() {
         UuidTokenModel token = new UuidTokenModel();
         token.setExpirationDate(LocalDateTime.now().plusMinutes(100));
         UserModel user = new UserModel();
@@ -161,21 +162,21 @@ class UserServiceTest {
     }
 
     @Test
-    public void test_verifyEmail_tokenNotFound_notFoundInDataBaseExceptionThrown() {
+    void test_verifyEmail_tokenNotFound_notFoundInDataBaseExceptionThrown() {
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
             assertThrows(NotFoundInDataBaseException.class, () -> userService.verifyEmail("12345"));
         });
     }
 
     @Test
-    public void test_verifyEmail_everythingCorrect() {
+    void test_verifyEmail_everythingCorrect() {
         UuidTokenModel token = new UuidTokenModel();
         UserModel user = new UserModel();
         token.setUser(user);
         RoleModel role = RoleModel.USER;
 
         when(uuidTokenDAO.findUuidTokenByToken(anyString())).thenReturn(Optional.of(token));
-        when(signUpService.findUserRole(anyString())).thenReturn(role);
+        when(userRoleDAO.findUserRoleByRoleName(anyString())).thenReturn(Optional.of(role));
 
         assertTimeout(Duration.ofMillis(TIMEOUT), () -> {
             userService.verifyEmail("12345");
@@ -185,7 +186,7 @@ class UserServiceTest {
 
     @Test
     void findUserByIdTest() {
-       UserModel userModelTest = new UserModel();
+        UserModel userModelTest = new UserModel();
         userModelTest.setFirstName("firstName");
         userModelTest.setEmail("ok@gmail");
 
@@ -195,15 +196,14 @@ class UserServiceTest {
     }
 
     @Test
-    public void negativeResultTest_findUserById() {
-
+    void negativeResultTest_findUserById() {
         Mockito.when(userDAO.findElementById(1000)).thenReturn(Optional.empty());
 
         assertThrows(UserDoesntExistException.class, () -> userService.findUserById(1000));
     }
 
     @Test
-    public void changePasswordTestNegativeResult(){
+    void changePasswordTestNegativeResult() {
         String newPassword = "";
         UserModel userModelTest = new UserModel();
         userModelTest.setId(1L);
@@ -215,7 +215,7 @@ class UserServiceTest {
 
 
     @Test
-    public void validatePasswordTest(){
+    void validatePasswordTest() {
         String password = "qwerty";
         UserModel userModelSpy = Mockito.spy(new UserModel());
         Mockito.when(userModelSpy.getPassword()).thenReturn("$2a$10$ck57rhrpiuJ0etVSuI5QVeYkjbiwLmdnkjkZ25ujcux9ivPUNtMca");
@@ -225,7 +225,7 @@ class UserServiceTest {
     }
 
     @Test
-    public void validateNewPasswordTestNegativeResult(){
+    void validateNewPasswordTestNegativeResult() {
         UserModel userModelSpy = Mockito.spy(new UserModel());
         Mockito.when(userModelSpy.getPassword()).thenReturn("$2a$10$ck57rhrpiuJ0etVSuI5QVeYkjbiwLmdnkjkZ25ujcux9ivPUNtMca");
         String newPassword = "";
