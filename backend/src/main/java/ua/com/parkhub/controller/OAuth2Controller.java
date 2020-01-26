@@ -12,8 +12,7 @@ import ua.com.parkhub.dto.AuthUserDTO;
 import ua.com.parkhub.dto.PhoneEmailDTO;
 
 import ua.com.parkhub.dto.TokenDTO;
-import ua.com.parkhub.mappers.dtoToModel.AuthUserDTOtoUserModelMapper;
-import ua.com.parkhub.mappers.dtoToModel.PhoneEmailDTOtoPhoneEmailMapper;
+import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.PhoneEmailModel;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.service.ISignUpService;
@@ -34,14 +33,16 @@ public class OAuth2Controller {
     private String frontUrl;
 
     private final ISignUpService signUpService;
-    private AuthUserDTOtoUserModelMapper authUserDTOtoUserModelMapper;
-    private PhoneEmailDTOtoPhoneEmailMapper phoneEmailDTOtoPhoneEmailMapper;
+    private Mapper<AuthUserDTO, UserModel> authUserDTOtoUserModelMapper;
+    private Mapper<PhoneEmailDTO, PhoneEmailModel> phoneEmailDTOtoPhoneEmailMapper;
 
 
     @Autowired
-    public OAuth2Controller(ISignUpService signUpService, AuthUserDTOtoUserModelMapper Mapper, PhoneEmailDTOtoPhoneEmailMapper phoneEmailDTOtoPhoneEmailMapper) {
+    public OAuth2Controller(ISignUpService signUpService,
+                            Mapper<AuthUserDTO,UserModel> authUserDTOtoUserModelMapper,
+                            Mapper<PhoneEmailDTO, PhoneEmailModel> phoneEmailDTOtoPhoneEmailMapper) {
         this.signUpService = signUpService;
-        this.authUserDTOtoUserModelMapper = Mapper;
+        this.authUserDTOtoUserModelMapper = authUserDTOtoUserModelMapper;
         this.phoneEmailDTOtoPhoneEmailMapper = phoneEmailDTOtoPhoneEmailMapper;
     }
 

@@ -16,6 +16,7 @@ import ua.com.parkhub.model.*;
 import ua.com.parkhub.service.IMailService;
 import ua.com.parkhub.security.JwtUtil;
 import ua.com.parkhub.service.ISignUpService;
+import ua.com.parkhub.values.Constants;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -161,7 +162,7 @@ public class SignUpService implements ISignUpService {
     public void setPhoneNumberForAuthUser(PhoneEmailModel phoneEmailModel) {
         logger.info("Setting phone number for Oauth2 user");
         UserModel userModel = userDAO.findUserByEmail(phoneEmailModel.getEmail()).orElseThrow(() ->
-                new NotFoundInDataBaseException("User was not found" ));
+                new NotFoundInDataBaseException(Constants.USERNOTFOUND));
         CustomerModel customerModel = userModel.getCustomer();
         customerModel.setPhoneNumber(phoneEmailModel.getPhoneNumber());
         customerDAO.updateElement(customerModel);
@@ -185,7 +186,7 @@ public class SignUpService implements ISignUpService {
     @Override
     public boolean isCustomerNumberEmpty(String email) {
         UserModel userModel = userDAO.findUserByEmail(email).orElseThrow(() ->
-                new NotFoundInDataBaseException("User was not found" ));
+                new NotFoundInDataBaseException(Constants.USERNOTFOUND));
         CustomerModel customer = userModel.getCustomer();
         return customer.getPhoneNumber().equals("Empty");
     }
@@ -209,7 +210,7 @@ public class SignUpService implements ISignUpService {
     @Override
     public String generateTokenForOauthUser(String email){
         UserModel userModel = userDAO.findUserByEmail(email).orElseThrow(() ->
-                new NotFoundInDataBaseException("User was not found" ));
+                new NotFoundInDataBaseException(Constants.USERNOTFOUND));
            return jwtUtil.generateToken(userModel.getEmail(),userModel.getRole().getRoleName(), userModel.getId());
 
     }

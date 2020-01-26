@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({Exception.class})
     public ResponseEntity handleUnexpectedExceptions(Exception e) {
-        LOGGER.info(e.getMessage());
+        LOGGER.warn(e.getMessage());
         String message = "Sorry!Something went wrong on our server.";
         return ResponseEntity.status(500).body(message);
     }

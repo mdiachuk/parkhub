@@ -8,7 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.ParkingRequestDTO;
-import ua.com.parkhub.mappers.dtoToModel.ParkingRequestDTOWithIDtoParkingModel;
+import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.ParkingModel;
 import ua.com.parkhub.service.IParkingService;
 
@@ -21,10 +21,11 @@ import java.util.stream.Collectors;
 public class ParkingController {
 
     private final IParkingService parkingService;
-    private final ParkingRequestDTOWithIDtoParkingModel parkingRequestDTOWithIDtoParkingModel;
+    private final Mapper<ParkingRequestDTO, ParkingModel> parkingRequestDTOWithIDtoParkingModel;
 
     @Autowired
-    public ParkingController(IParkingService parkingService, ParkingRequestDTOWithIDtoParkingModel parkingRequestDTOWithIDtoParkingModel) {
+    public ParkingController(IParkingService parkingService,
+                             Mapper<ParkingRequestDTO, ParkingModel> parkingRequestDTOWithIDtoParkingModel) {
         this.parkingService = parkingService;
         this.parkingRequestDTOWithIDtoParkingModel = parkingRequestDTOWithIDtoParkingModel;
     }

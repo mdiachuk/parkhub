@@ -70,6 +70,7 @@ import {MatChipsModule} from "@angular/material/chips";
 import {TranslateArrayService} from "./service/translatearray.service";
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CookieService } from 'ngx-cookie-service';
+import { AddParkingDialogComponent } from './add-parking-dialog/add-parking-dialog.component';
 
 @NgModule({
   declarations: [
@@ -107,7 +108,8 @@ import { CookieService } from 'ngx-cookie-service';
     ForgotPasswordComponent,
     VerifyEmailComponent,
     ManagerParkingListComponent,
-    AddPhoneNumberComponent
+    AddPhoneNumberComponent,
+    AddParkingDialogComponent
   ],
   imports: [
     BrowserModule,

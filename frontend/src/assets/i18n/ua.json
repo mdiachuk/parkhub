@@ -143,6 +143,9 @@
   "New building": "Новий будинок",
   "Parking Details": "Інформація про парковку",
   "You must enter a value": "Обов'язкове поле",
+  "This parking already exists": "Парковка з такою назвою вже існує",
+  "This address already exists": "Парковка з такою адресою вже існує",
+  "Sorry!Something went wrong on our server.": "Вибачте,сталася помилка!Спробуйте будь ласка пізніше",
   "PhonePlaceholder":{
     "value": "Номер телефону"
   },

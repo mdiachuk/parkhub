@@ -17,7 +17,7 @@ public class ParkHubException extends RuntimeException {
     public ParkHubException(Throwable cause) {
         super(cause);
     }
-    private StatusCode statusCode;
+    public StatusCode statusCode;
 
     public ParkHubException(StatusCode statusCode) {
         this.statusCode = statusCode;
