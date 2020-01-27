@@ -24,6 +24,8 @@ public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
+    private static final String VALIDATION_ERRORS = "Validation errors: {}";
+
     private final IUserService userService;
     private final Mapper<UserModel, UserInfoDTO> userModelToUserInfoDTOMapper;
     private final Mapper<PasswordDTO, UserModel> passwordDTOtoUserModelMapper;
@@ -46,7 +48,7 @@ public class UserController {
             List<String> errors = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
-            logger.info("Validation errors: {}", errors);
+            logger.info(VALIDATION_ERRORS, errors);
             return ResponseEntity.badRequest().body(errors);
         }
         userService.sendToken(emailDTO.getEmail(), emailDTO.getTokenType());
@@ -60,7 +62,7 @@ public class UserController {
             List<String> errors = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
-            logger.info("Validation errors: {}", errors);
+            logger.info(VALIDATION_ERRORS, errors);
             return ResponseEntity.badRequest().body(errors);
         }
         userService.resendToken(tokenDTO.getToken(), tokenDTO.getTokenType());
@@ -93,7 +95,7 @@ public class UserController {
             List<String> errors = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
-            logger.info("Validation errors: {}", errors);
+            logger.info(VALIDATION_ERRORS, errors);
             return ResponseEntity.badRequest().body(errors);
         }
         userService.resetPassword(passwordDTO.getToken(), passwordDTO.getPassword());
