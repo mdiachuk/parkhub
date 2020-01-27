@@ -1,0 +1,68 @@
+.container {
+    text-align: center;
+    justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+ul.container {
+    margin-top: 120px;   
+}
+
+button.submit {
+    color: white;
+    background-color: #3F51B5;
+}
+
+.label {
+    margin-top: 70px;
+    font-size: 19px;
+}
+
+
+
+li.name-block {
+    margin-top: 25px;
+}
+
+li.buttons-block {
+    margin-top: 45px;
+}
+
+.success {
+    margin-top: 140px;
+    text-align: center;
+}
+
+div.success-message {
+    margin-top: 20px;
+    font-size: medium;
+    color: #24B05B;
+}
+
+div.homepage-link {
+    margin-top: 20px;
+}
+
+a.homepage-link {
+    color: #FF4081;
+    text-decoration: none;
+}
+
+.success-image {
+    width: 150px;
+    height: auto;
+}
+
+li {
+    list-style-type: none;
+}
+
+ul {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.card {
+    max-width: 450px;
+}

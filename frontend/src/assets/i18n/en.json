@@ -17,7 +17,7 @@
   "Please, select preferred time": "Please, select preferred time",
   "Please, select available slot. Price per hour:": "Please, select available slot. Tariff per hour:",
   "Changes were accepted": "Changes were accepted!",
-  "Failed to change password" : "Failed to change password!",
+  "Failed to change password": "Failed to change password!",
   "Success": "Success",
   "Search": "Search",
   "Nearest parking": "Nearest parking",
@@ -128,6 +128,11 @@
   "Password must match requirements": "Password must match requirements",
   "Resend link": "Resend link",
   "Link for veifying email adress was sent": "Link for veifying email adress was sent",
+  "Verification link was sent to your email-box!": "Verification link was sent to your email-box!",
+  "Create an account": "Create an account",
+  "This parking already exists": "This parking already exists",
+  "This address already exists": "This address already exists",
+  "Sorry!Something went wrong on our server.": "Sorry!Something went wrong on our server.",
   "This parking already exists": "This parking already exists",
   "This address already exists": "This address already exists",
   "Sorry!Something went wrong on our server.": "Sorry!Something went wrong on our server.",
@@ -164,8 +169,8 @@
   "TypeUserRolePlaceholder": {
     "value": "Type user role"
   },
-    "FindYourParkingLove♥Placeholder": {
-    "value" : "Find your parking"
+  "FindYourParkingLove♥Placeholder": {
+    "value": "Find your parking"
   },
   "PhoneNumberPlaceholder": {
     "value": "Phone number"

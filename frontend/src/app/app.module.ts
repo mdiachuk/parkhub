@@ -2,12 +2,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import 'hammerjs'
+import 'hammerjs';
 import { MaterialModule } from './material.module';
 import { AppComponent } from './app.component';
-import { SingupComponent } from './singup/singup.component';
 import { AppRoutingModule } from './app-routing.module';
-import {HttpClientModule , HttpClient} from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { PageComponent } from './homePage/homePage.component';
@@ -37,10 +36,10 @@ import {
   MatCheckboxModule,
 } from "@angular/material";
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule} from '@angular/material/icon';
-import { MatSnackBarModule} from '@angular/material/snack-bar';
-import { MatExpansionModule} from '@angular/material/expansion';
-import { MatDialogModule} from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDialogModule } from '@angular/material/dialog';
 import { AddressDialog } from './parking-detail/parking-detail-dialog-component';
 import 'hammerjs'
 import { ManagerSignupComponent } from "./manager-signup/manager-signup.component";
@@ -66,10 +65,12 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ManagerParkingListComponent } from './manager-parking-list/manager-parking-list.component';
 import { AddPhoneNumberComponent } from './add-phone-number/add-phone-number.component';
-import {MatChipsModule} from "@angular/material/chips";
-import {TranslateArrayService} from "./service/translatearray.service";
+import { MatChipsModule } from "@angular/material/chips";
+import { TranslateArrayService } from "./service/translatearray.service";
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CookieService } from 'ngx-cookie-service';
+import { UserSignupComponent } from './user-signup/user-signup.component';
+import { AddParkingDialogComponent } from './add-parking-dialog/add-parking-dialog.component';
 import { AddParkingDialogComponent } from './add-parking-dialog/add-parking-dialog.component';
 
 @NgModule({
@@ -84,7 +85,6 @@ import { AddParkingDialogComponent } from './add-parking-dialog/add-parking-dial
     ParkingsComponent,
     ParkingDetailComponent,
     AddressDialog,
-    SingupComponent,
     PageComponent,
     ParkingListComponent,
     AddParkingComponent,
@@ -108,6 +108,7 @@ import { AddParkingDialogComponent } from './add-parking-dialog/add-parking-dial
     ForgotPasswordComponent,
     VerifyEmailComponent,
     ManagerParkingListComponent,
+    UserSignupComponent,
     AddPhoneNumberComponent,
     AddParkingDialogComponent
   ],
@@ -182,7 +183,7 @@ import { AddParkingDialogComponent } from './add-parking-dialog/add-parking-dial
     MatExpansionModule,
     FlexLayoutModule,
   ],
-  providers: [ParkingService, SlotService, ParkingService1, DataService, UserService, TranslateArrayService,CookieService,
+  providers: [ParkingService, SlotService, ParkingService1, DataService, UserService, TranslateArrayService, CookieService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ParkhubInterceptorComponent,
