@@ -110,7 +110,7 @@ import { MonerisComponent } from './moneris/moneris.component';
     ManagerParkingListComponent,
     UserSignupComponent,
     AddPhoneNumberComponent,
-    AddParkingDialogComponent
+    AddParkingDialogComponent,
     AddPhoneNumberComponent,
     MonerisComponent
   ],
