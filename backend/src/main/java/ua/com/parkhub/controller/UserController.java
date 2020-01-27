@@ -121,12 +121,8 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER') or hasRole('USER')")
     @PostMapping("/api/user/password/{id}")
     public ResponseEntity<Void> updateUserPassword(@PathVariable Long id, @RequestBody PasswordDTO passwordDTO){
-        try {
-            userService.changePassword(id, passwordDTO.getNewPassword(),
+        userService.changePassword(id, passwordDTO.getNewPassword(),
                     passwordDTOtoUserModelMapper.transform(passwordDTO));
-        } catch (PasswordException ex){
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
-        }
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 }

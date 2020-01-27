@@ -107,7 +107,7 @@ export class AddParkingComponent implements OnInit {
   }
 
   openDialog( message: string): MatDialogRef<AddParkingDialogComponent> {
-    return this.dialog.open(AlertDialogComponent, {
+    return this.dialog.open(AddParkingDialogComponent, {
       width: '350px',
       data: {message}
     });

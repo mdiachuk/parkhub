@@ -71,14 +71,7 @@ div.forgot-password-link {
   -webkit-tap-highlight-color: transparent;
 }
 
-.btn, .btn-large, .btn-small,
-.btn-floating,
-.btn-large,
-.btn-small,
-.btn-flat {
-  font-size: 14px;
-  outline: 0;
-}
+
 
 .btn, .btn-large, .btn-small {
   text-decoration: none;
@@ -93,4 +86,10 @@ div.forgot-password-link {
 
 .tap-target-origin:not(.btn):not(.btn-large):not(.btn-small), .tap-target-origin:not(.btn):not(.btn-large):not(.btn-small):hover {
   background: none;
+}
+
+.left{
+  font-size: 12pt;
+  vertical-align: top
+  ;
 }

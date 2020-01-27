@@ -189,6 +189,6 @@ import { AddParkingDialogComponent } from './add-parking-dialog/add-parking-dial
       multi: true
     }],
   bootstrap: [AppComponent],
-  entryComponents: [AlertDialogComponent, AddressDialog]
+  entryComponents: [AlertDialogComponent, AddressDialog,AddParkingDialogComponent]
 })
 export class AppModule { }

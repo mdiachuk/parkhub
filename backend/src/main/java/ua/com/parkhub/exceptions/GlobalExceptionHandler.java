@@ -2,6 +2,7 @@ package ua.com.parkhub.exceptions;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -35,11 +36,18 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(500).body(message);
     }
 
+    @ExceptionHandler({PasswordException.class})
+    public ResponseEntity handlePasswordException(Exception e) {
+        LOGGER.warn(e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+    }
+
     @ExceptionHandler({Exception.class})
     public ResponseEntity handleUnexpectedExceptions(Exception e) {
         LOGGER.warn(e.getMessage());
         String message = "Sorry!Something went wrong on our server.";
         return ResponseEntity.status(500).body(message);
     }
+
 
 }
