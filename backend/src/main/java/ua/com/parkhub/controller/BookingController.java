@@ -23,12 +23,6 @@ import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-//TODO Validation: parkId, slotId, car number, phone number
-
-//TODO Validation: parkId, slotId, car number, phone number
-
-//TODO Validation: parkId, slotId, car number, phone number
-
 @RestController
 public class BookingController {
     private static final Logger LOGGER = LoggerFactory.getLogger(BookingController.class);
