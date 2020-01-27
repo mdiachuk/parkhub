@@ -287,7 +287,7 @@ class ParkingServiceTest {
 
     @Test
     void createParkingWithSlots() {
-        when(parkingModelSpy.getInfo()).thenReturn(parkingInfoModelSpy);
+        when(parkingModel.getInfo()).thenReturn(parkingInfoModel);
         when(parkingInfoModel.getSlotsNumber()).thenReturn(2);
         assertSame(parkingModel,parkingService.createParkingWithSlots(parkingModel));
 
