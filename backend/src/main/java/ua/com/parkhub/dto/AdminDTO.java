@@ -29,6 +29,4 @@ public class AdminDTO {
     public void setUserRole(String userRole) {
         this.userRole = userRole;
     }
-
-
 }
