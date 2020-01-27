@@ -7,8 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.*;
-import ua.com.parkhub.exceptions.BookingException;
-import ua.com.parkhub.exceptions.CustomerException;
 import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.exceptions.ParkingException;
 import ua.com.parkhub.mappers.modelToDto.ParkingWithSlotsModelToDTOMapper;
@@ -86,15 +84,5 @@ public class BookingController {
         int price = bookingService.findPrice("+" + phoneNumber.getPhoneNumber());
         paymentResponseDTO.setPrice(price);
         return ResponseEntity.ok(paymentResponseDTO);
-    }
-
-    @ExceptionHandler(BookingException.class)
-    public ResponseEntity handleBookingException(BookingException e) {
-        return ResponseEntity.badRequest().body(e.getStatusCode());
-    }
-
-    @ExceptionHandler(CustomerException.class)
-    public ResponseEntity handleCustomerException(CustomerException e) {
-        return ResponseEntity.badRequest().body(e.getStatusCode());
     }
 }

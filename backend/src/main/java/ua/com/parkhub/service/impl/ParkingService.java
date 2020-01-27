@@ -6,10 +6,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.com.parkhub.exceptions.*;
+import ua.com.parkhub.model.*;
 import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.exceptions.ParkingDoesntExistException;
 import ua.com.parkhub.exceptions.StatusCode;
-import ua.com.parkhub.model.*;
 import ua.com.parkhub.model.comparator.SlotComparator;
 import ua.com.parkhub.persistence.impl.AddressDAO;
 import ua.com.parkhub.persistence.impl.ParkingDAO;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
-public class ParkingService implements IParkingService {
+public class  ParkingService implements IParkingService {
 
     private static final Logger logger = LoggerFactory.getLogger(ParkingService.class);
 
@@ -60,13 +61,34 @@ public class ParkingService implements IParkingService {
     @Transactional
     @Override
     public void createParkingByOwnerID(ParkingModel parkingModel, long id) {
+        logger.info("Creating parking");
+        if(!checkIfAddressIsUnique(parkingModel)){
+            logger.warn("Parking with such address already exists");
+            throw new AddressException("This address already exists");
+        }
+        if(!isParkingNameUnique(parkingModel)){
+            logger.warn("Parking with such name already exists");
+            throw new ExistingParkingException("This parking already exists");
+        }
+        parkingModel.getInfo().setOwner(userDAO.findElementById(id).orElseThrow(() ->
+                new NotFoundInDataBaseException("Manager not found")));
+        parkingModel.getInfo().setAddressModel(createAddressModel(parkingModel));
+        parkingDAO.addElement(createParkingWithSlots(parkingModel));
+        logger.info("Parking created successfully");
+    }
+
+    @Override
+    public AddressModel createAddressModel(ParkingModel parkingModel) {
+        logger.info("Creating address");
         AddressModel address = parkingModel.getInfo().getAddressModel();
         address = setLatLan(address);
-        if (userDAO.findElementById(id).isPresent()) {
-            parkingModel.getInfo().setOwner(userDAO.findElementById(id).get());
-        }
-        AddressModel addressModel = addressDAO.addWithResponse(address);
-        parkingModel.getInfo().setAddressModel(addressModel);
+        logger.info("Address created");
+        return addressDAO.addWithResponse(address);
+    }
+
+    @Override
+    public ParkingModel createParkingWithSlots(ParkingModel parkingModel) {
+        logger.info("Creating slots");
         List<SlotModel> slotModels = new ArrayList<>();
         IntStream.rangeClosed(1, parkingModel.getInfo().getSlotsNumber()).forEach(i -> {
                     SlotModel slotModel = new SlotModel();
@@ -75,7 +97,8 @@ public class ParkingService implements IParkingService {
                 }
         );
         parkingModel.setSlots(slotModels);
-        parkingDAO.addElement(parkingModel);
+        logger.info("Slots created");
+        return parkingModel;
     }
 
     public ParkingModel findParkingById(Long id) {
@@ -91,8 +114,6 @@ public class ParkingService implements IParkingService {
     public List<ParkingModel> findAllParkingByOwnerId(Long id) {
         return parkingDAO.findAllParkingByOwnerId(id);
     }
-
-
 
     @Transactional(readOnly = true)
     public ParkingModel findParkingByIdWithSlotList(long id) {
