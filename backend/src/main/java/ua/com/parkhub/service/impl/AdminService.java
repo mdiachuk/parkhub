@@ -102,9 +102,8 @@ public class AdminService implements IAdminService {
     }
 
     public AdminTicketCounterDTO countTickets(){
-        long ticketCounter = supportTicketDAO.findAll().stream().filter(isActive -> !isActive.isSolved()).count();
         AdminTicketCounterDTO targetAdminTicketCounterDTO = new AdminTicketCounterDTO();
-        targetAdminTicketCounterDTO.setAdminTicketCounter(ticketCounter);
+        targetAdminTicketCounterDTO.setAdminTicketCounter(supportTicketDAO.findAll().stream().filter(isActive -> !isActive.isSolved()).count());
         return targetAdminTicketCounterDTO;
     }
 }

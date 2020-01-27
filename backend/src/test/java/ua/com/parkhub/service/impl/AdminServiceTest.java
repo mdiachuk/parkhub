@@ -4,12 +4,32 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import ua.com.parkhub.dto.AdminDTO;
+import ua.com.parkhub.dto.AdminSupportTicketDTO;
+import ua.com.parkhub.dto.AdminTicketCounterDTO;
+import ua.com.parkhub.model.ParkingModel;
+import ua.com.parkhub.model.SupportTicketModel;
+import ua.com.parkhub.model.UserModel;
+import ua.com.parkhub.model.enums.RoleModel;
+import ua.com.parkhub.model.enums.TicketTypeModel;
+import ua.com.parkhub.persistence.entities.SupportTicket;
+import ua.com.parkhub.persistence.entities.User;
+import ua.com.parkhub.persistence.entities.UserRole;
 import ua.com.parkhub.persistence.impl.SupportTicketDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
 import ua.com.parkhub.persistence.impl.UserRoleDAO;
 
+import javax.management.relation.Role;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.mockito.ArgumentMatchers.anyLong;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class AdminServiceTest {
     @Mock
@@ -18,9 +38,19 @@ class AdminServiceTest {
     private UserRoleDAO userRoleDAO;
     @Mock
     private SupportTicketDAO supportTicketDAO;
-
     @InjectMocks
-    AdminService adminService;
+    private AdminService adminService;
+
+    @Mock
+    private UserModel userModel;
+    @Mock
+    private AdminDTO adminDTO;
+    @Mock
+    private AdminTicketCounterDTO adminTicketCounterDTO;
+    @Mock
+    private AdminSupportTicketDTO adminSupportTicketDTO;
+    @Mock
+    private List<RoleModel> roleList;
 
     @BeforeEach
     public void init(){
@@ -28,26 +58,109 @@ class AdminServiceTest {
     }
 
     @Test
-    void findUser() {
+    void findUserSuccessCase() {
+        UserModel user = new UserModel();
+        user.setId(1L);
+        user.setFirstName("Test");
+        user.setLastName("Test");
+        user.setRole(RoleModel.PENDING);
+        when(userDAO.findElementById(anyLong())).thenReturn(Optional.of(user));
+        assertEquals(user.getId(), adminService.findUser(1L).getId());
     }
 
     @Test
     void updateRole() {
+        UserModel userModelExample = new UserModel();
+        userModelExample.setId(1L);
+        userModelExample.setRole(RoleModel.PENDING);
+
+        UserRole userRoleExpected = new UserRole();
+        userRoleExpected.setId(1L);
+        userRoleExpected.setRoleName(RoleModel.MANAGER.toString());
+        userRoleExpected.setActive(true);
+
+        roleList.add(RoleModel.MANAGER);
+
+        Mockito.when(userRoleDAO.findAll()).thenReturn(roleList);
+        Mockito.when(userDAO.findElementById(anyLong())).thenReturn(Optional.of(userModelExample));
+        /*Mockito.when(roleList.get(0)).thenReturn(roleList.get(0));*/
+        adminService.updateRole(1L);
+
+        verify(userDAO, times(2)).findElementById(1L);
     }
 
     @Test
-    void solveTicket() {
+    void solveTicketSuccessCase() {
+        SupportTicketModel supportTicketModelExample = new SupportTicketModel();
+        supportTicketModelExample.setId(1L);
+        supportTicketModelExample.setSolved(false);
+
+        SupportTicketModel supportTicketModelExpected = new SupportTicketModel();
+        supportTicketModelExpected.setSolved(true);
+
+        Mockito.when(supportTicketDAO.findElementById(1L)).thenReturn(Optional.of(supportTicketModelExample));
+        adminService.solveTicket(1L);
+
+        verify(supportTicketDAO, times(1)).findElementById(1L);
     }
 
     @Test
-    void retrieveTickets() {
+    void retrieveTicketsSuccessCase() {
+        SupportTicketModel supportTicketModelId1 = new SupportTicketModel();
+        supportTicketModelId1.setId(1L);
+        supportTicketModelId1.setType(TicketTypeModel.MANAGER_REGISTRATION_REQUEST);
+        supportTicketModelId1.setDescription("ID: 4 Company: \"Booking\" USREOU: 33333311 Comment: \"'");
+
+        SupportTicketModel supportTicketModelId2 = new SupportTicketModel();
+        supportTicketModelId2.setId(2L);
+        supportTicketModelId2.setType(TicketTypeModel.MANAGER_REGISTRATION_REQUEST);
+        supportTicketModelId2.setDescription("ID: 4 Company: \"Booking\" USREOU: 33333311 Comment: \"'");
+
+        SupportTicketModel supportTicketModelId3 = new SupportTicketModel();
+        supportTicketModelId3.setId(3L);
+        supportTicketModelId3.setType(TicketTypeModel.MANAGER_REGISTRATION_REQUEST);
+        supportTicketModelId3.setDescription("ID: 4 Company: \"Booking\" USREOU: 33333311 Comment: \"'");
+
+        List<SupportTicketModel> targetSupportTicketTestList = new ArrayList<>();
+        targetSupportTicketTestList.add(supportTicketModelId1);
+        targetSupportTicketTestList.add(supportTicketModelId2);
+        targetSupportTicketTestList.add(supportTicketModelId3);
+
+        when(supportTicketDAO.findAll()).thenReturn(targetSupportTicketTestList);
+
+        assertEquals(targetSupportTicketTestList.size(), adminService.retrieveTickets().size());
     }
 
     @Test
-    void findTicket() {
+    void findTicketSuccessCase() {
+        SupportTicketModel supportTicketModel = new SupportTicketModel();
+        supportTicketModel.setId(1L);
+        supportTicketModel.setType(TicketTypeModel.MANAGER_REGISTRATION_REQUEST);
+        supportTicketModel.setDescription("ID: 4 Company: \"Booking\" USREOU: 33333311 Comment: \"'");
+
+        Mockito.when(supportTicketDAO.findElementById(1L)).thenReturn(Optional.of(supportTicketModel));
+
+        assertEquals(supportTicketModel.getId(), adminService.findTicket(1L).getId());
     }
 
     @Test
-    void countTickets() {
+    void countTicketsSuccessCase() {
+        SupportTicketModel supportTicket1 = new SupportTicketModel();
+        supportTicket1.setId(1L);
+        supportTicket1.setSolved(false);
+        SupportTicketModel supportTicket2 = new SupportTicketModel();
+        supportTicket2.setId(2L);
+        supportTicket2.setSolved(false);
+        SupportTicketModel supportTicket3 = new SupportTicketModel();
+        supportTicket3.setId(3L);
+        supportTicket3.setSolved(false);
+        List<SupportTicketModel> supportTickets = new ArrayList<>();
+        supportTickets.add(supportTicket1);
+        supportTickets.add(supportTicket2);
+        supportTickets.add(supportTicket3);
+
+        Mockito.when(supportTicketDAO.findAll()).thenReturn(supportTickets);
+
+        assertEquals(3, adminService.countTickets().getAdminTicketCounter());
     }
 }
