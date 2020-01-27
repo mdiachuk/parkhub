@@ -51,14 +51,14 @@ public class AdminService implements IAdminService {
     public void updateRole(long id){
         List<RoleModel> roleList = userRoleDAO.findAll().stream().filter(role -> role.getRoleName().equals(RoleDTO.MANAGER.toString())).collect(Collectors.toList());
         Optional<UserModel> targetOptionalUser = userDAO.findElementById(id);
-        UserModel targetUser = targetOptionalUser.get();
+        UserModel targetUser = targetOptionalUser.orElseGet(UserModel::new);
         targetUser.setRole(roleList.get(0));
         userDAO.updateElement(targetUser);
     }
 
     public void solveTicket(long id){
         Optional<SupportTicketModel> targetOptionalTicket = supportTicketDAO.findElementById(id);
-        SupportTicketModel targetTicket = targetOptionalTicket.get();
+        SupportTicketModel targetTicket = targetOptionalTicket.orElseGet(SupportTicketModel::new);
         targetTicket.setSolved(true);
         supportTicketDAO.updateElement(targetTicket);
     }
@@ -102,9 +102,8 @@ public class AdminService implements IAdminService {
     }
 
     public AdminTicketCounterDTO countTickets(){
-        long ticketCounter = supportTicketDAO.findAll().stream().filter(isActive -> !isActive.isSolved()).count();
         AdminTicketCounterDTO targetAdminTicketCounterDTO = new AdminTicketCounterDTO();
-        targetAdminTicketCounterDTO.setAdminTicketCounter(ticketCounter);
+        targetAdminTicketCounterDTO.setAdminTicketCounter(supportTicketDAO.findAll().stream().filter(isActive -> !isActive.isSolved()).count());
         return targetAdminTicketCounterDTO;
     }
 }

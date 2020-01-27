@@ -6,10 +6,6 @@ public class AdminDTO {
     private String firstName;
     private String userRole;
 
-    public AdminDTO() {
-    }
-
-
     public long getId() {
         return id;
     }
@@ -33,6 +29,4 @@ public class AdminDTO {
     public void setUserRole(String userRole) {
         this.userRole = userRole;
     }
-
-
 }
