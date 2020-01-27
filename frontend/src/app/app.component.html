@@ -21,8 +21,8 @@
           <a *ngIf="data.currentIsUser | async" mat-button [routerLink]='["user"]'>{{'User' | translate}}</a>
           <a *ngIf="!(data.currentIsLogged | async)" mat-button
             [routerLink]='["signup/user"]'>{{ 'Sign up' | translate }}</a>
-          <a *ngIf="!(data.currentIsLogged | async)" mat-button [routerLink]='["login"]'>{{ 'Login' | translate }}</a>
-          <a *ngIf="data.currentIsLogged | async" mat-button (click)="logout()">{{ 'LogOut' | translate }}</a>
+          <a *ngIf="!(data.currentIsLogged | async)" mat-button [routerLink]='["login"]'>{{ 'Sign in' | translate }}</a>
+          <a *ngIf="data.currentIsLogged | async" mat-button (click)="logout()">{{ 'Sign out' | translate }}</a>
         </div>
       </mat-toolbar>
       <mat-sidenav-container fxFlexFill class="example-container">
