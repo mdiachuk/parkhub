@@ -1,21 +1,20 @@
-<!--<h1 mat-dialog-title>Proceed payment</h1>
+<h1 mat-dialog-title>Proceed payment</h1>
 <div mat-dialog-content>
-  Some necessary payment info {{ data.payment.price}}
-  <FORM METHOD="POST" ACTION=https://esqa.moneris.com/HPPDP/index.php>
+  Parking price: {{data.payment.price}}
+  <br>
+  Your slot number: {{data.payment.slotNumber}}
+  <br>
+  Check-in: {{data.payment.booking.checkIn}}
+  <br>
+  Check-out: {{data.payment.booking.checkOut}}
+  <br>
+  <FORM METHOD="POST" ACTION="https://esqa.moneris.com/HPPDP/index.php">
     <INPUT TYPE="HIDDEN" NAME="ps_store_id" VALUE="M9DLAtore3">
-    <INPUT TYPE="HIDDEN" NAME="pp_key" VALUE="hpJDDTV9TCQL">
-    <INPUT TYPE="HIDDEN" NAME="charge_total" VALUE="1.00">
-    <INPUT TYPE="SUBMIT" NAME="SUBMIT"  VALUE="Click to proceed to Secure Page">
+    <INPUT TYPE="HIDDEN" NAME="hpp_key" VALUE="hpJDDTV9TCQL">
+    <INPUT TYPE="HIDDEN" NAME="charge_total" VALUE="{data.payment.price}">
+    <!--MORE OPTIONAL VARIABLES CAN BE DEFINED HERE -->
+    <INPUT TYPE="SUBMIT" NAME="SUBMIT" VALUE="Click to proceed to Secure Page">
   </FORM>
-</div>-->
-
-<FORM METHOD="POST" ACTION="https://esqa.moneris.com/HPPDP/index.php">
-  <INPUT TYPE="HIDDEN" NAME="ps_store_id" VALUE="M9DLAtore3">
-  <INPUT TYPE="HIDDEN" NAME="hpp_key" VALUE="hpJDDTV9TCQL">
-  <INPUT TYPE="HIDDEN" NAME="charge_total" VALUE="1.00">
-  <!--MORE OPTIONAL VARIABLES CAN BE DEFINED HERE -->
-  <INPUT TYPE="SUBMIT" NAME="SUBMIT" VALUE="Click to proceed to Secure Page">
-</FORM>
-
+</div>
 
 
