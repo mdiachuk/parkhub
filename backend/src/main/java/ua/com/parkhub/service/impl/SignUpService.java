@@ -3,6 +3,7 @@ package ua.com.parkhub.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.com.parkhub.exceptions.EmailException;
@@ -12,7 +13,10 @@ import ua.com.parkhub.model.enums.RoleModel;
 import ua.com.parkhub.model.enums.TicketTypeModel;
 import ua.com.parkhub.persistence.impl.*;
 import ua.com.parkhub.model.*;
+import ua.com.parkhub.service.IMailService;
+import ua.com.parkhub.security.JwtUtil;
 import ua.com.parkhub.service.ISignUpService;
+import ua.com.parkhub.values.Constants;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -21,6 +25,9 @@ import java.util.Optional;
 @Service
 public class SignUpService implements ISignUpService {
 
+    @Value("${fronturl}")
+    private String url;
+
     private static final Logger logger = LoggerFactory.getLogger(SignUpService.class);
 
     private final CustomerDAO customerDAO;
@@ -28,31 +35,43 @@ public class SignUpService implements ISignUpService {
     private final UserRoleDAO userRoleDAO;
     private final SupportTicketDAO supportTicketDAO;
     private final SupportTicketTypeDAO supportTicketTypeDAO;
+    private final IMailService mailService;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     @Autowired
     public SignUpService(CustomerDAO customerDAO, UserDAO userDAO, UserRoleDAO userRoleDAO,
                          SupportTicketDAO supportTicketDAO, SupportTicketTypeDAO supportTicketTypeDAO,
-                         PasswordEncoder passwordEncoder) {
+                         IMailService mailService, PasswordEncoder passwordEncoder,
+                         JwtUtil jwtUtil) {
         this.customerDAO = customerDAO;
         this.userDAO = userDAO;
         this.userRoleDAO = userRoleDAO;
         this.supportTicketDAO = supportTicketDAO;
         this.supportTicketTypeDAO = supportTicketTypeDAO;
+        this.mailService = mailService;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
+    }
+
+    @Transactional
+    @Override
+    public void registerUser(UserModel user) {
+        userDAO.addElement(createUser(user));
     }
 
     @Transactional
     @Override
     public void registerManager(ManagerRegistrationDataModel manager) {
-        CustomerModel customer = createCustomer(manager.getUser().getCustomer());
-        UserModel user = createUser(manager.getUser(), customer);
-        user = userDAO.addElement(user).orElseThrow(() ->
-                new NotFoundInDataBaseException("Customer not found"));
+        UserModel user =  userDAO.addElement(createUser(manager.getUser())).orElseThrow(() ->
+                new NotFoundInDataBaseException("User not found"));
         String description = generateDescription(user.getId(), manager.getCompanyName(),
                 manager.getUsreouCode(), manager.getComment());
         SupportTicketModel ticket = createTicket(description, user.getCustomer());
-        supportTicketDAO.addElement(ticket);
+        ticket = supportTicketDAO.addElement(ticket).orElseThrow(() ->
+                new NotFoundInDataBaseException("Ticket not found"));
+        sendNotification(getEmails(ticket.getSolvers()), user.getFirstName(),
+                user.getLastName(), ticket.getId());
     }
 
     @Transactional
@@ -75,7 +94,8 @@ public class SignUpService implements ISignUpService {
 
     @Transactional
     @Override
-    public UserModel createUser(UserModel user, CustomerModel customer) {
+    public UserModel createUser(UserModel user) {
+        CustomerModel customer = createCustomer(user.getCustomer());
         Optional<UserModel> optionalUser = userDAO.findUserByEmail(user.getEmail());
         if (optionalUser.isPresent()) {
             throw new EmailException("Account with this email already exists!");
@@ -99,26 +119,34 @@ public class SignUpService implements ISignUpService {
         return ticket;
     }
 
-    @Override
-    public String generateDescription(long id, String companyName, String usreouCode, String comment) {
+    private void sendNotification(String[] emails, String firstName, String lastName, long ticketId) {
+        String subject = "New registration request";
+        String body = String.format("New parking owner registration request was created by %s %s. " +
+                "<a href=\"%s/admin/%d\">See details</a>.", firstName, lastName, url, ticketId);
+        mailService.sendEmail(emails, subject, body);
+        logger.info("Email notification for new parking owner registration request was sent to admins");
+    }
+
+    private String[] getEmails(List<UserModel> solvers) {
+        return solvers.stream().map(UserModel::getEmail).toArray(String[]::new);
+    }
+
+    private String generateDescription(long id, String companyName, String usreouCode, String comment) {
         return String.format("ID: %d Company: \"%s\" USREOU code: %s Comment: \"%s\"", id, companyName,
                 usreouCode, comment);
     }
 
-    @Override
-    public RoleModel findUserRole(String name) {
+    private RoleModel findUserRole(String name) {
         return userRoleDAO.findUserRoleByRoleName(name).orElseThrow(() ->
                 new NotFoundInDataBaseException("Role was not found by name=" + name));
     }
 
-    @Override
-    public TicketTypeModel findSupportTicketType(String type) {
+    private TicketTypeModel findSupportTicketType(String type) {
         return supportTicketTypeDAO.findSupportTicketTypeByType(type).orElseThrow(() ->
                 new NotFoundInDataBaseException("Support ticket type was not found by type=" + type));
     }
 
-    @Override
-    public List<UserModel> findSolvers(String role) {
+    private List<UserModel> findSolvers(String role) {
         List<UserModel> solvers = userDAO.findUsersByRoleId(findUserRole(role).getId());
         if (solvers.isEmpty()) {
             throw new NotFoundInDataBaseException("Solvers were not found by role=" + role);
@@ -128,50 +156,40 @@ public class SignUpService implements ISignUpService {
 
     @Override
     public boolean isUserPresentByEmail(String email) {
-        return userDAO.findOneByFieldEqual("email", email).isPresent();
+        return userDAO.findUserByEmail(email).isPresent();
     }
 
     @Override
     public void setPhoneNumberForAuthUser(PhoneEmailModel phoneEmailModel) {
-        if(userDAO.findOneByFieldEqual("email", phoneEmailModel.getEmail()).isPresent()){
-            CustomerModel customerModel = userDAO.setOauthUserPhone(phoneEmailModel);
-            customerDAO.updateElement(customerModel);
-        }
+        logger.info("Setting phone number for Oauth2 user");
+        UserModel userModel = userDAO.findUserByEmail(phoneEmailModel.getEmail()).orElseThrow(() ->
+                new NotFoundInDataBaseException(Constants.USERNOTFOUND));
+        CustomerModel customerModel = userModel.getCustomer();
+        customerModel.setPhoneNumber(phoneEmailModel.getPhoneNumber());
+        customerDAO.updateElement(customerModel);
+        logger.info("Phone number for Oauth2 user is set successfully");
+
     }
 
     @Override
-    public void createUserAfterSocialAuth(AuthUserModel userModel){
-        if(!userDAO.findUserByEmail(userModel.getEmail()).isPresent()){
-            UserModel user = new UserModel();
+    public void createUserAfterSocialAuth(UserModel userModel){
+            logger.info("Creating new user that was authorized via Google ");
             CustomerModel customer = new CustomerModel();
             customer.setPhoneNumber("Empty");
-            user.setEmail(userModel.getEmail());
-            user.setCustomer(customer);
-            user.setPassword(passwordEncoder.encode("oauth2user"));
-            user.setLastName(userModel.getLastName());
-            user.setFirstName(userModel.getFirstName());
-            RoleModel userRole = userRoleDAO.findOneByFieldEqual("roleName", "USER").get();
-            user.setRole(userRole);
-            userDAO.addElement(user);
-        }
+            userModel.setCustomer(customer);
+            userModel.setPassword(passwordEncoder.encode("oauth2user"));
+            RoleModel userRole =  findUserRole("USER");
+            userModel.setRole(userRole);
+            userDAO.addElement(userModel);
+            logger.info("User created successfully ");
     }
 
     @Override
     public boolean isCustomerNumberEmpty(String email) {
-        UserModel user = userDAO.findOneByFieldEqual("email", email).get();
-        CustomerModel customer = user.getCustomer();
+        UserModel userModel = userDAO.findUserByEmail(email).orElseThrow(() ->
+                new NotFoundInDataBaseException(Constants.USERNOTFOUND));
+        CustomerModel customer = userModel.getCustomer();
         return customer.getPhoneNumber().equals("Empty");
-    }
-
-    @Override
-    public boolean signUpUser(UserModel userModel){
-        try {
-            userDAO.addElement( createUser( userModel, createCustomer(userModel.getCustomer())));
-            return true;
-        } catch (Exception e){
-            logger.error(""+e);
-        }
-        return false;
     }
 
     @Override
@@ -180,7 +198,10 @@ public class SignUpService implements ISignUpService {
     }
 
     @Override
-    public UserModel findUserbyEmail(String email) {
-        return userDAO.findOneByFieldEqual("email", email).get();
+    public String generateTokenForOauthUser(String email){
+        UserModel userModel = userDAO.findUserByEmail(email).orElseThrow(() ->
+                new NotFoundInDataBaseException(Constants.USERNOTFOUND));
+           return jwtUtil.generateToken(userModel.getEmail(),userModel.getRole().getRoleName(), userModel.getId());
+
     }
 }

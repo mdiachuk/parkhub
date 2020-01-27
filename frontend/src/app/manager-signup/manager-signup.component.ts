@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmPasswordValidator } from "../validation/confirm-password.validator";
 import { Manager } from '../model/manager';
-import { ManagerService } from "../service/manager.service";
+import { SignUpService } from "../service/signup.service";
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -18,7 +18,7 @@ export class ManagerSignupComponent implements OnInit {
   message: string;
   isCreated: boolean;
 
-  constructor(private managerService: ManagerService, private fb: FormBuilder,
+  constructor(private signUpService: SignUpService, private fb: FormBuilder,
     private http: HttpClient, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
@@ -47,7 +47,7 @@ export class ManagerSignupComponent implements OnInit {
       this.signupForm.get('password').value,
       this.signupForm.get('confirmPassword').value,
       this.signupForm.get('comment').value);
-    this.managerService.registerManager(this.manager).subscribe(response => {
+    this.signUpService.registerManager(this.manager).subscribe(response => {
       this.isCreated = true;
     }, err => {
       this.message = err.error;

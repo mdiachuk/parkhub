@@ -16,5 +16,10 @@ public interface IParkingService {
     boolean checkIfAddressIsUnique(ParkingModel parkingRequestModel);
     void createParkingByOwnerID(ParkingModel parkingModel, long id);
     AddressModel setLatLan(AddressModel addressModel);
-
+    AddressModel createAddressModel(ParkingModel parkingModel);
+    ParkingModel createParkingWithSlots(ParkingModel parkingModel);
+    List<ParkingModel> findAllParkingByOwnerId(Long parkingId);
+    ParkingModel findParkingById(Long Id);
+    void updateParking(Long parkingId, ParkingModel transform);
 }
+

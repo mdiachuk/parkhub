@@ -1,4 +1,5 @@
 export class PhoneNumberEmail {
     phoneNumber: string;
-    email:string
+    email:string;
+    token:any
   }

@@ -22,32 +22,32 @@ class UsreouCodeValidatorTest {
     }
 
     @Test
-    public void test_isValid_correctUsreouCode_1() {
+    void test_isValid_correctUsreouCode_1() {
         helper_isValid_correctUsreouCode("32789103");
     }
 
     @Test
-    public void test_isValid_correctUsreouCode_2() {
+    void test_isValid_correctUsreouCode_2() {
         helper_isValid_correctUsreouCode("34978910");
     }
 
     @Test
-    public void test_isValid_correctUsreouCode_3() {
+    void test_isValid_correctUsreouCode_3() {
         helper_isValid_correctUsreouCode("56019856");
     }
 
     @Test
-    public void test_isValid_incorrectUsreouCode_1() {
+    void test_isValid_incorrectUsreouCode_1() {
         helper_isValid_incorrectUsreouCode("111");
     }
 
     @Test
-    public void test_isValid_incorrectUsreouCode_2() {
+    void test_isValid_incorrectUsreouCode_2() {
         helper_isValid_incorrectUsreouCode("231aa213");
     }
 
     @Test
-    public void test_isValid_incorrectUsreouCode_3() {
+    void test_isValid_incorrectUsreouCode_3() {
         helper_isValid_incorrectUsreouCode("241901.-");
     }
 

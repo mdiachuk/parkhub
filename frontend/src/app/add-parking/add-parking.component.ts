@@ -10,6 +10,9 @@ import { Oauth2googleService } from '../service/oauth2google.service';
 import { UserService } from '../service/http-client.service';
 import { NewParking } from './NewParking';
 import { ParkingServiceService } from '../service/parking-service.service';
+import { MatDialogRef, MatDialog } from '@angular/material';
+import { AlertDialogComponent } from '../parkoff/alert-dialog/alert-dialog.component';
+import { AddParkingDialogComponent } from '../add-parking-dialog/add-parking-dialog.component';
 
 
 @Component({
@@ -28,12 +31,13 @@ export class AddParkingComponent implements OnInit {
   parkNameValidator: any;
   MatSnackBar: any;
 
+
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute,
               private router: Router, private snackBar: MatSnackBar,
               private parkingService: ParkingServiceService,
               private translateArrayService: TranslateArrayService,
               private translateService: TranslateService,
-              private service:Oauth2googleService,private addservice:UserService) {
+              private service:Oauth2googleService,private addservice:UserService,public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -102,6 +106,13 @@ export class AddParkingComponent implements OnInit {
     });
   }
 
+  openDialog( message: string): MatDialogRef<AddParkingDialogComponent> {
+    return this.dialog.open(AddParkingDialogComponent, {
+      width: '350px',
+      data: {message}
+    });
+  }
+
   onSubmit(formGroup) {
     console.log(formGroup);
     for(let property in formGroup){this.parking[property] = formGroup[property];}
@@ -109,10 +120,12 @@ export class AddParkingComponent implements OnInit {
     console.log(this.parking)
      this.parkingService.save(this.parking)
      .subscribe( data => {
-       this.openSnackBar((this.translateService.instant('Parking created successfully.')));
+       this.openDialog((this.translateService.instant("Parking created successfully.")));
     },
     err => {
-      this.openSnackBar1((err.error));
+      console.log(err.error)
+        this.openDialog(this.translateService.instant((err.error))).afterClosed().subscribe(() => {
+        });
     });
   }
 }

@@ -22,32 +22,32 @@ class PasswordValidatorTest {
     }
 
     @Test
-    public void test_isValid_correctPassword_1() {
+    void test_isValid_correctPassword_1() {
         helper_isValid_correctPassword("DsddaS24A");
     }
 
     @Test
-    public void test_isValid_correctPassword_2() {
+    void test_isValid_correctPassword_2() {
         helper_isValid_correctPassword("qwerT1");
     }
 
     @Test
-    public void test_isValid_correctPassword_3() {
+    void test_isValid_correctPassword_3() {
         helper_isValid_correctPassword("sadsF23");
     }
 
     @Test
-    public void test_isValid_incorrectPassword_1() {
+    void test_isValid_incorrectPassword_1() {
         helper_isValid_incorrectPassword("aaa");
     }
 
     @Test
-    public void test_isValid_incorrectPassword_2() {
+    void test_isValid_incorrectPassword_2() {
         helper_isValid_incorrectPassword("ppppPP");
     }
 
     @Test
-    public void test_isValid_incorrectPassword_3() {
+    void test_isValid_incorrectPassword_3() {
         helper_isValid_incorrectPassword("2313PPP");
     }
 

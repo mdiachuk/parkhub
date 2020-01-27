@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SingupComponent } from './singup/singup.component';
 import { AppComponent } from './app.component';
 import { AddParkingComponent } from "./add-parking/add-parking.component";
 import { ParkingListComponent } from "./parking-list/parking-list.component";
@@ -25,10 +24,12 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { ManagerParkingListComponent } from './manager-parking-list/manager-parking-list.component';
 import { AddPhoneNumberComponent } from './add-phone-number/add-phone-number.component';
+import { UserSignupComponent } from './user-signup/user-signup.component';
 
 const routes: Routes = [
   { path: 'cancel', component: ParkoffComponent },
-  { path: 'signup/user', component: SingupComponent },
+  { path: 'signup/user', component: UserSignupComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: PageComponent },
   { path: 'signup/manager', component: ManagerSignupComponent },
   { path: 'cabinet', component: AppComponent },
@@ -60,7 +61,8 @@ const routes: Routes = [
   exports: [RouterModule],
   declarations: []
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
 
 
 

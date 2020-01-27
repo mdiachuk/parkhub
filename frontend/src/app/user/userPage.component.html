@@ -1,27 +1,27 @@
 <mat-toolbar color="primary">
-  <span>User</span>
+  <span>{{'User' | translate}}</span>
 </mat-toolbar>
 
 
 <div>
   <div class="left-page">
-    <mat-card>User Details</mat-card>
+    <mat-card>{{'User Details' | translate}}</mat-card>
     <span id="displayUserInfo">
       <mat-list>
         <mat-list-item>
-          <h4>First name: </h4> {{user?.firstName}}
+          <h4>{{'First name' | translate}}: </h4> {{user?.firstName}}
         </mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item>
-          <h4>Last Name: </h4> {{user?.lastName}}
+          <h4>{{'Last Name' | translate}}: </h4> {{user?.lastName}}
         </mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item>
-          <h4>Email: </h4> {{user?.email}}
+          <h4>{{'Email' | translate}}: </h4> {{user?.email}}
         </mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item>
-          <h4>Phone: </h4> {{user?.phoneNumber}}
+          <h4>{{'Phone' | translate}}: </h4> {{user?.phoneNumber}}
         </mat-list-item>
         <mat-divider></mat-divider>
       </mat-list>
@@ -29,50 +29,49 @@
     <span id="editUserInfo" style="display: none;">
       <form [formGroup]="updateForm">
         <mat-form-field class="example-full-width">
-          <input type="text" formControlName="firstName" matInput placeholder="First Name" name="First Name" required
+          <input type="text" formControlName="firstName" matInput [placeholder]="'FirstNamePlaceholder.value' | translate" name="First Name" required
             minlength="1" maxlength="50">
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <input type="text" formControlName="lastName" matInput placeholder="Last Name" name="Last Name" required
+          <input type="text" formControlName="lastName" matInput [placeholder]="'LastNamePlaceholder.value' | translate" name="Last Name" required
             minlength="1" maxlength="50">
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <input type="email" formControlName="email" matInput placeholder="Email" name="Email"
+          <input type="email" formControlName="email" matInput [placeholder]="'EmailPlaceholder.value' | translate" name="Email"
             pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required>
           <mat-error>Invalid email format</mat-error>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <input type="tel" formControlName="phoneNumber" matInput placeholder="Telephone" name="Phone Number" required
+          <input type="tel" formControlName="phoneNumber" matInput [placeholder]="'PhonePlaceholder.value' | translate" name="Phone Number" required
             pattern="^3?8?(0\d{9})$">
           <mat-error>Invalid phone number format</mat-error>
         </mat-form-field>
       </form>
     </span>
-    <button id="editButton" mat-raised-button color="primary" (click)="EditUserInfo()">Edit</button>
-    <button mat-raised-button color="primary" (click)="PostData()">Save</button>
+    <button id="editButton" mat-raised-button color="primary" (click)="EditUserInfo()">{{'Edit' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="PostData()">{{'Save' | translate}}</button>
   </div>
   <div class="right-page">
     <span id="ChangePassword" style="display: none;">
       <form [formGroup]="updateForm" class="example-form">
         <mat-form-field class="example-full-width">
-          <input matInput formControlName="userPassword" type="password" placeholder="Password" required>
+          <input matInput formControlName="userPassword" type="password" [placeholder]="'PasswordPlaceholder.value' | translate" required>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <input matInput formControlName="newPassword" type="password" placeholder="New Password" required
+          <input matInput formControlName="newPassword" type="password" [placeholder]="'NewPasswordPlaceholder.value' | translate" required
             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}">
           <mat-error><small>Must contain at least one number, one uppercase and one lowercase letter, and at
               least 6 characters</small></mat-error>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <input matInput formControlName="newConfirmPassword" type="password" placeholder="Confirm Password" required>
+          <input matInput formControlName="newConfirmPassword" type="password" [placeholder]="'ConfirmPasswordPlaceholder.value' | translate" required>
           <mat-error *ngIf="updateForm.get('newConfirmPassword').errors &&
           updateForm.get('newConfirmPassword').errors.NewConfirmPassword"><small>Passwords must match!</small>
           </mat-error>
         </mat-form-field>
       </form>
     </span>
-    <button id="buttonChangePassword" mat-raised-button color="primary" (click)="changePassword()">Change Password</button>
-    <button id="buttonSavePassword" style="display: none;"  mat-raised-button color="primary" (click)="PostPassword()">Save
-      Password</button>
+    <button id="buttonChangePassword" mat-raised-button color="primary" (click)="changePassword()">{{'Change Password' | translate}}</button>
+    <button id="buttonSavePassword" style="display: none;"  mat-raised-button color="primary" (click)="PostPassword()">{{'Save Password' | translate}} </button>
   </div>
 </div>

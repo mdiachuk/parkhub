@@ -62,7 +62,7 @@ public class AuthorizationService implements IAuthorizationService {
     }
 
     @Transactional
-    private UserModel checkCredentials(UserModel loginUser, UserModel userModel) {
+    protected UserModel checkCredentials(UserModel loginUser, UserModel userModel) {
         if (passwordEncoder.matches(loginUser.getPassword(), userModel.getPassword()) ) {
             if (!checkForRolePending(userModel)) {
                 if (!(blockedUserDAO.isBlocked(userModel))) {

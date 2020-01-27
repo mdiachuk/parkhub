@@ -5,28 +5,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.dto.RoleDTO;
-import ua.com.parkhub.exceptions.EmailException;
-import ua.com.parkhub.exceptions.InvalidTokenException;
-import ua.com.parkhub.exceptions.NotFoundInDataBaseException;
-import ua.com.parkhub.exceptions.PasswordException;
+import ua.com.parkhub.exceptions.*;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.model.UuidTokenModel;
+import ua.com.parkhub.model.enums.RoleModel;
 import ua.com.parkhub.model.enums.UuidTokenType;
+import ua.com.parkhub.persistence.impl.UserRoleDAO;
 import ua.com.parkhub.persistence.impl.UuidTokenDAO;
 import ua.com.parkhub.persistence.impl.UserDAO;
+import ua.com.parkhub.service.IMailService;
 import ua.com.parkhub.service.IUserService;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -37,20 +32,22 @@ public class UserService implements IUserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
+    private static final String TOKEN_WAS_NOT_FOUND = "Token was not found";
+
     private final UserDAO userDAO;
     private final UuidTokenDAO uuidTokenDAO;
-    private final SignUpService signUpService;
-    private final JavaMailSender mailSender;
+    private final UserRoleDAO userRoleDAO;
+    private final IMailService mailService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserDAO userDAO, JavaMailSender mailSender,
-                       SignUpService signUpService,
+    public UserService(UserDAO userDAO, IMailService mailService,
+                       UserRoleDAO userRoleDAO,
                        UuidTokenDAO uuidTokenDAO,
                        PasswordEncoder passwordEncoder) {
         this.userDAO = userDAO;
-        this.mailSender = mailSender;
-        this.signUpService = signUpService;
+        this.mailService = mailService;
+        this.userRoleDAO = userRoleDAO;
         this.uuidTokenDAO = uuidTokenDAO;
         this.passwordEncoder = passwordEncoder;
     }
@@ -59,22 +56,23 @@ public class UserService implements IUserService {
     @Transactional
     public void sendToken(String email, String type) {
         UuidTokenModel token = createToken(email);
+        String[] to = { email };
         String subject;
         String body;
         switch (convertToUuidTokenType(type)) {
             case EMAIL:
                 subject = "Verify email";
-                body = "<a href=\"" + url + "/verify-email?token=" + token.getToken()
-                        + "\">Verify email address</a> (expires at " + formatExpirationDate(token.getExpirationDate()) + ")";
-                sendEmail(email, subject, body);
-                logger.info("Email for verifying email address was sent to {}", email);
+                body = String.format("<a href=\"%s/verify-email?token=%s\">Verify email address</a> (expires at %s)",
+                        url, token.getToken(), formatExpirationDate(token.getExpirationDate()));
+                mailService.sendEmail(to, subject, body);
+                logger.info("Email for verifying email address was sent");
                 break;
             case PASSWORD:
                 subject = "Reset password";
-                body = "<a href=\"" + url + "/reset-password?token=" + token.getToken()
-                        + "\">Reset password</a> (expires at " + formatExpirationDate(token.getExpirationDate()) + ")";
-                sendEmail(email, subject, body);
-                logger.info("Email for resetting password was sent to {}", email);
+                body = String.format("<a href=\"%s/reset-password?token=%s\">Reset password</a> (expires at %s)",
+                        url, token.getToken(), formatExpirationDate(token.getExpirationDate()));
+                mailService.sendEmail(to, subject, body);
+                logger.info("Email for resetting password was sent");
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + type);
@@ -100,12 +98,13 @@ public class UserService implements IUserService {
                     uuidToken.setExpirationDate(LocalDateTime.now());
                     uuidTokenDAO.updateElement(uuidToken);
                     return uuidToken.getUser();
-                }).orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
-        user.setRole(signUpService.findUserRole(String.valueOf(RoleDTO.USER)));
+                }).orElseThrow(() -> new NotFoundInDataBaseException(TOKEN_WAS_NOT_FOUND));
+        user.setRole(findUserRole(String.valueOf(RoleDTO.USER)));
         userDAO.updateElement(user);
         logger.info("Email was verified for user with email={}", user.getEmail());
     }
 
+    @Override
     @Transactional
     public void resetPassword(String token, String password) {
         UserModel user = uuidTokenDAO
@@ -119,7 +118,7 @@ public class UserService implements IUserService {
                     return userDAO.findUserByEmail(uuidToken.getUser().getEmail()).orElseThrow(() ->
                             new InvalidTokenException("Token is not assigned to any user"));
                 })
-                .orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
+                .orElseThrow(() -> new NotFoundInDataBaseException(TOKEN_WAS_NOT_FOUND));
         user.setPassword(passwordEncoder.encode(password));
         userDAO.updateElement(user);
         logger.info("Password was reset for user with email={}", user.getEmail());
@@ -138,24 +137,10 @@ public class UserService implements IUserService {
         return token;
     }
 
-    private void sendEmail(String to, String subject, String body) {
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
-        try {
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(body, true);
-            mailSender.send(message);
-        } catch (MessagingException e) {
-            logger.info(e.getMessage());
-            throw new EmailException("Error occurred while sending email. Please, try again later");
-        }
-    }
-
     @Override
     public boolean isLinkActive(String token) {
         UuidTokenModel uuidToken = uuidTokenDAO.findUuidTokenByToken(token)
-                .orElseThrow(() -> new NotFoundInDataBaseException("Token was not found"));
+                .orElseThrow(() -> new NotFoundInDataBaseException(TOKEN_WAS_NOT_FOUND));
         return !isExpired(uuidToken);
     }
 
@@ -172,16 +157,18 @@ public class UserService implements IUserService {
         return UuidTokenType.valueOf(type);
     }
 
+    private RoleModel findUserRole(String name) {
+        return userRoleDAO.findUserRoleByRoleName(name).orElseThrow(() ->
+                new NotFoundInDataBaseException("Role was not found by name=" + name));
+    }
 
-
-
-    public Optional<UserModel> findUserById(long id){
-        return userDAO.findElementById(id);
+    public UserModel findUserById(long id){
+        return userDAO.findElementById(id).orElseThrow(() -> new UserDoesntExistException("User not found",StatusCode.USER_NOT_FOUND));
     }
 
     @Override
     public void updateUser(long id, UserModel userUp) {
-        UserModel userModel = findUserById(id).get();
+        UserModel userModel = findUserById(id);
         userModel.setFirstName(userUp.getFirstName());
         userModel.setLastName(userUp.getLastName());
         userModel.setEmail(userUp.getEmail());
@@ -192,7 +179,7 @@ public class UserService implements IUserService {
 
     @Override
     public void changePassword(long id, String newPassword, UserModel userModel){
-        UserModel user = findUserById(id).get();
+        UserModel user = findUserById(id);
         if (validatePassword(userModel.getPassword(), user) & validateNewPassword(newPassword, user)){
             user.setPassword(passwordEncoder.encode(newPassword));
             userDAO.updateElement(user);
@@ -202,10 +189,10 @@ public class UserService implements IUserService {
             throw new PasswordException();
         }
     }
-    public boolean validatePassword(String passsword, UserModel userModel){
-        return passwordEncoder.matches(passsword, userModel.getPassword());
+    public boolean validatePassword(String password, UserModel userModel){
+        return passwordEncoder.matches(password, userModel.getPassword());
     }
-    public boolean validateNewPassword(String passsword, UserModel userModel){
-        return ((passsword != "") && (!passwordEncoder.matches(passsword, userModel.getPassword())));
+    public boolean validateNewPassword(String newPassword, UserModel userModel){
+        return (!("".equals(newPassword)) && (!passwordEncoder.matches(newPassword, userModel.getPassword())));
     }
 }

@@ -1,32 +1,57 @@
+variables:
+  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+  GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
 image: maven:latest
 
 services:
   - postgres:latest
 
 stages:
-  - build
   - test
+  - sonar
+  - build
   - deploy
+
+before_script:
+  - cd backend
 
 unit_test:
   stage: test
   script:
-    - cd backend
-    - mvn clean test -B
+    - mvn test -B
+
+sonarcloud-check:
+  stage: sonar
+  image: maven:latest
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script:
+    - mvn clean package sonar:sonar -B -Dsonar.login="$SONAR_TOKEN"
+  only:
+    - merge_requests
+    - master
+    - dev
 
 build:
   stage: build
   script:
-    - cd backend
+    - bash config.sh $GC_INSTANCE $GC_DB_NAME $DB_USER $DB_PASS
     - mvn package -B -Dmaven.test.skip=true -P release
+  artifacts:
+    expire_in: 1 days
+    paths:
+      - backend/target
 
-production:
+deploy:
   stage: deploy
-  image: docker:latest
-  script:
-    - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
-    - docker build -t $CI_REGISTRY_IMAGE:$CI_BUILD_TAG target/docker/
-    - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_TAG
   only:
     - master
     - dev
+  script:
+    - echo "$GCLOUD_SERVICE_KEY" > ./gcloud-service-key.json
+    - sed -i -e "s;eng-contact-261713;park-hub;g" pom.xml
+    - mvn appengine:deploy -Dmaven.test.skip=true -DserviceAccountKeyFile=./gcloud-service-key.json -P release
+  after_script:
+    - rm ./gcloud-service-key.json
