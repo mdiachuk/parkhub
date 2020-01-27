@@ -41,16 +41,6 @@ class AdminServiceTest {
     @InjectMocks
     private AdminService adminService;
 
-    @Mock
-    private UserModel userModel;
-    @Mock
-    private AdminDTO adminDTO;
-    @Mock
-    private AdminTicketCounterDTO adminTicketCounterDTO;
-    @Mock
-    private AdminSupportTicketDTO adminSupportTicketDTO;
-    @Mock
-    private List<RoleModel> roleList;
 
     @BeforeEach
     public void init(){
@@ -69,24 +59,23 @@ class AdminServiceTest {
     }
 
     @Test
-    void updateRole() {
+    void updateRoleSuccessCase() {
         UserModel userModelExample = new UserModel();
         userModelExample.setId(1L);
         userModelExample.setRole(RoleModel.PENDING);
 
-        UserRole userRoleExpected = new UserRole();
+        RoleModel userRoleExpected = RoleModel.MANAGER;
         userRoleExpected.setId(1L);
-        userRoleExpected.setRoleName(RoleModel.MANAGER.toString());
-        userRoleExpected.setActive(true);
 
-        roleList.add(RoleModel.MANAGER);
+        List<RoleModel> testList = new ArrayList<>();
 
-        Mockito.when(userRoleDAO.findAll()).thenReturn(roleList);
+        testList.add(userRoleExpected);
+
         Mockito.when(userDAO.findElementById(anyLong())).thenReturn(Optional.of(userModelExample));
-        /*Mockito.when(roleList.get(0)).thenReturn(roleList.get(0));*/
+        Mockito.when(userRoleDAO.findAll()).thenReturn(testList);
         adminService.updateRole(1L);
 
-        verify(userDAO, times(2)).findElementById(1L);
+        verify(userDAO, times(1)).findElementById(1L);
     }
 
     @Test
