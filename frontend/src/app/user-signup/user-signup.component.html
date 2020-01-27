@@ -29,7 +29,7 @@
                     <mat-form-field>
                         <input matInput type="telephone" formControlName="phoneNumber"
                             [placeholder]="'PhoneNumberPlaceholder.value' | translate" required
-                            pattern="^3?8?(0\d{9})$">
+                            pattern="/^380\d{9}$/">
                         <mat-error><small>{{'InvalidPhoneNumberFormat' | translate}}</small></mat-error>
                     </mat-form-field>
                 </li>
@@ -56,7 +56,7 @@
             <li class="buttons-block">
                 <button class="reset" mat-flat-button (click)="reset()">{{'Reset' | translate}}</button>
                 &nbsp;
-                <button class="submit" mat-raised-button [disabled]="!signupForm.valid"
+                <button class="submit" mat-raised-button [disabled]="!signupForm.valid || loading" [class.spinner]="loading"
                     (click)="register()">{{'Submit' | translate}}</button>
             </li>
         </mat-card>

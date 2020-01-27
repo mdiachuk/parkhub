@@ -80,7 +80,6 @@ public class BookingServiceTest {
         PaymentModel paymentModel = new PaymentModel();
         paymentModel.setBooking(bookingModel);
         when(bookingDAO.findBookingsByCustomer(customerModel)).thenReturn(bookingModels);
-        //when(bookingService.findPrepaidBooking(customerModel)).thenReturn(Optional.of(bookingModel));
         doReturn(Optional.of(bookingModel)).when(bookingService).findPrepaidBooking(customerModel);
         when(paymentService.findPriceIfCancelled(bookingModel)).thenReturn(paymentModel.getPrice());
         assertEquals(paymentModel.getPrice(), bookingService.findPrice(customerModel.getPhoneNumber()));
