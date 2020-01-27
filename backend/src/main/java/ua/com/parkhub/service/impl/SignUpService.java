@@ -14,7 +14,9 @@ import ua.com.parkhub.model.enums.TicketTypeModel;
 import ua.com.parkhub.persistence.impl.*;
 import ua.com.parkhub.model.*;
 import ua.com.parkhub.service.IMailService;
+import ua.com.parkhub.security.JwtUtil;
 import ua.com.parkhub.service.ISignUpService;
+import ua.com.parkhub.values.Constants;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -35,11 +37,13 @@ public class SignUpService implements ISignUpService {
     private final SupportTicketTypeDAO supportTicketTypeDAO;
     private final IMailService mailService;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     @Autowired
     public SignUpService(CustomerDAO customerDAO, UserDAO userDAO, UserRoleDAO userRoleDAO,
                          SupportTicketDAO supportTicketDAO, SupportTicketTypeDAO supportTicketTypeDAO,
-                         IMailService mailService, PasswordEncoder passwordEncoder) {
+                         IMailService mailService, PasswordEncoder passwordEncoder,
+                         JwtUtil jwtUtil) {
         this.customerDAO = customerDAO;
         this.userDAO = userDAO;
         this.userRoleDAO = userRoleDAO;
@@ -47,6 +51,7 @@ public class SignUpService implements ISignUpService {
         this.supportTicketTypeDAO = supportTicketTypeDAO;
         this.mailService = mailService;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
     }
 
     @Transactional
@@ -146,38 +151,39 @@ public class SignUpService implements ISignUpService {
 
     @Override
     public boolean isUserPresentByEmail(String email) {
-        return userDAO.findOneByFieldEqual("email", email).isPresent();
+        return userDAO.findUserByEmail(email).isPresent();
     }
 
     @Override
     public void setPhoneNumberForAuthUser(PhoneEmailModel phoneEmailModel) {
-        if(userDAO.findOneByFieldEqual("email", phoneEmailModel.getEmail()).isPresent()){
-            CustomerModel customerModel = userDAO.setOauthUserPhone(phoneEmailModel);
-            customerDAO.updateElement(customerModel);
-        }
+        logger.info("Setting phone number for Oauth2 user");
+        UserModel userModel = userDAO.findUserByEmail(phoneEmailModel.getEmail()).orElseThrow(() ->
+                new NotFoundInDataBaseException(Constants.USERNOTFOUND));
+        CustomerModel customerModel = userModel.getCustomer();
+        customerModel.setPhoneNumber(phoneEmailModel.getPhoneNumber());
+        customerDAO.updateElement(customerModel);
+        logger.info("Phone number for Oauth2 user is set successfully");
+
     }
 
     @Override
-    public void createUserAfterSocialAuth(AuthUserModel userModel){
-        if(!userDAO.findUserByEmail(userModel.getEmail()).isPresent()){
-            UserModel user = new UserModel();
+    public void createUserAfterSocialAuth(UserModel userModel){
+            logger.info("Creating new user that was authorized via Google ");
             CustomerModel customer = new CustomerModel();
             customer.setPhoneNumber("Empty");
-            user.setEmail(userModel.getEmail());
-            user.setCustomer(customer);
-            user.setPassword(passwordEncoder.encode("oauth2user"));
-            user.setLastName(userModel.getLastName());
-            user.setFirstName(userModel.getFirstName());
-            RoleModel userRole = userRoleDAO.findOneByFieldEqual("roleName", "USER").get();
-            user.setRole(userRole);
-            userDAO.addElement(user);
-        }
+            userModel.setCustomer(customer);
+            userModel.setPassword(passwordEncoder.encode("oauth2user"));
+            RoleModel userRole =  findUserRole("USER");
+            userModel.setRole(userRole);
+            userDAO.addElement(userModel);
+            logger.info("User created successfully ");
     }
 
     @Override
     public boolean isCustomerNumberEmpty(String email) {
-        UserModel user = userDAO.findOneByFieldEqual("email", email).get();
-        CustomerModel customer = user.getCustomer();
+        UserModel userModel = userDAO.findUserByEmail(email).orElseThrow(() ->
+                new NotFoundInDataBaseException(Constants.USERNOTFOUND));
+        CustomerModel customer = userModel.getCustomer();
         return customer.getPhoneNumber().equals("Empty");
     }
 
@@ -198,7 +204,10 @@ public class SignUpService implements ISignUpService {
     }
 
     @Override
-    public UserModel findUserbyEmail(String email) {
-        return userDAO.findOneByFieldEqual("email", email).get();
+    public String generateTokenForOauthUser(String email){
+        UserModel userModel = userDAO.findUserByEmail(email).orElseThrow(() ->
+                new NotFoundInDataBaseException(Constants.USERNOTFOUND));
+           return jwtUtil.generateToken(userModel.getEmail(),userModel.getRole().getRoleName(), userModel.getId());
+
     }
 }

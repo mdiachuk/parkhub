@@ -10,9 +10,9 @@ public interface ISignUpService {
     SupportTicketModel createTicket(String description, CustomerModel customer);
     boolean isUserPresentByEmail(String email);
     void setPhoneNumberForAuthUser(PhoneEmailModel phoneEmailModel);
-    void createUserAfterSocialAuth(AuthUserModel userModel);
+    void createUserAfterSocialAuth(UserModel userModel);
     boolean isCustomerNumberEmpty(String email);
     boolean signUpUser(UserModel userModel);
     boolean isNumberUnique(String phoneNumber);
-    UserModel findUserbyEmail(String email);
+    String generateTokenForOauthUser(String email);
 }
