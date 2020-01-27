@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ResetPasswordService } from '../service/reset-password.service';
 import { Email } from '../model/email';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AddParkingDialogComponent } from '../add-parking-dialog/add-parking-dialog.component';
+import { MatDialogRef, MatDialog } from '@angular/material'
 
 @Component({
   selector: 'app-forgot-password',
@@ -20,7 +21,7 @@ export class ForgotPasswordComponent implements OnInit {
   loading: boolean;
 
   constructor(private resetPasswordService: ResetPasswordService,
-    private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router,
+    private fb: FormBuilder, private dialog: MatDialog, private router: Router,
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
@@ -40,13 +41,14 @@ export class ForgotPasswordComponent implements OnInit {
     }, err => {
       this.loading = false;
       this.message = err.error;
-      this.openSnackBar(this.message);
+      this.openDialog(this.message);
     });
   }
 
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'Close', {
-      duration: 4000,
+  openDialog( message: string): MatDialogRef<AddParkingDialogComponent> {
+    return this.dialog.open(AddParkingDialogComponent, {
+      width: '350px',
+      data: {message}
     });
   }
 }

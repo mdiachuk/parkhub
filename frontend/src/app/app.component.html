@@ -2,34 +2,35 @@
   <section>
     <div>
       <mat-toolbar color="primary">
-        <span class="fill-remaining-space"> {{ 'ParkHub' | translate }}</span>
-        <span class="example-spacer"></span>
+        <span> {{ 'ParkHub' | translate }}</span>
         <div fxShow="true" fxHide.lt-md="true">
           <a mat-button [routerLink]='["home"]'>{{ 'Home' | translate }}</a>
           <a mat-button [routerLink]='["cancel"]'>{{ 'CancelPrepayment' | translate }}</a>
-          <!--          <a mat-button [routerLink]='["parkings"]'>Parking</a>-->
-
-          <a *ngIf="data.currentIsManager  | async" mat-button [routerLink]='["manager/parking"]'>{{ 'Add parking' | translate }}</a>
-          <a *ngIf="data.currentIsManager | async" mat-button [routerLink]='["manager/cabinet"]'>{{ 'Manager' | translate }}</a>
+          <a *ngIf="!(data.currentIsManager | async)" mat-button
+            [routerLink]='["signup/manager"]'>{{ 'Become partner' | translate }}</a>
+          <a *ngIf="data.currentIsManager  | async" mat-button
+            [routerLink]='["manager/parking"]'>{{ 'Add parking' | translate }}</a>
+        </div>
+        <span class="filler"></span>
+        <div fxShow="true" fxHide.lt-md="true">
+          <button mat-icon-button class="btn-primary" (click)="useLanguage('en')">{{'en' | translate}}</button>
+          <button mat-icon-button class="btn-primary" (click)="useLanguage('ua')">{{'ua' | translate}}</button>
+          <a *ngIf="data.currentIsManager | async" mat-button
+            [routerLink]='["manager/cabinet"]'>{{ 'Manager' | translate }}</a>
           <a *ngIf="data.currentIsAdmin  | async" mat-button [routerLink]='["admin"]'>{{ 'Admin' | translate }}</a>
           <a *ngIf="data.currentIsUser | async" mat-button [routerLink]='["user"]'>{{'User' | translate}}</a>
-          <a *ngIf="!(data.currentIsLogged | async)" mat-button [routerLink]='["signup/user"]'>{{ 'Sign up' | translate }}</a>
-          <a *ngIf="!(data.currentIsManager | async)" mat-button [routerLink]='["signup/manager"]'>{{ 'Become partner' | translate }}</a>
-          <a *ngIf="!(data.currentIsLogged | async)" mat-button [routerLink]='["login"]'>{{ 'Sign in' | translate }}</a>
-          <a *ngIf="data.currentIsLogged | async"mat-button (click)="logout()" >{{ 'Sign out' | translate }}</a>
-          <button class="btn btn-primary" (click)="useLanguage('en')">{{'en' | translate}}</button>
-          <button class="btn btn-primary" (click)="useLanguage('ua')">{{'ua' | translate}}</button>
+          <a *ngIf="!(data.currentIsLogged | async)" mat-button
+            [routerLink]='["signup/user"]'>{{ 'Sign up' | translate }}</a>
+          <a *ngIf="!(data.currentIsLogged | async)" mat-button [routerLink]='["login"]'>{{ 'Login' | translate }}</a>
+          <a *ngIf="data.currentIsLogged | async" mat-button (click)="logout()">{{ 'LogOut' | translate }}</a>
         </div>
       </mat-toolbar>
       <mat-sidenav-container fxFlexFill class="example-container">
         <mat-sidenav-content fxFlexFill>
-          <!--          CONTENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
         </mat-sidenav-content>
       </mat-sidenav-container>
     </div>
   </section>
   <router-outlet></router-outlet>
 
- </div>
-
-
+</div>

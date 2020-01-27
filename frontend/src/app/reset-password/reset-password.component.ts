@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Password } from '../model/password';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ResetPasswordService } from '../service/reset-password.service';
 import { ConfirmPasswordValidator } from '../validation/confirm-password.validator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Token } from '../model/token';
+import { AddParkingDialogComponent } from '../add-parking-dialog/add-parking-dialog.component';
+import { MatDialogRef, MatDialog } from '@angular/material';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class ResetPasswordComponent implements OnInit {
   isError: boolean;
 
   constructor(private resetPasswordService: ResetPasswordService,
-    private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router,
+    private fb: FormBuilder, private dialog: MatDialog, private router: Router,
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
@@ -59,13 +60,13 @@ export class ResetPasswordComponent implements OnInit {
       this.router.navigate(['login']).then((navigated: boolean) => {
         if (navigated) {
           this.loading = false;
-          this.openSnackBar('Your password was successfully reset! Try to login using your new credentials');
+          this.openDialog('Your password was successfully reset! Try to login using your new credentials');
         }
       });
     }, err => {
       this.loading = false;
       this.message = err.error;
-      this.openSnackBar(this.message);
+      this.openDialog(this.message);
     });
   }
 
@@ -80,15 +81,16 @@ export class ResetPasswordComponent implements OnInit {
       if (err.status === 500) {
         this.view = 2;
       } else {
-        this.openSnackBar(this.message);
+        this.openDialog(this.message);
       }
       this.loading = false;
     });
   }
 
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'Close', {
-      duration: 4000,
+  openDialog( message: string): MatDialogRef<AddParkingDialogComponent> {
+    return this.dialog.open(AddParkingDialogComponent, {
+      width: '350px',
+      data: {message}
     });
   }
 }
