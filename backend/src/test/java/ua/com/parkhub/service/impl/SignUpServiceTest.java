@@ -48,12 +48,12 @@ class SignUpServiceTest {
     SignUpService signUpService;
 
     @BeforeEach
-    public void init() {
+    void init() {
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void test_registerManager_pendingRoleNotFound_exceptionThrown() {
+    void test_registerManager_pendingRoleNotFound_exceptionThrown() {
         CustomerModel customer = new CustomerModel();
         UserModel user = new UserModel();
         ManagerRegistrationDataModel manager = new ManagerRegistrationDataModel();
@@ -68,7 +68,7 @@ class SignUpServiceTest {
     }
 
     @Test
-    public void test_registerManager_adminNotFound_exceptionThrown() {
+    void test_registerManager_adminNotFound_exceptionThrown() {
         CustomerModel customer = new CustomerModel();
         UserModel user = new UserModel();
         ManagerRegistrationDataModel manager = new ManagerRegistrationDataModel();
@@ -83,7 +83,7 @@ class SignUpServiceTest {
     }
 
     @Test
-    public void test_registerManager_supportTicketTypeNotFound_exceptionThrown() {
+    void test_registerManager_supportTicketTypeNotFound_exceptionThrown() {
         CustomerModel customer = new CustomerModel();
         UserModel user = new UserModel();
         ManagerRegistrationDataModel manager = new ManagerRegistrationDataModel();
@@ -98,7 +98,7 @@ class SignUpServiceTest {
     }
 
     @Test
-    public void test_registerManager_phoneNumberIsUsed_exceptionThrown() {
+    void test_registerManager_phoneNumberIsUsed_exceptionThrown() {
         CustomerModel customer = new CustomerModel();
         UserModel user = new UserModel();
         ManagerRegistrationDataModel manager = new ManagerRegistrationDataModel();
@@ -115,7 +115,7 @@ class SignUpServiceTest {
     }
 
     @Test
-    public void test_registerManager_phoneNumberIsUsedButNorRegistered_everythingCorrect() {
+    void test_registerManager_phoneNumberIsUsedButNorRegistered_everythingCorrect() {
         CustomerModel customer = new CustomerModel();
         UserModel user = new UserModel();
         ManagerRegistrationDataModel manager = new ManagerRegistrationDataModel();
@@ -145,7 +145,7 @@ class SignUpServiceTest {
     }
 
     @Test
-    public void test_registerManager_emailIsUsed_exceptionThrown() {
+    void test_registerManager_emailIsUsed_exceptionThrown() {
         CustomerModel customer = new CustomerModel();
         UserModel user = new UserModel();
         ManagerRegistrationDataModel manager = new ManagerRegistrationDataModel();
@@ -161,7 +161,7 @@ class SignUpServiceTest {
     }
 
     @Test
-    public void test_registerManager_everythingCorrect() {
+    void test_registerManager_everythingCorrect() {
         CustomerModel customer = new CustomerModel();
         UserModel user = new UserModel();
         ManagerRegistrationDataModel manager = new ManagerRegistrationDataModel();

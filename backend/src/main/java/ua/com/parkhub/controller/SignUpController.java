@@ -33,6 +33,8 @@ public class SignUpController {
 
     private static final Logger logger = LoggerFactory.getLogger(SignUpController.class);
 
+    private static final String VALIDATION_ERRORS = "Validation errors: {}";
+
     private final ISignUpService signUpService;
     private final IUserService userService;
     private final Mapper<ManagerRegistrationDataDTO, ManagerRegistrationDataModel>
@@ -57,7 +59,7 @@ public class SignUpController {
             List<String> errors = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
-            logger.info("Validation errors: {}", errors);
+            logger.info(VALIDATION_ERRORS, errors);
             return ResponseEntity.badRequest().body(errors);
         }
         signUpService.registerManager(managerRegistrationRequestDtoToModel.transform(manager));

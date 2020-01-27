@@ -10,9 +10,7 @@ import javax.validation.ConstraintValidatorContext;
 
 public class PhoneNumberValidator implements ConstraintValidator<ValidPhoneNumber, String> {
 
-    private Pattern pattern;
-    private Matcher matcher;
-    private static final String PHONE_NUMBER_PATTERN = "^3?8?(0\\d{9})$";
+    private static final String PATTERN = "^3?8?(0\\d{9})$";
 
     @Override
     public void initialize(ValidPhoneNumber constraintAnnotation) {
@@ -24,8 +22,8 @@ public class PhoneNumberValidator implements ConstraintValidator<ValidPhoneNumbe
     }
 
     private boolean validatePhoneNumber(String phoneNumber) {
-        pattern = Pattern.compile(PHONE_NUMBER_PATTERN);
-        matcher = pattern.matcher(phoneNumber);
+        Pattern pattern = Pattern.compile(PATTERN);
+        Matcher matcher = pattern.matcher(phoneNumber);
         return matcher.matches();
     }
 }
