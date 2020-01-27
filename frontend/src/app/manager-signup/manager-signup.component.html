@@ -1,93 +1,118 @@
 <div class="container" *ngIf="!isCreated">
   <mat-toolbar>
-    {{'BecomePartner' | translate}}
+    {{ "PleaseFillInThisFormToBecomeOurPartner" | translate }}
   </mat-toolbar>
-  <ul>
-    <li>
-      <div class="label">{{'PleaseFillInThisFormToBecomeOurPartner' | translate}}</div>
-    </li>
-    <form [formGroup]="signupForm">
-      <li class="name-block">
+  <mat-vertical-stepper #stepper linear>
+    <mat-step label="{{'Name' | translate}}" [stepControl]="nameGroup">
+      <form [formGroup]="nameGroup">
         <mat-form-field>
           <input matInput formControlName="firstName" [placeholder]="'FirstNamePlaceholder.value' | translate" required
-            minlength="1" maxlength="50">
-          <mat-error><small>{{'Required' | translate}}</small></mat-error>
+            minlength="1" maxlength="50" />
+          <mat-error><small>{{ "Required" | translate }}</small></mat-error>
         </mat-form-field>
         &nbsp;
         <mat-form-field>
           <input matInput formControlName="lastName" [placeholder]="'LastNamePlaceholder.value' | translate" required
-            minlength="1" maxlength="50">
-          <mat-error><small>{{'Required' | translate}}</small></mat-error>
+            minlength="1" maxlength="50" />
+          <mat-error><small>{{ "Required" | translate }}</small></mat-error>
         </mat-form-field>
-      </li>
-      <li>
+        &nbsp;
+        <button mat-button matStepperNext>{{'Next' | translate}}</button>
+      </form>
+    </mat-step>
+    <mat-step label="{{'Company details' | translate}}" [stepControl]="companyGroup">
+      <form [formGroup]="companyGroup">
         <mat-form-field>
           <input matInput formControlName="companyName" [placeholder]="'managerCompanyPlaceholder.value' | translate"
-            required minlength="1" maxlength="50">
-          <mat-error><small>{{'Required' | translate}}</small></mat-error>
+            required minlength="1" maxlength="50" />
+          <mat-error><small>{{ "Required" | translate }}</small></mat-error>
         </mat-form-field>
         &nbsp;
         <mat-form-field>
           <input matInput formControlName="usreouCode" [placeholder]="'managerUSREOUPlaceholder.value' | translate"
-            required pattern="[0-9]{8}">
-          <mat-error>{{'MustContain8Numbers' | translate}}</mat-error>
+            required pattern="[0-9]{8}" />
+          <mat-error><small>{{'Next' | translate}}</small></mat-error>
         </mat-form-field>
-      </li>
-      <li>
+        &nbsp;
+        <button mat-button matStepperNext>{{'Next' | translate}}</button>
+      </form>
+    </mat-step>
+    <mat-step label="{{'Contact information' | translate}}" [stepControl]="contactsGroup">
+      <form [formGroup]="contactsGroup">
         <mat-form-field>
           <input matInput type="email" formControlName="email" [placeholder]="'EmailPlaceholder.value' | translate"
-            required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}">
-          <mat-error>{{'InvalidEmailFormat' | translate}}</mat-error>
+            required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" />
+          <mat-error><small>{{ "InvalidEmailFormat" | translate }}</small></mat-error>
         </mat-form-field>
         &nbsp;
         <mat-form-field>
-          <input matInput type="tel" formControlName="phoneNumber"
-            [placeholder]="'PhoneNumberPlaceholder.value' | translate" required pattern="^\+?3?8?(0\d{9})$">
-          <mat-error>{{'InvalidPhoneNumberFormat' | translate}}</mat-error>
+          <input matInput type="telephone" formControlName="phoneNumber"
+            [placeholder]="'PhoneNumberPlaceholder.value' | translate" required pattern="/^380\d{9}$/" />
+          <mat-error><small>{{ "InvalidPhoneNumberFormat" | translate }}</small></mat-error>
         </mat-form-field>
-      </li>
-      <li>
+        &nbsp;
+        <button mat-button matStepperNext>{{'Next' | translate}}</button>
+      </form>
+    </mat-step>
+    <mat-step label="{{'Password' | translate}}" [stepControl]="passwordGroup">
+      <form [formGroup]="passwordGroup">
         <mat-form-field>
           <input matInput formControlName="password" type="password"
             [placeholder]="'PasswordPlaceholder.value' | translate" required
-            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}">
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" />
           <mat-error>
-            <small>{{'MustContainAtLeastOneNumberOneUppercaseAndOneLowercaseLetterAndAtLeast6Characters' | translate}}</small>
+            <small>{{
+              "MustContainAtLeastOneNumberOneUppercaseAndOneLowercaseLetterAndAtLeast6Characters"
+                | translate
+            }}</small>
           </mat-error>
         </mat-form-field>
         &nbsp;
         <mat-form-field>
           <input matInput formControlName="confirmPassword" type="password"
-            [placeholder]="'ConfirmPasswordPlaceholder.value' | translate" required>
-          <mat-error *ngIf="signupForm.get('confirmPassword').errors &&
-                signupForm.get('confirmPassword').errors.ConfirmPassword">
-            <small>{{'PasswordsMustMatch' | translate}}</small>
+            [placeholder]="'ConfirmPasswordPlaceholder.value' | translate" required />
+          <mat-error *ngIf="
+              passwordGroup.get('confirmPassword').errors &&
+              passwordGroup.get('confirmPassword').errors.ConfirmPassword
+            ">
+            <small>{{ "PasswordsMustMatch" | translate }}</small>
           </mat-error>
         </mat-form-field>
-      </li>
-      <li class="comment-block">
+        &nbsp;
+        <button mat-button matStepperNext>{{'Next' | translate}}</button>
+      </form>
+    </mat-step>
+    <mat-step label="{{'Finish' | translate}}" [stepControl]="commentGroup">
+      <form [formGroup]="commentGroup">
         <mat-form-field class="comment">
           <textarea matInput formControlName="comment" [placeholder]="'managerCommentPlaceholder.value' | translate"
             maxlength="200" cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5"></textarea>
-          <mat-hint><small>{{'Max200Characters' | translate}}</small></mat-hint>
+          <mat-hint><small>{{ "Max200Characters" | translate }}</small></mat-hint>
         </mat-form-field>
-      </li>
-      <li class="checkbox">
-        <mat-checkbox required formControlName="checkbox">{{'IAgreeWithTermsConditionsAndPrivacyPolicy'| translate}}
-        </mat-checkbox>
-      </li>
-    </form>
-    <li class="buttons-block">
-      <button class="reset" mat-flat-button (click)="reset()">{{'Reset' | translate}}</button>
-      &nbsp;
-      <button class="submit" mat-raised-button [disabled]="!signupForm.valid"
-        (click)="register()">{{'Submit' | translate}}</button>
-    </li>
-  </ul>
+      </form>
+      <div class="buttons">
+        <button mat-flat-button (click)="stepper.reset()">{{'Reset' | translate}}</button>
+        &nbsp;
+        <button class="submit" mat-raised-button [disabled]="
+          !nameGroup.valid ||
+          !companyGroup.valid ||
+          !contactsGroup.valid ||
+          !passwordGroup.valid ||
+          !commentGroup.valid || loading
+        " [class.spinner]="loading" (click)="register()">
+          {{ "Submit" | translate }}
+        </button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
 </div>
 
 <div class="success" *ngIf="isCreated">
-  <div><img src="assets/tick.png" class="success-image"></div>
-  <div class="success-message">{{'YourRegistrationRequestWasSentToTheAdministrator' | translate}}</div>
-  <div class="homepage-link"><a href="home" class="homepage-link">{{'GoToTheHomepage' | translate}}</a></div>
+  <div><img src="assets/tick.png" class="success-image" /></div>
+  <div class="success-message">
+    {{ "YourRegistrationRequestWasSentToTheAdministrator" | translate }}
+  </div>
+  <div class="homepage-link">
+    <a href="home" class="homepage-link">{{ "GoToTheHomepage" | translate }}</a>
+  </div>
 </div>

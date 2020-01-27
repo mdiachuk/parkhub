@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { FormControl, Validators, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { ConfirmPasswordValidator } from "../validation/confirm-password.validator";
 import { Manager } from '../model/manager';
 import { SignUpService } from "../service/signup.service";
 import { HttpClient } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { AddParkingDialogComponent } from '../add-parking-dialog/add-parking-dialog.component';
+import { MatDialogRef, MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-manager-signup',
@@ -13,57 +14,69 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ManagerSignupComponent implements OnInit {
 
-  signupForm: FormGroup;
+  nameGroup: FormGroup;
+  companyGroup: FormGroup;
+  contactsGroup: FormGroup;
+  passwordGroup: FormGroup;
+  commentGroup: FormGroup;
   manager: Manager;
   message: string;
   isCreated: boolean;
+  loading: boolean;
 
   constructor(private signUpService: SignUpService, private fb: FormBuilder,
-    private http: HttpClient, private snackBar: MatSnackBar) { }
+    private http: HttpClient, private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.signupForm = this.fb.group({
+    this.nameGroup = this.fb.group({
       firstName: [''],
-      lastName: [''],
+      lastName: ['']
+    });
+    this.companyGroup = this.fb.group({
       companyName: [''],
-      usreouCode: [''],
+      usreouCode: ['']
+    });
+    this.contactsGroup = this.fb.group({
       email: [''],
-      phoneNumber: [''],
+      phoneNumber: ['']
+    });
+    this.passwordGroup = this.fb.group({
       password: [''],
-      confirmPassword: [''],
+      confirmPassword: ['']
+    }, { validator: ConfirmPasswordValidator.matchPassword });
+    this.commentGroup = this.fb.group({
       comment: [''],
       checkbox: false
-    }, { validator: ConfirmPasswordValidator.matchPassword });
+    });
     this.isCreated = false;
+    this.loading = false;
   }
 
   register(): void {
-    this.manager = new Manager(this.signupForm.get('firstName').value,
-      this.signupForm.get('lastName').value,
-      this.signupForm.get('companyName').value,
-      this.signupForm.get('usreouCode').value,
-      this.signupForm.get('email').value,
-      this.signupForm.get('phoneNumber').value,
-      this.signupForm.get('password').value,
-      this.signupForm.get('confirmPassword').value,
-      this.signupForm.get('comment').value);
+    this.loading = true;
+    this.manager = new Manager(this.nameGroup.get('firstName').value,
+      this.nameGroup.get('lastName').value,
+      this.companyGroup.get('companyName').value,
+      this.companyGroup.get('usreouCode').value,
+      this.contactsGroup.get('email').value,
+      this.contactsGroup.get('phoneNumber').value,
+      this.passwordGroup.get('password').value,
+      this.passwordGroup.get('confirmPassword').value,
+      this.commentGroup.get('comment').value);
     this.signUpService.registerManager(this.manager).subscribe(response => {
       this.isCreated = true;
+      this.loading = false;
     }, err => {
       this.message = err.error;
-      this.openSnackBar(this.message);
+      this.openDialog(this.message);
+      this.loading = false;
     });
   }
 
-  reset(): void {
-    this.ngOnInit();
-    this.signupForm.markAsPristine();
-    this.signupForm.reset();
-  }
-
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'Close', {
-      duration: 4000,
+  openDialog( message: string): MatDialogRef<AddParkingDialogComponent> {
+    return this.dialog.open(AddParkingDialogComponent, {
+      width: '350px',
+      data: {message}
     });
   }
 }

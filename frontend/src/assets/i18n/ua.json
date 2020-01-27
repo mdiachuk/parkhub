@@ -148,6 +148,10 @@
   "This parking already exists": "Парковка з такою назвою вже існує",
   "This address already exists": "Парковка з такою адресою вже існує",
   "Sorry!Something went wrong on our server.": "Вибачте,сталася помилка!Спробуйте будь ласка пізніше",
+  "Next": "Далі",
+  "Company details": "Інформація про компанію",
+  "Contact information": "Контактна інформація",
+  "Finish": "Завершити",
   "PhonePlaceholder":{
     "value": "Номер телефону"
   },
