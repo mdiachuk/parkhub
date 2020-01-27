@@ -6,10 +6,6 @@ public class AdminDTO {
     private String firstName;
     private String userRole;
 
-    public AdminDTO() {
-    }
-
-
     public long getId() {
         return id;
     }
