@@ -1,32 +1,6 @@
-.container {
-    text-align: center;
-}
-
 button.submit {
     color: white;
     background-color: #3F51B5;
-}
-
-.label {
-    margin-top: 20px;
-    font-size: 19px;
-}
-
-li.comment-block {
-    margin-top: 25px;
-}
-
-
-li.name-block {
-    margin-top: 25px;
-}
-
-li.checkbox {
-    margin-top: 15px;
-}
-
-li.buttons-block {
-    margin-top: 45px;
 }
 
 .comment {
@@ -58,11 +32,27 @@ a.homepage-link {
     height: auto;
 }
 
-li {
-    list-style-type: none;
+.buttons {
+    margin-left: 220px;
+    margin-top: 40px;
 }
 
-ul {
-    margin-left: 0;
-    padding-left: 0;
+@keyframes spinner {
+    to {transform: rotate(360deg);}
+}
+   
+.spinner:before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    border-top-color: #3F51B5;
+    animation: spinner .8s linear infinite;
 }
