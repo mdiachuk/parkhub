@@ -1,23 +1,23 @@
 
-<mat-toolbar class = "toolbar" color="primary">
+<mat-toolbar class = "toolbar" color="">
   <mat-toolbar-row>
-  <span>Parking Details</span>
-  <button routerLink="/manager/cabinet" id="id1" mat-raised-button color="">Back</button>
+  <span>{{"Parking Details" | translate}}</span>
+  <button routerLink="/manager/cabinet" color="primary" id="id1" mat-raised-button >{{"Back" | translate}}</button>
 </mat-toolbar-row>
 </mat-toolbar>
 
     <mat-list *ngIf="parkingDTO">
 
-      <mat-list-item> <span class="title">Name:</span> <span class="parkingValue">{{parkingDTO.parkingName}}</span>
+      <mat-list-item> <span class="title">{{"Name:" | translate}}</span> <span class="parkingValue">{{parkingDTO.parkingName}}</span>
           <mat-form-field class="example-form-field" *ngIf="!buttonStatusList[0]">
-              <input matInput type="text" placeholder="New name" #parkingName [(ngModel)]="parkingDetail.parkingName" required>
-              <mat-error *ngIf="input.invalid">{{getErrorMessage()}}</mat-error>
+              <input matInput type="text" [placeholder]="'NewNamePlaceholder.value' | translate" #parkingName [(ngModel)]="parkingDetail.parkingName" required>
+              <mat-error *ngIf="input.invalid">{{"You must enter a value" | translate}}</mat-error>
               <button mat-button *ngIf="parkingDetail.parkingName" matSuffix mat-icon-button aria-label="Clear" (click)="parkingDetail.parkingName=''">
                 <mat-icon>close</mat-icon>
               </button>
             </mat-form-field>
-          <button class="saveButton" mat-raised-button color="" [disabled] = "buttonStatusList[0]"  (click) = "revert(0); openSnackBar(parkingDetail.parkingName)">Save</button>
-      <button class="changeButton" mat-raised-button color="" [disabled] = "!buttonStatusList[0]" (click) = "revert(0); buttonStatusList[4] = false">Change</button>
+          <button class="saveButton" mat-raised-button color="primary" [disabled] = "buttonStatusList[0]"  (click) = "revert(0); openSnackBar(parkingDetail.parkingName)">{{"Save" | translate}}</button>
+      <button class="changeButton" mat-raised-button color="primary" [disabled] = "!buttonStatusList[0]" (click) = "revert(0); buttonStatusList[4] = false">{{"Change" | translate}}</button>
       <button mat-mini-fab aria-label="Example icon-button with a heart icon" color="" (click) = "buttonStatusList[0] = true">
           <mat-icon>close</mat-icon>
         </button>
@@ -25,10 +25,10 @@
 
       <mat-divider></mat-divider>
 
-      <mat-list-item><span class="title">Address:</span><span class="parkingValue">{{parkingDTO.address}}</span>
-          <button class="saveButton" mat-raised-button color="" [disabled] = "buttonStatusList[1]" (click) = "revert(1); openSnackBar(parkingDetail.street + ' ' + parkingDetail.building + ', ' + parkingDetail.city)">Save</button>
-        <button class="changeButton" mat-raised-button color="" [disabled] = "!buttonStatusList[1]" (click) = "revert(1); openDialog(); buttonStatusList[4] = false">Change</button>
-        <button mat-mini-fab aria-label="Example icon-button with a heart icon" color="" (click) = "revert(1)">
+      <mat-list-item><span class="title">{{ 'Address:' | translate }}</span><span class="parkingValue">{{parkingDTO.address}}</span>
+          <button class="saveButton" mat-raised-button color="primary" [disabled] = "buttonStatusList[1]" (click) = "revert(1); openSnackBar(parkingDetail.street + ' ' + parkingDetail.building + ', ' + parkingDetail.city)">{{"Save" | translate}}</button>
+        <button class="changeButton" mat-raised-button color="primary" [disabled] = "!buttonStatusList[1]" (click) = "revert(1); openDialog(); buttonStatusList[4] = false">{{"Change" | translate}}</button>
+        <button mat-mini-fab aria-label="Example icon-button with a heart icon" color="" (click) = "buttonStatusList[1] = true">
             <mat-icon>close</mat-icon>
           </button>
 
@@ -36,15 +36,16 @@
 
       <mat-divider></mat-divider>
 
-      <mat-list-item><span class="title">Places:</span><span class="parkingValue">{{parkingDTO.slotsNumber}}</span>
+      <mat-list-item><span class="title">{{"Places:" | translate}}</span><span class="parkingValue">{{parkingDTO.slotsNumber}}</span>
           <mat-form-field  class="example-form-field" *ngIf="!buttonStatusList[2]">
-              <input matInput type="number" placeholder="New places quantity" [(ngModel)]="parkingDetail.slotsNumber">
+              <input matInput type="number" [placeholder]="'NewPlacesAmountPlaceholder.value' | translate" [(ngModel)]="parkingDetail.slotsNumber" required>
+              <mat-error *ngIf="input.invalid">{{"You must enter a value" | translate}}</mat-error>
               <button mat-button *ngIf="parkingDetail.slotsNumber" matSuffix mat-icon-button aria-label="Clear" (click)="parkingDetail.slotsNumber=''">
                 <mat-icon>close</mat-icon>
               </button>
             </mat-form-field>
-          <button class="saveButton" mat-raised-button color="" [disabled] = "buttonStatusList[2]" (click)="revert(2); openSnackBar(parkingDetail.slotsNumber)">Save</button>
-          <button class="changeButton" mat-raised-button color="" [disabled] = "!buttonStatusList[2]" (click)="revert(2); buttonStatusList[4] = false">Change</button>
+          <button class="saveButton" mat-raised-button color="primary" [disabled] = "buttonStatusList[2]" (click)="revert(2); openSnackBar(parkingDetail.slotsNumber)">{{"Save" | translate}}</button>
+          <button class="changeButton" mat-raised-button color="primary" [disabled] = "!buttonStatusList[2]" (click)="revert(2); buttonStatusList[4] = false">{{"Change" | translate}}</button>
           <button mat-mini-fab aria-label="Example icon-button with a heart icon" color="" (click) = "buttonStatusList[2] = true">
               <mat-icon>close</mat-icon>
             </button>
@@ -52,15 +53,16 @@
 
       <mat-divider></mat-divider>
 
-      <mat-list-item><span class="title">Tariff:</span><span class="parkingValue">{{parkingDTO.tariff}}</span>
+      <mat-list-item><span class="title">{{"Tariff:" | translate}}</span><span class="parkingValue">{{parkingDTO.tariff}}</span>
           <mat-form-field class="example-form-field" *ngIf="!buttonStatusList[3]">
-              <input matInput type="number" placeholder="New tariff" [(ngModel)]="parkingDetail.tariff">
+              <input matInput type="number" [placeholder]="'NewTariffPlaceholder.value' | translate" [(ngModel)]="parkingDetail.tariff" required>
+              <mat-error *ngIf="input.invalid">{{"You must enter a value" | translate}}</mat-error>
               <button mat-button *ngIf="parkingDetail.tariff" matSuffix mat-icon-button aria-label="Clear" (click)="parkingDetail.tariff=''">
                 <mat-icon>close</mat-icon>
               </button>
             </mat-form-field>
-          <button class="saveButton" mat-raised-button color="" [disabled] = "buttonStatusList[3]" (click)="revert(3); openSnackBar(parkingDetail.tariff)">Save</button>
-          <button class="changeButton" mat-raised-button color="" [disabled] = "!buttonStatusList[3]" (click)="revert(3); buttonStatusList[4] = false">Change</button>
+          <button class="saveButton" mat-raised-button color="primary" [disabled] = "buttonStatusList[3]" (click)="revert(3); openSnackBar(parkingDetail.tariff)">{{"Save" | translate}}</button>
+          <button class="changeButton" mat-raised-button color="primary" [disabled] = "!buttonStatusList[3]" (click)="revert(3); buttonStatusList[4] = false">{{"Change" | translate}}</button>
           <button mat-mini-fab aria-label="Example icon-button with a heart icon" color="" (click) = "buttonStatusList[3] = true">
               <mat-icon>close</mat-icon>
             </button>
@@ -71,7 +73,7 @@
 </mat-list>
 
 <div class="submitButtonCenter">
-  <button class="submitButton" mat-raised-button color="primary" [disabled] = "buttonStatusList[4]" (click)="revert(4); updateParking()">Submit</button>
+  <button class="submitButton" mat-raised-button color="primary" [disabled] = "buttonStatusList[4]" (click)="revert(4); updateParking()">{{"Submit" | translate}}</button>
 </div>
 
 

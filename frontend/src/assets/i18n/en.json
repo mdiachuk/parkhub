@@ -1,7 +1,4 @@
 {
-  "Logo": {
-    "value": "assets/logotitle.png"
-  },
   "ParkHub": "ParkHub",
   "RECOMMENDED BY THE MOST CAPRICIOUS DRIVERS!": "RECOMMENDED BY THE MOST CAPRICIOUS DRIVERS!",
   "Parking created successfully.": "Parking created successfully.",
@@ -20,7 +17,7 @@
   "Please, select preferred time": "Please, select preferred time",
   "Please, select available slot. Price per hour:": "Please, select available slot. Tariff per hour:",
   "Changes were accepted": "Changes were accepted!",
-  "Failed to change password" : "Failed to change password!",
+  "Failed to change password": "Failed to change password!",
   "Success": "Success",
   "Search": "Search",
   "Nearest parking": "Nearest parking",
@@ -52,11 +49,6 @@
   "Sign up": "Sign up",
   "Get User by Id": "Get User by ID",
   "ID:": "ID",
-  "First name": "First name",
-  "Last Name": "Last Name",
-  "Phone": "Phone",
-  "Edit": "Edit",
-  "Save": "Save",
   "Ticket List": "Ticket list",
   "Type User ID": "Type user ID",
   "Sign up Manager": "Sign up Manager",
@@ -88,7 +80,7 @@
   "MustContain8Numbers": "Must contain 8 numbers",
   "InvalidEmailFormat": "Invalid email format",
   "InvalidPhoneNumberFormat": "Invalid phone number format",
-  "MustContainAtLeastOneNumberOneUppercaseAndOneLowercaseLetterAndAtLeast6Characters": "Must contain at least one number, one uppercase and one lowercase letter, and at\n            least 6 characters",
+  "MustContainAtLeastOneNumberOneUppercaseAndOneLowercaseLetterAndAtLeast6Characters": "Must contain at least one number, one uppercase and one lowercase letter, and at least 6 characters",
   "PasswordsMustMatch": "Passwords must match!",
   "Max200Characters": "Max 200 characters",
   "IAgreeWithTermsConditionsAndPrivacyPolicy": "I agree with terms, conditions and privacy policy",
@@ -113,11 +105,7 @@
   "PhoneNumber": "Phone Number",
   "Email": "Email",
   "Password": "Password",
-  "User Details": "User Details",
-  "Change Password": "Change Password",
   "ConfirmPassword": "Confirm password",
-  "Close": "Close",
-  "Save Password": "Save Password",
   "PricePerHour": "Price per hour",
   "PleaseChooseAvailableSlot": "Please, choose available slot",
   "NotAValidNameOfStreet": "Not a valid name of street.",
@@ -140,23 +128,46 @@
   "Password must match requirements": "Password must match requirements",
   "Resend link": "Resend link",
   "Link for veifying email adress was sent": "Link for veifying email adress was sent",
+  "Verification link was sent to your email-box!": "Verification link was sent to your email-box!",
+  "Create an account": "Create an account",
+  "This parking already exists": "This parking already exists",
+  "This address already exists": "This address already exists",
+  "Sorry!Something went wrong on our server.": "Sorry!Something went wrong on our server.",
   "PhonePlaceholder":{
     "value": "PhonePlaceholder"
   },
   "NewPasswordPlaceholder": {
     "value": "NewPasswordPlaceholder"
   },
-  "ConfirmPasswordPlaceholder": {
-    "value": "ConfirmPasswordPlaceholder"
-  },
   "TypeUserIDPlaceholder": {
     "value": "Type User ID"
+  },
+  "NewCityPlaceholder": {
+    "value": "New city"
+  },
+  "NewStreetPlaceholder": {
+    "value": "New street"
+  },
+  "NewBuildingPlaceholder": {
+    "value": "New building"
+  },
+  "NewNamePlaceholder": {
+    "value": "New name"
+  },
+  "NewAddressPlaceholder": {
+    "value": "New address"
+  },
+  "NewTariffPlaceholder": {
+    "value": "New tariff"
+  },
+  "NewPlacesAmountPlaceholder": {
+    "value": "New places amount"
   },
   "TypeUserRolePlaceholder": {
     "value": "Type user role"
   },
   "FindYourParkingLove♥Placeholder": {
-    "value": "Find parking"
+    "value": "Find your parking"
   },
   "PhoneNumberPlaceholder": {
     "value": "Phone number"
@@ -184,9 +195,6 @@
   },
   "PasswordPlaceholder": {
     "value": "Password"
-  },
-  "NewPasswordPlaceholder": {
-    "value": "New password"
   },
   "FirstNamePlaceholder": {
     "value": "First name"

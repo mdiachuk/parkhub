@@ -1,18 +1,21 @@
 <div mat-dialog-content>
-  <p>Input new attributes</p>
+  <p>{{"Input new attributes" | translate}}</p>
   <mat-form-field>
-    <input matInput placeholder="New city" [(ngModel)]="parkingDialogDTO.city">
+    <input matInput [placeholder]="'NewCityPlaceholder.value' | translate" [(ngModel)]="parkingDialogDTO.city" required>
+    <mat-error *ngIf="input.invalid">{{"You must enter a value" | translate}}</mat-error>
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput placeholder="New street" [(ngModel)]="parkingDialogDTO.street">
+    <input matInput [placeholder]="'NewStreetPlaceholder.value' | translate" [(ngModel)]="parkingDialogDTO.street" required>
+    <mat-error *ngIf="input.invalid">{{"You must enter a value" | translate}}</mat-error>
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput placeholder="New building" [(ngModel)]="parkingDialogDTO.building">
+    <input matInput [placeholder]="'NewBuildingPlaceholder.value' | translate" [(ngModel)]="parkingDialogDTO.building" required>
+    <mat-error *ngIf="input.invalid">{{"You must enter a value" | translate}}</mat-error>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="parkingDialogDTO" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="onNoClick()">{{"No Thanks" | translate}}</button>
+  <button mat-button [mat-dialog-close]="parkingDialogDTO" cdkFocusInitial [disabled]="input.valid">{{"Ok" | translate}}</button>
 </div>

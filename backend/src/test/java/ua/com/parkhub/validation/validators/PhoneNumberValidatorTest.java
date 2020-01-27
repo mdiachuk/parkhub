@@ -22,32 +22,32 @@ class PhoneNumberValidatorTest {
     }
 
     @Test
-    public void test_isValid_correctPhoneNumber_1() {
+    void test_isValid_correctPhoneNumber_1() {
         helper_isValid_correctPhoneNumber("380639945557");
     }
 
     @Test
-    public void test_isValid_correctPhoneNumber_2() {
+    void test_isValid_correctPhoneNumber_2() {
         helper_isValid_correctPhoneNumber("0679951225");
     }
 
     @Test
-    public void test_isValid_correctPhoneNumber_3() {
+    void test_isValid_correctPhoneNumber_3() {
         helper_isValid_correctPhoneNumber("0332467890");
     }
 
     @Test
-    public void test_isValid_incorrectPhoneNumber_1() {
+    void test_isValid_incorrectPhoneNumber_1() {
         helper_isValid_incorrectPhoneNumber("245947");
     }
 
     @Test
-    public void test_isValid_incorrectPhoneNumber_2() {
+    void test_isValid_incorrectPhoneNumber_2() {
         helper_isValid_incorrectPhoneNumber("ppppPP");
     }
 
     @Test
-    public void test_isValid_incorrectPhoneNumber_3() {
+    void test_isValid_incorrectPhoneNumber_3() {
         helper_isValid_incorrectPhoneNumber("470639956668");
     }
 

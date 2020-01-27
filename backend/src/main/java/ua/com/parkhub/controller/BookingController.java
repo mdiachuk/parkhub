@@ -3,11 +3,10 @@ package ua.com.parkhub.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.*;
-import ua.com.parkhub.exceptions.BookingException;
-import ua.com.parkhub.exceptions.CustomerException;
 import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.exceptions.ParkingException;
 import ua.com.parkhub.mappers.modelToDto.ParkingWithSlotsModelToDTOMapper;
@@ -19,6 +18,7 @@ import ua.com.parkhub.service.IParkingService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -75,18 +75,8 @@ public class BookingController {
     @PostMapping(value = "/api/cancel")
     public ResponseEntity<PaymentResponseDTO> getPhoneNumber(@RequestBody PhoneNumberDTO phoneNumber) {
         PaymentResponseDTO paymentResponseDTO = new PaymentResponseDTO();
-        int price = bookingService.findPrice(phoneNumber.getPhoneNumber());
+        int price = bookingService.findPrice("+" + phoneNumber.getPhoneNumber());
         paymentResponseDTO.setPrice(price);
         return ResponseEntity.ok(paymentResponseDTO);
-    }
-
-    @ExceptionHandler(BookingException.class)
-    public ResponseEntity handleBookingException(BookingException e) {
-        return ResponseEntity.badRequest().body(e.getStatusCode());
-    }
-
-    @ExceptionHandler(CustomerException.class)
-    public ResponseEntity handleCustomerException(CustomerException e) {
-        return ResponseEntity.badRequest().body(e.getStatusCode());
     }
 }

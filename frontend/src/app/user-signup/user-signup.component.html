@@ -1,0 +1,70 @@
+<div class="container" *ngIf="!isCreated">
+    <ul class="container">
+        <mat-card class="card">
+            <mat-card-title>{{'Create an account' | translate}}</mat-card-title>
+            <form [formGroup]="signupForm">
+                <li class="name-block">
+                    <mat-form-field>
+                        <input matInput formControlName="firstName"
+                            [placeholder]="'FirstNamePlaceholder.value' | translate" required minlength="1"
+                            maxlength="50">
+                        <mat-error><small>{{'Required' | translate}}</small></mat-error>
+                    </mat-form-field>
+                    &nbsp;
+                    <mat-form-field>
+                        <input matInput formControlName="lastName"
+                            [placeholder]="'LastNamePlaceholder.value' | translate" required minlength="1"
+                            maxlength="50">
+                        <mat-error><small>{{'Required' | translate}}</small></mat-error>
+                    </mat-form-field>
+                </li>
+                <li>
+                    <mat-form-field>
+                        <input matInput type="email" formControlName="email"
+                            [placeholder]="'EmailPlaceholder.value' | translate" required
+                            pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}">
+                        <mat-error><small>{{'InvalidEmailFormat' | translate}}</small></mat-error>
+                    </mat-form-field>
+                    &nbsp;
+                    <mat-form-field>
+                        <input matInput type="telephone" formControlName="phoneNumber"
+                            [placeholder]="'PhoneNumberPlaceholder.value' | translate" required
+                            pattern="^3?8?(0\d{9})$">
+                        <mat-error><small>{{'InvalidPhoneNumberFormat' | translate}}</small></mat-error>
+                    </mat-form-field>
+                </li>
+                <li>
+                    <mat-form-field>
+                        <input matInput formControlName="password" type="password"
+                            [placeholder]="'PasswordPlaceholder.value' | translate" required
+                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}">
+                        <mat-error>
+                            <small>{{'MustContainAtLeastOneNumberOneUppercaseAndOneLowercaseLetterAndAtLeast6Characters' | translate}}</small>
+                        </mat-error>
+                    </mat-form-field>
+                    &nbsp;
+                    <mat-form-field>
+                        <input matInput formControlName="confirmPassword" type="password"
+                            [placeholder]="'ConfirmPasswordPlaceholder.value' | translate" required>
+                        <mat-error *ngIf="signupForm.get('confirmPassword').errors &&
+                      signupForm.get('confirmPassword').errors.ConfirmPassword">
+                            <small>{{'PasswordsMustMatch' | translate}}</small>
+                        </mat-error>
+                    </mat-form-field>
+                </li>
+            </form>
+            <li class="buttons-block">
+                <button class="reset" mat-flat-button (click)="reset()">{{'Reset' | translate}}</button>
+                &nbsp;
+                <button class="submit" mat-raised-button [disabled]="!signupForm.valid"
+                    (click)="register()">{{'Submit' | translate}}</button>
+            </li>
+        </mat-card>
+    </ul>
+</div>
+
+<div class="success" *ngIf="isCreated">
+    <div><img src="assets/tick.png" class="success-image"></div>
+    <div class="success-message">{{'Verification link was sent to your email-box!' | translate}}</div>
+    <div class="homepage-link"><a href="home" class="homepage-link">{{'GoToTheHomepage' | translate}}</a></div>
+</div>
