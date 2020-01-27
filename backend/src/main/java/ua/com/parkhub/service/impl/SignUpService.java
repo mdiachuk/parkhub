@@ -56,10 +56,15 @@ public class SignUpService implements ISignUpService {
 
     @Transactional
     @Override
+    public void registerUser(UserModel user) {
+        userDAO.addElement(createUser(user));
+    }
+
+    @Transactional
+    @Override
     public void registerManager(ManagerRegistrationDataModel manager) {
-        UserModel user = createUser(manager.getUser());
-        user = userDAO.addElement(user).orElseThrow(() ->
-                new NotFoundInDataBaseException("Customer not found"));
+        UserModel user =  userDAO.addElement(createUser(manager.getUser())).orElseThrow(() ->
+                new NotFoundInDataBaseException("User not found"));
         String description = generateDescription(user.getId(), manager.getCompanyName(),
                 manager.getUsreouCode(), manager.getComment());
         SupportTicketModel ticket = createTicket(description, user.getCustomer());
@@ -185,17 +190,6 @@ public class SignUpService implements ISignUpService {
                 new NotFoundInDataBaseException(Constants.USERNOTFOUND));
         CustomerModel customer = userModel.getCustomer();
         return customer.getPhoneNumber().equals("Empty");
-    }
-
-    @Override
-    public boolean signUpUser(UserModel userModel){
-        try {
-            userDAO.addElement(createUser(userModel));
-            return true;
-        } catch (Exception e){
-            logger.error(""+e);
-        }
-        return false;
     }
 
     @Override
