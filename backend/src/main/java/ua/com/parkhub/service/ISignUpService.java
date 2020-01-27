@@ -4,6 +4,7 @@ import ua.com.parkhub.model.*;
 
 public interface ISignUpService {
 
+    void registerUser(UserModel user);
     void registerManager(ManagerRegistrationDataModel manager);
     CustomerModel createCustomer(CustomerModel customer);
     UserModel createUser(UserModel user);
@@ -12,7 +13,6 @@ public interface ISignUpService {
     void setPhoneNumberForAuthUser(PhoneEmailModel phoneEmailModel);
     void createUserAfterSocialAuth(UserModel userModel);
     boolean isCustomerNumberEmpty(String email);
-    boolean signUpUser(UserModel userModel);
     boolean isNumberUnique(String phoneNumber);
     String generateTokenForOauthUser(String email);
 }

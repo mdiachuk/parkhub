@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { ConfirmPasswordValidator } from "../validation/confirm-password.validator";
-import { Manager } from '../model/manager';
-import { SignUpService } from "../service/signup.service";
+import { User } from '../model/user';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { SignUpService } from '../service/signup.service';
+import { MatSnackBar } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmPasswordValidator } from '../validation/confirm-password.validator';
 
 @Component({
-  selector: 'app-manager-signup',
-  templateUrl: './manager-signup.component.html',
-  styleUrls: ['./manager-signup.component.scss']
+  selector: 'app-user-signup',
+  templateUrl: './user-signup.component.html',
+  styleUrls: ['./user-signup.component.scss']
 })
-export class ManagerSignupComponent implements OnInit {
+export class UserSignupComponent implements OnInit {
 
   signupForm: FormGroup;
-  manager: Manager;
+  user: User;
   message: string;
   isCreated: boolean;
 
@@ -25,29 +25,23 @@ export class ManagerSignupComponent implements OnInit {
     this.signupForm = this.fb.group({
       firstName: [''],
       lastName: [''],
-      companyName: [''],
-      usreouCode: [''],
       email: [''],
       phoneNumber: [''],
       password: [''],
-      confirmPassword: [''],
-      comment: [''],
-      checkbox: false
+      confirmPassword: ['']
     }, { validator: ConfirmPasswordValidator.matchPassword });
     this.isCreated = false;
   }
 
   register(): void {
-    this.manager = new Manager(this.signupForm.get('firstName').value,
+    this.user = new User(this.signupForm.get('firstName').value,
       this.signupForm.get('lastName').value,
-      this.signupForm.get('companyName').value,
-      this.signupForm.get('usreouCode').value,
       this.signupForm.get('email').value,
       this.signupForm.get('phoneNumber').value,
       this.signupForm.get('password').value,
-      this.signupForm.get('confirmPassword').value,
-      this.signupForm.get('comment').value);
-    this.signUpService.registerManager(this.manager).subscribe(response => {
+      this.signupForm.get('confirmPassword').value);
+
+    this.signUpService.registerUser(this.user).subscribe(response => {
       this.isCreated = true;
     }, err => {
       this.message = err.error;
@@ -66,4 +60,5 @@ export class ManagerSignupComponent implements OnInit {
       duration: 4000,
     });
   }
+
 }
