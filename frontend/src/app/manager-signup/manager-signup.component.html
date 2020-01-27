@@ -31,7 +31,7 @@
         <mat-form-field>
           <input matInput formControlName="usreouCode" [placeholder]="'managerUSREOUPlaceholder.value' | translate"
             required pattern="[0-9]{8}" />
-          <mat-error><small>{{'Next' | translate}}</small></mat-error>
+          <mat-error><small>{{'MustContain8Numbers' | translate}}</small></mat-error>
         </mat-form-field>
         &nbsp;
         <button mat-button matStepperNext>{{'Next' | translate}}</button>
@@ -47,7 +47,7 @@
         &nbsp;
         <mat-form-field>
           <input matInput type="telephone" formControlName="phoneNumber"
-            [placeholder]="'PhoneNumberPlaceholder.value' | translate" required pattern="/^380\d{9}$/" />
+            [placeholder]="'PhoneNumberPlaceholder.value' | translate" required pattern="^38?(0\d{9})$" />
           <mat-error><small>{{ "InvalidPhoneNumberFormat" | translate }}</small></mat-error>
         </mat-form-field>
         &nbsp;
