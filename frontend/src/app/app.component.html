@@ -15,8 +15,8 @@
           <a *ngIf="data.currentIsUser | async" mat-button [routerLink]='["user"]'>{{'User' | translate}}</a>
           <a *ngIf="!(data.currentIsLogged | async)" mat-button [routerLink]='["signup/user"]'>{{ 'Sign up' | translate }}</a>
           <a *ngIf="!(data.currentIsManager | async)" mat-button [routerLink]='["signup/manager"]'>{{ 'Become partner' | translate }}</a>
-          <a *ngIf="!(data.currentIsLogged | async)" mat-button [routerLink]='["login"]'>{{ 'Login' | translate }}</a>
-          <a *ngIf="data.currentIsLogged | async"mat-button (click)="logout()" >{{ 'LogOut' | translate }}</a>
+          <a *ngIf="!(data.currentIsLogged | async)" mat-button [routerLink]='["login"]'>{{ 'Sign in' | translate }}</a>
+          <a *ngIf="data.currentIsLogged | async"mat-button (click)="logout()" >{{ 'Sign out' | translate }}</a>
           <button class="btn btn-primary" (click)="useLanguage('en')">{{'en' | translate}}</button>
           <button class="btn btn-primary" (click)="useLanguage('ua')">{{'ua' | translate}}</button>
         </div>

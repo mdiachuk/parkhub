@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar>
   <span>{{'User' | translate}}</span>
 </mat-toolbar>
 
@@ -72,6 +72,6 @@
       </form>
     </span>
     <button id="buttonChangePassword" mat-raised-button color="primary" (click)="changePassword()">{{'Change Password' | translate}}</button>
-    <button id="buttonSavePassword" style="display: none;"  mat-raised-button color="primary" (click)="PostPassword()">{{'Save Password' | translate}} </button>
+    <button id="buttonSavePassword" style="display: none;" [disabled]="!updateForm.valid" mat-raised-button color="primary" (click)="PostPassword()">{{'Save Password' | translate}} </button>
   </div>
 </div>

@@ -71,7 +71,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { CookieService } from 'ngx-cookie-service';
 import { UserSignupComponent } from './user-signup/user-signup.component';
 import { AddParkingDialogComponent } from './add-parking-dialog/add-parking-dialog.component';
-import { AddParkingDialogComponent } from './add-parking-dialog/add-parking-dialog.component';
 
 @NgModule({
   declarations: [

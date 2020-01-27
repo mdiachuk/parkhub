@@ -9,7 +9,7 @@
   "To:": "To:",
   "LIKE": "LIKE",
   "SHARE": "SHARE",
-  "Login via Google!": "Login via Google!",
+  "Sign in with Google!": "Sign in with Google!",
   "Enter your phone number": "Enter your phone number",
   "Price per hour:": "Price per hour:",
   "CancelPrepayment": "Cancel prepayment",
@@ -52,8 +52,8 @@
   "Ticket List": "Ticket list",
   "Type User ID": "Type user ID",
   "Sign up Manager": "Sign up Manager",
-  "Login": "Login",
-  "LogOut": "Logout",
+  "Sign in": "Sign in",
+  "Sign out": "Sign out",
   "en": "en",
   "ua": "ua",
   "City": "City",
@@ -133,14 +133,11 @@
   "This parking already exists": "This parking already exists",
   "This address already exists": "This address already exists",
   "Sorry!Something went wrong on our server.": "Sorry!Something went wrong on our server.",
-  "This parking already exists": "This parking already exists",
-  "This address already exists": "This address already exists",
-  "Sorry!Something went wrong on our server.": "Sorry!Something went wrong on our server.",
   "PhonePlaceholder":{
     "value": "PhonePlaceholder"
   },
   "NewPasswordPlaceholder": {
-    "value": "NewPasswordPlaceholder"
+    "value": "New Password"
   },
   "TypeUserIDPlaceholder": {
     "value": "Type User ID"

@@ -1,4 +1,4 @@
-<h5>Dear user,please input your phone number to be able to have full access cabinet!</h5>
+<h5>{{'Dear user,please input your phone number to be able to have full access cabinet!' | translate}}</h5>
 <div class="form" *ngIf="!post; else forminfo" novalidate>
   <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form">
 
@@ -7,7 +7,7 @@
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="PhoneNumber" formControlName="phoneNumber" >
+      <input matInput [placeholder]="'PhoneNumberPlaceholder.value' | translate" formControlName="phoneNumber" >
       <span matPrefix>+&nbsp;</span>
       <mat-error *ngIf="!formGroup.controls['phoneNumber'].valid && formGroup.controls['phoneNumber'].touched">
         {{ getErrorPhoneNumber() }}
