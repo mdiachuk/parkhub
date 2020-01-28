@@ -71,6 +71,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { CookieService } from 'ngx-cookie-service';
 import { UserSignupComponent } from './user-signup/user-signup.component';
 import { AddParkingDialogComponent } from './add-parking-dialog/add-parking-dialog.component';
+import { MonerisComponent } from './moneris/moneris.component';
 
 @NgModule({
   declarations: [
@@ -109,7 +110,9 @@ import { AddParkingDialogComponent } from './add-parking-dialog/add-parking-dial
     ManagerParkingListComponent,
     UserSignupComponent,
     AddPhoneNumberComponent,
-    AddParkingDialogComponent
+    AddParkingDialogComponent,
+    AddPhoneNumberComponent,
+    MonerisComponent
   ],
   imports: [
     BrowserModule,
@@ -189,6 +192,6 @@ import { AddParkingDialogComponent } from './add-parking-dialog/add-parking-dial
       multi: true
     }],
   bootstrap: [AppComponent],
-  entryComponents: [AlertDialogComponent, AddressDialog,AddParkingDialogComponent]
+  entryComponents: [AlertDialogComponent, AddressDialog, AddParkingDialogComponent, MonerisComponent]
 })
 export class AppModule { }
