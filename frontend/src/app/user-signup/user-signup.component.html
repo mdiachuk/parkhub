@@ -29,7 +29,7 @@
                     <mat-form-field>
                         <input matInput type="telephone" formControlName="phoneNumber"
                             [placeholder]="'PhoneNumberPlaceholder.value' | translate" required
-                            pattern="/^380\d{9}$/">
+                            pattern="^38?(0\d{9})$">
                         <mat-error><small>{{'InvalidPhoneNumberFormat' | translate}}</small></mat-error>
                     </mat-form-field>
                 </li>

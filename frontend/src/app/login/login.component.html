@@ -2,7 +2,7 @@
 <div class="container">
     <ul>
         <li>
-          <div class="header">{{'Login' | translate}}</div>
+          <div class="header">{{'Sign in' | translate}}</div>
         </li>
         <form [formGroup]="loginForm">
           <li>
@@ -23,18 +23,17 @@
         </form>
         <li>
           <mat-card-actions>
-            <button class="login" mat-raised-button  (click)="login()" color="primary">{{'Login' | translate}}</button>
+            <button class="login" mat-raised-button  (click)="login()" color="primary">{{'Sign in' | translate}}</button>
           </mat-card-actions>
         </li>
     </ul>
   </div>
-
 <div class="container">
-  <a class=" btn white black-text" href="http://localhost:8080/api/login/google" style="text-transform:none">
+  <a class=" btn white black-text" href="api/login/google" style="text-transform:none">
       <div class="left">
           <img width="11px" style="margin-top:7px; margin-right:8px" alt="Google sign-in" 
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
-              Login with Google
+              {{'Sign in with Google!' | translate}}
       </div>
   </a>
 </div>
