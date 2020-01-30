@@ -25,7 +25,7 @@
   "User": "User",
   "Enter your car number": "Enter your car number",
   "User Info": "User Info",
-  "First name": "First name",
+  "First name": "First Name",
   "Last Name": "Last Name",
   "Phone": "Phone",
   "Edit": "Edit",
@@ -170,7 +170,7 @@
   "TypeUserRolePlaceholder": {
     "value": "Type user role"
   },
-  "FindYourParkingLove♥Placeholder": {
+  "FindYourParking": {
     "value": "Find your parking"
   },
   "PhoneNumberPlaceholder": {
@@ -201,7 +201,7 @@
     "value": "Password"
   },
   "FirstNamePlaceholder": {
-    "value": "First name"
+    "value": "First Name"
   },
   "LastNamePlaceholder": {
     "value": "Last name"

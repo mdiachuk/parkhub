@@ -10,7 +10,7 @@ import javax.validation.ConstraintValidatorContext;
 
 public class PhoneNumberValidator implements ConstraintValidator<ValidPhoneNumber, String> {
 
-    private static final String PATTERN = "^3?8?(0\\d{9})$";
+    private static final String PATTERN = "^38(0\\d{9})$";
 
     @Override
     public void initialize(ValidPhoneNumber constraintAnnotation) {
