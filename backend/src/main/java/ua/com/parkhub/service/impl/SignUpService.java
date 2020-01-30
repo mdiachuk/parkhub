@@ -1,7 +1,5 @@
 package ua.com.parkhub.service.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +19,7 @@ import ua.com.parkhub.values.Constants;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Service
 public class SignUpService implements ISignUpService {
@@ -28,7 +27,7 @@ public class SignUpService implements ISignUpService {
     @Value("${fronturl}")
     private String url;
 
-    private static final Logger logger = LoggerFactory.getLogger(SignUpService.class);
+    private static final Logger logger = Logger.getLogger(SignUpService.class.getName());
 
     private final CustomerDAO customerDAO;
     private final UserDAO userDAO;
@@ -78,7 +77,7 @@ public class SignUpService implements ISignUpService {
     @Override
     public CustomerModel createCustomer(CustomerModel customer) {
         return customerDAO.findCustomerByPhoneNumber(customer.getPhoneNumber()).map(existingCustomer -> {
-            logger.info("Customer with phone number={} was found", customer.getPhoneNumber());
+            logger.info(String.format("Customer with phone number={} was found", customer.getPhoneNumber()));
             Optional<UserModel> optionalUser = userDAO.findUserByCustomerId(existingCustomer.getId());
             if (optionalUser.isPresent()) {
                 throw new PhoneNumberException("Account with this phone number already exists!");

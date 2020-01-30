@@ -56,8 +56,7 @@ public class AuthorizationService implements IAuthorizationService {
     private void activateIfPossible(UserModel user) {
         if ((blockedUserDAO.isBlocked(user)) && (blockedUserDAO.canActivate(user))) {
             blockedUserDAO.activateUser(user);
-            user.setNumberOfFailedPassEntering(0);
-            userDAO.updateElement(user);
+            setZeroFailedPassEntering(user);
         }
     }
 
@@ -66,6 +65,7 @@ public class AuthorizationService implements IAuthorizationService {
         if (passwordEncoder.matches(loginUser.getPassword(), userModel.getPassword()) ) {
             if (!checkForRolePending(userModel)) {
                 if (!(blockedUserDAO.isBlocked(userModel))) {
+                    setZeroFailedPassEntering(userModel);
                     return userModel;
                 } else {
                     throw new PermissionException(StatusCode.CANNOT_ACTIVATE);
@@ -91,4 +91,8 @@ public class AuthorizationService implements IAuthorizationService {
         }
     }
 
+    private void setZeroFailedPassEntering(UserModel userModel){
+        userModel.setNumberOfFailedPassEntering(0);
+        userDAO.updateElement(userModel);
+    }
 }

@@ -1,7 +1,5 @@
 package ua.com.parkhub.service.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -11,11 +9,12 @@ import ua.com.parkhub.service.IMailService;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.logging.Logger;
 
 @Service
 public class MailService implements IMailService {
 
-    private static final Logger logger = LoggerFactory.getLogger(MailService.class);
+    private static final Logger logger = Logger.getLogger(MailService.class.getName());
 
     private final JavaMailSender mailSender;
 

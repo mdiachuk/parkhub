@@ -6,8 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.parkhub.exceptions.ParkHubException;
 import ua.com.parkhub.exceptions.StatusCode;
 import ua.com.parkhub.model.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ua.com.parkhub.exceptions.BookingException;
 import ua.com.parkhub.persistence.entities.Slot;
 import ua.com.parkhub.persistence.impl.BookingDAO;
@@ -28,8 +26,6 @@ import java.util.Optional;
 @Service
 @Transactional
 public class BookingService implements IBookingService {
-
-    private static final Logger logger = LoggerFactory.getLogger(BookingService.class);
 
     private final BookingDAO bookingDAO;
     private final SlotDAO slotDAO;
