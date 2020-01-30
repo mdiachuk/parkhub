@@ -73,7 +73,7 @@ public class BookingController {
     }
 
     @PostMapping(value = "/api/cancel")
-    public ResponseEntity<PaymentResponseDTO> getPhoneNumber(@RequestBody PhoneNumberDTO phoneNumber) {
+    public ResponseEntity<PaymentResponseDTO> cancelPrepayment(@RequestBody PhoneNumberDTO phoneNumber) {
         PaymentResponseDTO paymentResponseDTO = new PaymentResponseDTO();
         int price = bookingService.findPrice("+" + phoneNumber.getPhoneNumber());
         paymentResponseDTO.setPrice(price);

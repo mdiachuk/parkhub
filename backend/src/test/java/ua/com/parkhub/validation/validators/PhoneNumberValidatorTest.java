@@ -28,12 +28,12 @@ class PhoneNumberValidatorTest {
 
     @Test
     void test_isValid_correctPhoneNumber_2() {
-        helper_isValid_correctPhoneNumber("0679951225");
+        helper_isValid_correctPhoneNumber("380679951225");
     }
 
     @Test
     void test_isValid_correctPhoneNumber_3() {
-        helper_isValid_correctPhoneNumber("0332467890");
+        helper_isValid_correctPhoneNumber("380332467890");
     }
 
     @Test
