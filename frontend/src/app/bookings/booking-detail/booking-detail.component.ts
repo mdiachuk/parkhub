@@ -23,11 +23,10 @@ export class BookingDetailComponent implements OnInit {
     phoneNumber: ""
   }
   carRegex: RegExp = /[A-Z]{2}\d{4}[A-Z]{2}/;
-  phoneRegex: RegExp = /^\+380\d{9}$/;
+  phoneRegex: RegExp = /^380\d{9}$/;
 
   constructor(
     private bookingService: BookingService,
-    // private paymentService: PaymentService,
     private route: ActivatedRoute,
     private router: Router,
     private snackBar: MatSnackBar,

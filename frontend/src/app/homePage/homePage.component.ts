@@ -20,18 +20,30 @@ export class PageComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.cookieService.check('TOKEN')) {  
-    this.cookieValue = this.cookieService.get('TOKEN');
-    console.log("cook",this.cookieService.getAll());
-    localStorage.setItem('TOKEN', this.cookieValue);
-    this.cookieService.deleteAll();
-     this.role = this.addservice.getUserROLE();
-    // console.log(this.cookieValue)
-     if (this.role === 'USER') {
-       this.changeIsLogged(true);
-       this.changeIsUser(true);
-     }
-  }}
+    if (this.cookieService.check('TOKEN')) {
+      this.cookieValue = this.cookieService.get('TOKEN');
+      console.log("cook",this.cookieService.getAll());
+      localStorage.setItem('TOKEN', this.cookieValue);
+      this.cookieService.deleteAll();
+      this.role = this.addservice.getUserROLE();
+      // console.log(this.cookieValue)
+      if (this.role === 'USER') {
+        this.changeIsLogged(true);
+        this.changeIsUser(true);
+        this.changeIsManager(false);
+        this.changeIsAdmin(false);
+      } else if (this.role === 'ADMIN') {
+        this.changeIsAdmin(true);
+        this.changeIsManager(false);
+        this.changeIsUser(false);
+        this.changeIsLogged(true);
+      } else if (this.role === 'MANAGER') {
+        this.changeIsManager(true);
+        this.changeIsAdmin(false);
+        this.changeIsUser(false);
+        this.changeIsLogged(true);
+      }
+    }}
   addSearch() {
     this.childSearch = this.search;
   }
@@ -43,5 +55,14 @@ export class PageComponent implements OnInit {
   public changeIsUser(isUser: boolean) {
     this.data.changeIsUser(isUser);
   }
+
+  public changeIsAdmin(isAdmin: boolean) {
+    this.data.changeIsAdmin(isAdmin);
+  }
+
+  public changeIsManager(isManager: boolean) {
+    this.data.changeIsManager(isManager);
+  }
+
 
 }

@@ -14,14 +14,14 @@ export class DateTimePickerComponent implements OnInit {
     rangeTo: FormControl;
 
     // Min moment from
-    public minFrom = new Date(2020, 0, 7, 20, 30);
+    public minFrom = new Date(2020, 0, 29, 17, 15);
     // Max moment from
-    public maxFrom = new Date(2020, 0, 21, 20, 30);
+    public maxFrom = new Date(2020, 1, 12, 17, 15);
 
     // Min moment to +1 hour!
-    public minTo = new Date(2020, 0, 7, 21, 30);
+    public minTo = new Date(2020, 0, 29, 18, 15);
     // Max moment to + 1 hour!
-    public maxTo = new Date(2020, 0, 21, 20, 30);
+    public maxTo = new Date(2020, 1, 12, 18, 15);
 
     constructor() {
     }

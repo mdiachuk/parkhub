@@ -11,4 +11,9 @@
         <env-var name="GC_INSTANCE" value="%GC_INSTANCE%" />
         <env-var name="GC_DB_NAME" value="%GC_DB_NAME%" />
     </env-variables>
+    <sessions-enabled>true</sessions-enabled>
+    <basic-scaling>
+        <max-instances>1</max-instances>
+        <idle-timeout>10m</idle-timeout>
+    </basic-scaling>
 </appengine-web-app>

@@ -38,6 +38,12 @@
   "No pre-order": "No pre-order for this phone number found",
   "Your reservation is already in progress": "Your reservation is already in progress",
   "UAH": " UAH",
+
+
+  "Parking price": "Parking price",
+  "Your slot number": "Your slot number",
+  "Check-in": "Check-in",
+  "Check-out": "Check-out",
   "Become partner": "Become partner",
   "The price of your booking is": "Refund amount is ",
   "WrongPhoneNumberPleaseTryAgain": "Wrong phone number, please try again",
@@ -137,6 +143,7 @@
   "This parking already exists": "This parking already exists",
   "This address already exists": "This address already exists",
   "Sorry!Something went wrong on our server.": "Sorry!Something went wrong on our server.",
+  "Sign in failed": "Sign in failed",
   "PhonePlaceholder":{
     "value": "PhonePlaceholder"
   },

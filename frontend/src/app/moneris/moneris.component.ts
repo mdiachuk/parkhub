@@ -13,6 +13,12 @@ export interface DialogData {
 })
 export class MonerisComponent {
 
+  get floatPrice(): string {
+    return `${this.data.payment.price}.00`;
+  }
+  set floatPrice(value: string) {
+  }
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 }
 

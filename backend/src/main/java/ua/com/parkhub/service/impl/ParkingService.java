@@ -129,11 +129,9 @@ public class  ParkingService implements IParkingService {
     @Override
     public ParkingModel findParkingByIdWithSlotListAndDateRange(long id, long checkIn, long checkOut) {
         ParkingModel parkingModel = findParkingByIdWithSlotList(id);
-        //TODO if null condition
         List<SlotModel> slotList = parkingModel.getSlots();
         for (SlotModel slotModel : slotList) {
             Optional<BookingModel> bookingModel = bookingService.findBookingByIdAndDateTimeRange(slotModel.getId(), checkIn, checkOut);
-            //TODO refactoring isPresent change to exception
             if (bookingModel.isPresent()) {
                 slotModel.setReserved(true);
             }
