@@ -71,9 +71,7 @@ export class LoginComponent implements OnInit {
     }, err => {
       this.code = err.error;
       const title = this.translate.instant('Sign in failed');
-      this.openDialog(title, this.checkStatusCode(this.code)).afterClosed().subscribe(() => {
-          window.location.reload();
-        }
+      this.openDialog(title, this.checkStatusCode(this.code)).afterClosed().subscribe(() => {}
       );
     });
   }
