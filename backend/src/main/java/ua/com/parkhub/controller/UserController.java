@@ -1,7 +1,5 @@
 package ua.com.parkhub.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -17,12 +15,13 @@ import ua.com.parkhub.service.IUserService;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @RestController
 public class UserController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    private static final Logger logger = Logger.getLogger(UserController.class.getName());
 
     private static final String VALIDATION_ERRORS = "Validation errors: {}";
 
@@ -48,7 +47,7 @@ public class UserController {
             List<String> errors = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
-            logger.info(VALIDATION_ERRORS, errors);
+            logger.info(String.format(VALIDATION_ERRORS, errors));
             return ResponseEntity.badRequest().body(errors);
         }
         userService.sendToken(emailDTO.getEmail(), emailDTO.getTokenType());
@@ -62,7 +61,7 @@ public class UserController {
             List<String> errors = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
-            logger.info(VALIDATION_ERRORS, errors);
+            logger.info(String.format(VALIDATION_ERRORS, errors));
             return ResponseEntity.badRequest().body(errors);
         }
         userService.resendToken(tokenDTO.getToken(), tokenDTO.getTokenType());
@@ -95,7 +94,7 @@ public class UserController {
             List<String> errors = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
-            logger.info(VALIDATION_ERRORS, errors);
+            logger.info(String.format(VALIDATION_ERRORS, errors));
             return ResponseEntity.badRequest().body(errors);
         }
         userService.resetPassword(passwordDTO.getToken(), passwordDTO.getPassword());

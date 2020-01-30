@@ -1,7 +1,5 @@
 package ua.com.parkhub.service.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +21,7 @@ import ua.com.parkhub.service.IUserService;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 @Service
 public class UserService implements IUserService {
@@ -30,7 +29,7 @@ public class UserService implements IUserService {
     @Value("${fronturl}")
     String url;
 
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private static final Logger logger = Logger.getLogger(UserService.class.getName());
 
     private static final String TOKEN_WAS_NOT_FOUND = "Token was not found";
 
@@ -101,7 +100,7 @@ public class UserService implements IUserService {
                 }).orElseThrow(() -> new NotFoundInDataBaseException(TOKEN_WAS_NOT_FOUND));
         user.setRole(findUserRole(String.valueOf(RoleDTO.USER)));
         userDAO.updateElement(user);
-        logger.info("Email was verified for user with email={}", user.getEmail());
+        logger.info(String.format("Email was verified for user with email={}", user.getEmail()));
     }
 
     @Override
@@ -121,7 +120,7 @@ public class UserService implements IUserService {
                 .orElseThrow(() -> new NotFoundInDataBaseException(TOKEN_WAS_NOT_FOUND));
         user.setPassword(passwordEncoder.encode(password));
         userDAO.updateElement(user);
-        logger.info("Password was reset for user with email={}", user.getEmail());
+        logger.info(String.format("Password was reset for user with email={}", user.getEmail()));
     }
 
     private UuidTokenModel createToken(String email) {
@@ -132,8 +131,8 @@ public class UserService implements IUserService {
         token.setToken(UUID.randomUUID().toString());
         token.setExpirationDate(LocalDateTime.now().plusMinutes(10));
         uuidTokenDAO.addElement(token);
-        logger.info("Token={} with expiration date at {} was created for user with email={}",
-                token.getToken(), token.getExpirationDate(), user.getEmail());
+        logger.info(String.format("Token={} with expiration date at {} was created for user with email={}",
+                token.getToken(), token.getExpirationDate(), user.getEmail()));
         return token;
     }
 

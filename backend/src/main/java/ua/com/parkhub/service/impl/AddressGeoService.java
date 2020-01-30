@@ -1,48 +1,60 @@
 package ua.com.parkhub.service.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 import ua.com.parkhub.dto.AddressGeoDTO;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 @Service
 public class AddressGeoService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AddressGeoService.class);
-
-    private RestTemplate restTemplate;
+    private static final Logger LOGGER = Logger.getLogger(AddressGeoService.class.getName());
+    private OkHttpClient httpClient;
     private static final double EARTH_RADIUS = 6372795;
 
+    @Autowired
+    public AddressGeoService(OkHttpClient httpClient) {
+        this.httpClient = httpClient;
+    }
 
     public Map<String, String> getLatLon(String query) {
 
-        HashMap hashMap = new HashMap();
-        restTemplate = new RestTemplate();
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.USE_JAVA_ARRAY_FOR_JSON_ARRAY, true);
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("lat", "0.0");
+        hashMap.put("lon", "0.0");
         String url = "https://nominatim.openstreetmap.org/search.php?q=" +
                 getUrl(query) + "&format=json";
-        ResponseEntity<AddressGeoDTO[]> adressGeoDTO = null;
 
-        try {
-            adressGeoDTO = restTemplate.getForEntity(url, AddressGeoDTO[].class);
+        Request request = new Request.Builder().url(url).build();
 
-            hashMap.put("lat", adressGeoDTO.getBody()[0].getLat());
-            hashMap.put("lon", adressGeoDTO.getBody()[0].getLon());
+        try (Response response = httpClient.newCall(request).execute()) {
+            ResponseBody body = response.body();
+
+            if (body != null) {
+                String json = body.string();
+                LOGGER.info("Reponse: " + json);
+                AddressGeoDTO[] adressGeoDTO = mapper.readValue(json, AddressGeoDTO[].class);
+                if (adressGeoDTO.length > 0) {
+                    hashMap.put("lat", adressGeoDTO[0].getLat());
+                    hashMap.put("lon", adressGeoDTO[0].getLon());
+                }
+            }
+        } catch (IOException e1) {
+            LOGGER.warning("Connection timed out ->"+e1);
+        }
+        LOGGER.info("lat: " + hashMap.get("lat") + " lon: " + hashMap.get("lon"));
             return hashMap;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            LOGGER.error("Not found address ->" + query + "!" + e);
-        }
-        catch (RestClientException e1 ){
-            LOGGER.error("Connection timed out ->"+e1);
-        }
-
-        hashMap.put("lat", "-500");
-        hashMap.put("lon", "-500");
-        return hashMap;
     }
 
 

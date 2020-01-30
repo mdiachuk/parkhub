@@ -4,8 +4,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import org.apache.commons.lang3.time.DateUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,6 +15,7 @@ import ua.com.parkhub.values.Constants;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Component
 public class JwtUtil {
@@ -33,11 +32,11 @@ public class JwtUtil {
     private final int MILLISECONDS_IN_SECOND = 1000;
     private final int SECONDS_IN_MINUTE = 60;
 
-    private static Logger logger = LoggerFactory.getLogger(JwtUtil.class.getSimpleName());
+    private static Logger logger = Logger.getLogger(JwtUtil.class.getName());
 
     public String generateToken(String email, String role, Long id) {
 
-        logger.debug(String.format("Generating token for %s with role %s", email, role));
+        logger.fine(String.format("Generating token for %s with role %s", email, role));
 
         return Jwts.builder()
                 .setSubject(email)
@@ -58,7 +57,7 @@ public class JwtUtil {
 
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_" + claims.get("role", String.class)));
-        logger.debug(String.format("Adding authorities %s for %s", authorities.toString(), claims.getSubject()));
+        logger.fine(String.format("Adding authorities %s for %s", authorities.toString(), claims.getSubject()));
 
 
         return new UsernamePasswordAuthenticationToken(claims.getSubject(), null, authorities);
@@ -66,28 +65,28 @@ public class JwtUtil {
 
     public Claims getClaims(String token) throws InvalidTokenException {
         try {
-            logger.debug("Parsing JWT");
+            logger.fine("Parsing JWT");
             return Jwts.parser()
                     .setSigningKey(jwtSecret)
                     .parseClaimsJws(token)
                     .getBody();
 
         } catch (JwtException | IllegalArgumentException e) {
-            logger.error(e.getMessage(), e);
+            logger.warning(e.getMessage());
             throw new InvalidTokenException();
         }
     }
 
     public String refresh(String oldToken) throws InvalidTokenException {
 
-        logger.debug("Refreshing JWT");
+        logger.fine("Refreshing JWT");
         Claims oldClaims = getClaims(oldToken);
 
         Date expiration = oldClaims.getExpiration();
-        logger.debug("JWT expiration date: " + expiration);
+        logger.fine("JWT expiration date: " + expiration);
 
         Date refreshingStart = DateUtils.addMinutes(expiration, -jwtRefreshingMinutes);
-        logger.debug("Refreshing start date for current JWT: " + refreshingStart);
+        logger.fine("Refreshing start date for current JWT: " + refreshingStart);
 
         return  (new Date().after(refreshingStart))
                 ? generateToken(oldClaims.getSubject(), oldClaims.get("role", String.class), oldClaims.get("id", Long.class))

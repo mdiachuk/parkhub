@@ -1,8 +1,6 @@
 package ua.com.parkhub.service.impl;
 
 import org.hibernate.Hibernate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +17,14 @@ import ua.com.parkhub.service.IParkingService;
 
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
 public class  ParkingService implements IParkingService {
 
-    private static final Logger logger = LoggerFactory.getLogger(ParkingService.class);
+    private static final Logger logger = Logger.getLogger(ParkingService.class.getName());
 
     private ParkingDAO parkingDAO;
     private final AddressDAO addressDAO;
@@ -63,11 +62,11 @@ public class  ParkingService implements IParkingService {
     public void createParkingByOwnerID(ParkingModel parkingModel, long id) {
         logger.info("Creating parking");
         if(!checkIfAddressIsUnique(parkingModel)){
-            logger.warn("Parking with such address already exists");
+            logger.warning("Parking with such address already exists");
             throw new AddressException("This address already exists");
         }
         if(!isParkingNameUnique(parkingModel)){
-            logger.warn("Parking with such name already exists");
+            logger.warning("Parking with such name already exists");
             throw new ExistingParkingException("This parking already exists");
         }
         parkingModel.getInfo().setOwner(userDAO.findElementById(id).orElseThrow(() ->
@@ -83,7 +82,7 @@ public class  ParkingService implements IParkingService {
         AddressModel address = parkingModel.getInfo().getAddressModel();
         address = setLatLan(address);
         logger.info("Address created");
-        return addressDAO.addWithResponse(address);
+        return address;
     }
 
     @Override

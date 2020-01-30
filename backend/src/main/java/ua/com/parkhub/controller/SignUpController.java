@@ -1,13 +1,14 @@
 package ua.com.parkhub.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ua.com.parkhub.dto.ManagerRegistrationDataDTO;
 import ua.com.parkhub.dto.UserDTO;
 import ua.com.parkhub.mappers.Mapper;
@@ -21,13 +22,14 @@ import ua.com.parkhub.validation.groups.ManagerChecks;
 import ua.com.parkhub.validation.groups.UserChecks;
 
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/signup")
 public class SignUpController {
 
-    private static final Logger logger = LoggerFactory.getLogger(SignUpController.class);
+    private static final Logger logger = Logger.getLogger(SignUpController.class.getName());
 
     private static final String VALIDATION_ERRORS = "Validation errors: {}";
 
@@ -55,7 +57,7 @@ public class SignUpController {
             List<String> errors = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
-            logger.info(VALIDATION_ERRORS, errors);
+            logger.info(String.format(VALIDATION_ERRORS, errors));
             return ResponseEntity.badRequest().body(errors);
         }
         signUpService.registerUser(userDtoToUserModelMapper.transform(user));
@@ -71,7 +73,7 @@ public class SignUpController {
             List<String> errors = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
-            logger.info(VALIDATION_ERRORS, errors);
+            logger.info(String.format(VALIDATION_ERRORS, errors));
             return ResponseEntity.badRequest().body(errors);
         }
         signUpService.registerManager(managerRegistrationRequestDtoToModel.transform(manager));
