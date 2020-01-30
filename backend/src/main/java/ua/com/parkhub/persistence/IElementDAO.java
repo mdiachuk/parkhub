@@ -9,7 +9,6 @@ public interface IElementDAO<E> {
     Optional<E> addElement(E element);
     void updateElement(E element);
     List<E> findAll();
-    //TODO to think how to generalize method properly
     Optional<E> findElementByFieldsEqual(long id, LocalDateTime checkIn, LocalDateTime checkOut, String fieldNameId, String fieldNameCheckIn, String fieldNameCheckOut);
     Optional<E> findElementById(long id);
     void deleteElement(E element);

@@ -19,11 +19,6 @@ import java.time.temporal.ChronoUnit;
 @Transactional
 public class PaymentService implements IPaymentService {
 
-    private static final int CANADIAN_DOLLAR = 21;
-    private static final int MAX_VALUE = 9;
-    private static final int MIN_VALUE = 1;
-
-
     private static final Logger logger = LoggerFactory.getLogger(PaymentService.class);
 
     private PaymentDAO paymentDAO;
@@ -42,11 +37,7 @@ public class PaymentService implements IPaymentService {
         LocalDateTime checkIn = bookingModel.getCheckIn();
         LocalDateTime checkOut = bookingModel.getCheckOut();
         long hours = ChronoUnit.HOURS.between(checkIn, checkOut);
-        if (hours > 0) {
-            int total = (int) (tariff * hours / CANADIAN_DOLLAR);
-            return Math.min(total, MAX_VALUE);
-        }
-        return MIN_VALUE;
+        return hours > 0 ? (int) (tariff * hours) : tariff;
     }
 
     public int findPriceIfCancelled(BookingModel bookingModel) {

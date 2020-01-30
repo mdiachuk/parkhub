@@ -31,9 +31,6 @@ public class BookingController {
     private final IBookingService bookingService;
     private final ParkingWithSlotsModelToDTOMapper parkingWithSlotsModelToDTOMapper;
     private final PaymentModelToDTOMapper paymentModelToDTOMapper;
-    //TODO @Min annotation add for rangeFrom and rangeTo validation
-    public static final long NOW = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
-    public static final long NOW_PLUS_HOUR = LocalDateTime.now().plusHours(1).toEpochSecond(ZoneOffset.UTC);
 
     @Autowired
     public BookingController(IParkingService parkingService, IBookingService bookingService, ParkingWithSlotsModelToDTOMapper parkingWithSlotsModelToDTOMapper,
@@ -45,7 +42,6 @@ public class BookingController {
     }
 
     @GetMapping("/api/parkings/{id}")
-    //TODO implementation w.o. pagination just for small amount of slots! Will do in a next impl steps
     public ResponseEntity<ParkingWithSlotsDTO> displayParking(@PathVariable(name = "id") @Positive @Min(1) Long id, @RequestParam @Positive Long rangeFrom,
                                                               @RequestParam @Positive Long rangeTo) {
         try {
@@ -59,7 +55,6 @@ public class BookingController {
     }
 
     @PostMapping("/api/booking")
-    //TODO not idempotent operation! Will do some smart restrictions on booking amount per one phone number in a next impl steps
     public ResponseEntity<PaymentDTO> addBooking(@Valid @RequestBody BookingFormDTO bookingFormDTO) {
         String carNumber = bookingFormDTO.getCarNumber();
         String phoneNumber = bookingFormDTO.getPhoneNumber();
@@ -75,7 +70,7 @@ public class BookingController {
     @PostMapping(value = "/api/cancel")
     public ResponseEntity<PaymentResponseDTO> getPhoneNumber(@RequestBody PhoneNumberDTO phoneNumber) {
         PaymentResponseDTO paymentResponseDTO = new PaymentResponseDTO();
-        int price = bookingService.findPrice("+" + phoneNumber.getPhoneNumber());
+        int price = bookingService.findPrice(phoneNumber.getPhoneNumber());
         paymentResponseDTO.setPrice(price);
         return ResponseEntity.ok(paymentResponseDTO);
     }

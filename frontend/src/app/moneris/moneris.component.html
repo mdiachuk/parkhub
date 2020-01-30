@@ -1,19 +1,18 @@
 <h1 mat-dialog-title>Proceed payment</h1>
 <div mat-dialog-content>
-  Parking price: {{data.payment.price}}
+  {{'Parking price' | translate}}: {{data.payment.price}} UAH
   <br>
-  Your slot number: {{data.payment.booking.slot}}
+  {{'Your slot number' | translate}}: {{data.payment.booking.slot}}
   <br>
-  Check-in: {{data.payment.booking.checkIn}}
+  {{'Check-in' | translate}}: {{data.payment.booking.checkIn}}
   <br>
-  Check-out: {{data.payment.booking.checkOut}}
+  {{'Check-out' | translate}}: {{data.payment.booking.checkOut}}
   <br>
   <FORM METHOD="POST" ACTION="https://esqa.moneris.com/HPPDP/index.php">
     <INPUT TYPE="HIDDEN" NAME="ps_store_id" VALUE="M9DLAtore3">
     <INPUT TYPE="HIDDEN" NAME="hpp_key" VALUE="hpJDDTV9TCQL">
-    <INPUT TYPE="HIDDEN" NAME="charge_total" VALUE="{data.payment.price}">
-    <!--MORE OPTIONAL VARIABLES CAN BE DEFINED HERE -->
-    <INPUT TYPE="SUBMIT" NAME="SUBMIT" VALUE="Click to proceed to Secure Page">
+    <INPUT TYPE="HIDDEN" NAME="charge_total" ngDefaultControl [(ngModel)]="floatPrice">
+    <INPUT TYPE="SUBMIT" NAME="SUBMIT" VALUE="Proceed">
   </FORM>
 </div>
 

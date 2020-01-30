@@ -11,7 +11,7 @@ public class BookingFormDTO {
     @Pattern(regexp = "[A-Z]{2}\\d{4}[A-Z]{2}", message = "car number has incorrect format")
     private String carNumber;
     @NotEmpty(message = "phone number is mandatory")
-    @Pattern(regexp = "^\\+380\\d{9}$", message = "phone number has incorrect format")
+    @Pattern(regexp = "^380\\d{9}$", message = "phone number has incorrect format")
     private String phoneNumber;
     @Positive
     @Min(1)
