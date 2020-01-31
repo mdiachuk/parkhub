@@ -19,7 +19,6 @@ import ua.com.parkhub.service.IMailService;
 import ua.com.parkhub.service.IUserService;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -28,6 +27,7 @@ public class UserService implements IUserService {
 
     @Value("${fronturl}")
     String url;
+    private static final int EXPIRATION_TIME_IN_MINUTES = 30;
 
     private static final Logger logger = Logger.getLogger(UserService.class.getName());
 
@@ -61,15 +61,15 @@ public class UserService implements IUserService {
         switch (convertToUuidTokenType(type)) {
             case EMAIL:
                 subject = "Verify email";
-                body = String.format("<a href=\"%s/verify-email?token=%s\">Verify email address</a> (expires at %s)",
-                        url, token.getToken(), formatExpirationDate(token.getExpirationDate()));
+                body = String.format("<a href=\"%s/verify-email?token=%s\">Verify email address</a> (expires in %d minutes)",
+                        url, token.getToken(), EXPIRATION_TIME_IN_MINUTES);
                 mailService.sendEmail(to, subject, body);
                 logger.info("Email for verifying email address was sent");
                 break;
             case PASSWORD:
                 subject = "Reset password";
-                body = String.format("<a href=\"%s/reset-password?token=%s\">Reset password</a> (expires at %s)",
-                        url, token.getToken(), formatExpirationDate(token.getExpirationDate()));
+                body = String.format("<a href=\"%s/reset-password?token=%s\">Reset password</a> (expires in %d minutes)",
+                        url, token.getToken(), EXPIRATION_TIME_IN_MINUTES);
                 mailService.sendEmail(to, subject, body);
                 logger.info("Email for resetting password was sent");
                 break;
@@ -129,7 +129,7 @@ public class UserService implements IUserService {
         UuidTokenModel token = new UuidTokenModel();
         token.setUser(user);
         token.setToken(UUID.randomUUID().toString());
-        token.setExpirationDate(LocalDateTime.now().plusMinutes(10));
+        token.setExpirationDate(LocalDateTime.now().plusMinutes(EXPIRATION_TIME_IN_MINUTES));
         uuidTokenDAO.addElement(token);
         logger.info(String.format("Token={} with expiration date at {} was created for user with email={}",
                 token.getToken(), token.getExpirationDate(), user.getEmail()));
@@ -145,11 +145,6 @@ public class UserService implements IUserService {
 
     private boolean isExpired(UuidTokenModel token) {
         return token.getExpirationDate().isBefore(LocalDateTime.now());
-    }
-
-    private String formatExpirationDate(LocalDateTime date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy");
-        return date.format(formatter);
     }
 
     private UuidTokenType convertToUuidTokenType(String type) {
