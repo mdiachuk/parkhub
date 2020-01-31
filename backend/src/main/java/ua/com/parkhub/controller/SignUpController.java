@@ -31,7 +31,7 @@ public class SignUpController {
 
     private static final Logger logger = Logger.getLogger(SignUpController.class.getName());
 
-    private static final String VALIDATION_ERRORS = "Validation errors: {}";
+    private static final String VALIDATION_ERRORS = "Validation errors: %s";
 
     private final ISignUpService signUpService;
     private final IUserService userService;

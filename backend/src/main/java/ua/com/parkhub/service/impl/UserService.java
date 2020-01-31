@@ -100,7 +100,7 @@ public class UserService implements IUserService {
                 }).orElseThrow(() -> new NotFoundInDataBaseException(TOKEN_WAS_NOT_FOUND));
         user.setRole(findUserRole(String.valueOf(RoleDTO.USER)));
         userDAO.updateElement(user);
-        logger.info(String.format("Email was verified for user with email={}", user.getEmail()));
+        logger.info(String.format("Email was verified for user with id=%d", user.getId()));
     }
 
     @Override
@@ -131,8 +131,8 @@ public class UserService implements IUserService {
         token.setToken(UUID.randomUUID().toString());
         token.setExpirationDate(LocalDateTime.now().plusMinutes(EXPIRATION_TIME_IN_MINUTES));
         uuidTokenDAO.addElement(token);
-        logger.info(String.format("Token={} with expiration date at {} was created for user with email={}",
-                token.getToken(), token.getExpirationDate(), user.getEmail()));
+        logger.info(String.format("Token=%s was created for user with id=%d",
+                token.getToken(), user.getId()));
         return token;
     }
 

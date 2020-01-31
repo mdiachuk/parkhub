@@ -8,7 +8,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.com.parkhub.dto.*;
-import ua.com.parkhub.exceptions.PasswordException;
 import ua.com.parkhub.mappers.Mapper;
 import ua.com.parkhub.model.UserModel;
 import ua.com.parkhub.service.IUserService;
@@ -23,7 +22,7 @@ public class UserController {
 
     private static final Logger logger = Logger.getLogger(UserController.class.getName());
 
-    private static final String VALIDATION_ERRORS = "Validation errors: {}";
+    private static final String VALIDATION_ERRORS = "Validation errors: %s";
 
     private final IUserService userService;
     private final Mapper<UserModel, UserInfoDTO> userModelToUserInfoDTOMapper;

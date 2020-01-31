@@ -77,7 +77,7 @@ public class SignUpService implements ISignUpService {
     @Override
     public CustomerModel createCustomer(CustomerModel customer) {
         return customerDAO.findCustomerByPhoneNumber(customer.getPhoneNumber()).map(existingCustomer -> {
-            logger.info(String.format("Customer with phone number={} was found", customer.getPhoneNumber()));
+            logger.info(String.format("Customer with phone number=%s was found", customer.getPhoneNumber()));
             Optional<UserModel> optionalUser = userDAO.findUserByCustomerId(existingCustomer.getId());
             if (optionalUser.isPresent()) {
                 throw new PhoneNumberException("Account with this phone number already exists!");
