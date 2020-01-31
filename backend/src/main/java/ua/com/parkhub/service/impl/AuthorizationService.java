@@ -12,6 +12,7 @@ import ua.com.parkhub.persistence.impl.UserDAO;
 import ua.com.parkhub.service.IAuthorizationService;
 
 import javax.transaction.Transactional;
+import java.util.logging.Logger;
 
 @Service
 public class AuthorizationService implements IAuthorizationService {
@@ -19,6 +20,7 @@ public class AuthorizationService implements IAuthorizationService {
     private UserDAO userDAO;
     private BlockedUserDAO blockedUserDAO;
     private PasswordEncoder passwordEncoder;
+    private static final Logger logger = Logger.getLogger(AuthorizationService.class.getName());
 
     private final int THREE_TRIES_TO_ENTER = 3;
     private final int ONE_FAILED_TRIE_TO_ENTER = 1;
@@ -48,6 +50,7 @@ public class AuthorizationService implements IAuthorizationService {
     private void block(UserModel user) {
         if (!(blockedUserDAO.isBlocked(user))) {
             blockedUserDAO.blockUser(user);
+            logger.info("Blocking of the user account");
             throw new PermissionException(StatusCode.ACCOUNT_BLOCKED);
         }
     }
@@ -57,6 +60,7 @@ public class AuthorizationService implements IAuthorizationService {
         if ((blockedUserDAO.isBlocked(user)) && (blockedUserDAO.canActivate(user))) {
             blockedUserDAO.activateUser(user);
             setZeroFailedPassEntering(user);
+            logger.info("Activation of user account");
         }
     }
 
@@ -66,11 +70,14 @@ public class AuthorizationService implements IAuthorizationService {
             if (!checkForRolePending(userModel)) {
                 if (!(blockedUserDAO.isBlocked(userModel))) {
                     setZeroFailedPassEntering(userModel);
+                    logger.info("SignIn user");
                     return userModel;
                 } else {
+                    logger.info("Cannot activate user: less then 24 hours have passed");
                     throw new PermissionException(StatusCode.CANNOT_ACTIVATE);
                 }
             } else {
+                logger.info("Cannot login user: account was not verified");
                 throw new PermissionException(StatusCode.ROLE_PENDING);
             }
         } else {
@@ -79,6 +86,7 @@ public class AuthorizationService implements IAuthorizationService {
             if (blockedUserDAO.isBlocked(userModel)) {
                 throw new PermissionException(StatusCode.ACCOUNT_BLOCKED);
             }
+            logger.info("Cannot signin user: invalid credentials");
             throw new PermissionException(StatusCode.INVALID_CREDENTIALS);
         }
     }

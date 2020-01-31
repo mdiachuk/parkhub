@@ -34,7 +34,7 @@ import {
   MatTableModule,
   MatSelectModule,
   MatCheckboxModule,
-} from "@angular/material";
+} from '@angular/material';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
